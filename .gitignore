@@ -8,10 +8,7 @@
 .buildlog/
 .history
 .svn/
-<<<<<<< HEAD
 .talismanrc
-=======
->>>>>>> Ginette - initial commit
 
 # IntelliJ related
 *.iml
