@@ -27,7 +27,6 @@ class _WasteExchangeMapState extends State<WasteExchangeMapScreen> {
     zoom: 15,
   );
 
-  ///Callback when map created
   void onMapCreated(GoogleMapController controller) {
     setState(() {
       _mapController = controller;
@@ -51,7 +50,6 @@ class _WasteExchangeMapState extends State<WasteExchangeMapScreen> {
     );
   }
 
-  ///Drop marker at the Ahmadabad
   void addMarker() {
     final Marker marker = Marker(
       markerId: MarkerId("1"),
