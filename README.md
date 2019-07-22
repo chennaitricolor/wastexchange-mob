@@ -12,4 +12,10 @@ samples, guidance on mobile development, and a full API reference.
 
 flutter run
 
+## Running Tests
+
+flutter test
+
+Always run the tests before pushing in. 
+
 
