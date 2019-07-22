@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wastexchange_mobile/field_validator.dart';  
+import 'package:wastexchange_mobile/util/field_validator.dart';  
 
 void main() {
   test('Empty Password Test', () {

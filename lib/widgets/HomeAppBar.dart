@@ -17,13 +17,13 @@ class HomeAppBar extends AppBar {
                 ),
                 Container(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('India Waste Exchange', style: TextStyle(color: Colors.black))),
+                    child: Text('India Waste Exchange',
+                        style: TextStyle(color: Colors.black))),
                 Image.asset(
                   'assets/images/smart-city-logo.png',
                   fit: BoxFit.contain,
                   height: 32,
                 ),
-
               ],
             ));
 }
