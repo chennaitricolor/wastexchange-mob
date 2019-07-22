@@ -11,3 +11,14 @@ samples, guidance on mobile development, and a full API reference.
 ## Running the application
 
 flutter run
+<<<<<<< HEAD
+=======
+
+## Running Tests
+
+flutter test
+
+Always run the tests before pushing in. 
+
+
+>>>>>>> Update README.md
