@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
       home: Scaffold(
         appBar: HomeAppBar(),
         body: Center(
-          child: Text('Welcome'),
+          child: Text('Login'),
         ),
       ),
     );
