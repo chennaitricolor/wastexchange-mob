@@ -16,7 +16,10 @@ Copy the .env.sample and rename as .env file. Contact the team to get the actual
 
 flutter run
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 8cfee5fa170656b68eb26434f19db26bd97a05b2
 
 ## Running Tests
 
@@ -25,4 +28,7 @@ flutter test
 Always run the tests before pushing in. 
 
 
+<<<<<<< HEAD
 >>>>>>> Update README.md
+=======
+>>>>>>> 8cfee5fa170656b68eb26434f19db26bd97a05b2
