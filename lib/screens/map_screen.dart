@@ -1,12 +1,12 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 
-class WasteExchangeMapScreen extends StatefulWidget {
+class MapScreen extends StatefulWidget {
   @override
-  _WasteExchangeMapState createState() => _WasteExchangeMapState();
+  _MapState createState() => _MapState();
 }
 
-class _WasteExchangeMapState extends State<WasteExchangeMapScreen> {
+class _MapState extends State<MapScreen> {
   GoogleMapController _mapController;
   MapType _type = MapType.normal;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -33,13 +33,9 @@ class _WasteExchangeMapState extends State<WasteExchangeMapScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Google Maps demo'),
-      ),
       body: GoogleMap(
           initialCameraPosition: _options,
           onMapCreated: onMapCreated,

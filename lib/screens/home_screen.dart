@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/widgets/HomeAppBar.dart';
+import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -8,9 +9,7 @@ class HomeScreen extends StatelessWidget {
       title: 'Waste Exchange',
       home: Scaffold(
         appBar: HomeAppBar(),
-        body: Center(
-          child: Text('Login'),
-        ),
+        body: MapScreen()
       ),
     );
   }

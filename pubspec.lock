@@ -53,7 +53,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -61,8 +60,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.19+2"
-=======
->>>>>>> 8cfee5fa170656b68eb26434f19db26bd97a05b2
   matcher:
     dependency: transitive
     description:
