@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends AppBar {
-  final _formKey = new GlobalKey<FormState>();
   HomeAppBar({Key key})
       : super(
             key: key,
@@ -12,17 +11,16 @@ class HomeAppBar extends AppBar {
               children: [
                 Image.asset(
                   'assets/images/ministry-logo.png',
-                  fit: BoxFit.contain,
                   height: 32,
+                  fit: BoxFit.contain,
                 ),
-                Container(
-                    padding: const EdgeInsets.all(8.0),
+                Expanded(
                     child: Text('India Waste Exchange',
-                        style: TextStyle(color: Colors.black))),
+                        style: TextStyle(fontSize: 14, color: Colors.black))),
                 Image.asset(
                   'assets/images/smart-city-logo.png',
-                  fit: BoxFit.contain,
                   height: 32,
+                  fit: BoxFit.contain,
                 ),
               ],
             ));
