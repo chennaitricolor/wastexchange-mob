@@ -1,7 +1,7 @@
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:authentication_view/authentication_view.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:authentication_view/authentication_view.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
