@@ -7,8 +7,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: AuthenticationView(screenType: ScreenType.LOGIN, fieldTypes: [FieldType.EMAIL, FieldType.PASSWORD], onValidation: (bool isValidationSuccess) {
+      body: AuthenticationView(screenType: ScreenType.LOGIN, fieldTypes: [FieldType.EMAIL, FieldType.PASSWORD], onValidation: (bool isValidationSuccess, List<String> fieldValues) {
         if (isValidationSuccess) {
+          debugPrint("email and password fields are " + fieldValues[0] + fieldValues[1]);
           Navigator.push(
               context,
               MaterialPageRoute(
