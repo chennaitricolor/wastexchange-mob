@@ -21,6 +21,9 @@
 # is commented out by default.
 #.vscode/
 
+# Environment configuration files
+.env
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

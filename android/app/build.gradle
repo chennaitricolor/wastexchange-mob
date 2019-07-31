@@ -39,7 +39,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+        manifestPlaceholders = [ MAPS_API_KEY:getApiKey()]
+   }
 
     buildTypes {
         release {
@@ -58,4 +59,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+def getApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('../.env')))
+    return props['MAPS_API_KEY']
 }
