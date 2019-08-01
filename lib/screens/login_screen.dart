@@ -1,5 +1,6 @@
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/resources/api_provider.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:authentication_view/authentication_view.dart';
 
