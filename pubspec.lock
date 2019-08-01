@@ -14,7 +14,7 @@ packages:
       name: authentication_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.1.4"
   boolean_selector:
     dependency: transitive
     description:
