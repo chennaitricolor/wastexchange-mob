@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/util/app_colors.dart';
+import 'package:wastexchange_mobile/util/constants.dart';
 
 class HomeAppBar extends AppBar {
   HomeAppBar({Key key})
       : super(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             key: key,
-            backgroundColor: Colors.white,
             centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(
-                  'assets/images/ministry-logo.png',
-                  height: 32,
-                  fit: BoxFit.contain,
-                ),
-                Expanded(
-                    child: Text('India Waste Exchange',
-                        style: TextStyle(fontSize: 14, color: Colors.black))),
-                Image.asset(
-                  'assets/images/smart-city-logo.png',
-                  height: 32,
-                  fit: BoxFit.contain,
-                ),
-              ],
+            title: Text(Constants.APP_TITLE,
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.text_black,
+                    fontSize: 20)),
+            leading: Image.asset(
+              Constants.LOGO_SMART_CITY,
+              height: 64,
             ));
 }
