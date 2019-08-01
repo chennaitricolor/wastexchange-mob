@@ -50,15 +50,15 @@ class _MapState extends State<MapScreen> {
 
   void addMarker() {
     final Marker marker = Marker(
-      markerId: MarkerId("1"),
+      markerId: MarkerId('1'),
       position: LatLng(12.9838, 80.2459),
-      infoWindow: InfoWindow(title: "ThoughtWorks Technologies India Pvt Ltd", snippet: 'Taramani'),
+      infoWindow: InfoWindow(title: 'ThoughtWorks Technologies India Pvt Ltd', snippet: 'Taramani'),
       onTap: () {
-        _onMarkerTapped(MarkerId("1"));
+        _onMarkerTapped(MarkerId('1'));
       },
     );
     setState(() {
-      markers[MarkerId("1")] = marker;
+      markers[MarkerId('1')] = marker;
     });
   }
 
