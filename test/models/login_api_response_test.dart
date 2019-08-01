@@ -4,23 +4,17 @@ import 'package:test/test.dart';
 
 void main() {
   test('auth key missing', () {
-    var map = Map<String, dynamic>();
-    map['token'] = 'Blah';
-    expect(() => LoginResponse.fromJson(map),
-        throwsA(const TypeMatcher<ApiResponseException>())); 
+    expect(() => LoginResponse.fromJson({'token': 'blah'}),
+        throwsA(const TypeMatcher<ApiResponseException>()));
   });
 
   test('token key missing', () {
-    var map = Map<String, dynamic>();
-    map['auth'] = true;
-    expect(() => LoginResponse.fromJson(map),
-        throwsA(const TypeMatcher<ApiResponseException>())); 
+    expect(() => LoginResponse.fromJson({'auth': true}),
+        throwsA(const TypeMatcher<ApiResponseException>()));
   });
 
   test('valid', () {
-    var map = Map<String, dynamic>();
-    map['auth'] = true;
-    map['token'] = 'Blah';
-    expect(LoginResponse.fromJson(map), TypeMatcher<LoginResponse>());
+    expect(LoginResponse.fromJson({'auth': true, 'token': 'blah'}),
+        TypeMatcher<LoginResponse>());
   });
 }
