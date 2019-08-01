@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -36,6 +37,7 @@ class _MapState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: HomeAppBar(),
       body: GoogleMap(
           initialCameraPosition: _options,
           onMapCreated: onMapCreated,

@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
     return MaterialApp(
       title: 'Waste Exchange',
       home: Scaffold(
-        appBar: HomeAppBar(),
         body: LoginScreen()
       ),
     );
