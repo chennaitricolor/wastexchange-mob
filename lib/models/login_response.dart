@@ -11,7 +11,7 @@ class LoginResponse {
     String token = json['token'];
     if (auth == null || token == null) {
       throw ApiResponseException(
-          cause: '\'auth\' or \'token\' key missing in LoginResponse');
+          '\'auth\' or \'token\' key missing in LoginResponse');
     }
     return LoginResponse(auth: auth, token: token);
   }

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' show Client;
+import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'dart:convert';
 import '../models/login_response.dart';
 
@@ -16,7 +17,7 @@ class ApiProvider {
     final response = await _client
         .post('http://data.indiawasteexchange.com/users/login', body: map);
     if (response.statusCode != 200) {
-      throw Exception('failed to login');
+      throw ApiResponseException('invalid status code');
     }
     return LoginResponse.fromJson(json.decode(response.body));
   }
