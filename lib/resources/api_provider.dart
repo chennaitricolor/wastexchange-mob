@@ -11,11 +11,9 @@ class ApiProvider {
   }
 
   Future<LoginResponse> login(String loginId, String password) async {
-    var map = new Map<String, String>();
-    map['loginId'] = loginId;
-    map['password'] = password;
+    final body = {'loginId': loginId, 'password': password};
     final response = await _client
-        .post('http://data.indiawasteexchange.com/users/login', body: map);
+        .post('http://data.indiawasteexchange.com/users/login', body: body);
     if (response.statusCode != 200) {
       throw ApiResponseException('invalid status code');
     }
