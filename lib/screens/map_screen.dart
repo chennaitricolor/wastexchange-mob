@@ -35,50 +35,44 @@ class _MapState extends State<MapScreen> {
     this.mapController = controller;
   }
 
-  GoogleMap getGoogleMap() => GoogleMap(
-        initialCameraPosition: _options,
-        onMapCreated: onMapCreated,
-        mapType: _type,
-        markers: Set<Marker>.of(markers.values),
-      );
-
-  FutureBuilder _futureBuilder() => FutureBuilder(
-        future: UserClient.getAllUsers(),
-        builder: (BuildContext context, AsyncSnapshot snapShot) =>
-            buildBody(snapShot),
-      );
-
-  Widget buildBody(AsyncSnapshot snapShot) {
-    bool isSuccess =
-        snapShot.connectionState == ConnectionState.done && snapShot.hasData;
-    if (!isSuccess) {
-      return Center(child: CircularProgressIndicator());
-    }
-    populateUsers(snapShot.data);
-    return getGoogleMap();
-  }
-
   populateUsers(List<User> users) {
-    var markers = users
-        .map((user) => Marker(
-              markerId: MarkerId(user.id.toString()),
-              position: LatLng(user.lat, user.long),
-              infoWindow: InfoWindow(
-                title: '${user.name}',
-                snippet: '${user.address}',
-              ),
-              onTap: () {
-                _onMarkerTapped(MarkerId(user.id.toString()));
-              },
-            ));
-    this.markers = Map.fromIterable(markers, key: (m) => m.markerId, value: (m) => m);
+    var markers = users.map((user) => Marker(
+          markerId: MarkerId(user.id.toString()),
+          position: LatLng(user.lat, user.long),
+          infoWindow: InfoWindow(
+            title: '${user.name}',
+            snippet: '${user.address}',
+          ),
+          onTap: () {
+            _onMarkerTapped(MarkerId(user.id.toString()));
+          },
+        ));
+    this.markers = Map.fromIterable(markers,
+        key: (marker) => marker.markerId, value: (marker) => marker);
+    debugPrint('Markers Ready');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: _futureBuilder(),
+      body: FutureBuilder(
+          future: UserClient.getAllUsers(),
+          builder: (BuildContext context, AsyncSnapshot snapShot) {
+            bool isSuccess = snapShot.connectionState == ConnectionState.done &&
+                snapShot.hasData;
+            if (!isSuccess) {
+              return Center(child: CircularProgressIndicator());
+            }
+            populateUsers(snapShot.data);
+            debugPrint('Initialize Google Map');
+            return GoogleMap(
+              initialCameraPosition: _options,
+              onMapCreated: onMapCreated,
+              mapType: _type,
+              markers: Set<Marker>.of(markers.values),
+            );
+          }),
     );
   }
 
