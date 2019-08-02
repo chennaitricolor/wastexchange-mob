@@ -1,5 +1,6 @@
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/models/login_request.dart';
 import 'package:wastexchange_mobile/resources/api_provider.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:authentication_view/authentication_view.dart';
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           fieldTypes: [FieldType.EMAIL, FieldType.PASSWORD],
           onValidation: (bool isValidationSuccess, List<String> fieldValues) {
             if (isValidationSuccess) {
-              ApiProvider().login(fieldValues[0], fieldValues[1]).then((value) {
+              ApiProvider().login(LoginRequest(loginId: fieldValues[0], password: fieldValues[1])).then((value) {
                 if (value.auth) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MapScreen()));
