@@ -1,6 +1,8 @@
 import 'package:http/http.dart' show Client;
+import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'dart:convert';
 import '../models/login_response.dart';
+import 'package:wastexchange_mobile/common/constants.dart';
 
 class ApiProvider {
   Client _client;
@@ -14,10 +16,12 @@ class ApiProvider {
     map['loginId'] = loginId;
     map['password'] = password;
     final response = await _client
-        .post('http://data.indiawasteexchange.com/users/login', body: map);
+        .post(userLoginUrl, body: map);
     if (response.statusCode != 200) {
       throw Exception('failed to login');
     }
-    return LoginResponse.fromJson(json.decode(response.body));
+    var loginResponse = LoginResponse.fromJson(json.decode(response.body));
+    AuthInfo().authenticationToken = loginResponse.token;
+    return loginResponse;
   }
 }
