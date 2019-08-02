@@ -7,12 +7,12 @@ void main() {
     expect(result, 'Password cannot be empty', );
   });
 
-  test('password < 7 chars', () {
-    var result = FieldValidator.validatePassword('abcdef');
-    expect(result, 'Password must be more than 6 characters');
+  test('password < 5 chars', () {
+    var result = FieldValidator.validatePassword('abc');
+    expect(result, 'Password must be more than 5 characters');
   });
 
-  test('password >= 7 chars', () {
+  test('password >= 5 chars', () {
     var result = FieldValidator.validatePassword('abcdefg');
     expect(result, null);
   });
