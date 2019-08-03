@@ -24,8 +24,8 @@ class LoginScreen extends StatelessWidget {
             }
             ApiProvider()
                 .login(LoginData(loginId: emailValue, password: passwordValue))
-                .then((value) {
-              if (value.auth) {
+                .then((response) {
+              if (response.success) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MapScreen()));
               }
