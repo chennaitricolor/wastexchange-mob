@@ -17,15 +17,19 @@ class LoginScreen extends StatelessWidget {
           field2Validator: (value) => FieldValidator.validatePassword(value),
           headerLayout: HomeAppBar(),
           fieldTypes: [FieldType.EMAIL, FieldType.PASSWORD],
-          onValidation: (bool isValidationSuccess, String emailValue, String passwordValue) {
-            if (isValidationSuccess) {
-              ApiProvider().login(LoginData(loginId: emailValue, password: passwordValue)).then((value) {
-                if (value.auth) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MapScreen()));
-                }
-              });
+          onValidation: (bool isValidationSuccess, String emailValue,
+              String passwordValue) {
+            if (!isValidationSuccess) {
+              return;
             }
+            ApiProvider()
+                .login(LoginData(loginId: emailValue, password: passwordValue))
+                .then((value) {
+              if (value.auth) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MapScreen()));
+              }
+            });
           }),
     );
   }

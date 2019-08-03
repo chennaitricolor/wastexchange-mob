@@ -10,7 +10,6 @@ class MockClient extends Mock implements http.Client {}
 
 void main() {
   group('login', () {
-
     const Login_URL = 'http://data.indiawasteexchange.com/users/login';
 
     test('throws an exception if the http call completes with an error', () {
@@ -45,8 +44,7 @@ void main() {
       ApiProvider provider = ApiProvider(client);
       await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      verify(client
-          .post(Login_URL, body: {'loginId': 'a', 'password': 'b'}));
+      verify(client.post(Login_URL, body: {'loginId': 'a', 'password': 'b'}));
     });
   });
 }
