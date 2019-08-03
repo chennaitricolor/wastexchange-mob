@@ -1,6 +1,6 @@
 import 'package:http/http.dart' show Client;
 import 'package:wastexchange_mobile/models/api_response_exception.dart';
-import 'package:wastexchange_mobile/models/login_request.dart';
+import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'dart:convert';
 import '../models/login_response.dart';
@@ -12,9 +12,9 @@ class ApiProvider {
     this._client = client == null ? Client() : client;
   }
 
-  Future<LoginResponse> login(LoginRequest loginRequest) async {
+  Future<LoginResponse> login(LoginData loginData) async {
     final response = await _client
-        .post(Constants.URL_LOGIN, body: loginRequest.toMap());
+        .post(Constants.URL_LOGIN, body: loginData.toMap());
     if (response.statusCode != 200) {
       throw ApiResponseException('invalid status code');
     }
