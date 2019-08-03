@@ -1,8 +1,8 @@
-class LoginRequest {
+class LoginData {
   String loginId;
   String password;
 
-  LoginRequest({
+  LoginData({
     this.loginId,
     this.password,
   });
