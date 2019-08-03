@@ -1,7 +1,6 @@
 import 'package:http/http.dart' show Client;
 import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
 import 'dart:convert';
 import '../models/login_response.dart';
 
@@ -14,7 +13,7 @@ class ApiProvider {
 
   Future<LoginResponse> login(LoginData loginData) async {
     final response = await _client
-        .post(Constants.URL_LOGIN, body: loginData.toMap());
+        .post('http://data.indiawasteexchange.com/users/login', body: loginData.toMap());
     if (response.statusCode != 200) {
       throw ApiResponseException('invalid status code');
     }

@@ -1,11 +1,7 @@
 class Constants {
 
-  //Url endpoints
-  static const URL_LOGIN = 'http://data.indiawasteexchange.com/users/login';
-
+  //app
   static const APP_TITLE = 'India Waste Exchange';
-
-
   static const LOGO_SMART_CITY = 'assets/images/smart-city-logo.png';
 
   //login screen
