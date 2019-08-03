@@ -5,15 +5,17 @@ import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/resources/api_provider.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
 
 class MockClient extends Mock implements http.Client {}
 
 void main() {
   group('login', () {
+
+    const Login_URL = 'http://data.indiawasteexchange.com/users/login';
+
     test('throws an exception if the http call completes with an error', () {
       final client = MockClient();
-      when(client.post(Constants.URL_LOGIN, body: anyNamed('body'))).thenAnswer(
+      when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 201));
 
       ApiProvider provider = ApiProvider(client);
@@ -25,7 +27,7 @@ void main() {
     test('returns a LoginResponse if the http call completes successfully',
         () async {
       final client = MockClient();
-      when(client.post(Constants.URL_LOGIN, body: anyNamed('body'))).thenAnswer(
+      when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
       ApiProvider provider = ApiProvider(client);
@@ -37,14 +39,14 @@ void main() {
 
     test('url, arguments passed to httpClient', () async {
       final client = MockClient();
-      when(client.post(Constants.URL_LOGIN, body: anyNamed('body'))).thenAnswer(
+      when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
       ApiProvider provider = ApiProvider(client);
       await provider.login(LoginData(loginId: 'a', password: 'b'));
 
       verify(client
-          .post(Constants.URL_LOGIN, body: {'loginId': 'a', 'password': 'b'}));
+          .post(Login_URL, body: {'loginId': 'a', 'password': 'b'}));
     });
   });
 }
