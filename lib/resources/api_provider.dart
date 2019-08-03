@@ -1,4 +1,5 @@
 import 'package:http/http.dart' show Client;
+import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
@@ -18,6 +19,8 @@ class ApiProvider {
     if (response.statusCode != 200) {
       throw ApiResponseException('invalid status code');
     }
-    return LoginResponse.fromJson(json.decode(response.body));
+    var loginResponse = LoginResponse.fromJson(json.decode(response.body));
+    AuthInfo().authenticationToken = loginResponse.token;
+    return loginResponse;
   }
 }
