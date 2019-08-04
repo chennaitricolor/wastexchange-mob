@@ -1,17 +1,20 @@
+import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/resources/api_provider.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: LoginView(
+          fieldStyle: FieldStyle.value(0, 8, 24, const EdgeInsets.all(36), AppColors.underline, AppColors.green, AppColors.text_grey),
           field1Validator: (value) =>
               FieldValidator.validateEmailAddress(value),
           field2Validator: (value) => FieldValidator.validatePassword(value),
