@@ -15,6 +15,6 @@ void main() {
 
   test('valid', () {
     expect(LoginResponse.fromJson({'auth': true, 'token': 'blah'}),
-        TypeMatcher<LoginResponse>());
+        const TypeMatcher<LoginResponse>());
   });
 }

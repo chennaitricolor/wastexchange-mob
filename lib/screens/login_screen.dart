@@ -10,7 +10,7 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: LoginView(
           field1Validator: (value) =>
               FieldValidator.validateEmailAddress(value),

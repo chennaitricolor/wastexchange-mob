@@ -17,10 +17,10 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 201));
 
-      ApiProvider provider = ApiProvider(client);
+      final ApiProvider provider = ApiProvider(client);
 
       expect(provider.login(LoginData(loginId: 'a', password: 'b')),
-          throwsA(TypeMatcher<ApiResponseException>()));
+          throwsA(const TypeMatcher<ApiResponseException>()));
     });
 
     test('returns a LoginResponse if the http call completes successfully',
@@ -29,11 +29,11 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-      ApiProvider provider = ApiProvider(client);
+      final ApiProvider provider = ApiProvider(client);
       final result =
           await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      expect(result, TypeMatcher<LoginResponse>());
+      expect(result, const TypeMatcher<LoginResponse>());
     });
 
     test('url, arguments passed to httpClient', () async {
@@ -41,7 +41,7 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-      ApiProvider provider = ApiProvider(client);
+      final ApiProvider provider = ApiProvider(client);
       await provider.login(LoginData(loginId: 'a', password: 'b'));
 
       verify(client.post(Login_URL, body: {'loginId': 'a', 'password': 'b'}));
