@@ -12,7 +12,6 @@ class LoginResponse {
   static LoginResponse fromJson(Map<String, dynamic> json) {
     final bool auth = json['auth'];
     final String token = json['token'];
-    // TODO(Sayeed): sdsds
     if (auth == null || token == null) {
       throw ApiResponseException(
           '\'auth\' or \'token\' key missing in LoginResponse');
