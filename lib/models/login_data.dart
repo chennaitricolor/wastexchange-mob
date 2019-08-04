@@ -1,14 +1,14 @@
 class LoginData {
-  String loginId;
-  String password;
-
   LoginData({
     this.loginId,
     this.password,
   });
 
+  String loginId;
+  String password;
+
   Map<String, dynamic> toMap() => {
-    "loginId": loginId,
-    "password": password,
-  };
+        'loginId': loginId,
+        'password': password,
+      };
 }
