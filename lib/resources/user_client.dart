@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' show Client;
-import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/api_response_exception.dart';
+import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import '../models/login_response.dart';
+import 'package:wastexchange_mobile/models/login_response.dart';
+import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 
-class ApiProvider {
-  ApiProvider([Client client]) {
+class UserClient {
+  UserClient([Client client]) {
     _client = client ?? Client();
   }
 
@@ -22,5 +24,14 @@ class ApiProvider {
     final loginResponse = LoginResponse.fromJson(json.decode(response.body));
     AuthInfo().authenticationToken = loginResponse.token;
     return loginResponse;
+  }
+
+  Future<List<User>> getAllUsers() async {
+    final response = await _client
+        .get(Constants.URL_USERS, headers: {'accept': 'application/json'});
+    if (response.statusCode != 200) {
+      throw Exception('failed to fetch users');
+    }
+    return usersListFromJson(response.body);
   }
 }

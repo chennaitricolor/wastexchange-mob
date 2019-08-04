@@ -1,6 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/util/user_client.dart';
+import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 
@@ -55,7 +55,7 @@ class _MapState extends State<MapScreen> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: FutureBuilder(
-          future: UserClient.getAllUsers(),
+          future: UserClient().getAllUsers(),
           builder: (BuildContext context, AsyncSnapshot snapShot) {
             bool isSuccess = snapShot.connectionState == ConnectionState.done &&
                 snapShot.hasData;

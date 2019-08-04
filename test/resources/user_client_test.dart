@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
-import 'package:wastexchange_mobile/resources/api_provider.dart';
+import 'package:wastexchange_mobile/resources/user_client.dart';
 
 class MockClient extends Mock implements http.Client {}
 
@@ -17,7 +17,7 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 201));
 
-      final ApiProvider provider = ApiProvider(client);
+      final UserClient provider = UserClient(client);
 
       expect(provider.login(LoginData(loginId: 'a', password: 'b')),
           throwsA(const TypeMatcher<ApiResponseException>()));
@@ -29,7 +29,7 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-      final ApiProvider provider = ApiProvider(client);
+      final UserClient provider = UserClient(client);
       final result =
           await provider.login(LoginData(loginId: 'a', password: 'b'));
 
@@ -41,7 +41,7 @@ void main() {
       when(client.post(Login_URL, body: anyNamed('body'))).thenAnswer(
           (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-      final ApiProvider provider = ApiProvider(client);
+      final UserClient provider = UserClient(client);
       await provider.login(LoginData(loginId: 'a', password: 'b'));
 
       verify(client.post(Login_URL, body: {'loginId': 'a', 'password': 'b'}));

@@ -3,11 +3,11 @@ import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/resources/api_provider.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
+import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -17,9 +17,14 @@ class LoginScreen extends StatelessWidget {
       body: LoginView(
           placeHolderBelowButton: MaterialButton(
               onPressed: () {},
-              child: RichText(text: TextSpan(text: Constants.LOGIN_NOT_MEMBER,
-                  style: TextStyle(color: AppColors.text_grey), children: <TextSpan>[
-                    TextSpan(text: Constants.SIGNUP_BUTTON, style: TextStyle(color: AppColors.green))
+              child: RichText(
+                  text: TextSpan(
+                      text: Constants.LOGIN_NOT_MEMBER,
+                      style: TextStyle(color: AppColors.text_grey),
+                      children: <TextSpan>[
+                    TextSpan(
+                        text: Constants.SIGNUP_BUTTON,
+                        style: TextStyle(color: AppColors.green))
                   ]))),
           placeHolderAboveButton: MaterialButton(
               onPressed: () {},
@@ -37,7 +42,7 @@ class LoginScreen extends StatelessWidget {
             if (!isValidationSuccess) {
               return;
             }
-            ApiProvider()
+            UserClient()
                 .login(LoginData(loginId: emailValue, password: passwordValue))
                 .then((response) {
               if (response.success) {
