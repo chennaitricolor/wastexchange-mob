@@ -7,4 +7,7 @@ class Constants {
 
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
+  static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
+  static const LOGIN_NOT_MEMBER = 'Not a member ? ';
+  static const SIGNUP_BUTTON = 'Join now';
 }
