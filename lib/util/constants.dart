@@ -9,4 +9,5 @@ class Constants {
 
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
+  static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
 }
