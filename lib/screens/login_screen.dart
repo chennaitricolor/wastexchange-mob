@@ -4,6 +4,7 @@ import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
@@ -16,15 +17,13 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: LoginView(
           placeHolderBelowButton: MaterialButton(
-              onPressed: () {},
-              child: RichText(
-                  text: TextSpan(
-                      text: Constants.LOGIN_NOT_MEMBER,
-                      style: TextStyle(color: AppColors.text_grey),
-                      children: <TextSpan>[
-                    TextSpan(
-                        text: Constants.SIGNUP_BUTTON,
-                        style: TextStyle(color: AppColors.green))
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegistrationScreen()));
+              },
+              child: RichText(text: TextSpan(text: Constants.LOGIN_NOT_MEMBER,
+                  style: TextStyle(color: AppColors.text_grey), children: <TextSpan>[
+                    TextSpan(text: Constants.SIGNUP_BUTTON, style: TextStyle(color: AppColors.green))
                   ]))),
           placeHolderAboveButton: MaterialButton(
               onPressed: () {},

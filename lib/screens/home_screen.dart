@@ -7,9 +7,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Constants.APP_TITLE,
-      home: Scaffold(
-        body: LoginScreen(),
-      ),
+      home: LoginScreen(),
     );
   }
 }
