@@ -3,6 +3,7 @@ import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
+import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
@@ -26,7 +27,10 @@ class LoginScreen extends StatelessWidget {
                     TextSpan(text: Constants.SIGNUP_BUTTON, style: TextStyle(color: AppColors.green))
                   ]))),
           placeHolderAboveButton: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+              },
               child: Text(Constants.LOGIN_FORGOT_PASSWORD,
                   style: TextStyle(color: AppColors.text_grey))),
           fieldStyle: FieldStyle.value(0, 8, 24, const EdgeInsets.all(36),
