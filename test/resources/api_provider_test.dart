@@ -10,7 +10,7 @@ class MockClient extends Mock implements http.Client {}
 
 void main() {
   group('login', () {
-    const Login_URL = 'http://data.indiawasteexchange.com/users/login';
+    const Login_URL = 'https://data.indiawasteexchange.com/users/login';
 
     test('throws an exception if the http call completes with an error', () {
       final client = MockClient();

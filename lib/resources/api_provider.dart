@@ -14,7 +14,7 @@ class ApiProvider {
 
   Future<LoginResponse> login(LoginData loginData) async {
     final response = await _client.post(
-        'http://data.indiawasteexchange.com/users/login',
+        'https://data.indiawasteexchange.com/users/login',
         body: loginData.toMap());
     if (response.statusCode != 200) {
       throw ApiResponseException('invalid status code');
