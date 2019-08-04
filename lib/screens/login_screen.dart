@@ -15,8 +15,18 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoginView(
-         placeHolderAboveButton: MaterialButton(onPressed: () {}, child: Text(Constants.LOGIN_FORGOT_PASSWORD, style: TextStyle(color: AppColors.text_grey))),
-          fieldStyle: FieldStyle.value(0, 8, 24, const EdgeInsets.all(36), AppColors.underline, AppColors.green, AppColors.text_grey),
+          placeHolderBelowButton: MaterialButton(
+              onPressed: () {},
+              child: RichText(text: TextSpan(text: Constants.LOGIN_NOT_MEMBER,
+                  style: TextStyle(color: AppColors.text_grey), children: <TextSpan>[
+                    TextSpan(text: Constants.SIGNUP_BUTTON, style: TextStyle(color: AppColors.green))
+                  ]))),
+          placeHolderAboveButton: MaterialButton(
+              onPressed: () {},
+              child: Text(Constants.LOGIN_FORGOT_PASSWORD,
+                  style: TextStyle(color: AppColors.text_grey))),
+          fieldStyle: FieldStyle.value(0, 8, 24, const EdgeInsets.all(36),
+              AppColors.underline, AppColors.green, AppColors.text_grey),
           field1Validator: (value) =>
               FieldValidator.validateEmailAddress(value),
           field2Validator: (value) => FieldValidator.validatePassword(value),
