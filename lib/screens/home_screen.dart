@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
+import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return MaterialApp(
       title: Constants.APP_TITLE,
       home: Scaffold(
-        body: LoginScreen()
+        body: LoginScreen(),
       ),
     );
   }
