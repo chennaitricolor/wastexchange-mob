@@ -26,7 +26,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   google_maps_flutter: ^0.5.19+2
-  authentication_view: ^0.3.6
+  authentication_view: ^0.3.8
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +51,8 @@ flutter:
     - .env
     - assets/images/ministry-logo.png
     - assets/images/smart-city-logo.png
+
+
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
