@@ -4,7 +4,6 @@ import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 
 class UserClient {
@@ -27,11 +26,11 @@ class UserClient {
   }
 
   Future<List<User>> getAllUsers() async {
-    final response = await _client
-        .get(Constants.URL_USERS, headers: {'accept': 'application/json'});
+    final response =
+        await _client.get('http://data.indiawasteexchange.com/users');
     if (response.statusCode != 200) {
       throw Exception('failed to fetch users');
     }
-    return usersListFromJson(response.body);
+    return User.fromJson(response.body);
   }
 }

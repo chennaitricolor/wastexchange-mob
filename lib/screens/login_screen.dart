@@ -19,17 +19,26 @@ class LoginScreen extends StatelessWidget {
       body: LoginView(
           placeHolderBelowButton: MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegistrationScreen()));
               },
-              child: RichText(text: TextSpan(text: Constants.LOGIN_NOT_MEMBER,
-                  style: TextStyle(color: AppColors.text_grey), children: <TextSpan>[
-                    TextSpan(text: Constants.SIGNUP_BUTTON, style: TextStyle(color: AppColors.green))
+              child: RichText(
+                  text: TextSpan(
+                      text: Constants.LOGIN_NOT_MEMBER,
+                      style: TextStyle(color: AppColors.text_grey),
+                      children: <TextSpan>[
+                    TextSpan(
+                        text: Constants.SIGNUP_BUTTON,
+                        style: TextStyle(color: AppColors.green))
                   ]))),
           placeHolderAboveButton: MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen()));
               },
               child: Text(Constants.LOGIN_FORGOT_PASSWORD,
                   style: TextStyle(color: AppColors.text_grey))),
