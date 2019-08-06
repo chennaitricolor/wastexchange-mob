@@ -1,4 +1,4 @@
-import 'api_response_exception.dart';
+import 'api_exception.dart';
 
 class LoginResponse {
   LoginResponse(this.auth, this.token, this.approved);
@@ -13,7 +13,7 @@ class LoginResponse {
     final bool auth = json['auth'];
     final String token = json['token'];
     if (auth == null || token == null) {
-      throw ApiResponseException(
+      throw InvalidResponseJSONException(
           '\'auth\' or \'token\' key missing in LoginResponse');
     }
     return LoginResponse(auth, token, true);
