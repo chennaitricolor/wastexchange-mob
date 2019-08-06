@@ -10,31 +10,23 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapState extends State<MapScreen> {
+  static const double CHENNAI_LAT = 12.9838;
+  static const double CHENNAI_LONG = 80.2459;
+  final MapType _type = MapType.normal;
   GoogleMapController mapController;
-  MapType _type = MapType.normal;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   static final _options = CameraPosition(
-    target: LatLng(12.9838, 80.2459),
+    target: const LatLng(CHENNAI_LAT, CHENNAI_LONG),
     zoom: 15,
   );
 
   void onMapCreated(GoogleMapController controller) {
-    this.mapController = controller;
+    mapController = controller;
   }
 
-  populateUsers(List<User> users) {
-    var markers = users.map((user) => Marker(
+  void populateUsers(List<User> users) {
+    final markers = users.map((user) => Marker(
           markerId: MarkerId(user.id.toString()),
           position: LatLng(user.lat, user.long),
           infoWindow: InfoWindow(
@@ -57,10 +49,10 @@ class _MapState extends State<MapScreen> {
       body: FutureBuilder(
           future: UserClient().getAllUsers(),
           builder: (BuildContext context, AsyncSnapshot snapShot) {
-            bool isSuccess = snapShot.connectionState == ConnectionState.done &&
+            final bool isSuccess = snapShot.connectionState == ConnectionState.done &&
                 snapShot.hasData;
             if (!isSuccess) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: const CircularProgressIndicator());
             }
             populateUsers(snapShot.data);
             debugPrint('Initialize Google Map');
@@ -75,6 +67,6 @@ class _MapState extends State<MapScreen> {
   }
 
   void _onMarkerTapped(MarkerId markerId) {
-    print("Marker $markerId Tapped!");
+    print('Marker $markerId Tapped!');
   }
 }
