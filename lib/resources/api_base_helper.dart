@@ -26,9 +26,6 @@ class ApiBaseHelper {
 
   Future<dynamic> post(String url, dynamic body) async {
     dynamic responseJson;
-    Future.delayed(Duration(seconds: 5),
-        () => throw FetchDataException('No Internet connection'));
-
     try {
       final response = await _client.post(url, body: body);
       responseJson = _returnResponse(response);

@@ -20,9 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _loginViewLoaded = false;
   LoginBloc _bloc;
-  LoginView _loginView;
 
   @override
   void didChangeDependencies() {
@@ -32,10 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_loginViewLoaded) {
-      _loginView = getLoginView(context);
-      _loginViewLoaded = true;
-    }
     return Scaffold(
         body: StreamBuilder<ApiResponse<LoginResponse>>(
             stream: _bloc.loginStream,
@@ -46,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return const Center(child: CircularProgressIndicator());
                     break;
                   case Status.ERROR:
-                    return _loginView;
+                    return getLoginView(context);
                     break;
                   case Status.COMPLETED:
                     Navigator.push(context,
@@ -55,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     break;
                 }
               }
-              return _loginView;
+              return getLoginView(context);
             }));
   }
 
