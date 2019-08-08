@@ -36,14 +36,18 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(Response response) {
+    final String responseStr = response.body.toString();
+    print(responseStr);
     switch (response.statusCode) {
       case 200:
-        return json.decode(response.body.toString());
+        return json.decode(responseStr);
       case 400:
-        throw BadRequestException(response.body.toString());
+        throw BadRequestException(responseStr);
       case 401:
       case 403:
-        throw UnauthorisedException(response.body.toString());
+        throw UnauthorisedException(responseStr);
+      case 404:
+        throw ResourceNotFoundException(responseStr);
       case 500:
       default:
         throw FetchDataException(

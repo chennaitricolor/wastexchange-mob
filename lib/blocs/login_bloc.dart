@@ -24,6 +24,6 @@ class LoginBloc {
   }
 
   void dispose() {
-    _loginController?.close();
+    _loginController.close();
   }
 }
