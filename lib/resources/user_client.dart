@@ -1,41 +1,24 @@
 import 'dart:convert';
-
-import 'package:http/http.dart' show Client;
-import 'package:wastexchange_mobile/models/api_response_exception.dart';
 import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/util/http_utils.dart';
+import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 
 class UserClient {
-  UserClient([Client client]) {
-    _client = client ?? Client();
-  }
-
-  static const String BASE_URL = 'https://data.indiawasteexchange.com';
-  Client _client;
+  final ApiBaseHelper _apiBaseHelper = ApiBaseHelper();
 
   Future<LoginResponse> login(LoginData loginData) async {
-    final response = await _client.post(
-        '$BASE_URL/users/login',
-        body: loginData.toMap());
-    if (!HttpUtils.isSuccessfulResponse(response.statusCode)) {
-      throw ApiResponseException('Failed to login, status code: ${response.statusCode}');
-    }
+    final response = await _apiBaseHelper.post(
+        'https://data.indiawasteexchange.com/users/login', loginData.toMap());
     final loginResponse = LoginResponse.fromJson(json.decode(response.body));
     AuthInfo().authenticationToken = loginResponse.token;
     return loginResponse;
   }
 
   Future<List<User>> getAllUsers() async {
-    final response = await _client
-        .get(
-        '$BASE_URL/users',
-        headers: {'accept': 'application/json'});
-    if (!HttpUtils.isSuccessfulResponse(response.statusCode)) {
-      throw ApiResponseException('failed to fetch users, status code: ${response.statusCode}');
-    }
-    return usersListFromJson(response.body);
+    final response =
+        await _apiBaseHelper.get('http://data.indiawasteexchange.com/users');
+    return User.fromJson(response.body);
   }
 }
