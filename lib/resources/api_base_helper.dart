@@ -11,6 +11,7 @@ class ApiBaseHelper {
     _client = client ?? Client();
   }
 
+  static const String BASE_API_URL = 'https://data.indiawasteexchange.com';
   Client _client;
 
   Future<dynamic> get(String url) async {
@@ -38,9 +39,19 @@ class ApiBaseHelper {
   dynamic _returnResponse(Response response) {
     final String responseStr = response.body.toString();
     print(responseStr);
+    if(isSuccessfulResponse(response.statusCode)) {
+      return json.decode(responseStr);
+    }
+
+    handleUnsuccessfulStatusCode(response, responseStr);
+  }
+
+  static bool isSuccessfulResponse(int statusCode) {
+    return statusCode >= 200 && statusCode < 300;
+  }
+
+  void handleUnsuccessfulStatusCode(Response response, String responseStr) {
     switch (response.statusCode) {
-      case 200:
-        return json.decode(responseStr);
       case 400:
         throw BadRequestException(responseStr);
       case 401:

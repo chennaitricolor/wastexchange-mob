@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
