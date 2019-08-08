@@ -24,6 +24,9 @@
 # Environment configuration files
 .env
 
+# Pubspeck lock file
+pubspec.lock
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
