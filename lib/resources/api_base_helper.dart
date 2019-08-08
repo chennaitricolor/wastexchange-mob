@@ -11,6 +11,7 @@ class ApiBaseHelper {
     _client = client ?? Client();
   }
 
+  static const String BASE_API_URL = 'https://data.indiawasteexchange.com';
   Client _client;
 
   Future<dynamic> get(String url) async {

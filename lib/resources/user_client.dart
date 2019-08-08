@@ -10,7 +10,7 @@ class UserClient {
 
   Future<LoginResponse> login(LoginData loginData) async {
     final response = await _apiBaseHelper.post(
-        'https://data.indiawasteexchange.com/users/login', loginData.toMap());
+        '${ApiBaseHelper.BASE_API_URL}/users/login', loginData.toMap());
     final loginResponse = LoginResponse.fromJson(json.decode(response.body));
     AuthInfo().authenticationToken = loginResponse.token;
     return loginResponse;
@@ -18,7 +18,7 @@ class UserClient {
 
   Future<List<User>> getAllUsers() async {
     final response =
-        await _apiBaseHelper.get('http://data.indiawasteexchange.com/users');
+        await _apiBaseHelper.get('${ApiBaseHelper.BASE_API_URL}/users');
     return User.fromJson(response.body);
   }
 }
