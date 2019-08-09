@@ -22,4 +22,8 @@ class Constants {
   //Forgot password screen
   static const FORGOT_TITLE = 'Forgot Password';
   static const FORGOT_MESSAGE = 'Please enter your registered email ID';
+
+  // Loading messages
+  static const LOADING_LOGIN = 'Logging In';
+  
 }

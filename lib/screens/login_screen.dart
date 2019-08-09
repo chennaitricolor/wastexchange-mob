@@ -27,10 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
     _bloc.loginStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
-          print('loading');
+          debugPrint('loading');
           break;
         case Status.ERROR:
-          print('error');
+          debugPrint('error');
           break;
         case Status.COMPLETED:
           if (_snapshot.data.success) {

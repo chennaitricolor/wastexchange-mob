@@ -1,6 +1,7 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
@@ -36,7 +37,12 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(Response response) {
+<<<<<<< HEAD
     final String responseStr = response.body;
+=======
+    final String responseStr = response.body.toString();
+    debugPrint(responseStr);
+>>>>>>> [Chandru] Updates print to debugPrint and added login loading message to constants
     if(isSuccessfulResponse(response.statusCode)) {
       final decodedJson = json.decode(responseStr);
       return decodedJson;

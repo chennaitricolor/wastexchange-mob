@@ -68,6 +68,6 @@ class _MapState extends State<MapScreen> {
   }
 
   void _onMarkerTapped(MarkerId markerId) {
-    print('Marker $markerId Tapped!');
+    debugPrint('Marker $markerId Tapped!');
   }
 }
