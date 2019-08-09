@@ -25,5 +25,12 @@ class Constants {
 
   // Loading messages
   static const LOADING_LOGIN = 'Logging In';
-  
+
+  // user type
+  static const USER_SELLER = 'seller';
+
+  // Map configuration
+  static const double CHENNAI_LAT = 12.9838;
+  static const double CHENNAI_LONG = 80.2459;
+  static const double DEFAULT_ZOOM = 15;
 }
