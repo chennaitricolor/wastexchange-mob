@@ -5,13 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper([Client client]) {
     _client = client ?? Client();
   }
 
-  static const String BASE_API_URL = 'https://data.indiawasteexchange.com';
+  static String baseApiUrl = DotEnv().env['BASE_API_URL'];
   Client _client;
 
   Future<dynamic> get(String url) async {
