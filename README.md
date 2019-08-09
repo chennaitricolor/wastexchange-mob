@@ -8,6 +8,23 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+Install [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
+
+## Starting local API server
+
+This setup assumes that the [backend](https://github.com/chennaitricolor/wastexchange-be) repository is present in the same directory as this project. For example:
+```
+chennaitricolor
+├── wastexchange-be
+└── wastexchange_mobile
+```
+
+Run:
+
+``docker-compose up``
+
+API is started in port `7000` and Postgres database is started in port `5432`.
+
 ## Create the .env file
 
 Copy the .env.sample and rename as .env file. Contact the team to get the actual values of the keys.
