@@ -19,6 +19,6 @@ class UserClient {
   Future<List<User>> getAllUsers() async {
     final response =
         await _apiBaseHelper.get('${ApiBaseHelper.BASE_API_URL}/users');
-    return User.fromJson(response.body);
+    return User.fromJson(response);
   }
 }

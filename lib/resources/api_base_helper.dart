@@ -1,5 +1,4 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' show Client;
@@ -37,10 +36,10 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(Response response) {
-    final String responseStr = response.body.toString();
-    print(responseStr);
+    final String responseStr = response.body;
     if(isSuccessfulResponse(response.statusCode)) {
-      return json.decode(responseStr);
+      final decodedJson = json.decode(responseStr);
+      return decodedJson;
     }
 
     handleUnsuccessfulStatusCode(response, responseStr);

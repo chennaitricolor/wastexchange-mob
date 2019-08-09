@@ -29,6 +29,7 @@ class _MapState extends State<MapScreen> {
     final markers = users.map((user) => Marker(
           markerId: MarkerId(user.id.toString()),
           position: LatLng(user.lat, user.long),
+          icon: BitmapDescriptor.defaultMarkerWithHue(user.persona == 'seller' ? 200.0 : 0.0),
           infoWindow: InfoWindow(
             title: '${user.name}',
             snippet: '${user.address}',
@@ -49,19 +50,19 @@ class _MapState extends State<MapScreen> {
       body: FutureBuilder(
           future: UserClient().getAllUsers(),
           builder: (BuildContext context, AsyncSnapshot snapShot) {
-            final bool isSuccess = snapShot.connectionState == ConnectionState.done &&
-                snapShot.hasData;
+            final isSuccess =
+                snapShot.connectionState == ConnectionState.done &&
+                    snapShot.hasData;
             if (!isSuccess) {
               return Center(child: const CircularProgressIndicator());
             }
             populateUsers(snapShot.data);
             debugPrint('Initialize Google Map');
             return GoogleMap(
-              initialCameraPosition: _options,
-              onMapCreated: onMapCreated,
-              mapType: _type,
-              markers: Set<Marker>.of(markers.values),
-            );
+                initialCameraPosition: _options,
+                onMapCreated: onMapCreated,
+                mapType: _type,
+                markers: Set<Marker>.of(markers.values));
           }),
     );
   }

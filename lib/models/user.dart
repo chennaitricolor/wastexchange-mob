@@ -33,8 +33,8 @@ class User {
   String name;
   String loginId;
 
-  static List<User> fromJson(String str) {
-    return List<User>.from(json.decode(str).map((x) => User._fromJson(x)));
+  static List<User> fromJson(List<dynamic> json) {
+    return List<User>.from(json.map((x) => User._fromJson(x)));
   }
 
   static User _fromJson(Map<String, dynamic> json) {
@@ -46,8 +46,6 @@ class User {
       address: json['address'],
       mobNo: json['mobNo'],
       altMobNo: json['altMobNo'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
       lat: json['lat'].toDouble(),
       long: json['long'].toDouble(),
       emailId: json['emailId'],
