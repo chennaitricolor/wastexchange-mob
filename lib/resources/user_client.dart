@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:wastexchange_mobile/models/auth_info.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -11,9 +10,7 @@ class UserClient {
   Future<LoginResponse> login(LoginData loginData) async {
     final response = await _apiBaseHelper.post(
         '${ApiBaseHelper.BASE_API_URL}/users/login', loginData.toMap());
-    final loginResponse = LoginResponse.fromJson(json.decode(response.body));
-    AuthInfo().authenticationToken = loginResponse.token;
-    return loginResponse;
+    return LoginResponse.fromJson(json.decode(response.body));
   }
 
   Future<List<User>> getAllUsers() async {
