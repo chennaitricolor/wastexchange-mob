@@ -37,13 +37,9 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(Response response) {
-<<<<<<< HEAD
-    final String responseStr = response.body;
-=======
     final String responseStr = response.body.toString();
     debugPrint(responseStr);
->>>>>>> [Chandru] Updates print to debugPrint and added login loading message to constants
-    if(isSuccessfulResponse(response.statusCode)) {
+    if (isSuccessfulResponse(response.statusCode)) {
       final decodedJson = json.decode(responseStr);
       return decodedJson;
     }
