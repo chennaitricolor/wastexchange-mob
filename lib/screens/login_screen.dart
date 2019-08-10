@@ -10,6 +10,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/loading_indicator.dart';
@@ -88,33 +89,20 @@ class _LoginScreenState extends State<LoginScreen> {
       _bloc.loginStream.listen((_snapshot) {
         switch (_snapshot.status) {
           case Status.LOADING:
-            _showLoadingDialog(context, _snapshot.message);
+            DisplayUtil.instance.showLoadingDialog(context);
             break;
           case Status.ERROR:
-            dismissDialog(context);
+            DisplayUtil.instance.dismissDialog(context);
             break;
           case Status.COMPLETED:
-            if (_snapshot.data.success) {
-              dismissDialog(context);
+            if (_snapshot.data.auth) {
+              DisplayUtil.instance.dismissDialog(context);
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => MapScreen()));
             }
             break;
         }
       });
-    }
-
-    void dismissDialog(BuildContext context) {
-      Navigator.of(context, rootNavigator: true).pop('dialog');
-    }
-
-     void _showLoadingDialog(BuildContext buildContext, String message) {
-      showDialog(
-        context: buildContext,
-        builder: (BuildContext context) {
-          return LoadingProgressIndictor();
-        },
-      );
     }
 
   @override

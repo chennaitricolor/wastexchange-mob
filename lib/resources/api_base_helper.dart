@@ -40,12 +40,11 @@ class ApiBaseHelper {
 
   dynamic _returnResponse(Response response) {
     final String responseStr = response.body.toString();
-    debugPrint(responseStr);
     if (isSuccessfulResponse(response.statusCode)) {
-      final decodedJson = json.decode(responseStr);
-      return decodedJson;
+      debugPrint('Success Response');
+      return responseStr;
     }
-
+    debugPrint('Failure Response');
     handleUnsuccessfulStatusCode(response, responseStr);
   }
 

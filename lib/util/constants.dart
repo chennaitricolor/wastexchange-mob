@@ -26,6 +26,7 @@ class Constants {
 
   // Loading messages
   static const LOADING_LOGIN = 'Logging In';
+  static const LOADING_OTP = 'Sending OTP';
 
   // user type
   static const USER_SELLER = 'seller';
