@@ -2,9 +2,6 @@ class Constants {
   static const APP_TITLE = 'India Waste Exchange';
   static const LOGO_SMART_CITY = 'assets/images/smart-city-logo.png';
 
-  // Base url and path url's
-  static const BASE_API_URL = 'https://data.indiawasteexchange.com';
-
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
   static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
