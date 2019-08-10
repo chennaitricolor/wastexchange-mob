@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/models/api_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
+import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
@@ -19,10 +20,31 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
 
   OtpBloc _bloc;
+  RegistrationData registrationData;
 
   @override
   void initState() {
     _bloc = OtpBloc();
+    _bloc.otpStream.listen((_snapshot) {
+      switch (_snapshot.status) {
+        case Status.LOADING:
+          DisplayUtil.instance.showLoadingDialog(context);
+          break;
+        case Status.ERROR:
+          debugPrint(_snapshot.message);
+          DisplayUtil.instance.dismissDialog(context);
+          break;
+        case Status.COMPLETED:
+          if (_snapshot.data.message.isNotEmpty) {
+            debugPrint(_snapshot.data.message);
+            DisplayUtil.instance.dismissDialog(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => OTPScreen(registrationData
+            )));
+          }
+          break;
+      }
+    });
     super.initState();
   }
 
@@ -47,35 +69,45 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           FieldType.CONFIRM_PASSWORD
         ],
         onValidation: (bool isValidationSuccess, textEditingControllers) {
-            sendOtp(
-                textEditingControllers[4].text, textEditingControllers[6].text);
+            sendOtp(textEditingControllers);
         },
       ),
     );
   }
 
-  void sendOtp(String mobile, String email) {
-    OtpData otpData = OtpData(emailId: email, mobileNo: mobile);
+  void sendOtp(Map<int, TextEditingController> textEditingControllers) {
+
+    final name = textEditingControllers[0].text;
+    final address = textEditingControllers[1].text;
+    final city = textEditingControllers[2].text;
+    final pincode = textEditingControllers[3].text != null
+        ? int.parse(textEditingControllers[3].text) : 0;
+    final int mobile = textEditingControllers[4].text != null
+        ? int.parse(textEditingControllers[4].text) : 0;
+    final int alternateNumber = textEditingControllers[5].text != null
+        ? int.parse(textEditingControllers[5].text) : 0;
+    final email = textEditingControllers[6].text;
+    final password = textEditingControllers[7].text;
+    final persona = 'buyer';
+    final int latitude = 0;
+    final int longitude = 0;
+
+    registrationData = RegistrationData(
+        name: name,
+        address: address,
+        city: city,
+        pinCode: pincode,
+        mobNo: mobile.toString(),
+        altMobNo: alternateNumber.toString(),
+        emailId: email,
+        password: password,
+        lat: latitude,
+        long: longitude,
+        persona: persona
+    );
+
+    OtpData otpData = OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);
-    _bloc.otpStream.listen((_snapshot) {
-      switch (_snapshot.status) {
-        case Status.LOADING:
-          DisplayUtil.instance.showLoadingDialog(context);
-          break;
-        case Status.ERROR:
-          debugPrint(_snapshot.message);
-          DisplayUtil.instance.dismissDialog(context);
-          break;
-        case Status.COMPLETED:
-          if (_snapshot.data.message.isNotEmpty) {
-            debugPrint(_snapshot.data.message);
-            DisplayUtil.instance.dismissDialog(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => OTPScreen()));
-          }
-          break;
-      }
-    });
   }
 
   @override

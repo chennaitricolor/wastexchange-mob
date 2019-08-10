@@ -3,6 +3,8 @@ import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
+import 'package:wastexchange_mobile/models/registration_data.dart';
+import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
@@ -16,6 +18,13 @@ class UserClient {
     final loginResponse = loginResponseFromJson(response);
     AuthInfo().authenticationToken = loginResponse.token;
     return loginResponse;
+  }
+
+  Future<RegistrationResponse> register(RegistrationData data) async {
+    final String response = await _apiBaseHelper.post(
+        ApiBaseHelper.baseApiUrl + Constants.PATH_REGISTER, data.toJson());
+    final registrationResponse = registrationResponseFromJson(response);
+    return registrationResponse;
   }
 
   Future<OtpResponse> sendOTP(OtpData otpData) async {

@@ -18,4 +18,11 @@ class FieldValidator {
     }
     return null;
   }
+
+  static String validateOTP(String value) {
+    if (value.isEmpty) {
+      return 'OTP cannot be empty';
+    }
+    return null;
+  }
 }

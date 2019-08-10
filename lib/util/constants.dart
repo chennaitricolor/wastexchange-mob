@@ -6,6 +6,7 @@ class Constants {
   static const BASE_API_URL = 'https://data.indiawasteexchange.com';
   static const PATH_SEND_OTP = '/users/sendOtp';
   static const PATH_LOGIN = '/users/login';
+  static const PATH_REGISTER = '/users/register';
   static const PATH_USERS = '/users';
 
   //login screen
@@ -32,6 +33,7 @@ class Constants {
   // Loading messages
   static const LOADING_LOGIN = 'Logging In';
   static const LOADING_OTP = 'Sending OTP';
+  static const LOADING_REGISTRATION = 'Registration OTP';
 
   // user type
   static const USER_SELLER = 'seller';
