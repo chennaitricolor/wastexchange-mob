@@ -18,7 +18,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   OtpBloc _bloc;
   RegistrationData registrationData;
 
@@ -39,8 +38,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             debugPrint(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => OTPScreen(registrationData
-            )));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => OTPScreen(registrationData)));
           }
           break;
       }
@@ -52,15 +52,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthenticationView(
-        fieldStyle: FieldStyle.value(0, 8, 24, 24,
-            AppColors.underline, AppColors.green, AppColors.text_grey),
+        fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+            AppColors.green, AppColors.text_grey),
         headerLayout: HomeAppBar(),
         fieldValidator: (value, index) {},
         fieldTypes: [
           FieldType.NAME,
-          const FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
-          const FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false),
-          const FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false),
+          const FieldType.value(
+              Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
+          const FieldType.value(
+              Constants.FIELD_CITY, 20, TextInputType.text, false),
+          const FieldType.value(
+              Constants.FIELD_PINCODE, 6, TextInputType.number, false),
           FieldType.MOBILE,
           const FieldType.value(
               Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
@@ -69,23 +72,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           FieldType.CONFIRM_PASSWORD
         ],
         onValidation: (bool isValidationSuccess, textEditingControllers) {
-            sendOtp(textEditingControllers);
+          sendOtp(textEditingControllers);
         },
       ),
     );
   }
 
   void sendOtp(Map<int, TextEditingController> textEditingControllers) {
-
     final name = textEditingControllers[0].text;
     final address = textEditingControllers[1].text;
     final city = textEditingControllers[2].text;
     final pincode = textEditingControllers[3].text != null
-        ? int.parse(textEditingControllers[3].text) : 0;
+        ? int.parse(textEditingControllers[3].text)
+        : 0;
     final int mobile = textEditingControllers[4].text != null
-        ? int.parse(textEditingControllers[4].text) : 0;
+        ? int.parse(textEditingControllers[4].text)
+        : 0;
     final int alternateNumber = textEditingControllers[5].text != null
-        ? int.parse(textEditingControllers[5].text) : 0;
+        ? int.parse(textEditingControllers[5].text)
+        : 0;
     final email = textEditingControllers[6].text;
     final password = textEditingControllers[7].text;
     final persona = 'buyer';
@@ -97,14 +102,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         address: address,
         city: city,
         pinCode: pincode,
-        mobNo: mobile.toString(),
-        altMobNo: alternateNumber.toString(),
+        mobNo: mobile,
+        altMobNo: alternateNumber,
         emailId: email,
         password: password,
         lat: latitude,
         long: longitude,
-        persona: persona
-    );
+        persona: persona);
 
     OtpData otpData = OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);

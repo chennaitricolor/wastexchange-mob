@@ -24,7 +24,8 @@ class Constants {
   //OTP screen
   static const FIELD_OTP = 'OTP';
   static const OTP_TITLE = 'OTP Sent';
-  static const OTP_MESSAGE = 'Please enter the OTP sent to your mobile number / Email';
+  static const OTP_MESSAGE =
+      'Please enter the OTP sent to your mobile number / Email';
 
   //Forgot password screen
   static const FORGOT_TITLE = 'Forgot Password';
