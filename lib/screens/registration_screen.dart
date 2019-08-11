@@ -11,6 +11,7 @@ import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:geolocator/geolocator.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -21,9 +22,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   OtpBloc _bloc;
   RegistrationData registrationData;
+  Position _currentPosition;
 
   @override
   void initState() {
+    _initCurrentLocation();
     _bloc = OtpBloc();
     _bloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
@@ -48,6 +51,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.initState();
   }
 
+  // Platform messages are asynchronous, so we initialize in an async method.
+  _initCurrentLocation() {
+    Geolocator()
+      ..getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+      ).then((position) {
+        if (mounted) {
+           _currentPosition = position;
+           debugPrint("Latitude: " + position?.latitude.toString());
+           debugPrint("Longitude: " + position?.longitude.toString());
+        }
+      }).catchError((e) {
+         _currentPosition = null;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +88,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           FieldType.CONFIRM_PASSWORD
         ],
         onValidation: (bool isValidationSuccess, textEditingControllers) {
-            sendOtp(textEditingControllers);
+          sendOtp(textEditingControllers);
         },
-      ),
+      )
     );
   }
 
@@ -89,8 +108,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final email = textEditingControllers[6].text;
     final password = textEditingControllers[7].text;
     final persona = 'buyer';
-    final int latitude = 0;
-    final int longitude = 0;
+    final int latitude = _currentPosition != null ? _currentPosition.latitude : 0;
+    final int longitude = _currentPosition != null ? _currentPosition.longitude : 0;
 
     registrationData = RegistrationData(
         name: name,
