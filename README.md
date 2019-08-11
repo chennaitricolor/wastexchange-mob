@@ -21,7 +21,12 @@ chennaitricolor
 
 Run:
 
-``docker-compose up``
+```
+docker-compose up
+
+# OR to rebuild the docker images before starting the services
+docker-compose up --build
+```
 
 API is started in port `7000` and Postgres database is started in port `5432`.
 
