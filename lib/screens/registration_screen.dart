@@ -22,7 +22,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   OtpBloc _bloc;
   RegistrationData registrationData;
-  Position _currentPosition;
+  double latitude;
+  double longitude;
 
   @override
   void initState() {
@@ -58,12 +59,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-          _currentPosition = position;
-          debugPrint("Latitude: " + position?.latitude.toString());
-          debugPrint("Longitude: " + position?.longitude.toString());
+          latitude =  position != null ? position.latitude : 0;
+          longitude = position != null ? position.longitude : 0;
+          debugPrint("Latitude: " + latitude.toString());
+          debugPrint("Longitude: " + longitude.toString());
         }
       }).catchError((e) {
-        _currentPosition = null;
+        latitude = 0;
+        longitude = 0;
       });
   }
 
@@ -114,7 +117,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           FieldType.CONFIRM_PASSWORD
         ],
         onValidation: (bool isValidationSuccess, textEditingControllers) {
-          sendOtp(textEditingControllers);
+          if(isValidationSuccess) {
+            if(latitude == 0 && longitude == 0){
+                DisplayUtil.instance.showErrorDialog(context, 'Location should be enabled to proceed with the registration');
+            } else {
+                sendOtp(textEditingControllers);
+            }
+          }
         },
       )
     );
@@ -136,10 +145,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final email = textEditingControllers[6].text;
     final password = textEditingControllers[7].text;
     const persona = 'buyer';
-    final double latitude =
-        _currentPosition != null ? _currentPosition.latitude : 0;
-    final double longitude =
-        _currentPosition != null ? _currentPosition.longitude : 0;
 
     registrationData = RegistrationData(
         name: name,

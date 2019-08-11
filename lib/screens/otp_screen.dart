@@ -66,7 +66,9 @@ class _OTPScreenState extends State<OTPScreen> {
           headerLayout: HomeAppBar(),
           fieldTypes: [FieldType.value(Constants.FIELD_OTP, 8, TextInputType.number, false)],
           onValidation: (isValidationSuccess, textEditingControllers) {
+            if(isValidationSuccess) {
               doRegister(textEditingControllers[0].text);
+            }
           }),
     );
   }
