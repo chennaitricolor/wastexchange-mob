@@ -25,3 +25,4 @@ services:
       DB_NAME: wastexchange_development
       DB_PWD: dev
       DB_USER: dev
+      SEED_DB: "true"

@@ -6,14 +6,13 @@ import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper([Client client]) {
     _client = client ?? Client();
   }
 
-  static String baseApiUrl = Constants.BASE_API_URL;
+  static String baseApiUrl = DotEnv().env['BASE_API_URL'];
   Client _client;
 
   Future<dynamic> get(String url) async {
