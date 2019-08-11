@@ -1,4 +1,33 @@
 class FieldValidator {
+
+  static String validateName(String value) {
+    if (value.isEmpty) {
+      return 'Name cannot be empty';
+    }
+    return null;
+  }
+
+  static String validateAddress(String value) {
+    if (value.isEmpty) {
+      return 'Address cannot be empty';
+    }
+    return null;
+  }
+
+  static String validateCity(String value) {
+    if (value.isEmpty) {
+      return 'City cannot be empty';
+    }
+    return null;
+  }
+
+  static String validatePincode(String value) {
+    if (value.isEmpty) {
+      return 'Pincode cannot be empty';
+    }
+    return null;
+  }
+
   static String validatePassword(String value) {
     if (value.isEmpty) {
       return 'Password cannot be empty';
@@ -15,6 +44,16 @@ class FieldValidator {
     }
     if (value.length < 5) {
       return 'Email must be more than 5 characters';
+    }
+    return null;
+  }
+
+  static String validateMobileNumber(String value) {
+    if (value.isEmpty) {
+      return 'Mobile number cannot be empty';
+    }
+    if (value.length < 10) {
+      return 'Mobile number must be minimum 10 digits';
     }
     return null;
   }

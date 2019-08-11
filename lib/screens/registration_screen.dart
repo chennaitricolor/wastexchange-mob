@@ -10,6 +10,7 @@ import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
+import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -51,8 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.initState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  _initCurrentLocation() {
+  void _initCurrentLocation() {
     Geolocator()
       ..getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
@@ -70,30 +70,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AuthenticationView(
-      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-          AppColors.green, AppColors.text_grey),
-      headerLayout: HomeAppBar(),
-      fieldValidator: (value, index) {},
-      fieldTypes: [
-        FieldType.NAME,
-        const FieldType.value(
-            Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
-        const FieldType.value(
-            Constants.FIELD_CITY, 20, TextInputType.text, false),
-        const FieldType.value(
-            Constants.FIELD_PINCODE, 6, TextInputType.number, false),
-        FieldType.MOBILE,
-        const FieldType.value(
-            Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
-        FieldType.EMAIL,
-        FieldType.PASSWORD,
-        FieldType.CONFIRM_PASSWORD
-      ],
-      onValidation: (bool isValidationSuccess, textEditingControllers) {
-        sendOtp(textEditingControllers);
-      },
-    ));
+      body: AuthenticationView(
+        fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+            AppColors.green, AppColors.text_grey),
+        headerLayout: HomeAppBar(),
+        fieldValidator: (value, index) {
+          switch (index) {
+            case 0:
+              return FieldValidator.validateName(value);
+            case 1:
+              return FieldValidator.validateAddress(value);
+            case 2:
+              return FieldValidator.validateCity(value);
+            case 3:
+              return FieldValidator.validatePincode(value);
+            case 4:
+              return FieldValidator.validateMobileNumber(value);
+            case 5:
+              return FieldValidator.validateMobileNumber(value);
+            case 6:
+              return FieldValidator.validateEmailAddress(value);
+            case 7:
+              return FieldValidator.validatePassword(value);
+            case 8:
+                return FieldValidator.validatePassword(value);
+            default:
+              return null;
+          }
+        },
+        fieldTypes: [
+          FieldType.NAME,
+          const FieldType.value(
+              Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
+          const FieldType.value(
+              Constants.FIELD_CITY, 20, TextInputType.text, false),
+          const FieldType.value(
+              Constants.FIELD_PINCODE, 6, TextInputType.number, false),
+          FieldType.MOBILE,
+          const FieldType.value(
+              Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
+          FieldType.EMAIL,
+          FieldType.PASSWORD,
+          FieldType.CONFIRM_PASSWORD
+        ],
+        onValidation: (bool isValidationSuccess, textEditingControllers) {
+          sendOtp(textEditingControllers);
+        },
+      )
+    );
   }
 
   void sendOtp(Map<int, TextEditingController> textEditingControllers) {

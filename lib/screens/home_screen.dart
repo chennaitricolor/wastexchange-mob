@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 
