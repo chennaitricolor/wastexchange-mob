@@ -4,10 +4,6 @@ class Constants {
 
   // Base url and path url's
   static const BASE_API_URL = 'https://data.indiawasteexchange.com';
-  static const PATH_SEND_OTP = '/users/sendOtp';
-  static const PATH_LOGIN = '/users/login';
-  static const PATH_REGISTER = '/users/register';
-  static const PATH_USERS = '/users';
 
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
