@@ -58,43 +58,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-           _currentPosition = position;
-           debugPrint("Latitude: " + position?.latitude.toString());
-           debugPrint("Longitude: " + position?.longitude.toString());
+          _currentPosition = position;
+          debugPrint("Latitude: " + position?.latitude.toString());
+          debugPrint("Longitude: " + position?.longitude.toString());
         }
       }).catchError((e) {
-         _currentPosition = null;
+        _currentPosition = null;
       });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthenticationView(
-        fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-            AppColors.green, AppColors.text_grey),
-        headerLayout: HomeAppBar(),
-        fieldValidator: (value, index) {},
-        fieldTypes: [
-          FieldType.NAME,
-          const FieldType.value(
-              Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
-          const FieldType.value(
-              Constants.FIELD_CITY, 20, TextInputType.text, false),
-          const FieldType.value(
-              Constants.FIELD_PINCODE, 6, TextInputType.number, false),
-          FieldType.MOBILE,
-          const FieldType.value(
-              Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
-          FieldType.EMAIL,
-          FieldType.PASSWORD,
-          FieldType.CONFIRM_PASSWORD
-        ],
-        onValidation: (bool isValidationSuccess, textEditingControllers) {
-          sendOtp(textEditingControllers);
-        },
-      )
-    );
+        body: AuthenticationView(
+      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+          AppColors.green, AppColors.text_grey),
+      headerLayout: HomeAppBar(),
+      fieldValidator: (value, index) {},
+      fieldTypes: [
+        FieldType.NAME,
+        const FieldType.value(
+            Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
+        const FieldType.value(
+            Constants.FIELD_CITY, 20, TextInputType.text, false),
+        const FieldType.value(
+            Constants.FIELD_PINCODE, 6, TextInputType.number, false),
+        FieldType.MOBILE,
+        const FieldType.value(
+            Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
+        FieldType.EMAIL,
+        FieldType.PASSWORD,
+        FieldType.CONFIRM_PASSWORD
+      ],
+      onValidation: (bool isValidationSuccess, textEditingControllers) {
+        sendOtp(textEditingControllers);
+      },
+    ));
   }
 
   void sendOtp(Map<int, TextEditingController> textEditingControllers) {
@@ -112,9 +111,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         : 0;
     final email = textEditingControllers[6].text;
     final password = textEditingControllers[7].text;
-    final persona = 'buyer';
-    final int latitude = _currentPosition != null ? _currentPosition.latitude : 0;
-    final int longitude = _currentPosition != null ? _currentPosition.longitude : 0;
+    const persona = 'buyer';
+    final double latitude =
+        _currentPosition != null ? _currentPosition.latitude : 0;
+    final double longitude =
+        _currentPosition != null ? _currentPosition.longitude : 0;
 
     registrationData = RegistrationData(
         name: name,

@@ -60,8 +60,8 @@ class RegistrationData {
   int pinCode;
   int mobNo;
   int altMobNo;
-  int lat;
-  int long;
+  double lat;
+  double long;
   String persona;
   String address;
   int otp;
