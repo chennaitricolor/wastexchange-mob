@@ -1,21 +1,37 @@
-import 'api_exception.dart';
+import 'dart:convert';
+
+import 'package:wastexchange_mobile/models/api_exception.dart';
+
+LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
+
+String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
-  LoginResponse(this.auth, this.token, this.approved);
 
-  final bool auth;
-  final String token;
-  final bool approved;
-  bool get success => auth && approved;
+  LoginResponse({
+    this.auth,
+    this.token,
+  });
 
-// TODO(Sayeed): Add test for success, approved when the api response is ready
-  static LoginResponse fromJson(Map<String, dynamic> json) {
-    final bool auth = json['auth'];
-    final String token = json['token'];
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    final auth = json['auth'];
+    final token = json['token'];
     if (auth == null || token == null) {
       throw InvalidResponseJSONException(
           '\'auth\' or \'token\' key missing in LoginResponse');
     }
-    return LoginResponse(auth, token, true);
+    return LoginResponse(
+      auth: auth,
+      token: token,
+    );
   }
+
+  Map<String, dynamic> toJson() => {
+    'auth': auth,
+    'token': token,
+  };
+
+  bool auth;
+  String token;
+
 }

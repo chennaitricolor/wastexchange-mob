@@ -1,6 +1,23 @@
 import 'dart:convert';
 
+List<User> userFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+
+String userToJson(List<User> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class User {
+  int id;
+  String city;
+  int pinCode;
+  String persona;
+  String address;
+  String mobNo;
+  String altMobNo;
+  double lat;
+  double long;
+  String emailId;
+  String name;
+  bool approved;
+
   User({
     this.id,
     this.city,
@@ -9,67 +26,41 @@ class User {
     this.address,
     this.mobNo,
     this.altMobNo,
-    this.createdAt,
-    this.updatedAt,
     this.lat,
     this.long,
     this.emailId,
     this.name,
-    this.loginId,
+    this.approved,
   });
 
-  int id;
-  String city;
-  int pinCode;
-  String persona;
-  String address;
-  dynamic mobNo;
-  dynamic altMobNo;
-  DateTime createdAt;
-  DateTime updatedAt;
-  double lat;
-  double long;
-  String emailId;
-  String name;
-  String loginId;
-
-  static List<User> fromJson(String str) {
-    return List<User>.from(json.decode(str).map((x) => User._fromJson(x)));
-  }
-
-  static User _fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      city: json['city'],
-      pinCode: json['pinCode'],
-      persona: json['persona'],
-      address: json['address'],
-      mobNo: json['mobNo'],
-      altMobNo: json['altMobNo'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      lat: json['lat'].toDouble(),
-      long: json['long'].toDouble(),
-      emailId: json['emailId'],
-      name: json['name'],
-      loginId: json['loginId'],
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json['id'],
+    city: json['city'],
+    pinCode: json['pinCode'],
+    persona: json['persona'],
+    address: json['address'],
+    mobNo: json['mobNo'],
+    altMobNo: json['altMobNo'],
+    lat: json['lat'].toDouble(),
+    long: json['long'].toDouble(),
+    emailId: json['emailId'],
+    name: json['name'],
+    approved: json['approved'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'city': city,
-        'pinCode': pinCode,
-        'persona': persona,
-        'address': address,
-        'mobNo': mobNo,
-        'altMobNo': altMobNo,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-        'lat': lat,
-        'long': long,
-        'emailId': emailId,
-        'name': name,
-        'loginId': loginId,
-      };
+    'id': id,
+    'city': city,
+    'pinCode': pinCode,
+    'persona': persona,
+    'address': address,
+    'mobNo': mobNo,
+    'altMobNo': altMobNo,
+    'lat': lat,
+    'long': long,
+    'emailId': emailId,
+    'name': name,
+    'approved': approved,
+  };
 }
+

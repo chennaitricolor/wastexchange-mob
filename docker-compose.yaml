@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:10.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./dbdata:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: wastexchange_development
+  backend:
+    build:
+      context: ../wastexchange-be
+      dockerfile: new.Dockerfile
+    ports:
+      - "7000:7000"
+    environment:
+      AUTH_KEY: abcd
+      NODE_ENV: development
+      NODE_CONFIG_ENV: dev
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: wastexchange_development
+      DB_PWD: dev
+      DB_USER: dev
+      SEED_DB: "true"

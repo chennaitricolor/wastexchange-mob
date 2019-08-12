@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/models/api_response.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
+import 'package:wastexchange_mobile/util/constants.dart';
 
 class LoginBloc {
   final UserRepository _userRepository = UserRepository();
@@ -14,7 +15,7 @@ class LoginBloc {
   Stream<ApiResponse<LoginResponse>> get loginStream => _loginController.stream;
 
   Future<void> login(LoginData data) async {
-    loginSink.add(ApiResponse.loading('Logging In'));
+    loginSink.add(ApiResponse.loading(Constants.LOADING_LOGIN));
     try {
       final LoginResponse response = await _userRepository.login(data);
       loginSink.add(ApiResponse.completed(response));

@@ -10,8 +10,10 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/loading_indicator.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,27 +23,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
 
-  @override
-  void didChangeDependencies() {
-    _bloc = LoginBloc();
-    _bloc.loginStream.listen((_snapshot) {
-      switch (_snapshot.status) {
-        case Status.LOADING:
-          print('loading');
-          break;
-        case Status.ERROR:
-          print('error');
-          break;
-        case Status.COMPLETED:
-          if (_snapshot.data.success) {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MapScreen()));
-          }
-          break;
-      }
-    });
-
-    super.didChangeDependencies();
+@override
+  void initState() {
+   _bloc = LoginBloc();
+    super.initState();
   }
 
   @override
@@ -95,9 +80,30 @@ class _LoginScreenState extends State<LoginScreen> {
               final LoginData data = LoginData(
                   loginId: textEditingControllers[0].text,
                   password: textEditingControllers[1].text);
-              _bloc.login(data);
+                  doLogin(context, data);
             }));
   }
+
+    void doLogin(BuildContext context, LoginData data) {
+      _bloc.login(data);
+      _bloc.loginStream.listen((_snapshot) {
+        switch (_snapshot.status) {
+          case Status.LOADING:
+            DisplayUtil.instance.showLoadingDialog(context);
+            break;
+          case Status.ERROR:
+            DisplayUtil.instance.dismissDialog(context);
+            break;
+          case Status.COMPLETED:
+            if (_snapshot.data.auth) {
+              DisplayUtil.instance.dismissDialog(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MapScreen()));
+            }
+            break;
+        }
+      });
+    }
 
   @override
   void dispose() {

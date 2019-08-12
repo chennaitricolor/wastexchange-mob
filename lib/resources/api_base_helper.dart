@@ -1,19 +1,22 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
-
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
-import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:wastexchange_mobile/resources/http_interceptors/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/http_interceptors/log_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:wastexchange_mobile/models/api_exception.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper([HttpWithInterceptor http]) {
     _http = http ?? HttpWithInterceptor.build(interceptors: [AuthInterceptor(), LogInterceptor()]);
   }
 
-  static const String BASE_API_URL = 'https://data.indiawasteexchange.com';
+
+  static String baseApiUrl = DotEnv().env['BASE_API_URL'];
   HttpWithInterceptor _http;
 
   Future<dynamic> get(String url) async {
@@ -30,7 +33,10 @@ class ApiBaseHelper {
   Future<dynamic> post(String url, dynamic body) async {
     dynamic responseJson;
     try {
-      final response = await _http.post(url, body: body);
+
+      final response = await _http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(body));
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -40,11 +46,12 @@ class ApiBaseHelper {
 
   dynamic _returnResponse(Response response) {
     final String responseStr = response.body.toString();
-    print(responseStr);
-    if(isSuccessfulResponse(response.statusCode)) {
-      return json.decode(responseStr);
+    debugPrint(responseStr);
+    if (isSuccessfulResponse(response.statusCode)) {
+      debugPrint('Success Response');
+      return responseStr;
     }
-
+    debugPrint('Failure Response');
     handleUnsuccessfulStatusCode(response, responseStr);
   }
 

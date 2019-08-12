@@ -17,9 +17,23 @@ class Constants {
   //OTP screen
   static const FIELD_OTP = 'OTP';
   static const OTP_TITLE = 'OTP Sent';
-  static const OTP_MESSAGE = 'Please enter the OTP sent to your mobile number / Email';
+  static const OTP_MESSAGE =
+      'Please enter the OTP sent to your mobile number / Email';
 
   //Forgot password screen
   static const FORGOT_TITLE = 'Forgot Password';
   static const FORGOT_MESSAGE = 'Please enter your registered email ID';
+
+  // Loading messages
+  static const LOADING_LOGIN = 'Logging In';
+  static const LOADING_OTP = 'Sending OTP';
+  static const LOADING_REGISTRATION = 'Registration OTP';
+
+  // user type
+  static const USER_SELLER = 'seller';
+
+  // Map configuration
+  static const double CHENNAI_LAT = 12.9838;
+  static const double CHENNAI_LONG = 80.2459;
+  static const double DEFAULT_ZOOM = 15;
 }
