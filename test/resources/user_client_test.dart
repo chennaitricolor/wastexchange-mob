@@ -7,8 +7,9 @@ import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-class MockClient extends Mock implements http.Client {}
+class MockClient extends Mock implements HttpClientWithInterceptor {}
 
 void main() {
   group('login', () {

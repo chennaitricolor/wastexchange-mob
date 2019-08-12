@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/resources/http_interceptors/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/http_interceptors/log_interceptor.dart';
@@ -12,17 +11,17 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper([HttpWithInterceptor http]) {
-    _http = http ?? HttpWithInterceptor.build(interceptors: [AuthInterceptor(), LogInterceptor()]);
+    _httpClient = http ?? HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(), LogInterceptor()]);
   }
 
 
   static String baseApiUrl = DotEnv().env['BASE_API_URL'];
-  HttpWithInterceptor _http;
+  HttpClientWithInterceptor _httpClient;
 
   Future<dynamic> get(String url) async {
     dynamic responseJson;
     try {
-      final response = await _http.get(url);
+      final response = await _httpClient.get(url);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -34,7 +33,7 @@ class ApiBaseHelper {
     dynamic responseJson;
     try {
 
-      final response = await _http.post(url,
+      final response = await _httpClient.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
       responseJson = _returnResponse(response);

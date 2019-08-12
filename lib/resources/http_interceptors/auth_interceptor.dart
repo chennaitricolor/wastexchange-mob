@@ -1,5 +1,5 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:wastexchange_mobile/resources/auth_manager.dart';
+import 'package:wastexchange_mobile/resources/auth_repository.dart';
 
 /// Interceptor that modify API Request by adding authentication information to the request.
 class AuthInterceptor implements InterceptorContract {
@@ -16,7 +16,7 @@ class AuthInterceptor implements InterceptorContract {
   }
 
   Future<void> addAuthHeader(RequestData data) async {
-    final String token = await AuthManager().getAccessToken();
+    final String token = await AuthRepository().getAccessToken();
     if(token != null) {
       data.headers['Authorization'] = token;
     }
