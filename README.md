@@ -52,7 +52,7 @@ Keep running analyzer periodically and before pushing code.
 
 ### References:
 1. [Linter for Dart](https://dart-lang.github.io/linter/lints/)
-2. [Rules from Flutter repo] (https://github.com/flutter/flutter/blob/master/analysis_options.yaml) 
+2. [Rules from Flutter repo](https://github.com/flutter/flutter/blob/master/analysis_options.yaml) 
 
 For viewing Lint rules, refer  **analysis_options.yaml** file in project root.
 
