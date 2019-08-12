@@ -50,7 +50,7 @@ Always run the tests before pushing in.
 
 Keep running analyzer periodically and before pushing code. 
 
-#####References:#####
+### References:
 1. [Linter for Dart](https://dart-lang.github.io/linter/lints/)
 2. [Rules from Flutter repo] (https://github.com/flutter/flutter/blob/master/analysis_options.yaml) 
 
