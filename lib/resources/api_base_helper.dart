@@ -14,7 +14,6 @@ class ApiBaseHelper {
     _httpClient = http ?? HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(), LogInterceptor()]);
   }
 
-
   static String baseApiUrl = DotEnv().env['BASE_API_URL'];
   HttpClientWithInterceptor _httpClient;
 
