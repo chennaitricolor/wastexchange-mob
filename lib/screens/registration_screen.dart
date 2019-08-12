@@ -11,6 +11,7 @@ import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -24,6 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   RegistrationData registrationData;
   double latitude;
   double longitude;
+  final logger = getLogger('RegistrationScreen');
 
   @override
   void initState() {
@@ -35,12 +37,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          debugPrint(_snapshot.message);
+          logger.i(_snapshot.message);
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
           if (_snapshot.data.message.isNotEmpty) {
-            debugPrint(_snapshot.data.message);
+            logger.i(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
                 context,
@@ -59,10 +61,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-          latitude =  position != null ? position.latitude : 0;
+          latitude = position != null ? position.latitude : 0;
           longitude = position != null ? position.longitude : 0;
-          debugPrint("Latitude: " + latitude.toString());
-          debugPrint("Longitude: " + longitude.toString());
+          logger.i('Latitude: ' + latitude.toString());
+          logger.i('Longitude: ' + longitude.toString());
         }
       }).catchError((e) {
         latitude = 0;
@@ -73,60 +75,60 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthenticationView(
-        fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-            AppColors.green, AppColors.text_grey),
-        headerLayout: HomeAppBar(),
-        fieldValidator: (value, index) {
-          switch (index) {
-            case 0:
-              return FieldValidator.validateName(value);
-            case 1:
-              return FieldValidator.validateAddress(value);
-            case 2:
-              return FieldValidator.validateCity(value);
-            case 3:
-              return FieldValidator.validatePincode(value);
-            case 4:
-              return FieldValidator.validateMobileNumber(value);
-            case 5:
-              return FieldValidator.validateMobileNumber(value);
-            case 6:
-              return FieldValidator.validateEmailAddress(value);
-            case 7:
-              return FieldValidator.validatePassword(value);
-            case 8:
-                return FieldValidator.validatePassword(value);
-            default:
-              return null;
+        body: AuthenticationView(
+      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+          AppColors.green, AppColors.text_grey),
+      headerLayout: HomeAppBar(),
+      fieldValidator: (value, index) {
+        switch (index) {
+          case 0:
+            return FieldValidator.validateName(value);
+          case 1:
+            return FieldValidator.validateAddress(value);
+          case 2:
+            return FieldValidator.validateCity(value);
+          case 3:
+            return FieldValidator.validatePincode(value);
+          case 4:
+            return FieldValidator.validateMobileNumber(value);
+          case 5:
+            return FieldValidator.validateMobileNumber(value);
+          case 6:
+            return FieldValidator.validateEmailAddress(value);
+          case 7:
+            return FieldValidator.validatePassword(value);
+          case 8:
+            return FieldValidator.validatePassword(value);
+          default:
+            return null;
+        }
+      },
+      fieldTypes: [
+        FieldType.NAME,
+        const FieldType.value(
+            Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
+        const FieldType.value(
+            Constants.FIELD_CITY, 20, TextInputType.text, false),
+        const FieldType.value(
+            Constants.FIELD_PINCODE, 6, TextInputType.number, false),
+        FieldType.MOBILE,
+        const FieldType.value(
+            Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
+        FieldType.EMAIL,
+        FieldType.PASSWORD,
+        FieldType.CONFIRM_PASSWORD
+      ],
+      onValidation: (bool isValidationSuccess, textEditingControllers) {
+        if (isValidationSuccess) {
+          if (latitude == 0 && longitude == 0) {
+            DisplayUtil.instance.showErrorDialog(context,
+                'Location should be enabled to proceed with the registration');
+          } else {
+            sendOtp(textEditingControllers);
           }
-        },
-        fieldTypes: [
-          FieldType.NAME,
-          const FieldType.value(
-              Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
-          const FieldType.value(
-              Constants.FIELD_CITY, 20, TextInputType.text, false),
-          const FieldType.value(
-              Constants.FIELD_PINCODE, 6, TextInputType.number, false),
-          FieldType.MOBILE,
-          const FieldType.value(
-              Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
-          FieldType.EMAIL,
-          FieldType.PASSWORD,
-          FieldType.CONFIRM_PASSWORD
-        ],
-        onValidation: (bool isValidationSuccess, textEditingControllers) {
-          if(isValidationSuccess) {
-            if(latitude == 0 && longitude == 0){
-                DisplayUtil.instance.showErrorDialog(context, 'Location should be enabled to proceed with the registration');
-            } else {
-                sendOtp(textEditingControllers);
-            }
-          }
-        },
-      )
-    );
+        }
+      },
+    ));
   }
 
   void sendOtp(Map<int, TextEditingController> textEditingControllers) {

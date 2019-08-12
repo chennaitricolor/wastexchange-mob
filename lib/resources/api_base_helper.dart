@@ -6,12 +6,14 @@ import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper([Client client]) {
     _client = client ?? Client();
   }
 
+  final logger = getLogger('ApiBaseHelper');
   static String baseApiUrl = DotEnv().env['BASE_API_URL'];
   Client _client;
 
@@ -41,12 +43,12 @@ class ApiBaseHelper {
 
   dynamic _returnResponse(Response response) {
     final String responseStr = response.body.toString();
-    debugPrint(responseStr);
+    logger.i(responseStr);
     if (isSuccessfulResponse(response.statusCode)) {
-      debugPrint('Success Response');
+      logger.i('Success Response');
       return responseStr;
     }
-    debugPrint('Failure Response');
+    logger.i('Failure Response');
     handleUnsuccessfulStatusCode(response, responseStr);
   }
 
