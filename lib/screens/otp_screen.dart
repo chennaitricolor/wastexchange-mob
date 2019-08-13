@@ -61,22 +61,28 @@ class _OTPScreenState extends State<OTPScreen> {
           messageLayout: Container(alignment: Alignment.center, margin: const EdgeInsets.all(24), child: Text(Constants.OTP_MESSAGE, style: TextStyle(fontSize: 16, color: AppColors.grey))),
           fieldStyle: FieldStyle.value(24, 8, 24, 36,
               AppColors.underline, AppColors.green, AppColors.text_grey),
-          fieldValidator: (value, position) =>
-              FieldValidator.validateOTP(value),
+          fieldValidator: (hintAsKey, values) {
+            final String value = values[hintAsKey];
+            switch(hintAsKey){
+              case Constants.FIELD_OTP:
+                return FieldValidator.validateOTP(value);
+              default:
+                return null;
+            }
+          },
           headerLayout: HomeAppBar(),
           fieldTypes: [FieldType.value(Constants.FIELD_OTP, 8, TextInputType.number, false)],
-          onValidation: (isValidationSuccess, textEditingControllers) {
+          onValidation: (isValidationSuccess, valueMap) {
             if(isValidationSuccess) {
-              doRegister(textEditingControllers[0].text);
+              doRegister(valueMap[Constants.FIELD_OTP]);
             }
           }),
     );
   }
 
   void doRegister(String otp) {
-    int value = otp != null ? int.parse(otp) : 0;
+    final int value = otp != null ? int.parse(otp) : 0;
     registrationData.otp = value;
-    debugPrint("registration data json " + registrationData.toJson().toString());
     _bloc.register(registrationData);
   }
 

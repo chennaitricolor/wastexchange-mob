@@ -22,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
+  final FieldType _email  =  FieldType.value(Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  final FieldType _password  =  FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
 
 @override
   void initState() {
@@ -60,26 +62,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: AppColors.text_grey))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
-            fieldValidator: (value, index) {
-              switch (index) {
-                case 0:
+            fieldValidator: (hintAsKey, values) {
+              final String value = values[hintAsKey];
+              switch(hintAsKey){
+                case Constants.FIELD_EMAIL:
                   return FieldValidator.validateEmailAddress(value);
-                case 1:
+                case Constants.FIELD_PASSWORD:
                   return FieldValidator.validatePassword(value);
                 default:
                   return null;
               }
             },
             headerLayout: HomeAppBar(),
-            fieldTypes: [FieldType.EMAIL, FieldType.PASSWORD],
-            onValidation: (isValidationSuccess, textEditingControllers) {
+            fieldTypes: [_email, _password],
+            onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
               }
-
+              final email = valueMap[Constants.FIELD_EMAIL];
+              final password = valueMap[Constants.FIELD_PASSWORD];
               final LoginData data = LoginData(
-                  loginId: textEditingControllers[0].text,
-                  password: textEditingControllers[1].text);
+                  loginId: email,
+                  password: password);
                   doLogin(context, data);
             }));
   }

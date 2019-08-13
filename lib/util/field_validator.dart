@@ -38,6 +38,16 @@ class FieldValidator {
     return null;
   }
 
+  static String validateConfirmPassword(String password, String confirmPassword) {
+    if (confirmPassword.isEmpty) {
+      return 'Confirm Password cannot be empty';
+    }
+    if (password != confirmPassword) {
+      return 'Confirm Password must be same as password';
+    }
+    return null;
+  }
+
   static String validateEmailAddress(String value) {
     if (value.isEmpty) {
       return 'Email cannot be empty';
