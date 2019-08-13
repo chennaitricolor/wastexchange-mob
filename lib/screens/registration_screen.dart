@@ -179,7 +179,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         long: longitude,
         persona: persona);
 
-    OtpData otpData = OtpData(emailId: email, mobileNo: mobile.toString());
+    final OtpData otpData =
+        OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);
   }
 

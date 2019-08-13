@@ -13,13 +13,13 @@ class ApiBaseHelper {
   }
 
   final logger = getLogger('ApiBaseHelper');
-  static String baseApiUrl = DotEnv().env['BASE_API_URL'];
+  static final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
   Client _client;
 
   Future<dynamic> get(String url) async {
     dynamic responseJson;
     try {
-      final response = await _client.get(url);
+      final response = await _client.get(_baseApiUrl + url);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -30,7 +30,7 @@ class ApiBaseHelper {
   Future<dynamic> post(String url, dynamic body) async {
     dynamic responseJson;
     try {
-      final response = await _client.post(url,
+      final response = await _client.post(_baseApiUrl + url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
       responseJson = _returnResponse(response);
