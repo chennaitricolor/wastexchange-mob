@@ -7,7 +7,6 @@ import 'package:wastexchange_mobile/util/jwt_utils.dart';
 ///
 /// TokenRepository can be used as base class for implementing the Authentication Token Functionality.
 abstract class TokenRepository {
-
   Future<void> setToken(String token);
 
   Future<String> getToken();
@@ -21,14 +20,16 @@ abstract class TokenRepository {
   Future<bool> isTokenExpired();
 
   Future<bool> refreshToken();
+
+  Future<bool> isAuthorized();
 }
 
 /// TokenRepository class specifically designed to handle JWT Token by validating JWT Token, Checking token expired, etc...
 /// This uses a singleton pattern to ensure only one instance is available.
 class JWTTokenRepository implements TokenRepository {
-
   factory JWTTokenRepository([FlutterSecureStorage secureStorage]) {
-    final FlutterSecureStorage storage = secureStorage ??= FlutterSecureStorage();
+    final FlutterSecureStorage storage =
+        secureStorage ??= FlutterSecureStorage();
     return _instance ??= JWTTokenRepository._internal(storage);
   }
 
@@ -51,9 +52,13 @@ class JWTTokenRepository implements TokenRepository {
   String _refreshToken;
 
   @override
-  Future<void> setToken(token) async {
+  Future<bool> isAuthorized() async {
+    return await getToken() != null;
+  }
 
-    if(!JWTUtils.isValidJWTToken(token)) {
+  @override
+  Future<void> setToken(token) async {
+    if (!JWTUtils.isValidJWTToken(token)) {
       throw Exception('Invalid JWT token');
     }
 
@@ -63,12 +68,16 @@ class JWTTokenRepository implements TokenRepository {
 
   @override
   Future<bool> refreshToken() async {
-    if(_getRefreshToken() != null) {
-      await lock.synchronized(() async {
-        // Refresh token is not done on the API Side.
-      });
+    if (await isAuthorized()) {
+      if (_getRefreshToken() != null) {
+        await lock.synchronized(() async {
+          // Refresh token is not done on the API Side.
+        });
 
-      return false; // Refresh token is not done on API Side. so return false.
+        //If token refresh failed, then the tokens are no longer valid. So delete the token.
+        deleteToken();
+        return false; // Refresh token is not done on API Side. so return false.
+      }
     }
 
     return false;
@@ -76,14 +85,14 @@ class JWTTokenRepository implements TokenRepository {
 
   @override
   Future<bool> isTokenExpired() async {
-
     final jwtToken = await getToken();
 
     final info = JWTUtils.parseJwtPayload(jwtToken);
 
     final int val = info['expireAt'];
 
-    if(DateTime.now().millisecondsSinceEpoch > val + Duration(seconds: 60).inMilliseconds) {
+    if (DateTime.now().millisecondsSinceEpoch >
+        val + Duration(seconds: 60).inMilliseconds) {
       return true;
     }
 

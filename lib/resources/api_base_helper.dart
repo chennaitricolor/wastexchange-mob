@@ -8,13 +8,28 @@ import 'package:wastexchange_mobile/resources/http_interceptors/log_interceptor.
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:wastexchange_mobile/resources/auth/token_repository.dart';
 
 class ApiBaseHelper {
-  ApiBaseHelper([HttpWithInterceptor http]) {
-    _httpClient = http ?? HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(), LogInterceptor()]);
+
+  ApiBaseHelper._internal(HttpClientWithInterceptor interceptor) {
+    _httpClient = interceptor;
+  }
+
+  static final ApiBaseHelper _instance = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
+
+  static final ApiBaseHelper _instanceWithAuth = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(JWTTokenRepository()), LogInterceptor()]));
+
+  static ApiBaseHelper getInstance() {
+    return _instance;
+  }
+
+  static ApiBaseHelper getInstanceWithAuth() {
+    return _instanceWithAuth;
   }
 
   static String baseApiUrl = DotEnv().env['BASE_API_URL'];
+
   HttpClientWithInterceptor _httpClient;
 
   Future<dynamic> get(String url) async {
