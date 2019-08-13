@@ -54,6 +54,12 @@ class _OTPScreenState extends State<OTPScreen> {
     super.initState();
   }
 
+  void doRegister(String otp) {
+    final int value = otp != null ? int.parse(otp) : 0;
+    registrationData.otp = value;
+    _bloc.register(registrationData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,11 +93,5 @@ class _OTPScreenState extends State<OTPScreen> {
             }
           }),
     );
-  }
-
-  void doRegister(String otp) {
-    final int value = otp != null ? int.parse(otp) : 0;
-    registrationData.otp = value;
-    _bloc.register(registrationData);
   }
 }
