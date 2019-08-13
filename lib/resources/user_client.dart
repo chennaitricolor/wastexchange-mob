@@ -7,13 +7,12 @@ import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
 
 class UserClient {
-  final PATH_SEND_OTP = '/users/sendOtp';
-  final PATH_LOGIN = '/users/login';
-  final PATH_REGISTER = '/users/register';
-  final PATH_USERS = '/users';
+  static const PATH_SEND_OTP = '/users/sendOtp';
+  static const PATH_LOGIN = '/users/login';
+  static const PATH_REGISTER = '/users/register';
+  static const PATH_USERS = '/users';
 
   final ApiBaseHelper _apiBaseHelper = ApiBaseHelper();
 

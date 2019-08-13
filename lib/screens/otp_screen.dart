@@ -14,9 +14,9 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:authentication_view/authentication_view.dart';
 
 class OTPScreen extends StatefulWidget {
-  OTPScreen(this.registrationData);
+  const OTPScreen(this.registrationData);
 
-  RegistrationData registrationData;
+  final RegistrationData registrationData;
 
   @override
   _OTPScreenState createState() => _OTPScreenState();

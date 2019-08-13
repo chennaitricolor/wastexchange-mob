@@ -1,7 +1,6 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
