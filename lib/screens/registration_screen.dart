@@ -11,6 +11,7 @@ import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -24,16 +25,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   RegistrationData registrationData;
   double latitude;
   double longitude;
+  final logger = getLogger('RegistrationScreen');
 
-  final FieldType _name  =  FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
-  final FieldType _email  =  FieldType.value(Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
-  final FieldType _mobile =  FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
-  final FieldType _password  =  FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
-  final FieldType _confirmPassword  =  FieldType.value(Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
-  final FieldType _address =  FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
-  final FieldType _city =     FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
-  final FieldType _pincode =  FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
-  final FieldType _alternateNumber =   FieldType.value(
+  final FieldType _name =
+      FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
+  final FieldType _email = FieldType.value(
+      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  final FieldType _mobile =
+      FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
+  final FieldType _password =
+      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _confirmPassword = FieldType.value(
+      Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _address =
+      FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
+  final FieldType _city =
+      FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
+  final FieldType _pincode =
+      FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
+  final FieldType _alternateNumber = FieldType.value(
       Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
 
   @override
@@ -46,12 +56,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          debugPrint(_snapshot.message);
+          logger.i(_snapshot.message);
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
           if (_snapshot.data.message.isNotEmpty) {
-            debugPrint(_snapshot.data.message);
+            logger.i(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
                 context,
@@ -70,10 +80,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-          latitude =  position != null ? position.latitude : 0;
+          latitude = position != null ? position.latitude : 0;
           longitude = position != null ? position.longitude : 0;
-          debugPrint("Latitude: " + latitude.toString());
-          debugPrint("Longitude: " + longitude.toString());
+          logger.i('Latitude: ' + latitude.toString());
+          logger.i('Longitude: ' + longitude.toString());
         }
       }).catchError((e) {
         latitude = 0;
@@ -84,57 +94,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthenticationView(
-        fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-            AppColors.green, AppColors.text_grey),
-        headerLayout: HomeAppBar(),
-        fieldValidator: (hintAsKey, values) {
-          final String value = values[hintAsKey];
-          switch(hintAsKey){
-            case Constants.FIELD_NAME:
-              return FieldValidator.validateName(value);
-            case Constants.FIELD_MOBILE:
-              return FieldValidator.validateMobileNumber(value);
-            case Constants.FIELD_ALTERNATE_NUMBER:
-              return FieldValidator.validateMobileNumber(value);
-            case Constants.FIELD_PINCODE:
-              return FieldValidator.validatePincode(value);
-            case Constants.FIELD_CITY:
-              return FieldValidator.validateCity(value);
-            case Constants.FIELD_ADDRESS:
-              return FieldValidator.validateAddress(value);
-            case Constants.FIELD_EMAIL:
-              return FieldValidator.validateEmailAddress(value);
-            case Constants.FIELD_PASSWORD:
-              return FieldValidator.validatePassword(value);
-            case Constants.FIELD_CONFIRM_PASSWORD:
-              return FieldValidator.validateConfirmPassword(values[Constants.FIELD_PASSWORD], value);
-            default:
-              return null;
+        body: AuthenticationView(
+      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+          AppColors.green, AppColors.text_grey),
+      headerLayout: HomeAppBar(),
+      fieldValidator: (hintAsKey, values) {
+        final String value = values[hintAsKey];
+        switch (hintAsKey) {
+          case Constants.FIELD_NAME:
+            return FieldValidator.validateName(value);
+          case Constants.FIELD_MOBILE:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.FIELD_ALTERNATE_NUMBER:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.FIELD_PINCODE:
+            return FieldValidator.validatePincode(value);
+          case Constants.FIELD_CITY:
+            return FieldValidator.validateCity(value);
+          case Constants.FIELD_ADDRESS:
+            return FieldValidator.validateAddress(value);
+          case Constants.FIELD_EMAIL:
+            return FieldValidator.validateEmailAddress(value);
+          case Constants.FIELD_PASSWORD:
+            return FieldValidator.validatePassword(value);
+          case Constants.FIELD_CONFIRM_PASSWORD:
+            return FieldValidator.validateConfirmPassword(
+                values[Constants.FIELD_PASSWORD], value);
+          default:
+            return null;
+        }
+      },
+      fieldTypes: [
+        _name,
+        _address,
+        _city,
+        _pincode,
+        _mobile,
+        _alternateNumber,
+        _email,
+        _password,
+        _confirmPassword
+      ],
+      onValidation: (bool isValidationSuccess, valueMap) {
+        if (isValidationSuccess) {
+          if (latitude == 0 && longitude == 0) {
+            DisplayUtil.instance.showErrorDialog(context,
+                'Location should be enabled to proceed with the registration');
+          } else {
+            sendOtp(valueMap);
           }
-        },
-        fieldTypes: [
-          _name,
-          _address,
-          _city,
-          _pincode,
-          _mobile,
-          _alternateNumber,
-          _email,
-          _password,
-          _confirmPassword
-        ],
-        onValidation: (bool isValidationSuccess, valueMap) {
-          if(isValidationSuccess) {
-            if(latitude == 0 && longitude == 0){
-                DisplayUtil.instance.showErrorDialog(context, 'Location should be enabled to proceed with the registration');
-            } else {
-                sendOtp(valueMap);
-            }
-          }
-        },
-      )
-    );
+        }
+      },
+    ));
   }
 
   void sendOtp(Map<String, String> valueMap) {
@@ -147,9 +158,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final int mobile = valueMap[Constants.FIELD_MOBILE] != null
         ? int.parse(valueMap[Constants.FIELD_MOBILE])
         : 0;
-    final int alternateNumber = valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
-        ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
-        : 0;
+    final int alternateNumber =
+        valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
+            ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
+            : 0;
     final email = valueMap[Constants.FIELD_EMAIL];
     final password = valueMap[Constants.FIELD_PASSWORD];
     const persona = 'buyer';
@@ -169,7 +181,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     OtpData otpData = OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);
-
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 
@@ -11,6 +12,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapState extends State<MapScreen> {
+  final logger = getLogger('MapScreen');
   final MapType _type = MapType.normal;
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -28,7 +30,8 @@ class _MapState extends State<MapScreen> {
     final markers = users.map((user) => Marker(
           markerId: MarkerId(user.id.toString()),
           position: LatLng(user.lat, user.long),
-          icon: BitmapDescriptor.defaultMarkerWithHue(user.persona == Constants.USER_SELLER ? 200.0 : 0.0),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+              user.persona == Constants.USER_SELLER ? 200.0 : 0.0),
           infoWindow: InfoWindow(
             title: '${user.name}',
             snippet: '${user.address}',
@@ -39,7 +42,7 @@ class _MapState extends State<MapScreen> {
         ));
     this.markers = Map.fromIterable(markers,
         key: (marker) => marker.markerId, value: (marker) => marker);
-    debugPrint('Markers Ready');
+    logger.i('Markers Ready');
   }
 
   @override
@@ -56,7 +59,7 @@ class _MapState extends State<MapScreen> {
               return Center(child: const CircularProgressIndicator());
             }
             populateUsers(snapShot.data);
-            debugPrint('Initialize Google Map');
+            logger.i('Initialize Google Map');
             return GoogleMap(
                 initialCameraPosition: _options,
                 onMapCreated: onMapCreated,
@@ -67,6 +70,6 @@ class _MapState extends State<MapScreen> {
   }
 
   void _onMarkerTapped(MarkerId markerId) {
-    debugPrint('Marker $markerId Tapped!');
+    logger.i('Marker $markerId Tapped!');
   }
 }
