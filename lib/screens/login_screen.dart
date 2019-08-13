@@ -29,6 +29,24 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     _bloc = LoginBloc();
+    _bloc.loginStream.listen((_snapshot) {
+      switch (_snapshot.status) {
+        case Status.LOADING:
+          DisplayUtil.instance.showLoadingDialog(context);
+          break;
+        case Status.ERROR:
+          DisplayUtil.instance.dismissDialog(context);
+          break;
+        case Status.COMPLETED:
+          if (_snapshot.data.auth) {
+            DisplayUtil.instance.dismissDialog(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MapScreen()));
+          }
+          break;
+      }
+    });
+
     super.initState();
   }
 
@@ -84,29 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
               final password = valueMap[Constants.FIELD_PASSWORD];
               final LoginData data =
                   LoginData(loginId: email, password: password);
-              doLogin(context, data);
+              _bloc.login(data);
             }));
-  }
-
-  void doLogin(BuildContext context, LoginData data) {
-    _bloc.login(data);
-    _bloc.loginStream.listen((_snapshot) {
-      switch (_snapshot.status) {
-        case Status.LOADING:
-          DisplayUtil.instance.showLoadingDialog(context);
-          break;
-        case Status.ERROR:
-          DisplayUtil.instance.dismissDialog(context);
-          break;
-        case Status.COMPLETED:
-          if (_snapshot.data.auth) {
-            DisplayUtil.instance.dismissDialog(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MapScreen()));
-          }
-          break;
-      }
-    });
   }
 
   @override

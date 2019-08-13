@@ -94,4 +94,10 @@ class _OTPScreenState extends State<OTPScreen> {
           }),
     );
   }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
 }
