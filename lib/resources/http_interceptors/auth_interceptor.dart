@@ -28,6 +28,7 @@ class AuthInterceptor implements InterceptorContract {
       /// and retry internally. This retry logic should not be intercepted to avoid
       /// falling under recursive loop.
       if(await _tokenRepository.isAuthorized() && await _tokenRepository.refreshToken()) {
+        await addAuthHeader(_requestData);
         final streamedResponse = await _requestData.toHttpRequest().send();
         final response = await Response.fromStream(streamedResponse);
         return ResponseData.fromHttpResponse(response);
