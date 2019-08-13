@@ -30,6 +30,8 @@ docker-compose up --build
 
 API is started in port `7000` and Postgres database is started in port `5432`.
 
+To seed test data in to the database refer the [backend readme](https://github.com/chennaitricolor/wastexchange-be#dev-machine-setup).
+
 ## Create the .env file
 
 Copy the .env.sample and rename as .env file. Contact the team to get the actual values of the keys.
