@@ -27,6 +27,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   double longitude;
   final logger = getLogger('RegistrationScreen');
 
+  final FieldType _name =
+      FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
+  final FieldType _email = FieldType.value(
+      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  final FieldType _mobile =
+      FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
+  final FieldType _password =
+      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _confirmPassword = FieldType.value(
+      Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _address =
+      FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
+  final FieldType _city =
+      FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
+  final FieldType _pincode =
+      FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
+  final FieldType _alternateNumber = FieldType.value(
+      Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
+
   @override
   void initState() {
     _initCurrentLocation();
@@ -79,73 +98,72 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
           AppColors.green, AppColors.text_grey),
       headerLayout: HomeAppBar(),
-      fieldValidator: (value, index) {
-        switch (index) {
-          case 0:
+      fieldValidator: (hintAsKey, values) {
+        final String value = values[hintAsKey];
+        switch (hintAsKey) {
+          case Constants.FIELD_NAME:
             return FieldValidator.validateName(value);
-          case 1:
-            return FieldValidator.validateAddress(value);
-          case 2:
-            return FieldValidator.validateCity(value);
-          case 3:
+          case Constants.FIELD_MOBILE:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.FIELD_ALTERNATE_NUMBER:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.FIELD_PINCODE:
             return FieldValidator.validatePincode(value);
-          case 4:
-            return FieldValidator.validateMobileNumber(value);
-          case 5:
-            return FieldValidator.validateMobileNumber(value);
-          case 6:
+          case Constants.FIELD_CITY:
+            return FieldValidator.validateCity(value);
+          case Constants.FIELD_ADDRESS:
+            return FieldValidator.validateAddress(value);
+          case Constants.FIELD_EMAIL:
             return FieldValidator.validateEmailAddress(value);
-          case 7:
+          case Constants.FIELD_PASSWORD:
             return FieldValidator.validatePassword(value);
-          case 8:
-            return FieldValidator.validatePassword(value);
+          case Constants.FIELD_CONFIRM_PASSWORD:
+            return FieldValidator.validateConfirmPassword(
+                values[Constants.FIELD_PASSWORD], value);
           default:
             return null;
         }
       },
       fieldTypes: [
-        FieldType.NAME,
-        const FieldType.value(
-            Constants.FIELD_ADDRESS, 30, TextInputType.text, false),
-        const FieldType.value(
-            Constants.FIELD_CITY, 20, TextInputType.text, false),
-        const FieldType.value(
-            Constants.FIELD_PINCODE, 6, TextInputType.number, false),
-        FieldType.MOBILE,
-        const FieldType.value(
-            Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false),
-        FieldType.EMAIL,
-        FieldType.PASSWORD,
-        FieldType.CONFIRM_PASSWORD
+        _name,
+        _address,
+        _city,
+        _pincode,
+        _mobile,
+        _alternateNumber,
+        _email,
+        _password,
+        _confirmPassword
       ],
-      onValidation: (bool isValidationSuccess, textEditingControllers) {
+      onValidation: (bool isValidationSuccess, valueMap) {
         if (isValidationSuccess) {
           if (latitude == 0 && longitude == 0) {
             DisplayUtil.instance.showErrorDialog(context,
                 'Location should be enabled to proceed with the registration');
           } else {
-            sendOtp(textEditingControllers);
+            sendOtp(valueMap);
           }
         }
       },
     ));
   }
 
-  void sendOtp(Map<int, TextEditingController> textEditingControllers) {
-    final name = textEditingControllers[0].text;
-    final address = textEditingControllers[1].text;
-    final city = textEditingControllers[2].text;
-    final pincode = textEditingControllers[3].text != null
-        ? int.parse(textEditingControllers[3].text)
+  void sendOtp(Map<String, String> valueMap) {
+    final name = valueMap[Constants.FIELD_NAME];
+    final address = valueMap[Constants.FIELD_ADDRESS];
+    final city = valueMap[Constants.FIELD_CITY];
+    final pincode = valueMap[Constants.FIELD_PINCODE] != null
+        ? int.parse(valueMap[Constants.FIELD_PINCODE])
         : 0;
-    final int mobile = textEditingControllers[4].text != null
-        ? int.parse(textEditingControllers[4].text)
+    final int mobile = valueMap[Constants.FIELD_MOBILE] != null
+        ? int.parse(valueMap[Constants.FIELD_MOBILE])
         : 0;
-    final int alternateNumber = textEditingControllers[5].text != null
-        ? int.parse(textEditingControllers[5].text)
-        : 0;
-    final email = textEditingControllers[6].text;
-    final password = textEditingControllers[7].text;
+    final int alternateNumber =
+        valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
+            ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
+            : 0;
+    final email = valueMap[Constants.FIELD_EMAIL];
+    final password = valueMap[Constants.FIELD_PASSWORD];
     const persona = 'buyer';
 
     registrationData = RegistrationData(

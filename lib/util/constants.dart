@@ -13,6 +13,11 @@ class Constants {
   static const FIELD_PINCODE = 'Pincode';
   static const FIELD_CITY = 'City';
   static const FIELD_ADDRESS = 'Address';
+  static const FIELD_PASSWORD = 'Password';
+  static const FIELD_CONFIRM_PASSWORD = 'Confirm Password';
+  static const FIELD_MOBILE = 'Mobile number';
+  static const FIELD_EMAIL = 'Email address';
+  static const FIELD_NAME = 'Name';
 
   //OTP screen
   static const FIELD_OTP = 'OTP';

@@ -30,6 +30,8 @@ docker-compose up --build
 
 API is started in port `7000` and Postgres database is started in port `5432`.
 
+To seed test data in to the database refer the [backend readme](https://github.com/chennaitricolor/wastexchange-be#dev-machine-setup).
+
 ## Create the .env file
 
 Copy the .env.sample and rename as .env file. Contact the team to get the actual values of the keys.
@@ -58,3 +60,10 @@ For viewing Lint rules, refer  **analysis_options.yaml** file in project root.
 
 For disabling a lint rule inline use (not recommended)
 ``// ignore: prefer_single_quotes``
+
+## Test Coverage
+
+To run tests and view coverage, run the following command from project root (wastexchange_mobile/) dir
+
+``./test/coverage_lcov.sh``
+
