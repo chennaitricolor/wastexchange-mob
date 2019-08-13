@@ -58,3 +58,10 @@ For viewing Lint rules, refer  **analysis_options.yaml** file in project root.
 
 For disabling a lint rule inline use (not recommended)
 ``// ignore: prefer_single_quotes``
+
+## Test Coverage
+
+To run tests and view coverage, run the following command from project root (wastexchange_mobile/) dir
+
+``./test/coverage_lcov.sh``
+
