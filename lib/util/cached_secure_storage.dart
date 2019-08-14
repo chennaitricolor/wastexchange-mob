@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class CachedSecureStorage {
 
   factory CachedSecureStorage([FlutterSecureStorage flutterSecureStorage]) {
-    return _instance??= CachedSecureStorage(flutterSecureStorage);
+    return _instance??= CachedSecureStorage._internal(flutterSecureStorage);
   }
 
   CachedSecureStorage._internal([FlutterSecureStorage flutterSecureStorage]) {
