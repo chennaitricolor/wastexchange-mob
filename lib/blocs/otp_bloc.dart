@@ -6,8 +6,10 @@ import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 
 class OtpBloc {
+  final logger = getLogger('OtpBloc');
   final UserRepository _userRepository = UserRepository();
   final StreamController _otpController =
       StreamController<ApiResponse<OtpResponse>>();
@@ -20,10 +22,9 @@ class OtpBloc {
     try {
       final OtpResponse response = await _userRepository.sendOTP(data);
       otpSink.add(ApiResponse.completed(response));
-      debugPrint('Bloc completed');
     } catch (e) {
       otpSink.add(ApiResponse.error(e.toString()));
-      debugPrint('Bloc error');
+      logger.e(e.toString());
     }
   }
 
