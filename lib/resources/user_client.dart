@@ -8,7 +8,6 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 
 class UserClient {
-
   UserClient([ApiBaseHelper helper]) {
     _helper = helper ??= ApiBaseHelper();
   }
@@ -21,29 +20,28 @@ class UserClient {
   ApiBaseHelper _helper;
 
   Future<LoginResponse> login(LoginData loginData) async {
-    final String response = await _helper.post(false,
-        PATH_LOGIN, loginData.toMap());
+    final String response =
+        await _helper.post(false, PATH_LOGIN, loginData.toMap());
     final loginResponse = loginResponseFromJson(response);
     return loginResponse;
   }
 
   Future<RegistrationResponse> register(RegistrationData data) async {
-    final String response = await _helper.post(false,
-        PATH_REGISTER, data.toJson());
+    final String response =
+        await _helper.post(false, PATH_REGISTER, data.toJson());
     final registrationResponse = registrationResponseFromJson(response);
     return registrationResponse;
   }
 
   Future<OtpResponse> sendOTP(OtpData otpData) async {
-    final String response = await _helper.post(false,
-        PATH_SEND_OTP, otpData.toMap());
+    final String response =
+        await _helper.post(false, PATH_SEND_OTP, otpData.toMap());
     final otpResponse = otpResponseFromJson(response);
     return otpResponse;
   }
 
   Future<List<User>> getAllUsers() async {
-    final response =
-        await _helper.get(false, PATH_USERS);
+    final response = await _helper.get(false, PATH_USERS);
     return userFromJson(response);
   }
 }

@@ -11,10 +11,16 @@ import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 
 class ApiBaseHelper {
-
-  ApiBaseHelper({HttpClientWithInterceptor httpClient, HttpClientWithInterceptor httpClientWithAuth}) {
-    _httpClientWithAuth = httpClientWithAuth ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]);
-    _httpClient = httpClient ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
+  ApiBaseHelper(
+      {HttpClientWithInterceptor httpClient,
+      HttpClientWithInterceptor httpClientWithAuth}) {
+    _httpClientWithAuth = httpClientWithAuth ??=
+        HttpClientWithInterceptor.build(interceptors: [
+      LogInterceptor(),
+      AuthInterceptor(TokenRepository())
+    ]);
+    _httpClient = httpClient ??=
+        HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
 
   HttpClientWithInterceptor _httpClientWithAuth;
@@ -24,7 +30,7 @@ class ApiBaseHelper {
   final logger = getLogger('ApiBaseHelper');
 
   HttpClientWithInterceptor _getClient(bool authenticated) {
-      return authenticated ? _httpClientWithAuth : _httpClient;
+    return authenticated ? _httpClientWithAuth : _httpClient;
   }
 
   Future<dynamic> get(bool authenticated, String path) async {
@@ -41,7 +47,6 @@ class ApiBaseHelper {
   Future<dynamic> post(bool authenticated, String path, dynamic body) async {
     dynamic responseJson;
     try {
-
       final response = await _getClient(authenticated).post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
@@ -83,4 +88,3 @@ class ApiBaseHelper {
     }
   }
 }
-

@@ -54,6 +54,12 @@ class _OTPScreenState extends State<OTPScreen> {
     super.initState();
   }
 
+  void doRegister(String otp) {
+    final int value = otp != null ? int.parse(otp) : 0;
+    registrationData.otp = value;
+    _bloc.register(registrationData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +85,7 @@ class _OTPScreenState extends State<OTPScreen> {
           },
           headerLayout: HomeAppBar(),
           fieldTypes: [
-            FieldType.value(Constants.FIELD_OTP, 8, TextInputType.number, false)
+            FieldType.value(Constants.FIELD_OTP, 10, TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {
@@ -89,9 +95,9 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
-  void doRegister(String otp) {
-    final int value = otp != null ? int.parse(otp) : 0;
-    registrationData.otp = value;
-    _bloc.register(registrationData);
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
   }
 }
