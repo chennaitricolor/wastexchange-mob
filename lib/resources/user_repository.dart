@@ -28,7 +28,7 @@ class UserRepository {
     return Future.value(response);
   }
 
-  Future<List<User>> getAllUsers(xs) async {
+  Future<List<User>> getAllUsers() async {
     return await _client.getAllUsers();
   }
 }

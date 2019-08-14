@@ -34,14 +34,5 @@ void main() {
 
       expect(result, const TypeMatcher<LoginResponse>());
     });
-
-    test('url, arguments passed to httpClient', () async {
-      final MockApiHelper mockApiHelper = MockApiHelper();
-
-      when(mockApiHelper.post(false, UserClient.PATH_LOGIN, LoginData(loginId: 'a', password: 'b').toMap())).thenAnswer(
-          (_) async => '{"auth":true,"token":"token"}');
-
-      verify(mockApiHelper.post(false, UserClient.PATH_LOGIN, {'loginId': 'a', 'password': 'b'}));
-    });
   });
 }
