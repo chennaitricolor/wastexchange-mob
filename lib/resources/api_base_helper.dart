@@ -18,9 +18,9 @@ class ApiBaseHelper {
 
   static ApiBaseHelper getInstance(bool isAuth, [HttpClientWithInterceptor httpClientWithInterceptor]) {
     if(isAuth) {
-      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
-    } else {
       return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]));
+    } else {
+      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
     }
   }
 

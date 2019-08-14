@@ -1,4 +1,6 @@
-@Skip('Failing tests after BLOC implementation')
+//@Skip('Failing tests after BLOC implementation')
+
+import 'dart:collection';
 
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
