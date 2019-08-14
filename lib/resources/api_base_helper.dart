@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
-import 'package:wastexchange_mobile/resources/http_interceptors/auth_interceptor.dart';
-import 'package:wastexchange_mobile/resources/http_interceptors/log_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:wastexchange_mobile/resources/auth/token_repository.dart';
+import 'package:wastexchange_mobile/util/http_interceptors/auth_interceptor.dart';
+import 'package:wastexchange_mobile/util/http_interceptors/log_interceptor.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 
 class ApiBaseHelper {
 
@@ -18,7 +18,7 @@ class ApiBaseHelper {
 
   static final ApiBaseHelper _instance = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
 
-  static final ApiBaseHelper _instanceWithAuth = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(JWTTokenRepository()), LogInterceptor()]));
+  static final ApiBaseHelper _instanceWithAuth = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(TokenRepository()), LogInterceptor()]));
 
   static ApiBaseHelper getInstance() {
     return _instance;

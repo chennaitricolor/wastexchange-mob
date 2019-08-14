@@ -1,4 +1,5 @@
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:flutter/widgets.dart';
 
 ///
 /// Interceptor for debug purpose.
@@ -18,16 +19,17 @@ class LogInterceptor implements InterceptorContract {
   }
 
   void printRequestLog(RequestData data) {
-    print('Method: ${data.method}');
-    print('Url: ${data.url}');
-    print('Body: ${data.body}');
+    debugPrint('Method: ${data.method}');
+    debugPrint('Url: ${data.url}');
+    debugPrint('Body: ${data.body}');
+    debugPrint('Headers: ${data.headers}');
   }
 
   void printResponseLog(ResponseData data) {
-    print('Status Code: ${data.statusCode}');
-    print('Method: ${data.method}');
-    print('Url: ${data.url}');
-    print('Body: ${data.body}');
-    print('Headers: ${data.headers}');
+    debugPrint('Status Code: ${data.statusCode}');
+    debugPrint('Method: ${data.method}');
+    debugPrint('Url: ${data.url}');
+    debugPrint('Body: ${data.body}');
+    debugPrint('Headers: ${data.headers}');
   }
 }

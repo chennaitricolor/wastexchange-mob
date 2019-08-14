@@ -6,8 +6,7 @@ import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
-import 'package:wastexchange_mobile/resources/auth/token_repository.dart';
-import 'package:wastexchange_mobile/util/jwt_utils.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 
 class UserRepository {
   final UserClient _client = UserClient();
@@ -23,11 +22,9 @@ class UserRepository {
   Future<LoginResponse> login(LoginData loginData) async {
     LoginResponse response = await _client.login(loginData);
 
-    //Ensure that data comes from API is valid.
-    if(response.token != null && JWTUtils.isValidJWTToken(response.token)) {
-      //Set response to AuthManager to persist access token information and wait for completeness.
-      await JWTTokenRepository().setToken(response.token);
-    }
+    //Set response to TokenRepository to persist access token information and wait for completeness.
+    await TokenRepository().setToken(response.token);
+
     return Future.value(response);
   }
 

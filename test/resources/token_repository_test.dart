@@ -1,7 +1,7 @@
 
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:wastexchange_mobile/resources/auth/token_repository.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MockStorage extends Mock implements FlutterSecureStorage {
@@ -17,7 +17,7 @@ void main() {
     final mockStorage = MockStorage();
     when(await mockStorage.read(key: 'access_token')).thenReturn(SAMPLE_JWT_TOKEN_TO_WRITE);
 
-    final authRepository = JWTTokenRepository(MockStorage());
+    final authRepository = TokenRepository(MockStorage());
 
     await authRepository.setToken(SAMPLE_JWT_TOKEN_TO_WRITE);
 
@@ -32,7 +32,7 @@ void main() {
     const SAMPLE_JWT_TOKEN_TO_WRITE2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkyIiwibmFtZSI6IlBSYXNhbm5hIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.wS0stFzGkhygpmnzZoWMPTUjkDzA_dFi7aSVFZhqIjg';
     const SAMPLE_JWT_TOKEN_TO_WRITE3 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkzIiwibmFtZSI6IlNhbXRobyBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.lCvAuq_71AHlb-dtgATQpxG3_TJAlVaoHXKpJd-tQ14';
 
-    final authRepository = JWTTokenRepository(MockStorage());
+    final authRepository = TokenRepository(MockStorage());
 
     authRepository.setToken(SAMPLE_JWT_TOKEN_TO_WRITE1);
     String retrieved1 = await authRepository.getToken();
