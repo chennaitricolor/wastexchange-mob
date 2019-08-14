@@ -25,8 +25,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   OtpBloc _bloc;
   RegistrationData registrationData;
-  double latitude;
-  double longitude;
+  double latitude = 0;
+  double longitude = 0;
   final logger = getLogger('RegistrationScreen');
 
   final FieldType _name =
@@ -101,7 +101,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: AuthenticationView(
         placeHolderAboveButton: UserTypeSelector(onValueChanged: (UserType userType) {
            this.userType = userType;
-           debugPrint(userType.toString());
+           logger.i(userType.toString());
         }),
         placeHolderBelowButton: Space(24),
         fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
