@@ -12,27 +12,25 @@ import 'package:wastexchange_mobile/util/logger.dart';
 
 class ApiBaseHelper {
 
-  ApiBaseHelper._internal(HttpClientWithInterceptor interceptor) {
-    _httpClient = interceptor;
+  ApiBaseHelper({HttpClientWithInterceptor httpClient, HttpClientWithInterceptor httpClientWithAuth}) {
+    _httpClientWithAuth = httpClientWithAuth ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]);
+    _httpClient = httpClient ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
 
-  static ApiBaseHelper getInstance(bool isAuth, [HttpClientWithInterceptor httpClientWithInterceptor]) {
-    if(isAuth) {
-      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]));
-    } else {
-      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
-    }
-  }
+  HttpClientWithInterceptor _httpClientWithAuth;
+  HttpClientWithInterceptor _httpClient;
 
   final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
   final logger = getLogger('ApiBaseHelper');
 
-  HttpClientWithInterceptor _httpClient;
+  HttpClientWithInterceptor _getClient(bool authenticated) {
+      return authenticated ? _httpClientWithAuth : _httpClient;
+  }
 
-  Future<dynamic> get(String path) async {
+  Future<dynamic> get(bool authenticated, String path) async {
     dynamic responseJson;
     try {
-      final response = await _httpClient.get(_baseApiUrl + path);
+      final response = await _getClient(authenticated).get(_baseApiUrl + path);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -40,11 +38,11 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> post(String path, dynamic body) async {
+  Future<dynamic> post(bool authenticated, String path, dynamic body) async {
     dynamic responseJson;
     try {
 
-      final response = await _httpClient.post(_baseApiUrl + path,
+      final response = await _getClient(authenticated).post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
       responseJson = _returnResponse(response);

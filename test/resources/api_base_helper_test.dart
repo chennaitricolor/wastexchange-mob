@@ -35,58 +35,58 @@ void main() {
 
   test('Test GET call throw Exception on 503 response', () async {
 
-    String path = 'login';
+    final String path = 'login';
     when(_mockHttpClient.get(_baseUrl + path)).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
-    final ApiBaseHelper apiBaseHelper = ApiBaseHelper.getInstance(false, _mockHttpClient);
+    final ApiBaseHelper apiBaseHelper = ApiBaseHelper(httpClient: _mockHttpClient);
 
-    expect(apiBaseHelper.get(path), throwsA(const TypeMatcher<ApiException>()));
+    expect(apiBaseHelper.get(false, path), throwsA(const TypeMatcher<ApiException>()));
   });
 
   test('Test POST call with json gives proper body on success response', () async {
-    String path = 'login';
-    String body = '{"email":"email@email.com", "otp":"1234"}';
+    final String path = 'login';
+    final String body = '{"email":"email@email.com", "otp":"1234"}';
 
-    ApiBaseHelper apiBaseHelper = ApiBaseHelper.getInstance(false, _mockHttpClient);
+    ApiBaseHelper apiBaseHelper = ApiBaseHelper(httpClient: _mockHttpClient);
 
     when(_mockHttpClient.post(_baseUrl + path, headers: {'Content-Type': 'application/json'},
         body: json.encode(body))).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-    expect((await apiBaseHelper.post(path, body)).toString(), '{"auth":true,"token":"token"}');
+    expect((await apiBaseHelper.post(false, path, body)).toString(), '{"auth":true,"token":"token"}');
   });
 
   test('Test POST call with json throw Exceptions on Bad Responses response', () async {
 
-    String path = 'login';
-    String body = '{"email":"email@email.com", "otp":"1234"}';
+    final String path = 'login';
+    final String body = '{"email":"email@email.com", "otp":"1234"}';
 
-    ApiBaseHelper apiBaseHelper = ApiBaseHelper.getInstance(false, _mockHttpClient);
+    ApiBaseHelper apiBaseHelper = ApiBaseHelper(httpClient: _mockHttpClient);
 
     when(_mockHttpClient.post(_baseUrl + path, headers: {'Content-Type': 'application/json'},
         body: json.encode(body))).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
-    expect(apiBaseHelper.post(path, body), throwsA(const TypeMatcher<ApiException>()));
+    expect(apiBaseHelper.post(false, path, body), throwsA(const TypeMatcher<ApiException>()));
 
     when(_mockHttpClient.post(_baseUrl + path, headers: {'Content-Type': 'application/json'},
         body: json.encode(body))).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 401));
 
-    expect(apiBaseHelper.post(path, body), throwsA(const TypeMatcher<UnauthorisedException>()));
+    expect(apiBaseHelper.post(false, path, body), throwsA(const TypeMatcher<UnauthorisedException>()));
 
     when(_mockHttpClient.post(_baseUrl + path, headers: {'Content-Type': 'application/json'},
         body: json.encode(body))).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 404));
 
-    expect(apiBaseHelper.post(path, body), throwsA(const TypeMatcher<ResourceNotFoundException>()));
+    expect(apiBaseHelper.post(false, path, body), throwsA(const TypeMatcher<ResourceNotFoundException>()));
 
     when(_mockHttpClient.post(_baseUrl + path, headers: {'Content-Type': 'application/json'},
         body: json.encode(body))).thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 400));
 
-    expect(apiBaseHelper.post(path, body), throwsA(const TypeMatcher<BadRequestException>()));
+    expect(apiBaseHelper.post(false, path, body), throwsA(const TypeMatcher<BadRequestException>()));
 
   });
 }
