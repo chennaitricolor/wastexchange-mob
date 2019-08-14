@@ -1,25 +1,42 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' show Client;
 import 'package:http/http.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:wastexchange_mobile/util/http_interceptors/auth_interceptor.dart';
+import 'package:wastexchange_mobile/util/http_interceptors/log_interceptor.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 
 class ApiBaseHelper {
-  ApiBaseHelper([Client client]) {
-    _client = client ?? Client();
+  ApiBaseHelper(
+      {HttpClientWithInterceptor httpClient,
+      HttpClientWithInterceptor httpClientWithAuth}) {
+    _httpClientWithAuth = httpClientWithAuth ??=
+        HttpClientWithInterceptor.build(interceptors: [
+      LogInterceptor(),
+      AuthInterceptor(TokenRepository())
+    ]);
+    _httpClient = httpClient ??=
+        HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
 
-  final logger = getLogger('ApiBaseHelper');
-  static final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
-  Client _client;
+  HttpClientWithInterceptor _httpClientWithAuth;
+  HttpClientWithInterceptor _httpClient;
 
-  Future<dynamic> get(String url) async {
+  final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
+  final logger = getLogger('ApiBaseHelper');
+
+  HttpClientWithInterceptor _getClient(bool authenticated) {
+    return authenticated ? _httpClientWithAuth : _httpClient;
+  }
+
+  Future<dynamic> get(bool authenticated, String path) async {
     dynamic responseJson;
     try {
-      final response = await _client.get(_baseApiUrl + url);
+      final response = await _getClient(authenticated).get(_baseApiUrl + path);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -27,10 +44,10 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, dynamic body) async {
+  Future<dynamic> post(bool authenticated, String path, dynamic body) async {
     dynamic responseJson;
     try {
-      final response = await _client.post(_baseApiUrl + url,
+      final response = await _getClient(authenticated).post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
       responseJson = _returnResponse(response);
