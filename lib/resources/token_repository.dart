@@ -1,42 +1,32 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:wastexchange_mobile/util/cached_secure_storage.dart';
 
 /// TokenRepository class specifically designed to handle JWT Token by validating JWT Token, Checking token expired, etc...
 /// This uses a singleton pattern to ensure only one instance is available.
 class TokenRepository {
-  factory TokenRepository([FlutterSecureStorage secureStorage]) {
-    final FlutterSecureStorage storage =
-        secureStorage ??= FlutterSecureStorage();
-    return _instance ??= TokenRepository._internal(storage);
+
+  factory TokenRepository() {
+    return _instance ??= TokenRepository._internal();
   }
 
-  TokenRepository._internal(FlutterSecureStorage secureStorage) {
-    _secureStorage = secureStorage;
-  }
-
-  FlutterSecureStorage _secureStorage;
+  TokenRepository._internal();
 
   static TokenRepository _instance;
 
   static const _tokenKey = 'token';
 
-  String _jwtToken;
-
-  @override
   Future<bool> isAuthorized() async {
     return await getToken() != null;
   }
 
   Future<void> setToken(token) async {
-    _jwtToken = token;
-    await _secureStorage.write(key: _tokenKey, value: token);
+    await CachedSecureStorage().setValue(_tokenKey, token);
   }
 
   Future<void> deleteToken() async {
-    _jwtToken = null;
-    await _secureStorage.delete(key: _tokenKey);
+    await CachedSecureStorage().setValue(_tokenKey, null);
   }
 
   Future<String> getToken() async {
-    return _jwtToken ??= await _secureStorage.read(key: _tokenKey);
+    return CachedSecureStorage().getValue(_tokenKey);
   }
 }

@@ -14,29 +14,29 @@ class UserClient {
   final PATH_USERS = '/users';
 
   Future<LoginResponse> login(LoginData loginData) async {
-    final String response = await ApiBaseHelper.getInstance().post(
-        ApiBaseHelper.baseApiUrl + PATH_LOGIN, loginData.toMap());
+    final String response = await ApiBaseHelper.getInstance(false).post(
+        PATH_LOGIN, loginData.toMap());
     final loginResponse = loginResponseFromJson(response);
     return loginResponse;
   }
 
   Future<RegistrationResponse> register(RegistrationData data) async {
-    final String response = await ApiBaseHelper.getInstance().post(
-        ApiBaseHelper.baseApiUrl + PATH_REGISTER, data.toJson());
+    final String response = await ApiBaseHelper.getInstance(false).post(
+        PATH_REGISTER, data.toJson());
     final registrationResponse = registrationResponseFromJson(response);
     return registrationResponse;
   }
 
   Future<OtpResponse> sendOTP(OtpData otpData) async {
-    final String response = await ApiBaseHelper.getInstance().post(
-        ApiBaseHelper.baseApiUrl + PATH_SEND_OTP, otpData.toMap());
+    final String response = await ApiBaseHelper.getInstance(false).post(
+        PATH_SEND_OTP, otpData.toMap());
     final otpResponse = otpResponseFromJson(response);
     return otpResponse;
   }
 
   Future<List<User>> getAllUsers() async {
     final response =
-        await ApiBaseHelper.getInstanceWithAuth().get(ApiBaseHelper.baseApiUrl + PATH_USERS);
+        await ApiBaseHelper.getInstance(true).get(PATH_USERS);
     return userFromJson(response);
   }
 }

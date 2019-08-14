@@ -16,26 +16,22 @@ class ApiBaseHelper {
     _httpClient = interceptor;
   }
 
-  static final ApiBaseHelper _instance = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
-
-  static final ApiBaseHelper _instanceWithAuth = ApiBaseHelper._internal(HttpClientWithInterceptor.build(interceptors: [AuthInterceptor(TokenRepository()), LogInterceptor()]));
-
-  static ApiBaseHelper getInstance() {
-    return _instance;
+  static ApiBaseHelper getInstance(bool isAuth, [HttpClientWithInterceptor httpClientWithInterceptor]) {
+    if(isAuth) {
+      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]));
+    } else {
+      return ApiBaseHelper._internal(httpClientWithInterceptor ??= HttpClientWithInterceptor.build(interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]));
+    }
   }
 
-  static ApiBaseHelper getInstanceWithAuth() {
-    return _instanceWithAuth;
-  }
-
-  static String baseApiUrl = DotEnv().env['BASE_API_URL'];
+  final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
 
   HttpClientWithInterceptor _httpClient;
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String path) async {
     dynamic responseJson;
     try {
-      final response = await _httpClient.get(url);
+      final response = await _httpClient.get(_baseApiUrl + path);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -43,11 +39,11 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, dynamic body) async {
+  Future<dynamic> post(String path, dynamic body) async {
     dynamic responseJson;
     try {
 
-      final response = await _httpClient.post(url,
+      final response = await _httpClient.post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
       responseJson = _returnResponse(response);
