@@ -85,7 +85,7 @@ class _OTPScreenState extends State<OTPScreen> {
           },
           headerLayout: HomeAppBar(),
           fieldTypes: [
-            FieldType.value(Constants.FIELD_OTP, 8, TextInputType.number, false)
+            FieldType.value(Constants.FIELD_OTP, 10, TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {
