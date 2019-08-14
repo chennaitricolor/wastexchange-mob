@@ -1,10 +1,11 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:flutter/widgets.dart';
-
+import 'package:wastexchange_mobile/util/logger.dart';
 ///
 /// Interceptor for debug purpose.
 ///
 class LogInterceptor implements InterceptorContract {
+
+  final logger = getLogger('LogInterceptor');
 
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
@@ -19,17 +20,17 @@ class LogInterceptor implements InterceptorContract {
   }
 
   void printRequestLog(RequestData data) {
-    debugPrint('Method: ${data.method}');
-    debugPrint('Url: ${data.url}');
-    debugPrint('Body: ${data.body}');
-    debugPrint('Headers: ${data.headers}');
+    logger.d('Method: ${data.method}');
+    logger.d('Url: ${data.url}');
+    logger.d('Body: ${data.body}');
+    logger.d('Headers: ${data.headers}');
   }
 
   void printResponseLog(ResponseData data) {
-    debugPrint('Status Code: ${data.statusCode}');
-    debugPrint('Method: ${data.method}');
-    debugPrint('Url: ${data.url}');
-    debugPrint('Body: ${data.body}');
-    debugPrint('Headers: ${data.headers}');
+    logger.d('Status Code: ${data.statusCode}');
+    logger.d('Method: ${data.method}');
+    logger.d('Url: ${data.url}');
+    logger.d('Body: ${data.body}');
+    logger.d('Headers: ${data.headers}');
   }
 }
