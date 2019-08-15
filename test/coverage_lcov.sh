@@ -1,42 +1,40 @@
 #!/bin/bash
 
 FILE_LOADER_TEST_FILE="test/file_loader_test.dart"
-FOLDERS=( "lib/blocs" "lib/models" "lib/resources" "lib/util" )
+LIB_DIR=( "lib" )
+EXCLUDE_PATHS=( "lib/widgets" "lib/screens" "lib/main.dart" )
 ALL_SOURCE_FILES=()
 PACKAGE_NAME="package:wastexchange_mobile"
 
-get_files_in_dir_recursively() {
-_files=()
+get_source_files_in_dir_recursively() {
     for entry in "$1"/* 
     do 
-    if [ -d "$entry" ]
-		then 
-			echo "Iterating dir $entry"			
-			get_files_in_dir_recursively $entry
-		else 
-			ALL_SOURCE_FILES+=( "$entry" )	
+	result=$(is_excluded_folder $entry) 
+	if [ $result -eq 1 ]
+	then
+		echo "Skipping exclude_path: $entry"
+		continue
+	fi
+
+    if [ -d $entry ]
+    then
+		echo "Iterating dir $entry"			
+		get_source_files_in_dir_recursively $entry
+	else 
+		ALL_SOURCE_FILES+=( "$entry" )		
 	fi
     done
 }
 
 check_and_install_lcov() {
   	echo "Checking lcov installation"
-	if brew ls --versions lcov > /dev/null; then
-		echo "lcov installed"
+	if brew ls --versions lcov > /dev/null
+	then
+		echo "lcov already installed"
 	else
 		echo "Installing lcov"
   		brew install lcov
 	fi
-}
-
-iterate_given_folders_and_collect_source_files() {
-	_files=()
-	for dir in "${FOLDERS[@]}" 
-	do
-		 echo "Iterating dir $dir"			
-		 get_files_in_dir_recursively $dir
-	done
-	echo "Found ${#ALL_SOURCE_FILES[@]} source files"
 }
 
 generate_file_loader_test_dart_file() {
@@ -69,22 +67,40 @@ remove_file_loader_test_dart_file() {
 	fi 
 }
 
+is_excluded_folder() {
+	_excluded=0
+	for i in "${EXCLUDE_PATHS[@]}"
+	do
+		if [[ $1 == *"$i"* ]]
+		then
+		_excluded=1
+		break
+		fi
+	done
+	echo "$_excluded"
+}
+
+print_source_files_count() {
+	echo "Found ${#ALL_SOURCE_FILES[@]} source files"
+}
+
 check_and_install_lcov
 
-iterate_given_folders_and_collect_source_files
+get_source_files_in_dir_recursively $LIB_DIR
 
-#remove existing file
+print_source_files_count
+
+#remove existing temp file_loader_test file
 remove_file_loader_test_dart_file
 
-#generate file
+#generate temp file_loader_test file
 generate_file_loader_test_dart_file
 
-#run flutter tests
 run_flutter_tests
 
-#generate and open coverage report
+#generate and open coverage report in browser
 generate_html_from_coverage
 
-#delete file now that the job is done
+#delete temp file_loader_test file
 remove_file_loader_test_dart_file
 
