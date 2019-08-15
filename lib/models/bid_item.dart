@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import 'item.dart';
 
 class BidItem {
@@ -11,16 +13,17 @@ class BidItem {
     double bidPrice;
 
   static BidItem mapItemToBidItem(Item item){
-    BidItem bidItem;
-    bidItem.name = item.name;
-    bidItem.availableQuantity = item.qty;
-    bidItem.specifiedPRice = item.price;
+    final BidItem bidItem = BidItem(name: item.name, availableQuantity: item.qty, specifiedPRice: item.price);
     return bidItem;
   }
 
   static List<BidItem> mapItemListToBidItemList(List<Item> items){
-    List<BidItem> bidITemsList;
-    items.map((item) => bidITemsList.add(mapItemToBidItem(item)));
+    List<BidItem> bidITemsList = List<BidItem>();
+    BidItem bidItem;
+    for(int i=0; i<items.length; i++){
+      bidItem = mapItemToBidItem(items.elementAt(i));
+      bidITemsList.add(bidItem);
+    }
     return bidITemsList;
   }
 
