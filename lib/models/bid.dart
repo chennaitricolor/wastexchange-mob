@@ -1,14 +1,13 @@
-class Bid{
+class Bid {
+  Bid(this.orderNumber, this.orderDate, this.seller, this.amount,
+      this.pickupDate, this.bidStatus);
+
   String orderNumber;
   DateTime orderDate;
   String seller;
   double amount;
   DateTime pickupDate;
   BidStatus bidStatus;
-
-  Bid(this.orderNumber, this.orderDate, this.seller, this.amount, this.pickupDate, this.bidStatus);
 }
 
-enum BidStatus {
-  cancelled, pending, successful
-}
+enum BidStatus { cancelled, pending, successful }

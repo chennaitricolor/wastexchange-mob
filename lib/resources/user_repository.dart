@@ -9,8 +9,7 @@ import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 
 class UserRepository {
-
-  UserRepository({UserClient client, TokenRepository tokenRepository})  {
+  UserRepository({UserClient client, TokenRepository tokenRepository}) {
     _client = client ?? UserClient();
     _tokenRepository = tokenRepository ?? TokenRepository();
   }
@@ -22,12 +21,13 @@ class UserRepository {
     return await _client.sendOTP(otpData);
   }
 
-  Future<RegistrationResponse> register(RegistrationData registrationData) async {
+  Future<RegistrationResponse> register(
+      RegistrationData registrationData) async {
     return await _client.register(registrationData);
   }
 
   Future<LoginResponse> login(LoginData loginData) async {
-    LoginResponse response = await _client.login(loginData);
+    final LoginResponse response = await _client.login(loginData);
 
     //Set response to TokenRepository to persist access token information and wait for completeness.
     await _tokenRepository.setToken(response.token);

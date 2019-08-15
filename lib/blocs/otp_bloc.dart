@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/api_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';

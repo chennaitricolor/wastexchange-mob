@@ -4,7 +4,6 @@ import 'package:wastexchange_mobile/widgets/radio_button_horizontal.dart';
 enum UserType { BUYER, SELLER }
 
 class UserTypeSelector extends StatefulWidget {
-
   UserTypeSelector({@required this.onValueChanged});
 
   ValueChanged<UserType> onValueChanged;
@@ -16,7 +15,7 @@ class UserTypeSelector extends StatefulWidget {
 class _UserTypeSelectorState extends State<UserTypeSelector> {
   UserType _userTypeValue = UserType.BUYER;
 
-
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Row(

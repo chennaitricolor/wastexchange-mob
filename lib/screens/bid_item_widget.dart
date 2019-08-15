@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 
 class BidItemWidget extends StatefulWidget {
-  const BidItemWidget({Key key, this.commodity, this.onSaveItem}) : super(key: key);
+  const BidItemWidget({Key key, this.commodity, this.onSaveItem})
+      : super(key: key);
   final BidItem commodity;
   final Function(int index, double bidQty, double bidAmt) onSaveItem;
   @override
@@ -13,9 +14,9 @@ class _BidItemWidgetState extends State<BidItemWidget> {
   final _formKey = GlobalKey<FormState>();
   final qtyController = TextEditingController();
   final priceController = TextEditingController();
-  
+
   //Styling
-  final EdgeInsets all10 = EdgeInsets.all(10.0);
+  static const EdgeInsets all10 = EdgeInsets.all(10.0);
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -23,7 +24,6 @@ class _BidItemWidgetState extends State<BidItemWidget> {
     priceController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +59,10 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                   ),
                 ),
                 SizedBox(
-                  width:100,
-                  child: TextFormField(
-                    controller: priceController,
-                  )),
+                    width: 100,
+                    child: TextFormField(
+                      controller: priceController,
+                    )),
               ],
             ),
             RaisedButton(
@@ -70,10 +70,11 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 // Validate returns true if the form is valid, or false
                 // otherwise.
                 if (_formKey.currentState.validate()) {
-                  widget.onSaveItem(0, double.parse(qtyController.text), double.parse(priceController.text));
+                  widget.onSaveItem(0, double.parse(qtyController.text),
+                      double.parse(priceController.text));
                 }
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
