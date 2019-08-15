@@ -33,14 +33,18 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User dummyUser = User(id: 1, name: 'Surya');
+   
+    // Dummy Data Block
+    final User dummyUser = User(id: 1, name: 'Chennai Dump Yard');
     final List<Item> itemsList = [Item(name: 'Plastic',price: 20,qty: 10),Item(name: 'Paper',price: 10,qty: 100)];
     widget.sellerInfo = SellerInformation(seller: dummyUser, sellerItems: itemsList);
     if(widget.sellerInfo.sellerItems.isNotEmpty)
      widget.bidItems = BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems);
      // TODO: implement build
+   
+   
     return Scaffold(
-      appBar: AppBar(title: Text('Seller Information'),),
+      appBar: AppBar(title: Text(widget.sellerInfo.seller.name),),
       body: Container(child: ListView.builder(
         itemCount: 2,
         itemBuilder: (BuildContext context,int index){
