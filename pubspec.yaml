@@ -35,6 +35,7 @@ dependencies:
 
   # Interceptor is used to modify API Request by adding auth header in each request.
   http_interceptor: ^0.0.3
+  intl: ^0.15.8
 
 
 dev_dependencies:
