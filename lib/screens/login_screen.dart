@@ -10,7 +10,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/display_util.dart';
+import 'package:wastexchange_mobile/util/widget_display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
