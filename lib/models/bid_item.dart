@@ -19,7 +19,7 @@ class BidItem {
   }
 
   static List<BidItem> mapItemListToBidItemList(List<Item> items) {
-    final List<BidItem> bidITemsList = List<BidItem>();
+    final List<BidItem> bidITemsList = [];
     BidItem bidItem;
     for (int i = 0; i < items.length; i++) {
       bidItem = mapItemToBidItem(items.elementAt(i));
