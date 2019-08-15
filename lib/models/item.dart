@@ -12,7 +12,7 @@ class Item {
     this.price,
   });
 
-  factory Item.fromJson(Map<dynamic, dynamic> json, String itemName) => Item(
+  factory Item.fromJson(Map<String, dynamic> json, String itemName) => Item(
         name: itemName,
         qty: json['qty'],
         price: json['price'],
