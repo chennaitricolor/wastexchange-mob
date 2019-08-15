@@ -1,6 +1,7 @@
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
+import 'package:authentication_view/space.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/models/api_response.dart';
@@ -11,8 +12,10 @@ import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
+import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -22,19 +25,30 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   OtpBloc _bloc;
   RegistrationData registrationData;
-  double latitude;
-  double longitude;
+  double latitude = 0;
+  double longitude = 0;
+  final logger = getLogger('RegistrationScreen');
 
-  final FieldType _name  =  FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
-  final FieldType _email  =  FieldType.value(Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
-  final FieldType _mobile =  FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
-  final FieldType _password  =  FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
-  final FieldType _confirmPassword  =  FieldType.value(Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
-  final FieldType _address =  FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
-  final FieldType _city =     FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
-  final FieldType _pincode =  FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
-  final FieldType _alternateNumber =   FieldType.value(
+  final FieldType _name =
+      FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
+  final FieldType _email = FieldType.value(
+      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  final FieldType _mobile =
+      FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
+  final FieldType _password =
+      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _confirmPassword = FieldType.value(
+      Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _address =
+      FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
+  final FieldType _city =
+      FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
+  final FieldType _pincode =
+      FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
+  final FieldType _alternateNumber = FieldType.value(
       Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
+
+  UserType userType = UserType.BUYER;
 
   @override
   void initState() {
@@ -46,12 +60,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          debugPrint(_snapshot.message);
+          logger.i(_snapshot.message);
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
           if (_snapshot.data.message.isNotEmpty) {
-            debugPrint(_snapshot.data.message);
+            logger.i(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
                 context,
@@ -70,10 +84,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-          latitude =  position != null ? position.latitude : 0;
+          latitude = position != null ? position.latitude : 0;
           longitude = position != null ? position.longitude : 0;
-          debugPrint("Latitude: " + latitude.toString());
-          debugPrint("Longitude: " + longitude.toString());
+          logger.i('Latitude: ' + latitude.toString());
+          logger.i('Longitude: ' + longitude.toString());
         }
       }).catchError((e) {
         latitude = 0;
@@ -85,6 +99,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthenticationView(
+        placeHolderAboveButton: UserTypeSelector(onValueChanged: (UserType userType) {
+           this.userType = userType;
+           logger.i(userType.toString());
+        }),
+        placeHolderBelowButton: Space(24),
         fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
             AppColors.green, AppColors.text_grey),
         headerLayout: HomeAppBar(),
@@ -132,9 +151,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 sendOtp(valueMap);
             }
           }
-        },
-      )
-    );
+      },
+    ));
   }
 
   void sendOtp(Map<String, String> valueMap) {
@@ -147,12 +165,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final int mobile = valueMap[Constants.FIELD_MOBILE] != null
         ? int.parse(valueMap[Constants.FIELD_MOBILE])
         : 0;
-    final int alternateNumber = valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
-        ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
-        : 0;
+    final int alternateNumber =
+        valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
+            ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
+            : 0;
     final email = valueMap[Constants.FIELD_EMAIL];
     final password = valueMap[Constants.FIELD_PASSWORD];
-    const persona = 'buyer';
+    final String persona = (userType==UserType.BUYER) ? 'buyer' : 'seller';
 
     registrationData = RegistrationData(
         name: name,
@@ -167,9 +186,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         long: longitude,
         persona: persona);
 
-    OtpData otpData = OtpData(emailId: email, mobileNo: mobile.toString());
+    final OtpData otpData =
+        OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);
-
   }
 
   @override

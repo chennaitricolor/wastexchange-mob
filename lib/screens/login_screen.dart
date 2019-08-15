@@ -13,7 +13,6 @@ import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/loading_indicator.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -22,12 +21,32 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
-  final FieldType _email  =  FieldType.value(Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
-  final FieldType _password  =  FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  final FieldType _email = FieldType.value(
+      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  final FieldType _password =
+      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
 
-@override
+  @override
   void initState() {
-   _bloc = LoginBloc();
+    _bloc = LoginBloc();
+    _bloc.loginStream.listen((_snapshot) {
+      switch (_snapshot.status) {
+        case Status.LOADING:
+          DisplayUtil.instance.showLoadingDialog(context);
+          break;
+        case Status.ERROR:
+          DisplayUtil.instance.dismissDialog(context);
+          break;
+        case Status.COMPLETED:
+          if (_snapshot.data.auth) {
+            DisplayUtil.instance.dismissDialog(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MapScreen()));
+          }
+          break;
+      }
+    });
+
     super.initState();
   }
 
@@ -64,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (hintAsKey, values) {
               final String value = values[hintAsKey];
-              switch(hintAsKey){
+              switch (hintAsKey) {
                 case Constants.FIELD_EMAIL:
                   return FieldValidator.validateEmailAddress(value);
                 case Constants.FIELD_PASSWORD:
@@ -81,33 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
               }
               final email = valueMap[Constants.FIELD_EMAIL];
               final password = valueMap[Constants.FIELD_PASSWORD];
-              final LoginData data = LoginData(
-                  loginId: email,
-                  password: password);
-                  doLogin(context, data);
+              final LoginData data =
+                  LoginData(loginId: email, password: password);
+              _bloc.login(data);
             }));
   }
-
-    void doLogin(BuildContext context, LoginData data) {
-      _bloc.login(data);
-      _bloc.loginStream.listen((_snapshot) {
-        switch (_snapshot.status) {
-          case Status.LOADING:
-            DisplayUtil.instance.showLoadingDialog(context);
-            break;
-          case Status.ERROR:
-            DisplayUtil.instance.dismissDialog(context);
-            break;
-          case Status.COMPLETED:
-            if (_snapshot.data.auth) {
-              DisplayUtil.instance.dismissDialog(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MapScreen()));
-            }
-            break;
-        }
-      });
-    }
 
   @override
   void dispose() {
