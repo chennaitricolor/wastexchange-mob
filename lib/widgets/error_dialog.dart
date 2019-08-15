@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/util/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog(this.message);
