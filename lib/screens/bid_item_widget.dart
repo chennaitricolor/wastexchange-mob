@@ -32,6 +32,13 @@ class _BidItemWidgetState extends State<BidItemWidget> {
       child: Container(
         margin: all10,
         padding: all10,
+        decoration: BoxDecoration(boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(1.0, 1.0),
+            blurRadius: 1.0,
+          ),
+        ]),
         child: Column(
           children: <Widget>[
             Row(
@@ -48,11 +55,10 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                      'Available Qty : ${widget.commodity.availableQuantity.toString()}'),
+                      'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
                   SizedBox(
                     width: 100,
                     child: TextFormField(
-                      
                       decoration: InputDecoration.collapsed(
                         hintText: 'Quantity',
                         // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
@@ -72,7 +78,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                    'Quoted Price : ${widget.commodity.specifiedPRice.toString()}'),
+                    'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
                 SizedBox(
                     width: 100,
                     child: TextFormField(
