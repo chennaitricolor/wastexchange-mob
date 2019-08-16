@@ -7,20 +7,19 @@ String userToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class User {
-  User({
-    this.id,
-    this.city,
-    this.pinCode,
-    this.persona,
-    this.address,
-    this.mobNo,
-    this.altMobNo,
-    this.lat,
-    this.long,
-    this.emailId,
-    this.name,
-    this.approved,
-  });
+  User(
+      {this.id,
+      this.city,
+      this.pinCode,
+      this.persona,
+      this.address,
+      this.mobNo,
+      this.altMobNo,
+      this.lat,
+      this.long,
+      this.emailId,
+      this.name,
+      this.approved});
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json['id'],
