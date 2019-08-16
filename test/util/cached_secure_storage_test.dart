@@ -13,12 +13,23 @@ void main() {
     cachedSecureStorage = CachedSecureStorage(MockFlutterStorage());
   });
 
-  test('check Storage Stores value based on the distinct KEY provided', () async {
+  test('check CachedSecureStorage Stores value based on the distinct KEY provided', () async {
 
     cachedSecureStorage.setValue('access_token', 'xdfcceee');
     cachedSecureStorage.setValue('jwt_token', 'abcdeee');
 
     expect(await cachedSecureStorage.getValue('access_token'), 'xdfcceee');
     expect(await cachedSecureStorage.getValue('jwt_token'), 'abcdeee');
+  });
+
+  test('check setting null value deleting the value', () async {
+
+    cachedSecureStorage.setValue('access_token', 'xdfcceee');
+
+    expect(await cachedSecureStorage.getValue('access_token'), 'xdfcceee');
+
+    cachedSecureStorage.setValue('access_token', null);
+
+    expect(await cachedSecureStorage.getValue('access_token'), null);
   });
 }

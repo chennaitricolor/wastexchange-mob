@@ -2,24 +2,20 @@ import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/util/cached_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class MockStorage extends Mock implements CachedSecureStorage {
+class MockStorage extends Mock implements FlutterSecureStorage {
 
 }
 
 ///Test case to check reading and writing flutter secure storage.
 void main() {
 
-  MockStorage mockStorage;
   TokenRepository tokenRepository;
   String token;
 
   setUp(() {
-    mockStorage = MockStorage();
-    tokenRepository = TokenRepository(mockStorage);
-    when(mockStorage.getValue('token')).thenAnswer((_) async {
-      return token;
-    });
+    tokenRepository = TokenRepository(CachedSecureStorage(MockStorage()));
   });
 
   test('Setting jwt token THEN expect it to retrieve the same', () async {
@@ -41,10 +37,6 @@ void main() {
 
     token = SAMPLE_JWT_TOKEN_TO_WRITE1;
 
-    when(mockStorage.getValue('token')).thenAnswer((_) async {
-      return token;
-    });
-
     tokenRepository.setToken(token);
     final String retrieved1 = await tokenRepository.getToken();
 
@@ -59,5 +51,21 @@ void main() {
     expect(retrieved1, SAMPLE_JWT_TOKEN_TO_WRITE1);
     expect(retrieved2, SAMPLE_JWT_TOKEN_TO_WRITE2);
     expect(retrieved3, SAMPLE_JWT_TOKEN_TO_WRITE3);
+  });
+
+  test('CHECK isAuthorized() method returns positive WHEN token is present', () async {
+
+    const SAMPLE_JWT_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.gCtyCNK1GbhBXIG_gIlb8HpB5xl4_wlivgly0yN3na8';
+
+    token = SAMPLE_JWT_TOKEN;
+
+    expect(await tokenRepository.isAuthorized(), true);
+  });
+
+  test('CHECK delete() method clears token and VERIFY isAuthorized() returns false', () async {
+
+    await tokenRepository.deleteToken();
+
+    expect(await tokenRepository.isAuthorized(), false);
   });
 }
