@@ -21,17 +21,21 @@ void main() {
 
     test('GIVEN value WHEN password is < 5 THEN should show error', () {
       final result = FieldValidator.validatePassword('abc');
-      expect(result, 'Password must be more than 5 characters');
+      expect(result, 'Password must be more than 4 characters');
     });
 
-    test('GIVEN value WHEN password is valid THEN should validate password successfully', () {
+    test(
+        'GIVEN value WHEN password is valid THEN should validate password successfully',
+        () {
       final result = FieldValidator.validatePassword('abcdefg');
       expect(result, null);
     });
   });
 
   group('Confirm Password Field Tests', () {
-    test('GIVEN value WHEN password and confirm password are null THEN should show error', () {
+    test(
+        'GIVEN value WHEN password and confirm password are null THEN should show error',
+        () {
       final result = FieldValidator.validateConfirmPassword(null, null);
       expect(
         result,
@@ -39,7 +43,9 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN password and confirm password are empty THEN should show error', () {
+    test(
+        'GIVEN value WHEN password and confirm password are empty THEN should show error',
+        () {
       final result = FieldValidator.validateConfirmPassword('', '');
       expect(
         result,
@@ -47,7 +53,9 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN password is valid and confirm password is empty THEN should show error', () {
+    test(
+        'GIVEN value WHEN password is valid and confirm password is empty THEN should show error',
+        () {
       final result = FieldValidator.validateConfirmPassword('123456', '');
       expect(
         result,
@@ -55,15 +63,19 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN password and confirm password are not matching THEN should show error', () {
+    test(
+        'GIVEN value WHEN password and confirm password are not matching THEN should show error',
+        () {
       final result = FieldValidator.validateConfirmPassword('123456', '123457');
       expect(
         result,
-        'Confirm Password must be same as password',
+        'Confirm Password must be same as Password',
       );
     });
 
-    test('GIVEN value WHEN password and confirm password matches THEN should validate confirm password successfully', () {
+    test(
+        'GIVEN value WHEN password and confirm password matches THEN should validate confirm password successfully',
+        () {
       final result = FieldValidator.validateConfirmPassword('123456', '123456');
       expect(result, null);
     });
@@ -86,27 +98,21 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN email is < 5 THEN should show error', () {
-      final result = FieldValidator.validateEmailAddress('abc');
-      expect(result, 'Email must be more than 5 characters');
-    });
-
-    test('GIVEN value WHEN email is > 5 THEN should show error', () {
-      final result = FieldValidator.validateEmailAddress('abcdefg');
-      expect(result, 'Please enter the valid email id');
-    });
-
-    test('GIVEN value WHEN email is without @ symbol THEN should show error', () {
+    test('GIVEN value WHEN email is without @ symbol THEN should show error',
+        () {
       final result = FieldValidator.validateEmailAddress('abcxyz.com');
-      expect(result, 'Please enter the valid email id');
+      expect(result, 'Please enter a valid Email');
     });
 
-    test('GIVEN value WHEN email is withougt domain THEN should show error', () {
+    test('GIVEN value WHEN email is withougt domain THEN should show error',
+        () {
       final result = FieldValidator.validateEmailAddress('abc@xyz');
-      expect(result, 'Please enter the valid email id');
+      expect(result, 'Please enter a valid Email');
     });
 
-    test('GIVEN value WHEN email is valid THEN should validate password successfully', () {
+    test(
+        'GIVEN value WHEN email is valid THEN should validate password successfully',
+        () {
       final result = FieldValidator.validateEmailAddress('abc@xyz.com');
       expect(result, null);
     });
@@ -134,7 +140,9 @@ void main() {
       expect(result, 'Mobile number must be minimum 10 digits');
     });
 
-    test('GIVEN value WHEN mobile number is valid THEN should validate mobile number successfully', () {
+    test(
+        'GIVEN value WHEN mobile number is valid THEN should validate mobile number successfully',
+        () {
       final result = FieldValidator.validateMobileNumber('9988776655');
       expect(result, null);
     });
@@ -157,7 +165,9 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN name is valid THEN should validate name successfully', () {
+    test(
+        'GIVEN value WHEN name is valid THEN should validate name successfully',
+        () {
       final result = FieldValidator.validateName('abcd');
       expect(result, null);
     });
@@ -180,7 +190,9 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN address is valid THEN should validate address successfully', () {
+    test(
+        'GIVEN value WHEN address is valid THEN should validate address successfully',
+        () {
       final result = FieldValidator.validateAddress('abcd');
       expect(result, null);
     });
@@ -203,7 +215,9 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN city is valid THEN should validate city successfully', () {
+    test(
+        'GIVEN value WHEN city is valid THEN should validate city successfully',
+        () {
       final result = FieldValidator.validateCity('abcd');
       expect(result, null);
     });
@@ -226,12 +240,14 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN pincode < 5 THEN should show erro', () {
+    test('GIVEN value WHEN pincode.length != 6 THEN should show error', () {
       final result = FieldValidator.validatePincode('abcd');
-      expect(result, 'Pincode should be minimum 5 digits');
+      expect(result, 'Pincode should be 6 digits');
     });
 
-    test('GIVEN value WHEN pincode is valid THEN should validate pincode successfully', () {
+    test(
+        'GIVEN value WHEN pincode is valid THEN should validate pincode successfully',
+        () {
       final result = FieldValidator.validatePincode('600054');
       expect(result, null);
     });
@@ -254,7 +270,8 @@ void main() {
       );
     });
 
-    test('GIVEN value WHEN otp is valid THEN should validate otp successfully', () {
+    test('GIVEN value WHEN otp is valid THEN should validate otp successfully',
+        () {
       final result = FieldValidator.validateOTP('1234');
       expect(result, null);
     });
