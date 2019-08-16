@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:test/test.dart';
@@ -16,25 +15,24 @@ class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
 ///Test case to check reading and writing flutter secure storage.
 void main() {
-  final Map<String, String> envValues = HashMap<String, String>();
-  envValues['MAPS_API_KEY'] = 'abc';
-  envValues['BASE_API_URL'] = 'http://127.0.0.1:7000';
-  envValues['LOGGER_LEVEL'] = 'debug';
-  DotEnv(env: envValues);
 
-  final MockHttpClient _mockHttpClient = MockHttpClient();
+  MockHttpClient _mockHttpClient;
+  ApiBaseHelper _apiBaseHelper;
+  String _baseUrl;
 
-  final _baseUrl = DotEnv().env['BASE_API_URL'];
+  setUp(() {
+    DotEnv(env: {'BASE_API_URL':'http://127.0.0.1:7000', 'LOGGER_LEVEL':'debug'});
+    _baseUrl = DotEnv().env['BASE_API_URL'];
+    _mockHttpClient = MockHttpClient();
+    _apiBaseHelper = ApiBaseHelper(httpClient: _mockHttpClient, httpClientWithAuth: _mockHttpClient);
+  });
 
   test('Test GET call throw Exception on 503 response', () async {
     const String path = 'login';
     when(_mockHttpClient.get(_baseUrl + path)).thenAnswer(
         (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
-    final ApiBaseHelper apiBaseHelper =
-        ApiBaseHelper(httpClient: _mockHttpClient);
-
-    expect(apiBaseHelper.get(false, path),
+    expect(_apiBaseHelper.get(false, path),
         throwsA(const TypeMatcher<ApiException>()));
   });
 
@@ -43,16 +41,13 @@ void main() {
     const String path = 'login';
     const String body = '{"email":"email@email.com", "otp":"1234"}';
 
-    final ApiBaseHelper apiBaseHelper =
-        ApiBaseHelper(httpClient: _mockHttpClient);
-
     when(_mockHttpClient.post(_baseUrl + path,
             headers: {'Content-Type': 'application/json'},
             body: json.encode(body)))
         .thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 200));
 
-    expect((await apiBaseHelper.post(false, path, body)).toString(),
+    expect((await _apiBaseHelper.post(false, path, body)).toString(),
         '{"auth":true,"token":"token"}');
   });
 
@@ -61,16 +56,13 @@ void main() {
     const String path = 'login';
     const String body = '{"email":"email@email.com", "otp":"1234"}';
 
-    final ApiBaseHelper apiBaseHelper =
-        ApiBaseHelper(httpClient: _mockHttpClient);
-
     when(_mockHttpClient.post(_baseUrl + path,
             headers: {'Content-Type': 'application/json'},
             body: json.encode(body)))
         .thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
-    expect(apiBaseHelper.post(false, path, body),
+    expect(_apiBaseHelper.post(false, path, body),
         throwsA(const TypeMatcher<ApiException>()));
 
     when(_mockHttpClient.post(_baseUrl + path,
@@ -79,7 +71,7 @@ void main() {
         .thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 401));
 
-    expect(apiBaseHelper.post(false, path, body),
+    expect(_apiBaseHelper.post(false, path, body),
         throwsA(const TypeMatcher<UnauthorisedException>()));
 
     when(_mockHttpClient.post(_baseUrl + path,
@@ -88,7 +80,7 @@ void main() {
         .thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 404));
 
-    expect(apiBaseHelper.post(false, path, body),
+    expect(_apiBaseHelper.post(false, path, body),
         throwsA(const TypeMatcher<ResourceNotFoundException>()));
 
     when(_mockHttpClient.post(_baseUrl + path,
@@ -97,7 +89,7 @@ void main() {
         .thenAnswer(
             (_) async => http.Response('{"auth":true,"token":"token"}', 400));
 
-    expect(apiBaseHelper.post(false, path, body),
+    expect(_apiBaseHelper.post(false, path, body),
         throwsA(const TypeMatcher<BadRequestException>()));
   });
 }
