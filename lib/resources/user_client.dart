@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
+import 'package:wastexchange_mobile/models/api_response.dart';
 
 class UserClient {
   UserClient([ApiBaseHelper helper]) {
@@ -19,11 +20,15 @@ class UserClient {
 
   ApiBaseHelper _helper;
 
-  Future<LoginResponse> login(LoginData loginData) async {
-    final String response =
-        await _helper.post(false, PATH_LOGIN, loginData.toMap());
-    final loginResponse = loginResponseFromJson(response);
-    return loginResponse;
+  Future<ApiResponse<LoginResponse>> login(LoginData loginData) async {
+    try {
+      final String response =
+          await _helper.post(false, PATH_LOGIN, loginData.toMap());
+      final LoginResponse loginResponse = loginResponseFromJson(response);
+      return ApiResponse.completed(loginResponse);
+    } catch (e) {
+      return ApiResponse.error(e.toString());
+    }
   }
 
   Future<RegistrationResponse> register(RegistrationData data) async {

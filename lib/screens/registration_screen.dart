@@ -60,12 +60,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          logger.i(_snapshot.message);
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
           if (_snapshot.data.message.isNotEmpty) {
-            logger.i(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
                 context,

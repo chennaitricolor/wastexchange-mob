@@ -7,6 +7,7 @@ import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/models/api_response.dart';
 
 class UserRepository {
   UserRepository({UserClient client, TokenRepository tokenRepository}) {
@@ -26,13 +27,15 @@ class UserRepository {
     return await _client.register(registrationData);
   }
 
-  Future<LoginResponse> login(LoginData loginData) async {
-    final LoginResponse response = await _client.login(loginData);
+  Future<ApiResponse<LoginResponse>> login(LoginData loginData) async {
+    final ApiResponse<LoginResponse> response = await _client.login(loginData);
 
-    //Set response to TokenRepository to persist access token information and wait for completeness.
-    await _tokenRepository.setToken(response.token);
+    if (response.status == Status.COMPLETED) {
+      //Set response to TokenRepository to persist access token information and wait for completeness.
+      await _tokenRepository.setToken(response.data.token);
+    }
 
-    return Future.value(response);
+    return response;
   }
 
   Future<List<User>> getAllUsers() async {

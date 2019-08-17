@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
+import 'package:wastexchange_mobile/models/api_response.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
@@ -10,21 +11,20 @@ class MockApiBaseHelper extends Mock implements ApiBaseHelper {}
 
 void main() {
   group('login', () {
-    test('throws an exception if the http call completes with an error',
-        () async {
+    test('returns error if the http call completes with an error', () async {
       final MockApiBaseHelper mockApiHelper = MockApiBaseHelper();
       when(mockApiHelper.post(false, UserClient.PATH_LOGIN,
               LoginData(loginId: 'a', password: 'b').toMap()))
           .thenThrow(ApiException());
 
       final UserClient provider = UserClient(mockApiHelper);
+      final result =
+          await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      expect(provider.login(LoginData(loginId: 'a', password: 'b')),
-          throwsA(const TypeMatcher<ApiException>()));
+      expect(result.status, Status.ERROR);
     });
 
-    test('returns a LoginResponse if the http call completes successfully',
-        () async {
+    test('returns result if the http call completes successfully', () async {
       final MockApiBaseHelper mockApiHelper = MockApiBaseHelper();
 
       when(mockApiHelper.post(false, UserClient.PATH_LOGIN,
@@ -35,7 +35,7 @@ void main() {
       final result =
           await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      expect(result, const TypeMatcher<LoginResponse>());
+      expect(result.data, const TypeMatcher<LoginResponse>());
     });
   });
 }

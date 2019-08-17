@@ -16,12 +16,9 @@ class LoginBloc {
 
   Future<void> login(LoginData data) async {
     loginSink.add(ApiResponse.loading(Constants.LOADING_LOGIN));
-    try {
-      final LoginResponse response = await _userRepository.login(data);
-      loginSink.add(ApiResponse.completed(response));
-    } catch (e) {
-      loginSink.add(ApiResponse.error(e.toString()));
-    }
+    final ApiResponse<LoginResponse> response =
+        await _userRepository.login(data);
+    loginSink.add(response);
   }
 
   void dispose() {
