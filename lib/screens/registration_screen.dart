@@ -1,23 +1,21 @@
-import 'dart:math';
-
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/space.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
-import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override

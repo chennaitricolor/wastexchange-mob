@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:wastexchange_mobile/models/api_exception.dart';
-
 LoginResponse loginResponseFromJson(String str) =>
     LoginResponse.fromJson(json.decode(str));
 

@@ -53,7 +53,8 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                     controller: qtyController,
                     validator: (value) {
                       if (double.parse(value) >
-                          widget.commodity.availableQuantity) return '> qty';
+                          widget.commodity.availableQuantity)
+                        return '> qty';
                       return null;
                     },
                   ),

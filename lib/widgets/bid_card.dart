@@ -92,6 +92,8 @@ class BidCard extends StatelessWidget {
           Icons.check,
           color: Colors.green,
         );
+      default:
+        return null;
     }
   }
 }
