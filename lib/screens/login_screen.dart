@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
   final FieldType _password =
       FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,11 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           DisplayUtil.instance.dismissDialog(context);
+          _scaffoldKey.currentState.showSnackBar(
+              SnackBar(content: const Text(Constants.LOGIN_FAILED)));
           break;
         case Status.COMPLETED:
-          if (_snapshot.data.auth) {
+          if (_snapshot.data.success) {
             DisplayUtil.instance.dismissDialog(context);
-            Navigator.push(
+            Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => MapScreen()));
           }
           break;
@@ -53,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         body: AuthenticationView(
             placeHolderBelowButton: MaterialButton(
                 onPressed: () {

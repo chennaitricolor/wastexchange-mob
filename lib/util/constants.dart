@@ -7,6 +7,7 @@ class Constants {
   static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
   static const LOGIN_NOT_MEMBER = 'Not a member ? ';
   static const SIGNUP_BUTTON = 'Join now';
+  static const LOGIN_FAILED = 'Login failed';
 
   //registration screen
   static const FIELD_ALTERNATE_NUMBER = 'Alternate Number';
