@@ -12,11 +12,8 @@ class Item {
     this.price,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json, String itemName) => Item(
-        name: itemName,
-        qty: json['qty'],
-        price: json['price'],
-      );
+  factory Item.fromJson(Map<String, dynamic> json, String itemName) =>
+      Item(name: itemName, qty: json['qty']);
   String name;
   double qty;
   double price;
