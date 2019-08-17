@@ -3,13 +3,12 @@ import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-
 import 'bid_item_widget.dart';
 
 class SellerInformationScreen extends StatefulWidget {
   SellerInformationScreen({this.sellerInfo});
   SellerInformation sellerInfo;
-  List<BidItem> bidItems = [];
+  Set<BidItem> bidItems;
   @override
   _SellerInformationScreenState createState() =>
       _SellerInformationScreenState();
@@ -44,7 +43,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
         SellerInformation(seller: dummyUser, sellerItems: itemsList);
     if (widget.sellerInfo.sellerItems.isNotEmpty)
       widget.bidItems =
-          BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems);
+          Set.of(BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems));
     // TODO: implement build
 
     return Scaffold(

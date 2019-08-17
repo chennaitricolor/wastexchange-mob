@@ -56,19 +56,24 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 children: <Widget>[
                   Text(
                       'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
-                  SizedBox(
-                    width: 100,
-                    child: TextFormField(
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'Quantity',
-                        // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      child: TextFormField(
+                        style: TextStyle(backgroundColor: Colors.white),
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Quantity',
+                          // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
+                        ),
+                        controller: qtyController,
+                        validator: (value) {
+                          if (double.parse(value) >
+                              widget.commodity.availableQuantity)
+                            return '> qty';
+                          return null;
+                        },
                       ),
-                      controller: qtyController,
-                      validator: (value) {
-                        if (double.parse(value) >
-                            widget.commodity.availableQuantity) return '> qty';
-                        return null;
-                      },
                     ),
                   ),
                 ],
@@ -82,6 +87,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 SizedBox(
                     width: 100,
                     child: TextFormField(
+                      style: TextStyle(backgroundColor: Colors.white),
                       decoration: new InputDecoration.collapsed(
                         hintText: 'Price',
                       ),

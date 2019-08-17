@@ -6,7 +6,6 @@ class BidItem {
     BidItem({this.name,this.availableQuantity,this.specifiedPRice});
 
     String name;
-    
     double availableQuantity;
     double specifiedPRice;
     double bidQuantity;
@@ -27,4 +26,7 @@ class BidItem {
     return bidITemsList;
   }
 
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }
