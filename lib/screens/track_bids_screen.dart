@@ -4,7 +4,7 @@ import 'package:wastexchange_mobile/blocs/track_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/bid_card.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 
 class TrackBidsScreen extends StatefulWidget {
   @override
