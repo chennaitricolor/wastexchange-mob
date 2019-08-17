@@ -1,6 +1,7 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
 import 'dart:convert';
 import 'dart:io';
+import 'package:meta/meta.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
@@ -12,25 +13,25 @@ import 'package:wastexchange_mobile/util/logger.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper(
-      {HttpClientWithInterceptor httpClient,
-      HttpClientWithInterceptor httpClientWithAuth}) {
-    _httpClientWithAuth = httpClientWithAuth ??=
-        HttpClientWithInterceptor.build(interceptors: [
-      LogInterceptor(),
-      AuthInterceptor(TokenRepository())
-    ]);
-    _httpClient = httpClient ??=
+      {HttpClientWithInterceptor client,
+      HttpClientWithInterceptor clientWithAuth}) {
+    httpClientWithAuth = clientWithAuth ??= HttpClientWithInterceptor.build(
+        interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]);
+    httpClient = client ??=
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
 
-  HttpClientWithInterceptor _httpClientWithAuth;
-  HttpClientWithInterceptor _httpClient;
+  @visibleForTesting
+  HttpClientWithInterceptor httpClientWithAuth;
+
+  @visibleForTesting
+  HttpClientWithInterceptor httpClient;
 
   final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
   final logger = getLogger('ApiBaseHelper');
 
   HttpClientWithInterceptor _client(bool authenticated) =>
-      authenticated ? _httpClientWithAuth : _httpClient;
+      authenticated ? httpClientWithAuth : httpClient;
 
   Future<dynamic> get(bool authenticated, String path) async {
     try {

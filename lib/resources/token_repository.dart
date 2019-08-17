@@ -4,11 +4,15 @@ import 'package:wastexchange_mobile/util/cached_secure_storage.dart';
 /// This uses a singleton pattern to ensure only one instance is available.
 class TokenRepository {
 
-  factory TokenRepository() {
-    return _instance ??= TokenRepository._internal();
+  factory TokenRepository([CachedSecureStorage cachedSecureStorage]) {
+    return _instance ??= TokenRepository._internal(cachedSecureStorage);
   }
 
-  TokenRepository._internal();
+  TokenRepository._internal([CachedSecureStorage cachedSecureStorage]) {
+    _cachedSecureStorage = cachedSecureStorage ??= CachedSecureStorage();
+  }
+
+  CachedSecureStorage _cachedSecureStorage;
 
   static TokenRepository _instance;
 
@@ -19,14 +23,14 @@ class TokenRepository {
   }
 
   Future<void> setToken(token) async {
-    await CachedSecureStorage().setValue(_tokenKey, token);
+    await _cachedSecureStorage.setValue(_tokenKey, token);
   }
 
   Future<void> deleteToken() async {
-    await CachedSecureStorage().setValue(_tokenKey, null);
+    await _cachedSecureStorage.setValue(_tokenKey, null);
   }
 
   Future<String> getToken() async {
-    return CachedSecureStorage().getValue(_tokenKey);
+    return await _cachedSecureStorage.getValue(_tokenKey);
   }
 }

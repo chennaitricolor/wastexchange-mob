@@ -14,7 +14,7 @@ class AuthInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
     final String token = await _tokenRepository.getToken();
-    if(token != null) {
+    if(token != null && data != null) {
       data.headers['Authorization'] = 'Bearer ' + token;
     }
     return data;
@@ -22,7 +22,7 @@ class AuthInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
-    if(data.statusCode == Constants.UNAUTHORIZED || data.statusCode == Constants.FORBIDDEN) {
+    if(data != null && data.statusCode == Constants.UNAUTHORIZED || data.statusCode == Constants.FORBIDDEN) {
       await _tokenRepository.deleteToken();
     }
     return data;
