@@ -1,13 +1,10 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
-import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
-import 'package:wastexchange_mobile/models/registration_response.dart';
-import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
@@ -18,97 +15,86 @@ class MockTokenRepository extends Mock implements TokenRepository {}
 
 ///Test case to check reading and writing flutter secure storage.
 void main() {
-  MockUserClient userClient;
-  MockTokenRepository tokenRepository;
+  MockUserClient mockUserClient;
+  MockTokenRepository mockTokenRepository;
   UserRepository userRepository;
 
+  const email = 'email';
+  const mobile = 'mobile';
+  const city = 'city';
+  const persona = 'persona';
+  const long = 14.5;
+  const password = '123445';
+  const lat = 10.2;
+  const mobileNumber = 9988776655;
+  const altMobileNumber = 0;
+  const name = 'name';
+  const address = 'address';
+  const pincode = 60000;
+  const otp = 123456;
+
   setUp(() {
-    userClient = MockUserClient();
-    tokenRepository = MockTokenRepository();
-    userRepository =
-        UserRepository(client: userClient, tokenRepository: tokenRepository);
+     mockUserClient = MockUserClient();
+     mockTokenRepository = MockTokenRepository();
+     userRepository =  UserRepository(client: mockUserClient, tokenRepository: mockTokenRepository);
   });
 
-  test(
-      'GIVEN otp data WHEN email and mobile number are valid THEN receive success response',
-      () async {
-    const message = 'OTP has been sent successfully';
-    final otpData = OtpData(emailId: 'email', mobileNo: 'mobile');
-    when(userClient.sendOTP(otpData))
-        .thenAnswer((_) async => OtpResponse(message: message));
-    userRepository.sendOTP(otpData).then((data) {
-      expect(data.message, message);
+  test('GIVEN otp data CHECK send otp is called from client', () async {
+    final otpData = OtpData(emailId: email, mobileNo: mobile);
+    userRepository.sendOTP(otpData);
+
+    final OtpData capturedData = verify(mockUserClient.sendOTP(captureAny)).captured.single;
+    expect(capturedData.emailId, email);
+    expect(capturedData.mobileNo, mobile);
+  });
+
+  test('GIVEN registration data CHECK register is called from client', () async {
+    final registrationData = RegistrationData(city: city, emailId: email, persona: persona, long: long,
+    lat: lat, password: password, altMobNo: altMobileNumber, name: name, address: address,
+    mobNo: mobileNumber, pinCode: pincode, otp: otp);
+
+    mockUserClient.register(registrationData);
+    final RegistrationData capturedData = verify(mockUserClient.register(captureAny)).captured.single;
+
+    expect(capturedData.city, city);
+    expect(capturedData.emailId, email);
+    expect(capturedData.persona, persona);
+    expect(capturedData.long, long);
+    expect(capturedData.lat, lat);
+    expect(capturedData.password, password);
+    expect(capturedData.altMobNo, altMobileNumber);
+    expect(capturedData.name, name);
+    expect(capturedData.address, address);
+    expect(capturedData.mobNo, mobileNumber);
+    expect(capturedData.pinCode, pincode);
+    expect(capturedData.otp, otp);
+  });
+
+  test('GIVEN login data THEN set token should be called', () async {
+    final loginData = LoginData(loginId: email, password: password);
+
+    final expectedResponse = LoginResponse(auth: true, token: 'token_id');
+    when(mockUserClient.login(loginData)).thenAnswer((_) async => Result.completed(expectedResponse));
+    userRepository.login(loginData).then((loginResponse) {
+      final String capturedData = verify(mockTokenRepository.setToken(captureAny)).captured.single;
+      expect(capturedData, 'token_id');
+      expect(loginResponse, const TypeMatcher<Result<LoginResponse>>());
     });
   });
 
-  test(
-      'GIVEN registration data WHEN all the fields are valid THEN receive success response',
-      () async {
-    const message = 'registration message';
-    final registrationData = RegistrationData(
-        city: 'city',
-        emailId: 'email',
-        persona: 'persona',
-        long: 14.5,
-        lat: 10.2,
-        password: '123445',
-        altMobNo: 0,
-        name: 'name',
-        address: 'address',
-        mobNo: 9988776655,
-        pinCode: 123456,
-        otp: 232345);
+  test('GIVEN login data THEN set token should not be called', () async {
+    final loginData = LoginData(loginId: email, password: password);
 
-    when(userClient.register(registrationData)).thenAnswer((_) async =>
-        RegistrationResponse(
-            message: message, success: true, auth: true, token: 'token_id'));
-    userRepository.register(registrationData).then((data) {
-      expect(data.message, message);
-      expect(data.success, true);
-      expect(data.auth, true);
-      expect(data.token, 'token_id');
+    when(mockUserClient.login(loginData)).thenAnswer((_) async => Result.error('error'));
+
+    userRepository.login(loginData).then((loginResponse) {
+      verifyNever(mockTokenRepository.setToken(any));
+      expect(loginResponse, const TypeMatcher<Result<LoginResponse>>());
     });
   });
 
-  test(
-      'GIVEN login data WHEN email and password are valid THEN receive success response',
-      () async {
-    final loginData = LoginData(loginId: 'email', password: '123445');
-
-    when(userClient.login(loginData)).thenAnswer((_) async =>
-        Result.completed(LoginResponse(auth: true, token: 'token_id')));
-    userRepository.login(loginData).then((result) {
-      expect(result.data.auth, true);
-      expect(result.data.token, 'token_id');
-    });
-  });
-
-  test('GET all users THEN receive success response', () async {
-    const mobileNumber = '9988776655';
-    const latitude = 10.34;
-    const longitude = 14.98;
-
-    when(userClient.getAllUsers()).thenAnswer((_) async => [
-          User(
-              id: 1,
-              pinCode: 123456,
-              mobNo: mobileNumber,
-              address: 'address',
-              name: 'name',
-              altMobNo: mobileNumber,
-              lat: latitude,
-              long: longitude,
-              persona: 'seller',
-              emailId: 'email',
-              city: 'city',
-              approved: true)
-        ]);
-    userRepository.getAllUsers().then((data) {
-      expect(data.length, 1);
-      final User user = data[0];
-      expect(user.mobNo, mobileNumber);
-      expect(user.lat, latitude);
-      expect(user.long, longitude);
-    });
+  test('SHOULD check get all users are called from client only once', () async {
+    userRepository.getAllUsers();
+    verify(mockUserClient.getAllUsers()).called(1);
   });
 }
