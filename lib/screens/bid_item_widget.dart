@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 
 class BidItemWidget extends StatefulWidget {
-  const BidItemWidget({Key key, this.commodity, this.onSaveItem})
+  const BidItemWidget({Key key,this.index, this.commodity, this.onSaveItem, this.onDeleteItem})
       : super(key: key);
+  final int index;
   final BidItem commodity;
   final Function(int index, double bidQty, double bidAmt) onSaveItem;
+  final Function(int index) onDeleteItem;
   @override
   _BidItemWidgetState createState() => _BidItemWidgetState();
 }
@@ -25,12 +27,18 @@ class _BidItemWidgetState extends State<BidItemWidget> {
     super.dispose();
   }
 
+  void removeCommodityFromBid(){
+    widget.onDeleteItem(widget.index);
+    qtyController.text = '';
+    priceController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Container(
-        margin: all10,
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
         padding: all10,
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
@@ -49,46 +57,46 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                      'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 100,
-                      child: TextFormField(
-                        style: TextStyle(backgroundColor: Colors.white),
-                        decoration: InputDecoration.collapsed(
-                          hintText: 'Quantity',
-                          // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
-                        ),
-                        controller: qtyController,
-                        validator: (value) {
-                          if (double.parse(value) >
-                              widget.commodity.availableQuantity)
-                            return '> qty';
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                    'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
-                SizedBox(
-                    width: 100,
+                Flexible(
+                  flex:3,
+                  child: Text(
+                      'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
+                ),
+                Flexible(
+                    flex: 1,
                     child: TextFormField(
                       style: TextStyle(backgroundColor: Colors.white),
-                      decoration: new InputDecoration.collapsed(
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Quantity',
+                        // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
+                      ),
+                      controller: qtyController,
+                      validator: (value) {
+                        if (double.parse(value) >
+                            widget.commodity.availableQuantity) return '> qty';
+                        return null;
+                      },
+                    ),
+                  ),
+                
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex:3,
+                  child: Text(
+                      'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
+                ),
+                Flexible(
+                    flex:1,
+                    child: TextFormField(
+                      decoration: InputDecoration.collapsed(
                         hintText: 'Price',
                       ),
                       controller: priceController,
@@ -96,21 +104,35 @@ class _BidItemWidgetState extends State<BidItemWidget> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                RaisedButton(
-                  color: Colors.green[300],
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false
-                    // otherwise.
-                    if (_formKey.currentState.validate()) {
-                      widget.onSaveItem(0, double.parse(qtyController.text),
-                          double.parse(priceController.text));
-                    }
-                  },
-                  child: Text('Add'),
+                Flexible(
+                  flex: 3,
+                  child: IconButton(
+                    disabledColor: Colors.grey,
+                    color: Colors.green[300],
+                    icon: Icon(Icons.delete),
+                    onPressed: (widget.commodity.bidPrice != null) ? () {
+                      removeCommodityFromBid();
+                    } : null,
+                  ),
                 ),
+                Flexible(
+                  flex:1,
+                  child: RaisedButton(
+                    color: Colors.green[300],
+                    textColor: Colors.white,
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false
+                      // otherwise.
+                      if (_formKey.currentState.validate()) {
+                        widget.onSaveItem(widget.index, double.parse(qtyController.text),
+                            double.parse(priceController.text));
+                      }
+                    },
+                    child: Text('Add'),
+                  ),
+                )
               ],
             ),
           ],

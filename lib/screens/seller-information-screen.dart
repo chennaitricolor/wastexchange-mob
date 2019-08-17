@@ -19,19 +19,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   void initState() {
     super.initState();
     // DUmmy Data
-  }
-
-  void saveBidItem(int index, double bidQty, double bidAmount) {
-    debugPrint('$index $bidQty $bidAmount');
-    widget.bidItems.elementAt(index).bidPrice = bidAmount;
-    widget.bidItems.elementAt(index).bidQuantity = bidQty;
-    debugPrint('${widget.bidItems.elementAt(index).bidQuantity}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Dummy Data Block
-    final User dummyUser = User(
+      final User dummyUser = User(
         id: 1,
         name: 'Chennai Dump Yard',
         address: 'No :1120, Perungudi , Chennai City');
@@ -39,11 +27,34 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
       Item(name: 'Plastic', price: 20, qty: 10),
       Item(name: 'Paper', price: 10, qty: 100)
     ];
+
     widget.sellerInfo =
         SellerInformation(seller: dummyUser, sellerItems: itemsList);
     if (widget.sellerInfo.sellerItems.isNotEmpty)
       widget.bidItems =
           Set.of(BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems));
+  
+  }
+
+  void saveBidItem(int index, double bidQty, double bidAmount) {
+    setState((){
+      widget.bidItems.elementAt(index).bidPrice = bidAmount;
+      widget.bidItems.elementAt(index).bidQuantity = bidQty;
+    });
+    
+  }
+
+  void deleteBidItem(int index){
+    setState((){
+      widget.bidItems.elementAt(index).bidPrice = null;
+      widget.bidItems.elementAt(index).bidQuantity = null;
+    });
+  }
+
+  
+  @override
+  Widget build(BuildContext context) {
+    // Dummy Data Block
     // TODO: implement build
 
     return Scaffold(
@@ -61,8 +72,10 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           itemCount: 2,
           itemBuilder: (BuildContext context, int index) {
             return BidItemWidget(
+                index: index,
                 commodity: widget.bidItems.elementAt(index),
-                onSaveItem: saveBidItem);
+                onSaveItem: saveBidItem,
+                onDeleteItem: deleteBidItem);
           },
         ),  
       ),
