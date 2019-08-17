@@ -4,8 +4,8 @@ class LoginData {
     this.password,
   });
 
-  String loginId;
-  String password;
+  final String loginId;
+  final String password;
 
   Map<String, dynamic> toMap() => {
         'loginId': loginId,

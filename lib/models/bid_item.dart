@@ -27,4 +27,8 @@ class BidItem {
     }
     return bidITemsList;
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }

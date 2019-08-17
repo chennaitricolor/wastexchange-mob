@@ -29,11 +29,6 @@ class InvalidInputException extends ApiException {
   InvalidInputException([String message]) : super(message, 'Invalid Input: ');
 }
 
-class InvalidResponseJSONException extends ApiException {
-  InvalidResponseJSONException([String message])
-      : super(message, 'Invalid Response JSON: ');
-}
-
 class ResourceNotFoundException extends ApiException {
   ResourceNotFoundException([String message]) : super(message, 'Not Found: ');
 }

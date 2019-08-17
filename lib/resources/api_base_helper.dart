@@ -15,11 +15,8 @@ class ApiBaseHelper {
   ApiBaseHelper(
       {HttpClientWithInterceptor client,
       HttpClientWithInterceptor clientWithAuth}) {
-    httpClientWithAuth = clientWithAuth ??=
-        HttpClientWithInterceptor.build(interceptors: [
-      LogInterceptor(),
-      AuthInterceptor(TokenRepository())
-    ]);
+    httpClientWithAuth = clientWithAuth ??= HttpClientWithInterceptor.build(
+        interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]);
     httpClient = client ??=
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
@@ -33,62 +30,68 @@ class ApiBaseHelper {
   final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
   final logger = getLogger('ApiBaseHelper');
 
-  HttpClientWithInterceptor _getClient(bool authenticated) {
-    return authenticated ? httpClientWithAuth : httpClient;
-  }
+  HttpClientWithInterceptor _client(bool authenticated) =>
+      authenticated ? httpClientWithAuth : httpClient;
 
   Future<dynamic> get(bool authenticated, String path) async {
-    dynamic responseJson;
     try {
-      final response = await _getClient(authenticated).get(_baseApiUrl + path);
-      responseJson = _returnResponse(response);
+      final response = await _client(authenticated).get(_baseApiUrl + path);
+      return _returnResponse(response);
     } on SocketException {
-      throw FetchDataException('No Internet connection');
+      final ApiException exception =
+          FetchDataException('No Internet connection');
+      logger.e(exception);
+      throw exception;
     }
-    return responseJson;
   }
 
   Future<dynamic> post(bool authenticated, String path, dynamic body) async {
-    dynamic responseJson;
     try {
-      final response = await _getClient(authenticated).post(_baseApiUrl + path,
+      final response = await _client(authenticated).post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));
-      responseJson = _returnResponse(response);
+      return _returnResponse(response);
     } on SocketException {
-      throw FetchDataException('No Internet connection');
+      final ApiException exception =
+          FetchDataException('No Internet connection');
+      logger.e(exception);
+      throw exception;
     }
-    return responseJson;
   }
 
   dynamic _returnResponse(Response response) {
     final String responseStr = response.body.toString();
-    logger.i(responseStr);
-    if (isSuccessfulResponse(response.statusCode)) {
-      logger.i('Success Response');
+    if (_isSuccessfulResponse(response)) {
       return responseStr;
     }
-    logger.i('Failure Response');
     handleUnsuccessfulStatusCode(response, responseStr);
   }
 
-  static bool isSuccessfulResponse(int statusCode) {
-    return statusCode >= 200 && statusCode < 300;
+  bool _isSuccessfulResponse(Response response) {
+    return response.statusCode >= 200 && response.statusCode < 300;
   }
 
   void handleUnsuccessfulStatusCode(Response response, String responseStr) {
     switch (response.statusCode) {
       case 400:
-        throw BadRequestException(responseStr);
+        final ApiException exception = BadRequestException(responseStr);
+        logger.e(exception);
+        throw exception;
       case 401:
       case 403:
-        throw UnauthorisedException(responseStr);
+        final ApiException exception = UnauthorisedException(responseStr);
+        logger.e(exception);
+        throw exception;
       case 404:
-        throw ResourceNotFoundException(responseStr);
+        final ApiException exception = ResourceNotFoundException(responseStr);
+        logger.e(exception);
+        throw exception;
       case 500:
       default:
-        throw FetchDataException(
-            'Error occured while communicating with server with statusCode : ${response.statusCode}');
+        final ApiException exception = FetchDataException(
+            'Error occured while communicating with server. StatusCode : ${response.statusCode}, Error: $responseStr');
+        logger.e(exception);
+        throw exception;
     }
   }
 }

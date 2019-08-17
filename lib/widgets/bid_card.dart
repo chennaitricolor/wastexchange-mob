@@ -18,20 +18,7 @@ class BidCard extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Text('Order number: ' + _bid.orderNumber),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('Order date: ' + _getFormattedDate(_bid.orderDate)),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('Seller: ' + _bid.seller),
+                child: Text('Order number: ' + _bid.orderId),
               ),
               Container(
                 child: Row(
@@ -42,10 +29,24 @@ class BidCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 16),
-                      child: _getStatus(_bid.bidStatus),
+                      child: _getStatus(_bid.status),
                     )
                   ],
                 ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text('Seller: ' + _bid.sellerId),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child:
+                    Text('Order date: ' + _getFormattedDate(_bid.createdDate)),
               )
             ],
           ),
@@ -70,7 +71,8 @@ class BidCard extends StatelessWidget {
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    return DateFormat.yMd().format(date);
+    final f = DateFormat('yyyy-MM-dd h:mm a');
+    return f.format(date).toString();
   }
 
   Icon _getStatus(BidStatus bidStatus) {
@@ -92,6 +94,8 @@ class BidCard extends StatelessWidget {
           Icons.check,
           color: Colors.green,
         );
+      default:
+        return null;
     }
   }
 }

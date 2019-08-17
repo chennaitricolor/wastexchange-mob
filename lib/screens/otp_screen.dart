@@ -2,7 +2,7 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';

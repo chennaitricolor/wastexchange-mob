@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/blocs/track_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/bid_card.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 
 class TrackBidsScreen extends StatefulWidget {
   @override
@@ -10,20 +12,59 @@ class TrackBidsScreen extends StatefulWidget {
 }
 
 class _TrackBidsScreenState extends State<TrackBidsScreen> {
+  TrackBidsBloc _bloc;
   //todo
   final _bids = [
-    Bid('123fgh47', DateTime(2019, 08, 10), 'PK Steels', 109.50,
-        DateTime(2019, 09, 02), BidStatus.pending),
-    Bid('2647jfj4', DateTime(2019, 08, 11), 'JK Plastics', 200.00,
-        DateTime(2019, 09, 02), BidStatus.cancelled),
-    Bid('3647hfjd', DateTime(2019, 08, 11), 'RS Steels', 10000.00,
-        DateTime(2019, 09, 01), BidStatus.successful),
+    Bid(
+        orderId: '123fgh47',
+        createdDate: DateTime(2019, 08, 10, 9, 21),
+        sellerId: 'PK Steels',
+        amount: 109.50,
+        pickupDate: DateTime(2019, 09, 02, 5, 30),
+        status: BidStatus.pending,
+        contactName: 'Azhagu',
+        bidItems: []),
+    Bid(
+        orderId: '2647jfj4',
+        createdDate: DateTime(2019, 08, 11, 11, 10),
+        sellerId: 'JK Plastics',
+        amount: 109.50,
+        pickupDate: DateTime(2019, 09, 02, 3, 45),
+        status: BidStatus.cancelled,
+        contactName: 'Azhagu',
+        bidItems: []),
+    Bid(
+        orderId: '2647jfj4',
+        createdDate: DateTime(2019, 08, 11, 17, 19),
+        sellerId: 'JK Plastics',
+        amount: 109.50,
+        pickupDate: DateTime(2019, 09, 01, 21, 20),
+        status: BidStatus.successful,
+        contactName: 'Azhagu',
+        bidItems: []),
   ];
+
+  @override
+  void initState() {
+    _bloc = TrackBidsBloc();
+    _bloc.trackBidsStream.listen((_snapshot) {
+      switch (_snapshot.status) {
+        case Status.LOADING:
+          break;
+        case Status.ERROR:
+          break;
+        case Status.COMPLETED:
+          break;
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.chrome_grey,
         appBar: AppBar(
           title: const Text('Track Bids'),
           backgroundColor: AppColors.green,
@@ -37,5 +78,11 @@ class _TrackBidsScreenState extends State<TrackBidsScreen> {
             },
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
   }
 }

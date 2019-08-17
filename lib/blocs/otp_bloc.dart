@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
@@ -11,18 +11,18 @@ class OtpBloc {
   final logger = getLogger('OtpBloc');
   final UserRepository _userRepository = UserRepository();
   final StreamController _otpController =
-      StreamController<ApiResponse<OtpResponse>>();
+      StreamController<Result<OtpResponse>>();
 
-  StreamSink<ApiResponse<OtpResponse>> get otpSink => _otpController.sink;
-  Stream<ApiResponse<OtpResponse>> get otpStream => _otpController.stream;
+  StreamSink<Result<OtpResponse>> get otpSink => _otpController.sink;
+  Stream<Result<OtpResponse>> get otpStream => _otpController.stream;
 
   Future<void> sendOtp(OtpData data) async {
-    otpSink.add(ApiResponse.loading(Constants.LOADING_OTP));
+    otpSink.add(Result.loading(Constants.LOADING_OTP));
     try {
       final OtpResponse response = await _userRepository.sendOTP(data);
-      otpSink.add(ApiResponse.completed(response));
+      otpSink.add(Result.completed(response));
     } catch (e) {
-      otpSink.add(ApiResponse.error(e.toString()));
+      otpSink.add(Result.error(e.toString()));
       logger.e(e.toString());
     }
   }

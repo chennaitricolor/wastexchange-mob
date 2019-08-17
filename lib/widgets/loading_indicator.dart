@@ -10,7 +10,7 @@ class LoadingProgressIndictor extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: Colors.black54,
-        child: Container(alignment: Alignment.center, width: 36, height: 36, child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.green),strokeWidth: 3)),
+        child: Container(alignment: Alignment.center, width: 36, height: 36, child: const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.green),strokeWidth: 3)),
     ));
   }
 }

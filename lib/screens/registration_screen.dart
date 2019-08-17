@@ -3,19 +3,19 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/space.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -60,12 +60,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          logger.i(_snapshot.message);
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
           if (_snapshot.data.message.isNotEmpty) {
-            logger.i(_snapshot.data.message);
             DisplayUtil.instance.dismissDialog(context);
             Navigator.push(
                 context,
@@ -79,6 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _initCurrentLocation() {
+    // TODO(Sayeed): [Sayeed] Can we move this as a new stream to the bloc
     Geolocator()
       ..getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
@@ -86,10 +85,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         if (mounted) {
           latitude = position != null ? position.latitude : 0;
           longitude = position != null ? position.longitude : 0;
-          logger.i('Latitude: ' + latitude.toString());
-          logger.i('Longitude: ' + longitude.toString());
+          logger.d('Latitude: ' + latitude.toString());
+          logger.d('Longitude: ' + longitude.toString());
         }
       }).catchError((e) {
+        logger.d(e.toString());
         latitude = 0;
         longitude = 0;
       });
