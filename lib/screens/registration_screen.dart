@@ -79,6 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _initCurrentLocation() {
+    // TODO(Sayeed): [Sayeed] Can we move this as a new stream to the bloc
     Geolocator()
       ..getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,

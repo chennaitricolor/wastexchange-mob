@@ -35,7 +35,6 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     if (widget.sellerInfo.sellerItems.isNotEmpty)
       widget.bidItems =
           BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems);
-    // TODO(Sayeed): implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text('Seller Information'),
