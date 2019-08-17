@@ -1,10 +1,12 @@
+import 'dart:math';
+
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:authentication_view/space.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
@@ -84,10 +86,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         if (mounted) {
           latitude = position != null ? position.latitude : 0;
           longitude = position != null ? position.longitude : 0;
-          logger.i('Latitude: ' + latitude.toString());
-          logger.i('Longitude: ' + longitude.toString());
+          logger.d('Latitude: ' + latitude.toString());
+          logger.d('Longitude: ' + longitude.toString());
         }
       }).catchError((e) {
+        logger.d(e.toString());
         latitude = 0;
         longitude = 0;
       });

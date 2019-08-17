@@ -1,6 +1,6 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -76,7 +76,7 @@ void main() {
     final loginData = LoginData(loginId: 'email', password: '123445');
 
     when(userClient.login(loginData)).thenAnswer((_) async =>
-        ApiResponse.completed(LoginResponse(auth: true, token: 'token_id')));
+        Result.completed(LoginResponse(auth: true, token: 'token_id')));
     userRepository.login(loginData).then((result) {
       expect(result.data.auth, true);
       expect(result.data.token, 'token_id');
