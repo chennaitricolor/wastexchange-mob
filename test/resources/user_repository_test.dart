@@ -75,8 +75,8 @@ void main() {
       () async {
     final loginData = LoginData(loginId: 'email', password: '123445');
 
-    when(userClient.login(loginData)).thenAnswer((_) async =>
-        Result.completed(LoginResponse(auth: true, token: 'token_id')));
+    when(userClient.login(loginData)).thenAnswer((_) async => Result.completed(
+        LoginResponse(auth: true, token: 'token_id', approved: true)));
     userRepository.login(loginData).then((result) {
       expect(result.data.auth, true);
       expect(result.data.token, 'token_id');

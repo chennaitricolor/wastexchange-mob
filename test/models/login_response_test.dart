@@ -1,4 +1,3 @@
-import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:test/test.dart';
 
@@ -13,8 +12,15 @@ void main() {
         throwsA(const TypeMatcher<ArgumentError>()));
   });
 
+  test('approved key missing', () {
+    expect(() => LoginResponse.fromJson({'auth': true}),
+        throwsA(const TypeMatcher<ArgumentError>()));
+  });
+
   test('valid', () {
-    expect(LoginResponse.fromJson({'auth': true, 'token': 'blah'}),
+    expect(
+        LoginResponse.fromJson(
+            {'auth': true, 'token': 'blah', 'approved': true}),
         const TypeMatcher<LoginResponse>());
   });
 }
