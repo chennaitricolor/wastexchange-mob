@@ -18,7 +18,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
   final priceController = TextEditingController();
 
   //Styling
-  final EdgeInsets all10 = EdgeInsets.all(10.0);
+  static const EdgeInsets all10 = EdgeInsets.all(10.0);
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.

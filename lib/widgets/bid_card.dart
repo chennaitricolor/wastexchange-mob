@@ -3,18 +3,14 @@ import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:intl/intl.dart';
 
 class BidCard extends StatelessWidget {
+  const BidCard(this._bid);
+
   final Bid _bid;
-  BidCard(this._bid);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(
-          right: 8,
-          left: 8,
-          top: 4,
-          bottom: 4
-      ),
+      margin: const EdgeInsets.only(right: 8, left: 8, top: 4, bottom: 4),
       child: Column(
         children: <Widget>[
           Row(
@@ -35,16 +31,14 @@ class BidCard extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Text('Seller: '+ _bid.seller),
+                child: Text('Seller: ' + _bid.seller),
               ),
               Container(
                 child: Row(
                   children: <Widget>[
                     const Padding(
                       padding: EdgeInsets.all(4.0),
-                      child: Text(
-                          'Status: '
-                      ),
+                      child: Text('Status: '),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 16),
@@ -64,7 +58,8 @@ class BidCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Text('Pickup Date: ' + _getFormattedDate(_bid.pickupDate)),
+                child:
+                    Text('Pickup Date: ' + _getFormattedDate(_bid.pickupDate)),
               )
             ],
           ),
@@ -79,13 +74,14 @@ class BidCard extends StatelessWidget {
   }
 
   Icon _getStatus(BidStatus bidStatus) {
-    switch(bidStatus) {
-      case BidStatus.pending: {
-        return Icon(
-          Icons.access_time,
-          color: Colors.yellow,
-        );
-      }
+    switch (bidStatus) {
+      case BidStatus.pending:
+        {
+          return Icon(
+            Icons.access_time,
+            color: Colors.yellow,
+          );
+        }
       case BidStatus.cancelled:
         return Icon(
           Icons.cancel,
@@ -96,6 +92,8 @@ class BidCard extends StatelessWidget {
           Icons.check,
           color: Colors.green,
         );
+      default:
+        return null;
     }
   }
 }

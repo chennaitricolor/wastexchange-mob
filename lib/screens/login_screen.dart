@@ -3,14 +3,14 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/display_util.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 

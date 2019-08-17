@@ -2,12 +2,12 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
-import 'package:wastexchange_mobile/models/api_response.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/display_util.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/util/field_validator.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
@@ -85,7 +85,8 @@ class _OTPScreenState extends State<OTPScreen> {
           },
           headerLayout: HomeAppBar(),
           fieldTypes: [
-            FieldType.value(Constants.FIELD_OTP, 10, TextInputType.number, false)
+            FieldType.value(
+                Constants.FIELD_OTP, 10, TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {

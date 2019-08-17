@@ -1,25 +1,22 @@
 import 'dart:convert';
 
-import 'package:wastexchange_mobile/models/api_exception.dart';
-
-LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
+LoginResponse loginResponseFromJson(String str) =>
+    LoginResponse.fromJson(json.decode(str));
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
-
   LoginResponse({
     this.auth,
     this.token,
-  });
+  }) {
+    ArgumentError.checkNotNull(auth, 'auth key is missing in LoginResponse');
+    ArgumentError.checkNotNull(token, 'token key is missing in LoginResponse');
+  }
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     final auth = json['auth'];
     final token = json['token'];
-    if (auth == null || token == null) {
-      throw InvalidResponseJSONException(
-          '\'auth\' or \'token\' key missing in LoginResponse');
-    }
     return LoginResponse(
       auth: auth,
       token: token,
@@ -27,11 +24,10 @@ class LoginResponse {
   }
 
   Map<String, dynamic> toJson() => {
-    'auth': auth,
-    'token': token,
-  };
+        'auth': auth,
+        'token': token,
+      };
 
   bool auth;
   String token;
-
 }

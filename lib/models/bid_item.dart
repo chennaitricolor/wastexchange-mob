@@ -1,25 +1,27 @@
-import 'package:flutter/widgets.dart';
-
 import 'item.dart';
 
 class BidItem {
-    BidItem({this.name,this.availableQuantity,this.specifiedPRice});
+  BidItem({this.name, this.availableQuantity, this.specifiedPRice});
 
-    String name;
-    double availableQuantity;
-    double specifiedPRice;
-    double bidQuantity;
-    double bidPrice;
+  String name;
 
-  static BidItem mapItemToBidItem(Item item){
-    final BidItem bidItem = BidItem(name: item.name, availableQuantity: item.qty, specifiedPRice: item.price);
+  double availableQuantity;
+  double specifiedPRice;
+  double bidQuantity;
+  double bidPrice;
+
+  static BidItem mapItemToBidItem(Item item) {
+    final BidItem bidItem = BidItem(
+        name: item.name,
+        availableQuantity: item.qty,
+        specifiedPRice: item.price);
     return bidItem;
   }
 
-  static List<BidItem> mapItemListToBidItemList(List<Item> items){
-    List<BidItem> bidITemsList = List<BidItem>();
+  static List<BidItem> mapItemListToBidItemList(List<Item> items) {
+    final List<BidItem> bidITemsList = [];
     BidItem bidItem;
-    for(int i=0; i<items.length; i++){
+    for (int i = 0; i < items.length; i++) {
       bidItem = mapItemToBidItem(items.elementAt(i));
       bidITemsList.add(bidItem);
     }
