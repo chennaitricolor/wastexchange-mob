@@ -14,22 +14,24 @@ String sellerItemDetailsToJson(SellerItemDetails data) =>
 class SellerItemDetails {
   SellerItemDetails({this.sellerId, this.id, this.items});
 
-  SellerItemDetails.fromJson(Map<String, dynamic> json) {
-    SellerItemDetails(
-        sellerId: json['sellerId'],
-        id: json['id'],
-        items: mapDetailsJsonToList(json['details']));
+  static SellerItemDetails fromJson(String str) {
+    final Map<String, dynamic> sellerDetailsJson = json.decode(str);
+    final sellerItems = mapDetailsJsonToList(sellerDetailsJson['details']);
+    return SellerItemDetails(
+        sellerId: sellerDetailsJson['sellerId'],
+        id: sellerDetailsJson['id'],
+        items: sellerItems);
+  }
+
+  static List<Item> mapDetailsJsonToList(dynamic detailsJson) {
+    final List<Item> itemsList = [];
+    detailsJson.forEach((k, v) => itemsList.add(itemFromJson(k, v)));
+    return itemsList;
   }
 
   int sellerId;
   int id;
   List<Item> items;
-
-  List<Item> mapDetailsJsonToList(dynamic detailsJson) {
-    final List<Item> itemsList = [];
-    detailsJson.forEach((k, v) => itemsList.add(itemFromJson(k, v)));
-    return itemsList;
-  }
 
   Map<String, dynamic> toJson() => {
         'sellerId': sellerId,

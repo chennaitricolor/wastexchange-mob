@@ -1,6 +1,8 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
+import 'package:wastexchange_mobile/screens/seller_item_list.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
@@ -16,6 +18,9 @@ class _MapState extends State<MapScreen> {
   final MapType _type = MapType.normal;
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  User _selectedUser;
+  List<User> _users;
+  final _panelController = PanelController();
 
   static final _options = CameraPosition(
     target: const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
@@ -27,6 +32,7 @@ class _MapState extends State<MapScreen> {
   }
 
   void populateUsers(List<User> users) {
+    _users = users;
     final markers = users.map((user) => Marker(
           markerId: MarkerId(user.id.toString()),
           position: LatLng(user.lat, user.long),
@@ -49,27 +55,43 @@ class _MapState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: FutureBuilder(
-          future: UserClient().getAllUsers(),
-          builder: (BuildContext context, AsyncSnapshot snapShot) {
-            final isSuccess =
-                snapShot.connectionState == ConnectionState.done &&
-                    snapShot.hasData;
-            if (!isSuccess) {
-              return Center(child: const CircularProgressIndicator());
-            }
-            populateUsers(snapShot.data);
-            logger.i('Initialize Google Map');
-            return GoogleMap(
-                initialCameraPosition: _options,
-                onMapCreated: onMapCreated,
-                mapType: _type,
-                markers: Set<Marker>.of(markers.values));
-          }),
+      body: SlidingUpPanel(
+        maxHeight: MediaQuery.of(context).size.height * 0.6,
+        controller: _panelController,
+        backdropEnabled: true,
+        backdropOpacity: 0.4,
+        backdropColor: Colors.black,
+        panel: SellerItemsList(_selectedUser),
+        body: FutureBuilder(
+            future: UserClient().getAllUsers(),
+            builder: (BuildContext context, AsyncSnapshot snapShot) {
+              final isSuccess =
+                  snapShot.connectionState == ConnectionState.done &&
+                      snapShot.hasData;
+              if (!isSuccess) {
+                return Center(child: const CircularProgressIndicator());
+              }
+              populateUsers(snapShot.data);
+              logger.i('Initialize Google Map');
+              return GoogleMap(
+                  initialCameraPosition: _options,
+                  onMapCreated: onMapCreated,
+                  mapType: _type,
+                  markers: Set<Marker>.of(markers.values));
+            }),
+      ),
     );
   }
 
   void _onMarkerTapped(MarkerId markerId) {
     logger.i('Marker $markerId Tapped!');
+    setState(() {
+      _selectedUser = _getUser(markerId.value);
+    });
+  }
+
+  User _getUser(String stringIdentifier) {
+    final id = int.parse(stringIdentifier);
+    return _users.firstWhere((user) => user.id == id);
   }
 }

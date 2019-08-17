@@ -1,7 +1,10 @@
 class Constants {
   static const APP_TITLE = 'India Waste Exchange';
   static const LOGO_SMART_CITY = 'assets/images/smart-city-logo.png';
-
+  
+  //Currency
+  static const INR_UNICODE = '\u20B9';
+  
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
   static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';

@@ -12,10 +12,16 @@ class Item {
     this.price,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json, String itemName) =>
-      Item(name: itemName, qty: json['qty']);
+  factory Item.fromJson(Map<dynamic, dynamic> json, String itemName) {
+    return Item(
+      name: itemName,
+      qty: json['quantity'],
+      price: json['cost'].toDouble(),
+    );
+  }
+
   String name;
-  double qty;
+  int qty;
   double price;
 
   Map<String, dynamic> toJson() => {

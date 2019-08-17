@@ -5,7 +5,7 @@ class BidItem {
 
   String name;
 
-  double availableQuantity;
+  int availableQuantity;
   double specifiedPRice;
   double bidQuantity;
   double bidPrice;

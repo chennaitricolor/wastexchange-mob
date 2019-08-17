@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
+import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
@@ -40,5 +41,9 @@ class UserRepository {
 
   Future<List<User>> getAllUsers() async {
     return await _client.getAllUsers();
+  }
+
+  Future<SellerItemDetails> getSellerDetails(int id) async {
+    return await _client.getSellerDetails(id);
   }
 }

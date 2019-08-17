@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
+import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/models/result.dart';
@@ -48,5 +50,11 @@ class UserClient {
   Future<List<User>> getAllUsers() async {
     final response = await _helper.get(false, PATH_USERS);
     return userFromJson(response);
+  }
+
+  Future<SellerItemDetails> getSellerDetails(int id) async {
+    final pathSellerItems = '/seller/$id/items';
+    final response = await _helper.get(false, pathSellerItems);
+    return SellerItemDetails.fromJson(response);
   }
 }
