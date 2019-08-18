@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 
 class BidItemWidget extends StatefulWidget {
-  const BidItemWidget({Key key,this.index, this.commodity, this.onSaveItem, this.onDeleteItem})
+
+  final state = _BidItemWidgetState();
+  BidItemWidget({Key key,this.index, this.commodity, this.onSaveItem, this.onDeleteItem})
       : super(key: key);
   final int index;
   final BidItem commodity;
+  
   final Function(int index, double bidQty, double bidAmt) onSaveItem;
   final Function(int index) onDeleteItem;
   @override
-  _BidItemWidgetState createState() => _BidItemWidgetState();
+  _BidItemWidgetState createState() => state;
+
+    bool isValid() => state.validate();
+
 }
 
 class _BidItemWidgetState extends State<BidItemWidget> {
@@ -33,6 +39,18 @@ class _BidItemWidgetState extends State<BidItemWidget> {
     priceController.text = '';
   }
 
+  bool isTextNullOrEmpty(String str){
+    return str == '' || str == null;
+  }
+  bool validate(){
+    var valid = _formKey.currentState.validate();
+    if (valid && !isTextNullOrEmpty(qtyController.text) && !isTextNullOrEmpty(priceController.text)){
+      widget.onSaveItem(widget.index, double.parse(qtyController.text),
+                            double.parse(priceController.text));
+    } 
+    return valid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -42,7 +60,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
         padding: all10,
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.black12,
+            color: Colors.white,
             offset: Offset(1.0, 1.0),
             blurRadius: 1.0,
           ),
@@ -67,15 +85,13 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 ),
                 Flexible(
                     flex: 1,
-                    child: TextFormField(
-                      style: TextStyle(backgroundColor: Colors.white),
-                      decoration: InputDecoration.collapsed(
+                    child: TextFormField(                      
+                      decoration: InputDecoration(
                         hintText: 'Quantity',
-                        // border: InputBorder(borderSide: BorderSide.lerp(a, b, t)),
                       ),
                       controller: qtyController,
                       validator: (value) {
-                        if (double.parse(value) >
+                        if ( value != '' && double.parse(value) >
                             widget.commodity.availableQuantity) return '> qty';
                         return null;
                       },
@@ -96,45 +112,18 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                 Flexible(
                     flex:1,
                     child: TextFormField(
-                      decoration: InputDecoration.collapsed(
+                      decoration: InputDecoration(
                         hintText: 'Price',
                       ),
                       controller: priceController,
+                      validator: (value) {
+                        if ( value != '' && double.parse(value) <
+                            0) return '< 0';
+                        return null;
+                      }
                     )),
               ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  flex: 3,
-                  child: IconButton(
-                    disabledColor: Colors.grey,
-                    color: Colors.green[300],
-                    icon: Icon(Icons.delete),
-                    onPressed: (widget.commodity.bidPrice != null) ? () {
-                      removeCommodityFromBid();
-                    } : null,
-                  ),
-                ),
-                Flexible(
-                  flex:1,
-                  child: RaisedButton(
-                    color: Colors.green[300],
-                    textColor: Colors.white,
-                    onPressed: () {
-                      // Validate returns true if the form is valid, or false
-                      // otherwise.
-                      if (_formKey.currentState.validate()) {
-                        widget.onSaveItem(widget.index, double.parse(qtyController.text),
-                            double.parse(priceController.text));
-                      }
-                    },
-                    child: Text('Add'),
-                  ),
-                )
-              ],
-            ),
+            ), 
           ],
         ),
       ),
