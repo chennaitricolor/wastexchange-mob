@@ -7,6 +7,7 @@ import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -61,7 +62,7 @@ class _MapState extends State<MapScreen> {
         backdropEnabled: true,
         backdropOpacity: 0.4,
         backdropColor: Colors.black,
-        panel: SellerItemsList(_selectedUser),
+        panel: SellerInventoryDetailScreen(_selectedUser),
         body: FutureBuilder(
             future: UserClient().getAllUsers(),
             builder: (BuildContext context, AsyncSnapshot snapShot) {
@@ -69,7 +70,9 @@ class _MapState extends State<MapScreen> {
                   snapShot.connectionState == ConnectionState.done &&
                       snapShot.hasData;
               if (!isSuccess) {
-                return Center(child: const CircularProgressIndicator());
+                return Center(
+                  child: LoadingProgressIndicator(),
+                );
               }
               populateUsers(snapShot.data);
               logger.i('Initialize Google Map');
