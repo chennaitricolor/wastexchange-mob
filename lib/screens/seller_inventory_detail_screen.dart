@@ -5,8 +5,8 @@ import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
-import 'package:wastexchange_mobile/widgets/seller_item_cell.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/widgets/seller_items_list.dart';
 
 class SellerInventoryDetailScreen extends StatefulWidget {
   const SellerInventoryDetailScreen(this.seller);
@@ -14,10 +14,12 @@ class SellerInventoryDetailScreen extends StatefulWidget {
   final User seller;
 
   @override
-  _SellerInventoryDetailScreenState createState() => _SellerInventoryDetailScreenState();
+  _SellerInventoryDetailScreenState createState() =>
+      _SellerInventoryDetailScreenState();
 }
 
-class _SellerInventoryDetailScreenState extends State<SellerInventoryDetailScreen> {
+class _SellerInventoryDetailScreenState
+    extends State<SellerInventoryDetailScreen> {
   SellerItemDetailsBloc _bloc;
 
   @override
@@ -74,8 +76,8 @@ class _SellerInventoryDetailScreenState extends State<SellerInventoryDetailScree
       builder: (context, snapShot) {
         if (!snapShot.hasData) {
           return LoadingProgressIndicator(
-              alignment: Alignment.topCenter,
-            );
+            alignment: Alignment.topCenter,
+          );
         }
 
         final Result result = snapShot.data;
@@ -119,18 +121,7 @@ class _SellerInventoryDetailScreenState extends State<SellerInventoryDetailScree
                 ),
               ),
               Expanded(
-                child: ListView.separated(
-                  itemCount: items.length,
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.grey,
-                    endIndent: 16.0,
-                    indent: 16.0,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = items[index];
-                    return SellerItemCell(item);
-                  },
-                ),
+                child: SellerItemList(items: items),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.6,
