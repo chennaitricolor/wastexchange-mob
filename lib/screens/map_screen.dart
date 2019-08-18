@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/screens/seller_inventory_detail_screen.dart';
@@ -22,14 +24,38 @@ class _MapState extends State<MapScreen> {
   User _selectedUser;
   List<User> _users;
   final _panelController = PanelController();
+  StreamController<User> sellerStreamController;
 
   static final _options = CameraPosition(
     target: const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
     zoom: Constants.DEFAULT_ZOOM,
   );
 
+  @override
+  void initState() {
+    sellerStreamController = StreamController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    sellerStreamController.close();
+    super.dispose();
+  }
+
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  void _onMarkerTapped(MarkerId markerId) {
+    logger.i('Marker $markerId Tapped!');
+    _selectedUser = _getUser(markerId.value);
+    sellerStreamController.sink.add(_selectedUser);
+  }
+
+  User _getUser(String stringIdentifier) {
+    final id = int.parse(stringIdentifier);
+    return _users.firstWhere((user) => user.id == id);
   }
 
   void populateUsers(List<User> users) {
@@ -62,7 +88,12 @@ class _MapState extends State<MapScreen> {
         backdropEnabled: true,
         backdropOpacity: 0.4,
         backdropColor: Colors.black,
-        panel: SellerInventoryDetailScreen(_selectedUser),
+        panel: StreamBuilder(
+          stream: sellerStreamController.stream,
+          builder: (context, snapshot) {
+            return SellerInventoryDetailScreen(_selectedUser);
+          },
+        ),
         body: FutureBuilder(
             future: UserClient().getAllUsers(),
             builder: (BuildContext context, AsyncSnapshot snapShot) {
@@ -84,17 +115,5 @@ class _MapState extends State<MapScreen> {
             }),
       ),
     );
-  }
-
-  void _onMarkerTapped(MarkerId markerId) {
-    logger.i('Marker $markerId Tapped!');
-    setState(() {
-      _selectedUser = _getUser(markerId.value);
-    });
-  }
-
-  User _getUser(String stringIdentifier) {
-    final id = int.parse(stringIdentifier);
-    return _users.firstWhere((user) => user.id == id);
   }
 }

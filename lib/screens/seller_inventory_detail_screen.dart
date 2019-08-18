@@ -7,11 +7,16 @@ import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/widgets/seller_items_list.dart';
+import 'package:wastexchange_mobile/widgets/login_to_buy_button.dart';
 
 class SellerInventoryDetailScreen extends StatefulWidget {
   const SellerInventoryDetailScreen(this.seller);
 
   final User seller;
+
+  void updateSeller(User seller) {
+    seller = seller;
+  }
 
   @override
   _SellerInventoryDetailScreenState createState() =>
@@ -51,21 +56,10 @@ class _SellerInventoryDetailScreenState
     if (_seller == null) {
       return Align(
         alignment: Alignment.topCenter,
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.6,
-          child: RaisedButton(
-            color: Colors.white,
-            child: const Text(
-              'Login to buy',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 25.0,
-              ),
-            ),
-            onPressed: () {
-              _routeToLogin();
-            },
-          ),
+        child: LoginToBuyButton(
+          onPressed: () {
+            _routeToLogin();
+          },
         ),
       );
     }
@@ -123,21 +117,10 @@ class _SellerInventoryDetailScreenState
               Expanded(
                 child: SellerItemList(items: items),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: RaisedButton(
-                  color: Colors.white,
-                  child: const Text(
-                    'Login to buy',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 25.0,
-                    ),
-                  ),
-                  onPressed: () {
-                    _routeToLogin();
-                  },
-                ),
+              LoginToBuyButton(
+                onPressed: () {
+                  _routeToLogin();
+                },
               ),
             ],
           ),
