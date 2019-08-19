@@ -41,6 +41,7 @@ class _OTPScreenState extends State<OTPScreen> {
     super.initState();
   }
 
+  // TODO(Sayeed): Combine _otpBloc, _registration blocs
   void _initOtpBloc() {
     _otpBloc = OtpBloc();
     _otpBloc.otpStream.listen((_snapshot) {
