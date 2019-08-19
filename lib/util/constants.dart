@@ -28,6 +28,10 @@ class Constants {
   static const OTP_TITLE = 'OTP Sent';
   static const OTP_MESSAGE =
       'Please enter the OTP sent to your mobile number / Email';
+  static const RESEND_OTP = 'Resend OTP';
+  static const RESEND_OTP_FAIL = 'Resend OTP failed';
+  static const RESEND_OTP_SUCCESS = 'OTP sent';
+  static const REGISTRATION_FAILED = 'Registration failed';
 
   //Forgot password screen
   static const FORGOT_TITLE = 'Forgot Password';

@@ -53,6 +53,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     _initCurrentLocation();
+
     _bloc = OtpBloc();
     _bloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
@@ -189,6 +190,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         long: longitude,
         persona: persona);
 
+    _sendOtp(email, mobile);
+  }
+
+  void _sendOtp(String email, int mobile) {
     final OtpData otpData =
         OtpData(emailId: email, mobileNo: mobile.toString());
     _bloc.sendOtp(otpData);
