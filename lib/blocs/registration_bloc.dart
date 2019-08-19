@@ -24,10 +24,8 @@ class RegistrationBloc {
       final RegistrationResponse response =
           await _userRepository.register(data);
       registrationSink.add(Result.completed(response));
-      logger.i('Bloc completed');
     } catch (e) {
       registrationSink.add(Result.error(e.toString()));
-      logger.i('Bloc error');
     }
   }
 

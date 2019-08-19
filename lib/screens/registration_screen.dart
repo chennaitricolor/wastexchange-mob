@@ -24,10 +24,11 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   OtpBloc _bloc;
-  RegistrationData registrationData;
-  double latitude = 0;
-  double longitude = 0;
-  final logger = getLogger('RegistrationScreen');
+  RegistrationData _registrationData;
+  double _latitude = 0;
+  double _longitude = 0;
+  final _logger = getLogger('RegistrationScreen');
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final FieldType _name =
       FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
@@ -53,6 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     _initCurrentLocation();
+
     _bloc = OtpBloc();
     _bloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
@@ -61,19 +63,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           break;
         case Status.ERROR:
           DisplayUtil.instance.dismissDialog(context);
+          _showToast(Constants.SEND_OTP_FAIL);
           break;
         case Status.COMPLETED:
-          if (_snapshot.data.message.isNotEmpty) {
-            DisplayUtil.instance.dismissDialog(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => OTPScreen(registrationData)));
-          }
+          DisplayUtil.instance.dismissDialog(context);
+          _showOTPScreen();
           break;
       }
     });
     super.initState();
+  }
+
+  void _showToast(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _showOTPScreen() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => OTPScreen(_registrationData)));
   }
 
   void _initCurrentLocation() {
@@ -83,79 +90,80 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-          latitude = position != null ? position.latitude : 0;
-          longitude = position != null ? position.longitude : 0;
-          logger.d('Latitude: ' + latitude.toString());
-          logger.d('Longitude: ' + longitude.toString());
+          _latitude = position != null ? position.latitude : 0;
+          _longitude = position != null ? position.longitude : 0;
+          _logger.d('Latitude: ' + _latitude.toString());
+          _logger.d('Longitude: ' + _longitude.toString());
         }
       }).catchError((e) {
-        logger.d(e.toString());
-        latitude = 0;
-        longitude = 0;
+        _logger.d(e.toString());
+        _latitude = 0;
+        _longitude = 0;
       });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         body: AuthenticationView(
-      placeHolderAboveButton:
-          UserTypeSelector(onValueChanged: (UserType userType) {
-        this.userType = userType;
-        logger.i(userType.toString());
-      }),
-      placeHolderBelowButton: Space(24),
-      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-          AppColors.green, AppColors.text_grey),
-      headerLayout: HomeAppBar(),
-      fieldValidator: (hintAsKey, values) {
-        final String value = values[hintAsKey];
-        switch (hintAsKey) {
-          case Constants.FIELD_NAME:
-            return FieldValidator.validateName(value);
-          case Constants.FIELD_MOBILE:
-            return FieldValidator.validateMobileNumber(value);
-          case Constants.FIELD_ALTERNATE_NUMBER:
-            return FieldValidator.validateMobileNumber(value);
-          case Constants.FIELD_PINCODE:
-            return FieldValidator.validatePincode(value);
-          case Constants.FIELD_CITY:
-            return FieldValidator.validateCity(value);
-          case Constants.FIELD_ADDRESS:
-            return FieldValidator.validateAddress(value);
-          case Constants.FIELD_EMAIL:
-            return FieldValidator.validateEmailAddress(value);
-          case Constants.FIELD_PASSWORD:
-            return FieldValidator.validatePassword(value);
-          case Constants.FIELD_CONFIRM_PASSWORD:
-            return FieldValidator.validateConfirmPassword(
-                values[Constants.FIELD_PASSWORD], value);
-          default:
-            return null;
-        }
-      },
-      fieldTypes: [
-        _name,
-        _address,
-        _city,
-        _pincode,
-        _mobile,
-        _alternateNumber,
-        _email,
-        _password,
-        _confirmPassword
-      ],
-      onValidation: (bool isValidationSuccess, valueMap) {
-        if (isValidationSuccess) {
-          if (latitude == 0 && longitude == 0) {
-            DisplayUtil.instance.showErrorDialog(context,
-                'Location should be enabled to proceed with the registration');
-          } else {
-            sendOtp(valueMap);
-          }
-        }
-      },
-    ));
+          placeHolderAboveButton:
+              UserTypeSelector(onValueChanged: (UserType userType) {
+            this.userType = userType;
+            _logger.i(userType.toString());
+          }),
+          placeHolderBelowButton: Space(24),
+          fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+              AppColors.green, AppColors.text_grey),
+          headerLayout: HomeAppBar(),
+          fieldValidator: (hintAsKey, values) {
+            final String value = values[hintAsKey];
+            switch (hintAsKey) {
+              case Constants.FIELD_NAME:
+                return FieldValidator.validateName(value);
+              case Constants.FIELD_MOBILE:
+                return FieldValidator.validateMobileNumber(value);
+              case Constants.FIELD_ALTERNATE_NUMBER:
+                return FieldValidator.validateMobileNumber(value);
+              case Constants.FIELD_PINCODE:
+                return FieldValidator.validatePincode(value);
+              case Constants.FIELD_CITY:
+                return FieldValidator.validateCity(value);
+              case Constants.FIELD_ADDRESS:
+                return FieldValidator.validateAddress(value);
+              case Constants.FIELD_EMAIL:
+                return FieldValidator.validateEmailAddress(value);
+              case Constants.FIELD_PASSWORD:
+                return FieldValidator.validatePassword(value);
+              case Constants.FIELD_CONFIRM_PASSWORD:
+                return FieldValidator.validateConfirmPassword(
+                    values[Constants.FIELD_PASSWORD], value);
+              default:
+                return null;
+            }
+          },
+          fieldTypes: [
+            _name,
+            _address,
+            _city,
+            _pincode,
+            _mobile,
+            _alternateNumber,
+            _email,
+            _password,
+            _confirmPassword
+          ],
+          onValidation: (bool isValidationSuccess, valueMap) {
+            if (isValidationSuccess) {
+              if (_latitude == 0 && _longitude == 0) {
+                DisplayUtil.instance.showErrorDialog(context,
+                    'Location should be enabled to proceed with the registration');
+              } else {
+                sendOtp(valueMap);
+              }
+            }
+          },
+        ));
   }
 
   void sendOtp(Map<String, String> valueMap) {
@@ -176,7 +184,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final password = valueMap[Constants.FIELD_PASSWORD];
     final String persona = (userType == UserType.BUYER) ? 'buyer' : 'seller';
 
-    registrationData = RegistrationData(
+    _registrationData = RegistrationData(
         name: name,
         address: address,
         city: city,
@@ -185,8 +193,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         altMobNo: alternateNumber,
         emailId: email,
         password: password,
-        lat: latitude,
-        long: longitude,
+        lat: _latitude,
+        long: _longitude,
         persona: persona);
 
     final OtpData otpData =
