@@ -6,6 +6,8 @@ import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
+import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/models/result.dart';
@@ -57,14 +59,7 @@ class _SellerInventoryDetailScreenState
   Widget build(BuildContext context) {
     final _seller = widget.seller;
     if (_seller == null) {
-      return Align(
-        alignment: Alignment.topCenter,
-        child: ButtonView(
-            onButtonPressed: _routeToLogin,
-            buttonText: 'Login to buy',
-            margin: const EdgeInsets.all(16),
-            buttonStyle: ButtonStyle.DEFAULT),
-      );
+      return SellerDetailHeaderNoDetail(onPressed: _routeToLogin);
     }
 
     _fetchSellerDetails();
@@ -100,29 +95,12 @@ class _SellerInventoryDetailScreenState
               Icons.drag_handle,
               size: 14.0,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      _seller.name,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        color: AppColors.primary_text,
-                      ),
-                    ),
-                  ),
-                  LoginToBuyButton(
-                    onPressed: () {
-                      _routeToLogin();
-                    },
-                  )
-                ],
-              ),
-            ),
+            SellerDetailHeader(onPressed: _routeToLogin, name: _seller.name),
             Expanded(
-              child: SellerItemList(items: items),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: SellerItemList(items: items),
+              ),
             ),
           ],
         );

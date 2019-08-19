@@ -1,14 +1,14 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/screens/seller_inventory_detail_screen.dart';
 import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
-import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 
 class MapScreen extends StatefulWidget {
