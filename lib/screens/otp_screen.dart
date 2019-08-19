@@ -49,14 +49,12 @@ class _OTPScreenState extends State<OTPScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(content: const Text(Constants.RESEND_OTP_FAIL)));
           DisplayUtil.instance.dismissDialog(context);
+          _showToast(Constants.SEND_OTP_FAIL);
           break;
         case Status.COMPLETED:
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(content: const Text(Constants.RESEND_OTP_SUCCESS)));
           DisplayUtil.instance.dismissDialog(context);
+          _showToast(Constants.SEND_OTP_SUCCESS);
           break;
       }
     });
@@ -70,17 +68,24 @@ class _OTPScreenState extends State<OTPScreen> {
           DisplayUtil.instance.showLoadingDialog(context);
           break;
         case Status.ERROR:
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(content: const Text(Constants.REGISTRATION_FAILED)));
           DisplayUtil.instance.dismissDialog(context);
+          _showToast(Constants.REGISTRATION_FAILED);
           break;
         case Status.COMPLETED:
           DisplayUtil.instance.dismissDialog(context);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MapScreen()));
+          _showMap();
           break;
       }
     });
+  }
+
+  void _showToast(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _showMap() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => MapScreen()));
   }
 
   void _doRegister(String otp) {

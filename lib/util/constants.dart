@@ -1,10 +1,10 @@
 class Constants {
   static const APP_TITLE = 'India Waste Exchange';
   static const LOGO_SMART_CITY = 'assets/images/smart-city-logo.png';
-  
+
   //Currency
   static const INR_UNICODE = '\u20B9';
-  
+
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
   static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
@@ -29,8 +29,8 @@ class Constants {
   static const OTP_MESSAGE =
       'Please enter the OTP sent to your mobile number / Email';
   static const RESEND_OTP = 'Resend OTP';
-  static const RESEND_OTP_FAIL = 'Resend OTP failed';
-  static const RESEND_OTP_SUCCESS = 'OTP sent';
+  static const SEND_OTP_FAIL = 'Send OTP failed';
+  static const SEND_OTP_SUCCESS = 'OTP sent';
   static const REGISTRATION_FAILED = 'Registration failed';
 
   //Forgot password screen
