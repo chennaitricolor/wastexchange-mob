@@ -27,7 +27,7 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   _OTPScreenState(this._registrationData);
 
-  RegistrationData _registrationData;
+  final RegistrationData _registrationData;
   RegistrationBloc _registrationBloc;
   OtpBloc _otpBloc;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
