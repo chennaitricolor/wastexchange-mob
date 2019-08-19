@@ -1,4 +1,7 @@
+import 'package:authentication_view/button_style.dart';
+import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/util/app_colors.dart';
 
 class LoginToBuyButton extends StatelessWidget {
   const LoginToBuyButton({
@@ -10,19 +13,15 @@ class LoginToBuyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.6,
-      child: RaisedButton(
-        color: Colors.white,
-        child: const Text(
-          'Login to buy',
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 25.0,
-          ),
+    return RaisedButton(
+      color: AppColors.green,
+      child: const Text(
+        'Login to buy',
+        style: TextStyle(
+          color: AppColors.white,
         ),
-        onPressed: onPressed,
       ),
+      onPressed: onPressed,
     );
   }
 }

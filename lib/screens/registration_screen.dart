@@ -112,7 +112,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             this.userType = userType;
             _logger.i(userType.toString());
           }),
-          placeHolderBelowButton: Space(24),
           fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
               AppColors.green, AppColors.text_grey),
           headerLayout: HomeAppBar(),
