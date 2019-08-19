@@ -74,15 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: Constants.SIGNUP_BUTTON,
                           style: TextStyle(color: AppColors.green))
                     ]))),
-            placeHolderAboveButton: MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ForgotPasswordScreen()));
-                },
-                child: Text(Constants.LOGIN_FORGOT_PASSWORD,
-                    style: TextStyle(color: AppColors.text_grey))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (hintAsKey, values) {
