@@ -58,7 +58,12 @@ class Constants {
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
 
-  // Response codes
+  // Response codes //TODO:: Move to enum, seems like dart does not support type enums out of the box
+  static const int SUCCESS = 200;
+  static const int MULTIPLE_CHOICE = 300;
+  static const int BAD_REQUEST = 400;
   static const int UNAUTHORIZED = 401;
   static const int FORBIDDEN = 403;
+  static const int NOT_FOUND = 404;
+  static const int INTERNAL_SERVER_ERROR = 500;
 }

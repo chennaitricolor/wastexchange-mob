@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:wastexchange_mobile/util/constants.dart';
 import 'package:wastexchange_mobile/util/http_interceptors/auth_interceptor.dart';
 import 'package:wastexchange_mobile/util/http_interceptors/log_interceptor.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
@@ -68,25 +69,26 @@ class ApiBaseHelper {
   }
 
   bool _isSuccessfulResponse(Response response) {
-    return response.statusCode >= 200 && response.statusCode < 300;
+    return response.statusCode >= Constants.SUCCESS &&
+        response.statusCode < Constants.MULTIPLE_CHOICE;
   }
 
   void handleUnsuccessfulStatusCode(Response response, String responseStr) {
     switch (response.statusCode) {
-      case 400:
+      case Constants.BAD_REQUEST:
         final ApiException exception = BadRequestException(responseStr);
         logger.e(exception);
         throw exception;
-      case 401:
-      case 403:
+      case Constants.UNAUTHORIZED:
+      case Constants.FORBIDDEN:
         final ApiException exception = UnauthorisedException(responseStr);
         logger.e(exception);
         throw exception;
-      case 404:
+      case Constants.NOT_FOUND:
         final ApiException exception = ResourceNotFoundException(responseStr);
         logger.e(exception);
         throw exception;
-      case 500:
+      case Constants.INTERNAL_SERVER_ERROR:
       default:
         final ApiException exception = FetchDataException(
             'Error occured while communicating with server. StatusCode : ${response.statusCode}, Error: $responseStr');
