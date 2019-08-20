@@ -1,7 +1,6 @@
-import 'package:authentication_view/button_style.dart';
-import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/util/app_colors.dart';
+import 'package:wastexchange_mobile/util/constants.dart';
 
 class LoginToBuyButton extends StatelessWidget {
   const LoginToBuyButton({
@@ -16,7 +15,7 @@ class LoginToBuyButton extends StatelessWidget {
     return RaisedButton(
       color: AppColors.green,
       child: const Text(
-        'Login to buy',
+        Constants.LOGIN_TO_BUY,
         style: TextStyle(
           color: AppColors.white,
         ),

@@ -50,6 +50,14 @@ class Constants {
   static const double CHENNAI_LONG = 80.2459;
   static const double DEFAULT_ZOOM = 15;
 
+  // Seller Details Drawer
+  static const String LOGIN_TO_BUY = 'Login to buy';
+  static const String BID_TO_BUY = 'Bid to buy';
+  static const String ANNOUNCEMENT_MESSAGE =
+      '''We have listed all 210 Resource recovery points of Chennai Corporation. Buyers registration is increasing every day. Soon Platform will be open to all sellers.''';
+  static const String USER_ENCOURAGE_LOGIN_MESSAGE =
+      '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
+
   // Response codes
   static const int UNAUTHORIZED = 401;
   static const int FORBIDDEN = 403;
