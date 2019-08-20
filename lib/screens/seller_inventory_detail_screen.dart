@@ -8,11 +8,9 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
-import 'package:wastexchange_mobile/util/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/widgets/seller_items_list.dart';
-import 'package:wastexchange_mobile/widgets/login_to_buy_button.dart';
 
 class SellerInventoryDetailScreen extends StatefulWidget {
   const SellerInventoryDetailScreen(this.seller);

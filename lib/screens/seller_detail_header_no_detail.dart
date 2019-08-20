@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class SellerDetailHeaderNoDetail extends StatelessWidget {
 
-  SellerDetailHeaderNoDetail({@required this.onPressed});
+  const SellerDetailHeaderNoDetail({@required this.onPressed});
 
-  VoidCallback onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
