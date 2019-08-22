@@ -1,7 +1,6 @@
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
-import 'package:authentication_view/space.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';

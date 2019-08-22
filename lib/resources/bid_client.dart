@@ -3,7 +3,7 @@ import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 
 class BidClient {
   BidClient([ApiBaseHelper helper]) {
-    _helper = helper ??= ApiBaseHelper();
+    _helper = helper ?? ApiBaseHelper();
   }
 
   static const PATH_MY_BIDS = '/bids';

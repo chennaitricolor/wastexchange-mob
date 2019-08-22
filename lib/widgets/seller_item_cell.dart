@@ -31,9 +31,9 @@ class SellerItemCell extends StatelessWidget {
               text: TextSpan(
                   style: TextStyle(fontSize: 14.0, color: AppColors.text_grey),
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: '${Constants.INR_UNICODE} ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12.0,
                         color: AppColors.text_black,
                       ),

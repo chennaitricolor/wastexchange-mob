@@ -1,5 +1,3 @@
-import 'package:authentication_view/button_style.dart';
-import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';

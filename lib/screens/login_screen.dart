@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';

@@ -28,7 +28,7 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
           ),
           child: Text(
             Constants.ANNOUNCEMENT_MESSAGE,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25.0,
             ),
           ),
@@ -43,7 +43,7 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
           ),
           child: Text(
             Constants.USER_ENCOURAGE_LOGIN_MESSAGE,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25.0,
             ),
           ),

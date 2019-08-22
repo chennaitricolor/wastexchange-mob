@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 
 class LoadingProgressIndicator extends StatelessWidget {
-  LoadingProgressIndicator({this.alignment = Alignment.center}) {
-    alignment = alignment ?? Alignment.center;
-  }
+  const LoadingProgressIndicator({this.alignment = Alignment.center});
 
-  Alignment alignment;
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {

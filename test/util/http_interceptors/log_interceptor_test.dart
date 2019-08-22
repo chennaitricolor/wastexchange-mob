@@ -19,25 +19,26 @@ void main() {
   });
 
   test('check interceptRequest does not modify original data', () async {
-    MockRequest mockRequest = MockRequest();
+    final MockRequest mockRequest = MockRequest();
 
-    RequestData requestData = RequestData.fromHttpRequest(mockRequest);
-    RequestData interceptedData =
+    final RequestData requestData = RequestData.fromHttpRequest(mockRequest);
+    final RequestData interceptedData =
         await logInterceptor.interceptRequest(data: requestData);
 
     expect(interceptedData, requestData);
   });
 
   test('check interceptResponse does not modify original data', () async {
-    MockResponse mockResponse = MockResponse();
-    MockRequest mockRequest = MockRequest();
+    final MockResponse mockResponse = MockResponse();
+    final MockRequest mockRequest = MockRequest();
 
     when(mockRequest.url).thenReturn(Uri.parse('http://localhost'));
     when(mockResponse.request).thenReturn(mockRequest);
     when(mockResponse.statusCode).thenReturn(401);
 
-    ResponseData responseData = ResponseData.fromHttpResponse(mockResponse);
-    ResponseData interceptedResponse =
+    final ResponseData responseData =
+        ResponseData.fromHttpResponse(mockResponse);
+    final ResponseData interceptedResponse =
         await logInterceptor.interceptResponse(data: responseData);
 
     expect(interceptedResponse, responseData);
