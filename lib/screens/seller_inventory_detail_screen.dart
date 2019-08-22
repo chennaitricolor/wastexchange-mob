@@ -1,10 +1,9 @@
-import 'package:authentication_view/button_style.dart';
-import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
@@ -49,8 +48,7 @@ class _SellerInventoryDetailScreenState
   }
 
   void _routeToLogin() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    Router.pushNamed(context, LoginScreen.routeName);
   }
 
   @override

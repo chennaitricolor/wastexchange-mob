@@ -2,10 +2,11 @@ import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
@@ -15,6 +16,8 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/loginScreen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -43,14 +46,21 @@ class _LoginScreenState extends State<LoginScreen> {
         case Status.COMPLETED:
           if (_snapshot.data.success) {
             DisplayUtil.instance.dismissDialog(context);
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => MapScreen()));
+            _showMapScreen();
           }
           break;
       }
     });
 
     super.initState();
+  }
+
+  void _showMapScreen() {
+    Router.removeAllAndPush(context, MapScreen.routeName);
+  }
+
+  void _showRegistrationScreen() {
+    Router.pushNamed(context, RegistrationScreen.routeName);
   }
 
   @override
@@ -60,10 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: AuthenticationView(
             placeHolderBelowButton: MaterialButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegistrationScreen()));
+                  _showRegistrationScreen();
                 },
                 child: RichText(
                     text: TextSpan(

@@ -8,6 +8,8 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
+  static const routeName = '/forgotPasswordScreen';
+
   final FieldType _email = FieldType.value(
       Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
 

@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -17,9 +18,9 @@ import 'package:authentication_view/authentication_view.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen(this._registrationData);
+  static const routeName = '/otpScreen';
 
   final RegistrationData _registrationData;
-
   @override
   _OTPScreenState createState() => _OTPScreenState(_registrationData);
 }
@@ -27,11 +28,11 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   _OTPScreenState(this._registrationData);
 
-  final RegistrationData _registrationData;
+  RegistrationData _registrationData;
   RegistrationBloc _registrationBloc;
   OtpBloc _otpBloc;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final logger = getLogger('OTPScreen');
 
   @override
@@ -85,8 +86,7 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   void _showMap() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MapScreen()));
+    Router.pushReplacementNamed(context, MapScreen.routeName);
   }
 
   void _doRegister(String otp) {
