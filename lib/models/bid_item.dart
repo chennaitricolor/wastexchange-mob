@@ -29,6 +29,6 @@ class BidItem {
   }
 
   @override
-  // TODO: implement hashCode
+  // TODO(Surya): implement hashCode
   int get hashCode => super.hashCode;
 }

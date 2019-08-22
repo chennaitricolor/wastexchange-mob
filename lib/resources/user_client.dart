@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -12,7 +11,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 
 class UserClient {
   UserClient([ApiBaseHelper helper]) {
-    _helper = helper ??= ApiBaseHelper();
+    _helper = helper ?? ApiBaseHelper();
   }
 
   static const PATH_SEND_OTP = '/users/sendOtp';

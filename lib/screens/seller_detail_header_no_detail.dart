@@ -5,9 +5,10 @@ import 'package:authentication_view/button_view.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 class SellerDetailHeaderNoDetail extends StatelessWidget {
-  const SellerDetailHeaderNoDetail({@required this.onPressed});
+  const SellerDetailHeaderNoDetail({@required VoidCallback onPressed})
+      : _onPressed = onPressed;
 
-  final VoidCallback onPressed;
+  final VoidCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         ButtonView(
-          onButtonPressed: onPressed,
+          onButtonPressed: _onPressed,
           buttonText: Constants.LOGIN_TO_BUY,
           margin: const EdgeInsets.all(16),
           buttonStyle: ButtonStyle.DEFAULT,
@@ -28,7 +29,7 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
           ),
           child: Text(
             Constants.ANNOUNCEMENT_MESSAGE,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25.0,
             ),
           ),
@@ -43,7 +44,7 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
           ),
           child: Text(
             Constants.USER_ENCOURAGE_LOGIN_MESSAGE,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25.0,
             ),
           ),

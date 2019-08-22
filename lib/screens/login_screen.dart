@@ -2,7 +2,6 @@ import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';

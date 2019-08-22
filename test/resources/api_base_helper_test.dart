@@ -58,7 +58,7 @@ void main() {
   test('Test GET call throw FetchData exception on Socket Exception', () async {
     const String path = 'login';
     when(_mockHttpClient.get(_baseUrl + path)).thenAnswer((_) => Future(() {
-          throw SocketException("");
+          throw const SocketException('');
         }));
 
     expect(_apiBaseHelper.get(false, path),
@@ -72,7 +72,7 @@ void main() {
             headers: {'Content-Type': 'application/json'},
             body: json.encode('{}')))
         .thenAnswer((_) => Future(() {
-              throw SocketException("");
+              throw const SocketException('');
             }));
 
     expect(_apiBaseHelper.post(false, path, '{}'),

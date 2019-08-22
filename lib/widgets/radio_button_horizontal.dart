@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
 
 class RadioButtonHorizontal extends StatelessWidget {
-  RadioButtonHorizontal(
+  const RadioButtonHorizontal(
       {@required this.userType,
       @required this.groupValue,
       @required this.label,
       @required this.onValueChanged});
 
-  UserType userType;
-  UserType groupValue;
-  String label;
-  ValueChanged<UserType> onValueChanged;
+  final UserType userType;
+  final UserType groupValue;
+  final String label;
+  final ValueChanged<UserType> onValueChanged;
 
   @override
   Widget build(BuildContext context) {

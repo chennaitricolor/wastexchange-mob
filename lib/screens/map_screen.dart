@@ -103,7 +103,7 @@ class _MapState extends State<MapScreen> {
                       snapShot.hasData;
               if (!isSuccess) {
                 return Center(
-                  child: LoadingProgressIndicator(),
+                  child: const LoadingProgressIndicator(),
                 );
               }
               populateUsers(snapShot.data);

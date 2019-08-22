@@ -26,11 +26,11 @@ void main() {
   test(
       'check interceptRequest adding token to header WHEN TokenRepository returns token',
       () async {
-    MockRequest mockRequest = MockRequest();
+    final MockRequest mockRequest = MockRequest();
 
     await tokenRepository.setToken('abbc');
 
-    RequestData requestData = RequestData.fromHttpRequest(mockRequest);
+    final RequestData requestData = RequestData.fromHttpRequest(mockRequest);
     await authInterceptor.interceptRequest(data: requestData);
 
     expect(requestData.headers['Authorization'], 'Bearer abbc');
@@ -42,8 +42,8 @@ void main() {
     await tokenRepository.setToken('abbc');
     expect(await tokenRepository.getToken(), 'abbc');
 
-    MockResponse mockResponse = MockResponse();
-    MockRequest mockRequest = MockRequest();
+    final MockResponse mockResponse = MockResponse();
+    final MockRequest mockRequest = MockRequest();
 
     when(mockRequest.url).thenReturn(Uri.parse('http://localhost'));
     when(mockResponse.request).thenReturn(mockRequest);

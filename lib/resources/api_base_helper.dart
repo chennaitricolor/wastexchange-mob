@@ -16,9 +16,12 @@ class ApiBaseHelper {
   ApiBaseHelper(
       {HttpClientWithInterceptor client,
       HttpClientWithInterceptor clientWithAuth}) {
-    httpClientWithAuth = clientWithAuth ??= HttpClientWithInterceptor.build(
-        interceptors: [LogInterceptor(), AuthInterceptor(TokenRepository())]);
-    httpClient = client ??=
+    httpClientWithAuth = clientWithAuth ??
+        HttpClientWithInterceptor.build(interceptors: [
+          LogInterceptor(),
+          AuthInterceptor(TokenRepository())
+        ]);
+    httpClient = client ??
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
   }
 

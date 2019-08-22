@@ -3,11 +3,10 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/login_to_buy_button.dart';
 
 class SellerDetailHeader extends StatelessWidget {
-  SellerDetailHeader({@required this.onPressed, this.name});
+  const SellerDetailHeader({@required this.onPressed, this.name});
 
-  VoidCallback onPressed;
-
-  String name;
+  final VoidCallback onPressed;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
