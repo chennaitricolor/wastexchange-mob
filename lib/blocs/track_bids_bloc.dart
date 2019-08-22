@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/resources/bid_repository.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/logger.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 
 class TrackBidsBloc {

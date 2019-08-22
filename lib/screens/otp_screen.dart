@@ -7,11 +7,11 @@ import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
-import 'package:wastexchange_mobile/util/app_colors.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
-import 'package:wastexchange_mobile/util/field_validator.dart';
-import 'package:wastexchange_mobile/util/logger.dart';
+import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:authentication_view/authentication_view.dart';
 

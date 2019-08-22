@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/util/app_colors.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 
 class HomeAppBar extends AppBar {
   HomeAppBar({Key key})

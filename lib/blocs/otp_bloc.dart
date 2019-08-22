@@ -4,8 +4,8 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/logger.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
 
 class OtpBloc {
   final logger = getLogger('OtpBloc');

@@ -1,10 +1,10 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:wastexchange_mobile/util/logger.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
+
 ///
 /// Interceptor for debug purpose.
 ///
 class LogInterceptor implements InterceptorContract {
-
   final logger = getLogger('LogInterceptor');
 
   @override

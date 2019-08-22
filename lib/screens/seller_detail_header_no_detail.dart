@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/button_view.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 
 class SellerDetailHeaderNoDetail extends StatelessWidget {
   const SellerDetailHeaderNoDetail({@required this.onPressed});

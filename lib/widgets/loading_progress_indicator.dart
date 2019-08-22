@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/util/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 
 class LoadingProgressIndicator extends StatelessWidget {
   LoadingProgressIndicator({this.alignment = Alignment.center}) {

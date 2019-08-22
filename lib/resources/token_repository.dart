@@ -1,9 +1,8 @@
-import 'package:wastexchange_mobile/util/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
 
 /// TokenRepository class specifically designed to handle JWT Token by validating JWT Token, Checking token expired, etc...
 /// This uses a singleton pattern to ensure only one instance is available.
 class TokenRepository {
-
   factory TokenRepository([CachedSecureStorage cachedSecureStorage]) {
     return _instance ??= TokenRepository._internal(cachedSecureStorage);
   }

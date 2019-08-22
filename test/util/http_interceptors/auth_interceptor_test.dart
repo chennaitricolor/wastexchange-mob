@@ -1,11 +1,11 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
-import 'package:wastexchange_mobile/util/http_interceptors/auth_interceptor.dart';
+import 'package:wastexchange_mobile/utils/http_interceptors/auth_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:wastexchange_mobile/util/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
 
 class MockFlutterStorage extends Mock implements FlutterSecureStorage {}
 
@@ -14,17 +14,18 @@ class MockRequest extends Mock implements Request {}
 class MockResponse extends Mock implements Response {}
 
 void main() {
-
   AuthInterceptor authInterceptor;
   TokenRepository tokenRepository;
 
   setUp(() {
-    tokenRepository = TokenRepository(CachedSecureStorage(MockFlutterStorage()));
+    tokenRepository =
+        TokenRepository(CachedSecureStorage(MockFlutterStorage()));
     authInterceptor = AuthInterceptor(tokenRepository);
   });
 
-  test('check interceptRequest adding token to header WHEN TokenRepository returns token', () async {
-
+  test(
+      'check interceptRequest adding token to header WHEN TokenRepository returns token',
+      () async {
     MockRequest mockRequest = MockRequest();
 
     await tokenRepository.setToken('abbc');
@@ -35,8 +36,9 @@ void main() {
     expect(requestData.headers['Authorization'], 'Bearer abbc');
   });
 
-  test('check interceptResponse clearing token in TokenRepository WHEN response returns 401 or 403', () async {
-
+  test(
+      'check interceptResponse clearing token in TokenRepository WHEN response returns 401 or 403',
+      () async {
     await tokenRepository.setToken('abbc');
     expect(await tokenRepository.getToken(), 'abbc');
 
@@ -52,7 +54,6 @@ void main() {
 
     expect(await tokenRepository.getToken(), null);
 
-
     await tokenRepository.setToken('abbc');
     expect(await tokenRepository.getToken(), 'abbc');
 
@@ -65,5 +66,4 @@ void main() {
 
     expect(await tokenRepository.getToken(), null);
   });
-
 }

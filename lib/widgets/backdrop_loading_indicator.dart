@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/util/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 
 class BackdropLoadingProgressIndicator extends StatelessWidget {

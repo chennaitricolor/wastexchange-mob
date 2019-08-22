@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
-import 'package:wastexchange_mobile/util/constants.dart';
-import 'package:wastexchange_mobile/util/logger.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 
 class SellerItemDetailsBloc {

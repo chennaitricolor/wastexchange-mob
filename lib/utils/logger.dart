@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:wastexchange_mobile/util/log_printer.dart';
+import 'package:wastexchange_mobile/utils/log_printer.dart';
 
 Level getLoggerLevel(String level) {
   switch (level) {
