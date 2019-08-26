@@ -7,6 +7,7 @@ import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -17,6 +18,7 @@ import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  static const routeName = '/registrationScreen';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -78,8 +80,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _showOTPScreen() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => OTPScreen(_registrationData)));
+    Router.pushNamed(
+      context,
+      OTPScreen.routeName,
+      arguments: _registrationData,
+    );
   }
 
   void _initCurrentLocation() {

@@ -12,6 +12,7 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 
 class MapScreen extends StatefulWidget {
+  static const routeName = '/mapScreen';
   @override
   _MapState createState() => _MapState();
 }

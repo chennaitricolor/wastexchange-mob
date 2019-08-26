@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
@@ -16,9 +17,9 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    SellerInformation sellerInformation,
-  }) : _sellerInformation = sellerInformation;
+  const LoginScreen(this._sellerInformation);
+
+  static const routeName = '/loginScreen';
 
   final SellerInformation _sellerInformation;
   @override
@@ -33,19 +34,29 @@ class _LoginScreenState extends State<LoginScreen> {
       FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  //TODO(Sayeed): Why do we need this method
   SellerInformation _sellerInformation() => widget._sellerInformation;
   bool isSellerInfoAvailable() => _sellerInformation() != null;
 
   void _routeToNextScreen() {
-    final nextScreen = isSellerInfoAvailable()
-        ? SellerInformationScreen(
-            sellerInfo: _sellerInformation(),
-          )
-        : MapScreen();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextScreen),
-    );
+    if (isSellerInfoAvailable()) {
+      _routeToSellerInfo();
+    } else {
+      _routeToMapScreen();
+    }
+  }
+
+  void _routeToSellerInfo() {
+    Router.pushReplacementNamed(context, SellerInformationScreen.routeName,
+        arguments: _sellerInformation());
+  }
+
+  void _routeToMapScreen() {
+    Router.removeAllAndPush(context, MapScreen.routeName);
+  }
+
+  void _routeToRegistrationScreen() {
+    Router.pushNamed(context, RegistrationScreen.routeName);
   }
 
   @override
@@ -80,10 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: AuthenticationView(
             placeHolderBelowButton: MaterialButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegistrationScreen()));
+                  _routeToRegistrationScreen();
                 },
                 child: RichText(
                     text: TextSpan(
