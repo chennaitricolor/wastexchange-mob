@@ -9,6 +9,8 @@ import 'bid_item_widget.dart';
 
 class SellerInformationScreen extends StatefulWidget {
   const SellerInformationScreen({this.sellerInfo});
+  static const routeName = '/sellerInformationScreen';
+
   final SellerInformation sellerInfo;
   @override
   _SellerInformationScreenState createState() =>

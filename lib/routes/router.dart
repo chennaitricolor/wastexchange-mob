@@ -5,18 +5,17 @@ import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
+import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => MapScreen());
-
       case MapScreen.routeName:
         return MaterialPageRoute(builder: (_) => MapScreen());
 
       case LoginScreen.routeName:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(
+            builder: (_) => LoginScreen(settings.arguments));
 
       case ForgotPasswordScreen.routeName:
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
@@ -27,6 +26,10 @@ class Router {
       case RegistrationScreen.routeName:
         return MaterialPageRoute(builder: (_) => RegistrationScreen());
 
+      case SellerInformationScreen.routeName:
+        return MaterialPageRoute(
+            builder: (_) =>
+                SellerInformationScreen(sellerInfo: settings.arguments));
       default:
         return null;
     }

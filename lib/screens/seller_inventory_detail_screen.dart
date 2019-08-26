@@ -5,6 +5,7 @@ import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
@@ -51,31 +52,36 @@ class _SellerInventoryDetailScreenState
     }
   }
 
-  void _routeToLogin() {
-    final sellerInfo = SellerInformation(
+  void _routeToNextScreen() {
+    if (TokenRepository.sharedInstance.isAuthorized()) {
+      _routeToSellerInformationScreen();
+    } else {
+      _routeToLoginScreen();
+    }
+  }
+
+  SellerInformation _getSellerInfo() {
+    return SellerInformation(
       sellerItems: _sellerItemDetails.items,
       seller: _seller(),
     );
+  }
 
-    final screen = TokenRepository.sharedInstance.isAuthorized()
-        ? SellerInformationScreen(
-            sellerInfo: sellerInfo,
-          )
-        : LoginScreen(
-            sellerInformation: sellerInfo,
-          );
+  void _routeToLoginScreen() {
+    Router.pushNamed(context, LoginScreen.routeName,
+        arguments: _getSellerInfo());
+  }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => screen),
-    );
+  void _routeToSellerInformationScreen() {
+    Router.pushNamed(context, SellerInformationScreen.routeName,
+        arguments: _getSellerInfo());
   }
 
   @override
   Widget build(BuildContext context) {
     if (_seller() == null) {
       return SellerDetailHeaderNoDetail(
-        onPressed: _routeToLogin,
+        onPressed: _routeToNextScreen,
       );
     }
 
@@ -113,7 +119,7 @@ class _SellerInventoryDetailScreenState
               size: 14.0,
             ),
             SellerDetailHeader(
-              onPressed: _routeToLogin,
+              onPressed: _routeToNextScreen,
               name: _seller().name,
             ),
             Expanded(
