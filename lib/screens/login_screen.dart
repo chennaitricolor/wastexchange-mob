@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  //TODO(Sayeed): Why do we need this method
+  // TODO(Sayeed): Why do we need this method
   SellerInformation _sellerInformation() => widget._sellerInformation;
   bool isSellerInfoAvailable() => _sellerInformation() != null;
 

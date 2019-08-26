@@ -61,7 +61,7 @@ void main() {
 
     token = SAMPLE_JWT_TOKEN;
 
-    expect(await tokenRepository.isAuthorized(), true);
+    expect(tokenRepository.isAuthorized(), true);
   });
 
   test(
@@ -69,6 +69,6 @@ void main() {
       () async {
     await tokenRepository.deleteToken();
 
-    expect(await tokenRepository.isAuthorized(), false);
+    expect(tokenRepository.isAuthorized(), false);
   });
 }
