@@ -6,8 +6,10 @@ import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
+import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
@@ -15,8 +17,13 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({
+    SellerInformation sellerInformation,
+  }) : _sellerInformation = sellerInformation;
+
   static const routeName = '/loginScreen';
 
+  final SellerInformation _sellerInformation;
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -28,6 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final FieldType _password =
       FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  SellerInformation _sellerInformation() => widget._sellerInformation;
+  bool isSellerInfoAvailable() => _sellerInformation() != null;
+
+  void _routeToNextScreen() {
+    final nextScreen = isSellerInfoAvailable()
+        ? SellerInformationScreen(
+            sellerInfo: _sellerInformation(),
+          )
+        : MapScreen();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => nextScreen),
+    );
+  }
 
   @override
   void initState() {
@@ -45,7 +67,11 @@ class _LoginScreenState extends State<LoginScreen> {
         case Status.COMPLETED:
           if (_snapshot.data.success) {
             DisplayUtil.instance.dismissDialog(context);
+<<<<<<< HEAD
             _showMapScreen();
+=======
+            _routeToNextScreen();
+>>>>>>> e21bf62562cf814e4afbef21b970564c62c5c20e
           }
           break;
       }

@@ -13,23 +13,33 @@ class TokenRepository {
 
   CachedSecureStorage _cachedSecureStorage;
 
+  static TokenRepository sharedInstance = TokenRepository();
   static TokenRepository _instance;
 
   static const _tokenKey = 'token';
+  
+  String token;
 
-  Future<bool> isAuthorized() async {
-    return await getToken() != null;
+  bool isAuthorized() {
+    return token != null;
   }
 
   Future<void> setToken(token) async {
+    token = token;
     await _cachedSecureStorage.setValue(_tokenKey, token);
   }
 
   Future<void> deleteToken() async {
+    token = null;
     await _cachedSecureStorage.setValue(_tokenKey, null);
   }
 
   Future<String> getToken() async {
-    return await _cachedSecureStorage.getValue(_tokenKey);
+    token = await _cachedSecureStorage.getValue(_tokenKey);
+    return token;
+  }
+
+  Future<void> loadTokenFromCache() async {
+    await getToken();
   }
 }

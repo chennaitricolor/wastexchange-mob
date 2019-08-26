@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/utils/logger.dart';
 import 'bid_item_widget.dart';
 
 class SellerInformationScreen extends StatefulWidget {
-  SellerInformationScreen({this.sellerInfo});
-  SellerInformation sellerInfo;
-  Set<BidItem> bidItems;
-  List<BidItemWidget> bidItemWidgets = List<BidItemWidget>();
+  const SellerInformationScreen({this.sellerInfo});
+  final SellerInformation sellerInfo;
   @override
   _SellerInformationScreenState createState() =>
-      _SellerInformationScreenState();
+      _SellerInformationScreenState(sellerInfo: sellerInfo);
 }
 
 class _SellerInformationScreenState extends State<SellerInformationScreen> {
+  _SellerInformationScreenState({this.sellerInfo});
+
+  Set<BidItem> _bidItems = {};
+  final List<BidItemWidget> _bidItemWidgets = [];
+  SellerInformation sellerInfo;
+  Logger logger = getLogger('SellerInformationScreen');
+
   @override
   void initState() {
     super.initState();
@@ -29,15 +36,14 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
       Item(name: 'Paper', price: 10, qty: 100)
     ];
 
-    widget.sellerInfo =
-        SellerInformation(seller: dummyUser, sellerItems: itemsList);
+    sellerInfo = SellerInformation(seller: dummyUser, sellerItems: itemsList);
     if (widget.sellerInfo.sellerItems.isNotEmpty) {
-      widget.bidItems = Set.of(
+      _bidItems = Set.of(
           BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems));
-      for (int index = 0; index < widget.bidItems.length; index++) {
-        widget.bidItemWidgets.add(BidItemWidget(
+      for (int index = 0; index < _bidItems.length; index++) {
+        _bidItemWidgets.add(BidItemWidget(
             index: index,
-            commodity: widget.bidItems.elementAt(index),
+            commodity: _bidItems.elementAt(index),
             onSaveItem: saveBidItem,
             onDeleteItem: deleteBidItem));
       }
@@ -45,44 +51,47 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   }
 
   void saveBidItem(int index, double bidQty, double bidAmount) {
-    debugPrint('^^^^^^^^^^^^^^^^^^^ ${bidQty} ${bidAmount}');
+    logger.d('^^^^^^^^^^^^^^^^^^^ $bidQty $bidAmount');
     setState(() {
-      widget.bidItems.elementAt(index).bidPrice = bidAmount;
-      widget.bidItems.elementAt(index).bidQuantity = bidQty;
+      _bidItems.elementAt(index).bidPrice = bidAmount;
+      _bidItems.elementAt(index).bidQuantity = bidQty;
     });
   }
 
   void deleteBidItem(int index) {
     setState(() {
-      widget.bidItems.elementAt(index).bidPrice = null;
-      widget.bidItems.elementAt(index).bidQuantity = null;
+      _bidItems.elementAt(index).bidPrice = null;
+      _bidItems.elementAt(index).bidQuantity = null;
     });
   }
 
-  void validateForms(){
-    widget.bidItemWidgets.forEach((form)=> {
-       form.isValid()
-    });
+  bool isFormsValid() {
+    return _bidItemWidgets.firstWhere((form) => !form.isValid(),
+            orElse: () => null) ==
+        null;
   }
 
   @override
   Widget build(BuildContext context) {
     // Dummy Data Block
-    // TODO: implement build
+    // TODO(Surya): implement build
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,  
-        actions: <Widget>[RaisedButton(
-                    color: Colors.green[300],
-                    textColor: Colors.white,
-                    onPressed: () {
-                      // Validate returns true if the form is valid, or false
-                      // otherwise.
-                      validateForms();
-                    },
-                    child: Text('Add'),
-                  )],
+        backgroundColor: Colors.green,
+        actions: <Widget>[
+          RaisedButton(
+            color: Colors.green[300],
+            textColor: Colors.white,
+            onPressed: () {
+              // Validate returns true if the form is valid, or false
+              // otherwise.
+              final bool valid = isFormsValid();
+              logger.d(valid);
+            },
+            child: const Text('Add'),
+          )
+        ],
         title: ListTile(
           title: Text(widget.sellerInfo.seller.name,
               style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -94,14 +103,14 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(1.0, 1.0),
+            offset: const Offset(1.0, 1.0),
             blurRadius: 1.0,
           ),
         ]),
         child: ListView.builder(
           itemCount: 2,
           itemBuilder: (BuildContext context, int index) {
-            return widget.bidItemWidgets[index];
+            return _bidItemWidgets[index];
           },
         ),
       ),

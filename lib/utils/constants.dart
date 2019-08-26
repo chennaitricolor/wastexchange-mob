@@ -57,6 +57,7 @@ class Constants {
       '''We have listed all 210 Resource recovery points of Chennai Corporation. Buyers registration is increasing every day. Soon Platform will be open to all sellers.''';
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
+  static const String TAP_SELLER_FOR_DETAILS = 'Tap on a seller to view their inventory details';
 
   // Response codes //TODO:: Move to enum, seems like dart does not support type enums out of the box
   static const int SUCCESS = 200;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
+import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
+import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
@@ -28,6 +30,8 @@ class SellerInventoryDetailScreen extends StatefulWidget {
 class _SellerInventoryDetailScreenState
     extends State<SellerInventoryDetailScreen> {
   SellerItemDetailsBloc _bloc;
+  User _seller() => widget.seller;
+  SellerItemDetails _sellerItemDetails;
 
   @override
   void initState() {
@@ -48,14 +52,31 @@ class _SellerInventoryDetailScreenState
   }
 
   void _routeToLogin() {
-    Router.pushNamed(context, LoginScreen.routeName);
+    final sellerInfo = SellerInformation(
+      sellerItems: _sellerItemDetails.items,
+      seller: _seller(),
+    );
+
+    final screen = TokenRepository.sharedInstance.isAuthorized()
+        ? SellerInformationScreen(
+            sellerInfo: sellerInfo,
+          )
+        : LoginScreen(
+            sellerInformation: sellerInfo,
+          );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => screen),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final _seller = widget.seller;
-    if (_seller == null) {
-      return SellerDetailHeaderNoDetail(onPressed: _routeToLogin);
+    if (_seller() == null) {
+      return SellerDetailHeaderNoDetail(
+        onPressed: _routeToLogin,
+      );
     }
 
     _fetchSellerDetails();
@@ -83,19 +104,26 @@ class _SellerInventoryDetailScreenState
             break;
         }
 
-        final SellerItemDetails sellerItemDetails = result.data;
-        final items = sellerItemDetails.items;
+        _sellerItemDetails = result.data;
+        final items = _sellerItemDetails.items;
         return Column(
           children: <Widget>[
             Icon(
               Icons.drag_handle,
               size: 14.0,
             ),
-            SellerDetailHeader(onPressed: _routeToLogin, name: _seller.name),
+            SellerDetailHeader(
+              onPressed: _routeToLogin,
+              name: _seller().name,
+            ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: SellerItemList(items: items),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                child: SellerItemList(
+                  items: items,
+                ),
               ),
             ),
           ],
