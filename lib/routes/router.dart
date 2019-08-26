@@ -5,7 +5,7 @@ import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
-import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
+import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {

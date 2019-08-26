@@ -7,7 +7,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
-import 'package:wastexchange_mobile/screens/seller-information-screen.dart';
+import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
 import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
