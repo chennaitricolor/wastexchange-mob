@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/login_to_buy_button.dart';
 
 class SellerDetailHeader extends StatelessWidget {
-  const SellerDetailHeader({@required this.onPressed, this.name});
+  const SellerDetailHeader({
+    @required this.onPressed,
+    this.name,
+  });
 
   final VoidCallback onPressed;
   final String name;
 
   @override
   Widget build(BuildContext context) {
+    final buttonTitle = TokenRepository.sharedInstance.isAuthorized()
+        ? Constants.BID_TO_BUY
+        : Constants.LOGIN_TO_BUY;
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(
+        16,
+      ),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -23,8 +33,11 @@ class SellerDetailHeader extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(
+            width: 10,
+          ),
           LoginToBuyButton(
+            title: buttonTitle,
             onPressed: onPressed,
           )
         ],

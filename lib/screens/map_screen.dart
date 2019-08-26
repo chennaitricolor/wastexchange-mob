@@ -47,32 +47,40 @@ class _MapState extends State<MapScreen> {
     mapController = controller;
   }
 
-  void _onMarkerTapped(MarkerId markerId) {
-    logger.i('Marker $markerId Tapped!');
-    _selectedUser = _getUser(markerId.value);
+  void _onMarkerTapped(int userId) {
+    logger.i('Marker $userId Tapped!');
+    _selectedUser = _getUser(userId);
     sellerStreamController.sink.add(_selectedUser);
   }
 
-  User _getUser(String stringIdentifier) {
-    final id = int.parse(stringIdentifier);
+  User _getUser(int id) {
     return _users.firstWhere((user) => user.id == id);
   }
 
   void populateUsers(List<User> users) {
     _users = users;
-    final markers = users.map((user) => Marker(
-          markerId: MarkerId(user.id.toString()),
-          position: LatLng(user.lat, user.long),
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-              user.persona == Constants.USER_SELLER ? 200.0 : 0.0),
-          infoWindow: InfoWindow(
-            title: '${user.name}',
-            snippet: '${user.address}',
-          ),
-          onTap: () {
-            _onMarkerTapped(MarkerId(user.id.toString()));
-          },
-        ));
+    final markers = users.map((user) {
+      final isSeller = user.persona == Constants.USER_SELLER;
+      final hue = isSeller ? 200.0 : 0.0;
+      void callback() => _onMarkerTapped(user.id);
+      return Marker(
+        markerId: MarkerId(
+          user.id.toString(),
+        ),
+        position: LatLng(
+          user.lat,
+          user.long,
+        ),
+        icon: BitmapDescriptor.defaultMarkerWithHue(
+          hue,
+        ),
+        infoWindow: InfoWindow(
+          title: '${user.name}',
+          snippet: '${user.address}',
+        ),
+        onTap: callback,
+      );
+    });
     this.markers = Map.fromIterable(markers,
         key: (marker) => marker.markerId, value: (marker) => marker);
     logger.i('Markers Ready');
