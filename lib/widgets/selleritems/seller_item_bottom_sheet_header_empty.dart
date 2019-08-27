@@ -6,8 +6,8 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/announcement_message.dart';
 import 'package:wastexchange_mobile/widgets/tap_seller_for_details.dart';
 
-class SellerDetailHeaderNoDetail extends StatelessWidget {
-  const SellerDetailHeaderNoDetail({
+class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
+  const SellerItemBottomSheetHeaderEmpty({
     @required VoidCallback onPressed,
   }) : _onPressed = onPressed;
 

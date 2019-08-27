@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
-import 'package:wastexchange_mobile/screens/seller_inventory_detail_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
@@ -100,7 +100,7 @@ class _MapState extends State<MapScreen> {
         panel: StreamBuilder(
           stream: sellerStreamController.stream,
           builder: (context, snapshot) {
-            return SellerInventoryDetailScreen(_selectedUser);
+            return SellerItemBottomSheet(_selectedUser);
           },
         ),
         body: FutureBuilder(

@@ -3,8 +3,8 @@ import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
-class SellerItemCell extends StatelessWidget {
-  const SellerItemCell(this.item);
+class SellerItemsListItem extends StatelessWidget {
+  const SellerItemsListItem(this.item);
 
   final Item item;
 

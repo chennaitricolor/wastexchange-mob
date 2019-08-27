@@ -3,13 +3,17 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 class HomeAppBar extends AppBar {
-  HomeAppBar({Key key})
+  final List<Widget> actions;
+  final title;
+
+  HomeAppBar({Key key, this.actions, this.title})
       : super(
             backgroundColor: Colors.transparent,
             elevation: 0,
             key: key,
             centerTitle: true,
-            title: Text(Constants.APP_TITLE,
+            actions: actions,
+            title: title ?? Text(Constants.APP_TITLE,
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppColors.text_black,

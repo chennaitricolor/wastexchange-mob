@@ -5,8 +5,9 @@ import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
+import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'bid_item_widget.dart';
-
+//TODO Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
   const SellerInformationScreen({this.sellerInfo});
   static const routeName = '/sellerInformationScreen';
@@ -79,8 +80,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     // TODO(Surya): implement build
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
+      appBar: HomeAppBar(
         actions: <Widget>[
           RaisedButton(
             color: Colors.green[300],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:wastexchange_mobile/widgets/seller_item_cell.dart';
 import 'package:wastexchange_mobile/models/item.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_items_list_item.dart';
 
 class SellerItemList extends StatelessWidget {
   const SellerItemList({
@@ -17,7 +16,7 @@ class SellerItemList extends StatelessWidget {
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) {
         final item = items[index];
-        return SellerItemCell(item);
+        return SellerItemsListItem(item);
       },
     );
   }

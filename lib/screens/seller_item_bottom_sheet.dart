@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -8,14 +8,13 @@ import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_detail_header.dart';
-import 'package:wastexchange_mobile/screens/seller_detail_header_no_detail.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
-import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/widgets/seller_items_list.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_items_list.dart';
 
-class SellerInventoryDetailScreen extends StatefulWidget {
-  const SellerInventoryDetailScreen(this.seller);
+class SellerItemBottomSheet extends StatefulWidget {
+  const SellerItemBottomSheet(this.seller);
 
   final User seller;
 
@@ -24,12 +23,12 @@ class SellerInventoryDetailScreen extends StatefulWidget {
   }
 
   @override
-  _SellerInventoryDetailScreenState createState() =>
-      _SellerInventoryDetailScreenState();
+  _SellerItemBottomSheetState createState() =>
+      _SellerItemBottomSheetState();
 }
 
-class _SellerInventoryDetailScreenState
-    extends State<SellerInventoryDetailScreen> {
+class _SellerItemBottomSheetState
+    extends State<SellerItemBottomSheet> {
   SellerItemDetailsBloc _bloc;
   User _seller() => widget.seller;
   SellerItemDetails _sellerItemDetails;
@@ -80,7 +79,7 @@ class _SellerInventoryDetailScreenState
   @override
   Widget build(BuildContext context) {
     if (_seller() == null) {
-      return SellerDetailHeaderNoDetail(
+      return SellerItemBottomSheetHeaderEmpty(
         onPressed: _routeToNextScreen,
       );
     }
@@ -118,7 +117,7 @@ class _SellerInventoryDetailScreenState
               Icons.drag_handle,
               size: 14.0,
             ),
-            SellerDetailHeader(
+            SellerItemBottomSheetHeader(
               onPressed: _routeToNextScreen,
               name: _seller().name,
             ),
