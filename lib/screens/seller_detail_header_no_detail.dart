@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/button_view.dart';
+import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/announcement_message.dart';
-import 'package:wastexchange_mobile/widgets/encourage_login_message.dart';
 import 'package:wastexchange_mobile/widgets/tap_seller_for_details.dart';
 
 class SellerDetailHeaderNoDetail extends StatelessWidget {
@@ -30,24 +28,8 @@ class SellerDetailHeaderNoDetail extends StatelessWidget {
           margin: const EdgeInsets.all(16),
           buttonStyle: ButtonStyle.DEFAULT,
         ),
-        Container(
-          margin: const EdgeInsets.only(
-            top: 10.0,
-            left: 16.0,
-            right: 16.0,
-          ),
-          child: AnnouncementMessage(),
-        ),
-        const SizedBox(
-          height: 25.0,
-        ),
-        Container(
-          margin: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-          ),
-          child: EncourageLoginMessage(),
-        ),
+        AnnouncementMessage(Constants.ANNOUNCEMENT_MESSAGE),
+        AnnouncementMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
       ],
     );
   }
