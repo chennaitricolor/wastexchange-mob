@@ -4,9 +4,14 @@ import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:authentication_view/button_style.dart';
+import 'package:authentication_view/button_view.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'bid_item_widget.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+
+
 //TODO Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
   const SellerInformationScreen({this.sellerInfo});
@@ -36,13 +41,16 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
         address: 'No :1120, Perungudi , Chennai City');
     final List<Item> itemsList = [
       Item(name: 'Plastic', price: 20, qty: 10),
-      Item(name: 'Paper', price: 10, qty: 100)
+      Item(name: 'Paper', price: 10, qty: 100),
+      Item(name: 'Metal', price: 10, qty: 100),
+      Item(name: 'Wood', price: 10, qty: 100),
+      Item(name: 'PET', price: 10, qty: 100)
     ];
 
     sellerInfo = SellerInformation(seller: dummyUser, sellerItems: itemsList);
-    if (widget.sellerInfo.sellerItems.isNotEmpty) {
+    if (sellerInfo.sellerItems.isNotEmpty) {
       _bidItems = Set.of(
-          BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems));
+          BidItem.mapItemListToBidItemList(sellerInfo.sellerItems));
       for (int index = 0; index < _bidItems.length; index++) {
         _bidItemWidgets.add(BidItemWidget(
             index: index,
@@ -81,40 +89,33 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
 
     return Scaffold(
       appBar: HomeAppBar(
-        actions: <Widget>[
-          RaisedButton(
-            color: Colors.green[300],
-            textColor: Colors.white,
-            onPressed: () {
-              // Validate returns true if the form is valid, or false
-              // otherwise.
+        title: ListTile(
+          title: Text(sellerInfo.seller.name,
+              style: TextStyle(fontSize: 20)),
+          subtitle: Text(sellerInfo.seller.address,
+              style: TextStyle(fontSize: 13)),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) {
+                return _bidItemWidgets[index];
+              },
+            ),
+          ),
+          ButtonView(
+          onButtonPressed: () {
               final bool valid = isFormsValid();
               logger.d(valid);
             },
-            child: const Text('Add'),
-          )
+          buttonText: Constants.CHECKOUT,
+          margin: const EdgeInsets.all(16),
+          buttonStyle: ButtonStyle.RAISED,
+        )
         ],
-        title: ListTile(
-          title: Text(widget.sellerInfo.seller.name,
-              style: TextStyle(color: Colors.white, fontSize: 20)),
-          subtitle: Text(widget.sellerInfo.seller.address,
-              style: TextStyle(color: Colors.white, fontSize: 13)),
-        ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black12,
-            offset: const Offset(1.0, 1.0),
-            blurRadius: 1.0,
-          ),
-        ]),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) {
-            return _bidItemWidgets[index];
-          },
-        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:authentication_view/auth_colors.dart';
 
 class BidItemWidget extends StatefulWidget {
   BidItemWidget(
@@ -58,76 +59,73 @@ class _BidItemWidgetState extends State<BidItemWidget> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-        padding: all10,
-        decoration: BoxDecoration(boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.white,
-            offset: const Offset(1.0, 1.0),
-            blurRadius: 1.0,
-          ),
-        ]),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                  widget.commodity.name,
-                  style: TextStyle(fontSize: 25),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  flex: 3,
-                  child: Text(
-                      'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Quantity',
-                    ),
-                    controller: qtyController,
-                    validator: (value) {
-                      if (value != '' &&
-                          double.parse(value) >
-                              widget.commodity.availableQuantity)
-                        return '> qty';
-                      return null;
-                    },
+      child: Card(
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        // padding: all10,
+        // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text(
+                    widget.commodity.name,
+                    style: TextStyle(fontSize: 25, color: AuthColors.green),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  flex: 3,
-                  child: Text(
-                      'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
-                ),
-                Flexible(
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    flex: 3,
+                    child: Text(
+                        'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
+                  ),
+                  Flexible(
                     flex: 1,
                     child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Price',
-                        ),
-                        controller: priceController,
-                        validator: (value) {
-                          if (value != '' && double.parse(value) < 0)
-                            return '< 0';
-                          return null;
-                        })),
-              ],
-            ),
-          ],
+                      decoration: InputDecoration(
+                        hintText: 'Quantity',
+                      ),
+                      controller: qtyController,
+                      validator: (value) {
+                        if (value != '' &&
+                            double.parse(value) >
+                                widget.commodity.availableQuantity)
+                          return '> qty';
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    flex: 3,
+                    child: Text(
+                        'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
+                  ),
+                  Flexible(
+                      flex: 1,
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Price',
+                          ),
+                          controller: priceController,
+                          validator: (value) {
+                            if (value != '' && double.parse(value) < 0)
+                              return '< 0';
+                            return null;
+                          })),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

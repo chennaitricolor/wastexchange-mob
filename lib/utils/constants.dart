@@ -50,6 +50,9 @@ class Constants {
   static const double CHENNAI_LONG = 80.2459;
   static const double DEFAULT_ZOOM = 15;
 
+  //Seller Information Screen
+  static const String CHECKOUT = 'Checkout';
+
   // Seller Details Drawer
   static const String LOGIN_TO_BUY = 'Login to buy';
   static const String BID_TO_BUY = 'Bid to buy';
