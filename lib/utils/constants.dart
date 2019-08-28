@@ -70,4 +70,18 @@ class Constants {
   static const int FORBIDDEN = 403;
   static const int NOT_FOUND = 404;
   static const int INTERNAL_SERVER_ERROR = 500;
+
+  //Buyer's bid form
+  static const TITLE_BUYER_BID = 'Buyer\'s Bid';
+  static const DATE_FORMAT = 'yyyy-MM-dd';
+  static const TIME_FORMAT = 'HH:mm a';
+  static const FIELD_CONTACT_NAME = 'Contact name';
+  static const FIELD_PICKUP_DATE = 'Pick up date';
+  static const FIELD_PICKUP_TIME = 'Pick up time';
+  static const FIELD_CONTACT_NAME_ERROR_MSG = 'Please enter contact name';
+  static const FIELD_PICKUP_DATE_ERROR_MSG = 'Please enter pick up date';
+  static const FIELD_PICKUP_TIME_ERROR_MSG = 'Please enter pick up time';
+  static const BUTTON_HOME_PAGE = 'Home page';
+  static const BUTTON_LIST_OF_BIDS = 'List of bids';
+  static const BID_SUCCESS_MSG = 'Bid successful';
 }
