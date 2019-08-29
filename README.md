@@ -1,3 +1,5 @@
+[![Codemagic build status](https://api.codemagic.io/apps/5d541ac05ce262001e7fe21f/5d541ac05ce262001e7fe21e/status_badge.svg)](https://codemagic.io/apps/5d541ac05ce262001e7fe21f/5d541ac05ce262001e7fe21e/latest_build)
+
 # wastexchange_mobile
 
 ## Getting Started

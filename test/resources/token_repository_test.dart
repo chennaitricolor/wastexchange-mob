@@ -60,6 +60,7 @@ void main() {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.gCtyCNK1GbhBXIG_gIlb8HpB5xl4_wlivgly0yN3na8';
 
     token = SAMPLE_JWT_TOKEN;
+    await tokenRepository.setToken(token);
 
     expect(tokenRepository.isAuthorized(), true);
   });

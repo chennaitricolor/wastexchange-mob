@@ -17,7 +17,7 @@ class TokenRepository {
   static TokenRepository _instance;
 
   static const _tokenKey = 'token';
-  
+
   String token;
 
   bool isAuthorized() {
@@ -25,7 +25,7 @@ class TokenRepository {
   }
 
   Future<void> setToken(token) async {
-    token = token;
+    this.token = token;
     await _cachedSecureStorage.setValue(_tokenKey, token);
   }
 
