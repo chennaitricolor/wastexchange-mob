@@ -236,6 +236,7 @@ class _BuyerBidConfirmationScreenState
     //   _isEnabled = false;
     // });
 
+//TODO (Sayeed): Verify _itemsList with Web works fine, check status possible values, why is totalBid an integer.
     final BuyerBidData data = BuyerBidData(
         bidItems: _itemsList,
         sellerId: 1,
