@@ -81,7 +81,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                        'Available Qty : ${widget.commodity.availableQuantity.toString()} Kgs'),
+                        'Available Qty : ${widget.commodity.qty.toString()} Kgs'),
                   ),
                   Flexible(
                     flex: 1,
@@ -93,7 +93,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                       validator: (value) {
                         if (value != '' &&
                             double.parse(value) >
-                                widget.commodity.availableQuantity)
+                                widget.commodity.qty)
                           return '> qty';
                         return null;
                       },
@@ -108,7 +108,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                        'Quoted Price : Rs.${widget.commodity.specifiedPRice.toString()}'),
+                        'Quoted Price : Rs.${widget.commodity.price.toString()}'),
                   ),
                   Flexible(
                       flex: 1,

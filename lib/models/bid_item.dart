@@ -1,20 +1,16 @@
 import 'item.dart';
 
-class BidItem {
-  BidItem({this.name, this.availableQuantity, this.specifiedPRice});
+class BidItem extends Item{
+  BidItem(name,quantity,price) : super(name:name,qty:quantity,price:price);
 
-  String name;
-
-  int availableQuantity;
-  double specifiedPRice;
   double bidQuantity;
   double bidPrice;
 
   static BidItem mapItemToBidItem(Item item) {
     final BidItem bidItem = BidItem(
-        name: item.name,
-        availableQuantity: item.qty,
-        specifiedPRice: item.price);
+        item.name,
+        item.qty,
+        item.price);
     return bidItem;
   }
 

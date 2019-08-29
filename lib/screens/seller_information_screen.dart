@@ -61,7 +61,6 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   }
 
   void saveBidItem(int index, double bidQty, double bidAmount) {
-    logger.d('^^^^^^^^^^^^^^^^^^^ $bidQty $bidAmount');
     setState(() {
       _bidItems.elementAt(index).bidPrice = bidAmount;
       _bidItems.elementAt(index).bidQuantity = bidQty;
