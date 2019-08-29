@@ -11,7 +11,6 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'bid_item_widget.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
-
 //TODO Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
   const SellerInformationScreen({this.sellerInfo});
