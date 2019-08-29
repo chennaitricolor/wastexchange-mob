@@ -48,8 +48,8 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
 
     sellerInfo = SellerInformation(seller: dummyUser, sellerItems: itemsList);
     if (sellerInfo.sellerItems.isNotEmpty) {
-      _bidItems = Set.of(
-          BidItem.mapItemListToBidItemList(sellerInfo.sellerItems));
+      _bidItems =
+          Set.of(BidItem.mapItemListToBidItemList(sellerInfo.sellerItems));
       for (int index = 0; index < _bidItems.length; index++) {
         _bidItemWidgets.add(BidItemWidget(
             index: index,
@@ -89,10 +89,9 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     return Scaffold(
       appBar: HomeAppBar(
         title: ListTile(
-          title: Text(sellerInfo.seller.name,
-              style: TextStyle(fontSize: 20)),
-          subtitle: Text(sellerInfo.seller.address,
-              style: TextStyle(fontSize: 13)),
+          title: Text(sellerInfo.seller.name, style: TextStyle(fontSize: 20)),
+          subtitle:
+              Text(sellerInfo.seller.address, style: TextStyle(fontSize: 13)),
         ),
       ),
       body: Column(
@@ -106,14 +105,14 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
             ),
           ),
           ButtonView(
-          onButtonPressed: () {
+            onButtonPressed: () {
               final bool valid = isFormsValid();
               logger.d(valid);
             },
-          buttonText: Constants.CHECKOUT,
-          margin: const EdgeInsets.all(16),
-          buttonStyle: ButtonStyle.RAISED,
-        )
+            buttonText: Constants.CHECKOUT,
+            margin: const EdgeInsets.all(16),
+            buttonStyle: ButtonStyle.DEFAULT,
+          )
         ],
       ),
     );
