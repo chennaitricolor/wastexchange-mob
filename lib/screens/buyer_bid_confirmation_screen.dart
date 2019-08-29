@@ -2,7 +2,9 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/blocs/bid_bloc.dart';
+import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -10,10 +12,12 @@ import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
   @override
-  _BuyerBidConfirmationScreenState createState() => _BuyerBidConfirmationScreenState();
+  _BuyerBidConfirmationScreenState createState() =>
+      _BuyerBidConfirmationScreenState();
 }
 
-class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen> {
+class _BuyerBidConfirmationScreenState
+    extends State<BuyerBidConfirmationScreen> {
   BidBloc _bloc;
   final contactNameController = TextEditingController();
   final pickupDateController = TextEditingController();
@@ -26,6 +30,21 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
   final _formKey = GlobalKey<FormState>();
   final _scafffoldState = GlobalKey<ScaffoldState>();
   bool _isEnabled = true;
+
+  final List<BidItem> _itemsList = [
+    BidItem(
+        bidPrice: 5.5,
+        bidQuantity: 5,
+        item: Item(name: 'Plastic', price: 20, qty: 10)),
+    BidItem(
+        bidPrice: 5.5,
+        bidQuantity: 5,
+        item: Item(name: 'Plastic', price: 20, qty: 10)),
+    BidItem(
+        bidPrice: 5.5,
+        bidQuantity: 5,
+        item: Item(name: 'Plastic', price: 20, qty: 10))
+  ];
 
   @override
   void initState() {
@@ -43,10 +62,10 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
             DisplayUtil.instance.dismissDialog(context);
             //Success Message
             setState(() {
-              _scafffoldState.currentState.showSnackBar(
-                  SnackBar(
-                    content: Text(Constants.BID_SUCCESS_MSG),
-                    duration: Duration(seconds: 3),));
+              _scafffoldState.currentState.showSnackBar(SnackBar(
+                content: Text(Constants.BID_SUCCESS_MSG),
+                duration: Duration(seconds: 3),
+              ));
             });
           }
           break;
@@ -55,7 +74,6 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
 
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +144,20 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                         context: context,
                         initialTime: TimeOfDay.fromDateTime(initialPickupTime),
                       );
-                      var combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), time);
+                      final combinedDateTime = DateTimeField.combine(
+                          DateTime.parse(pickupDateController.text), time);
                       return combinedDateTime;
                     },
                     validator: (value) {
-                      TimeOfDay timeOfDay = TimeOfDay.fromDateTime(value);
-                      var combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), timeOfDay);
-                      int diffHours = combinedDateTime.difference(initialPickupTime).inHours;
-                      int diffMinutes = combinedDateTime.difference(initialPickupTime).inMinutes;
+                      final TimeOfDay timeOfDay = TimeOfDay.fromDateTime(value);
+                      final combinedDateTime = DateTimeField.combine(
+                          DateTime.parse(pickupDateController.text), timeOfDay);
+                      final int diffHours = combinedDateTime
+                          .difference(initialPickupTime)
+                          .inHours;
+                      final int diffMinutes = combinedDateTime
+                          .difference(initialPickupTime)
+                          .inMinutes;
                       if (diffHours < 0 && diffMinutes < 0) {
                         return Constants.FIELD_PICKUP_TIME_ERROR_MSG;
                       }
@@ -149,27 +173,27 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                         children: <Widget>[
                           Expanded(
                               child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 8, 0),
                                   child: IconButton(
                                     icon: Icon(Icons.check),
                                     color: AppColors.colorAccent,
                                     iconSize: 32,
                                     onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        sendBidFormData();
-                                      }
+                                      // if (_formKey.currentState.validate()) {
+                                      sendBidFormData();
+                                      // }
                                     },
                                   ))),
                           Expanded(
                               child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                   child: IconButton(
                                     icon: Icon(Icons.cancel),
                                     color: AppColors.colorAccent,
                                     iconSize: 32,
-                                    onPressed: () {
-
-                                    },
+                                    onPressed: () {},
                                   ))),
                         ],
                       ))),
@@ -186,9 +210,7 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                                 child: RaisedButton(
                                   color: AppColors.colorAccent,
                                   child: Text(Constants.BUTTON_HOME_PAGE),
-                                  onPressed: () {
-
-                                  },
+                                  onPressed: () {},
                                 ))),
                         Expanded(
                             child: Padding(
@@ -196,9 +218,7 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                                 child: RaisedButton(
                                   color: AppColors.colorAccent,
                                   child: Text(Constants.BUTTON_LIST_OF_BIDS),
-                                  onPressed: () {
-
-                                  },
+                                  onPressed: () {},
                                 ))),
                       ],
                     )),
@@ -212,12 +232,18 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
   //send data to bid form api
   //disable fields after success
   void sendBidFormData() {
-    setState(() {
-      _isEnabled = false;
-    });
-    final BuyerBidData data =
-    BuyerBidData(details: null, sellerId: 0, totalBid: 0, pDateTime: null, contactName: '');
-    // _bloc.doBid(data);
+    // setState(() {
+    //   _isEnabled = false;
+    // });
+
+    final BuyerBidData data = BuyerBidData(
+        bidItems: _itemsList,
+        sellerId: 1,
+        totalBid: 20,
+        pDateTime: DateTime.now(),
+        contactName: 'Surya',
+        status: 'pending');
+    _bloc.placeBid(data);
   }
 
   @override
@@ -226,4 +252,3 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
     super.dispose();
   }
 }
-

@@ -70,7 +70,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
               Row(
                 children: <Widget>[
                   Text(
-                    widget.commodity.name,
+                    widget.commodity.item.name,
                     style: TextStyle(fontSize: 25, color: AuthColors.green),
                   ),
                 ],
@@ -81,7 +81,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                        'Available Qty : ${widget.commodity.qty.toString()} Kgs'),
+                        'Available Qty : ${widget.commodity.item.qty.toString()} Kgs'),
                   ),
                   Flexible(
                     flex: 1,
@@ -92,8 +92,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                       controller: qtyController,
                       validator: (value) {
                         if (value != '' &&
-                            double.parse(value) >
-                                widget.commodity.qty)
+                            double.parse(value) > widget.commodity.item.qty)
                           return '> qty';
                         return null;
                       },
@@ -108,7 +107,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                        'Quoted Price : Rs.${widget.commodity.price.toString()}'),
+                        'Quoted Price : Rs.${widget.commodity.item.price.toString()}'),
                   ),
                   Flexible(
                       flex: 1,

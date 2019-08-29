@@ -1,30 +1,21 @@
-import 'item.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 
-class BidItem extends Item{
-  BidItem(name,quantity,price) : super(name:name,qty:quantity,price:price);
+class BidItem {
+  BidItem({this.item, this.bidQuantity, this.bidPrice});
 
+  Item item;
   double bidQuantity;
   double bidPrice;
 
-  static BidItem mapItemToBidItem(Item item) {
-    final BidItem bidItem = BidItem(
-        item.name,
-        item.qty,
-        item.price);
-    return bidItem;
-  }
-
   static List<BidItem> mapItemListToBidItemList(List<Item> items) {
-    final List<BidItem> bidITemsList = [];
-    BidItem bidItem;
-    for (int i = 0; i < items.length; i++) {
-      bidItem = mapItemToBidItem(items.elementAt(i));
-      bidITemsList.add(bidItem);
-    }
-    return bidITemsList;
+    return items.map((item) => BidItem(item: item));
   }
 
-  @override
-  // TODO(Surya): implement hashCode
-  int get hashCode => super.hashCode;
+  Map<String, dynamic> toJson() => {
+        'name': item.name,
+        'quantity': item.qty,
+        'price': item.price,
+        'bidQuantity': bidQuantity,
+        'bidPrice': bidPrice
+      };
 }
