@@ -30,7 +30,7 @@ docker-compose up
 docker-compose up --build
 ```
 
-API is started in port `7000` and Postgres database is started in port `5432`.
+API will run on port `7000` and Postgres database will run on port `5432`.
 
 To seed test data in to the database refer the [backend readme](https://github.com/chennaitricolor/wastexchange-be#dev-machine-setup).
 
