@@ -1,6 +1,7 @@
 import 'item.dart';
 
 class BidItem extends Item{
+
   BidItem(name,quantity,price) : super(name:name,qty:quantity,price:price);
 
   double bidQuantity;
@@ -15,16 +16,11 @@ class BidItem extends Item{
   }
 
   static List<BidItem> mapItemListToBidItemList(List<Item> items) {
-    final List<BidItem> bidITemsList = [];
-    BidItem bidItem;
-    for (int i = 0; i < items.length; i++) {
-      bidItem = mapItemToBidItem(items.elementAt(i));
-      bidITemsList.add(bidItem);
-    }
-    return bidITemsList;
+      return items.map((item) => mapItemToBidItem(item)).toList();
   }
 
   @override
-  // TODO(Surya): implement hashCode
-  int get hashCode => super.hashCode;
+  String toString() {
+    return "$qty = $bidQuantity , $price = $bidPrice";
+  }
 }
