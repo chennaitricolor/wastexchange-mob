@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BuyerBidConfirmationScreen(),
+      home: MapScreen(),
       title: Constants.APP_TITLE,
       onGenerateRoute: Router.generateRoute,
     );

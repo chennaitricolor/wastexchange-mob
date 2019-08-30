@@ -17,15 +17,15 @@ class BidClient {
     return bidsFromJson(response);
   }
 
-  Future<void> placeBid(String userId, BuyerBidData data) async {
+  Future<void> placeBid(String buyerId, BuyerBidData data) async {
     final response = await _helper.post(
         true,
-        PATH_PLACE_BID.replaceFirst(':buyerId', userId),
-        _placeBidPostData(data));
+        PATH_PLACE_BID.replaceFirst(':buyerId', buyerId),
+        _placeBidPostData(buyerId, data));
     return bidsFromJson(response);
   }
 
-  dynamic _placeBidPostData(BuyerBidData data) {
+  dynamic _placeBidPostData(String buyerId, BuyerBidData data) {
     final Map<String, dynamic> details = {};
     data.bidItems.forEach((item) => details[item.item.name] = {
           'bidCost': item.bidCost,
@@ -34,8 +34,8 @@ class BidClient {
 
     return {
       'details': details,
-      'sellerId': 1497,
-      'buyerId': 2,
+      'sellerId': data.sellerId,
+      'buyerId': buyerId,
       'totalBid': data.totalBid,
       'pDateTime': data.pDateTime.toUtc().toString(),
       'contactName': data.contactName,

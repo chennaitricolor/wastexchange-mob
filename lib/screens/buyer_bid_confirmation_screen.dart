@@ -6,11 +6,19 @@ import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
+  static const String routeName = "/buyerBidConfirmationScreen";
+
+  BuyerBidConfirmationScreen({this.seller, this.bidItems});
+
+  final User seller;
+  final List<BidItem> bidItems;
+
   @override
   _BuyerBidConfirmationScreenState createState() =>
       _BuyerBidConfirmationScreenState();
@@ -31,15 +39,9 @@ class _BuyerBidConfirmationScreenState
   final _scafffoldState = GlobalKey<ScaffoldState>();
   bool _isEnabled = true;
 
-  final List<BidItem> _itemsList = [
-    BidItem(
-        bidCost: 5,
-        bidQuantity: 5,
-        item: Item(name: 'glassBottles', price: 20, qty: 10)),
-  ];
-
   @override
   void initState() {
+    print(widget.bidItems);
     _bloc = BidBloc();
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
@@ -91,7 +93,7 @@ class _BuyerBidConfirmationScreenState
                     ),
                     enabled: _isEnabled,
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value != null && value.length > 5) {
                         return Constants.FIELD_CONTACT_NAME_ERROR_MSG;
                       }
                       return null;
@@ -174,9 +176,9 @@ class _BuyerBidConfirmationScreenState
                                     color: AppColors.colorAccent,
                                     iconSize: 32,
                                     onPressed: () {
-                                      // if (_formKey.currentState.validate()) {
-                                      sendBidFormData();
-                                      // }
+                                      if (_formKey.currentState.validate()) {
+                                        sendBidFormData();
+                                      }
                                     },
                                   ))),
                           Expanded(
@@ -230,13 +232,18 @@ class _BuyerBidConfirmationScreenState
     //   _isEnabled = false;
     // });
 
-//TODO (Sayeed): Verify _itemsList with Web works fine, check status possible values, why is totalBid an integer.
+    final totalBid = widget.bidItems
+        .fold(0, (acc, item) => acc + item.bidQuantity * item.bidCost);
+
+    // final TimeOfDay timeOfDay = TimeOfDay.fromDateTime(pickupTimeController.text);
+    // final dateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), DateTime.parse(pickupTimeController.text));
+
     final BuyerBidData data = BuyerBidData(
-        bidItems: _itemsList,
-        sellerId: 1,
-        totalBid: 20,
+        bidItems: widget.bidItems,
+        sellerId: widget.seller.id,
+        totalBid: totalBid.toInt(),
         pDateTime: DateTime.now(),
-        contactName: 'Surya',
+        contactName: contactNameController.text,
         status: 'pending');
     _bloc.placeBid(data);
   }

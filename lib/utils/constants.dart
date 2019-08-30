@@ -84,4 +84,5 @@ class Constants {
   static const BUTTON_HOME_PAGE = 'Home page';
   static const BUTTON_LIST_OF_BIDS = 'List of bids';
   static const BID_SUCCESS_MSG = 'Bid successful';
+  static const BUTTON_SUBMIT = 'Submit';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
@@ -30,6 +31,14 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 SellerInformationScreen(sellerInfo: settings.arguments));
+
+      case BuyerBidConfirmationScreen.routeName:
+        final Map<String, dynamic> argsMap = settings.arguments;
+        final seller = argsMap['seller'];
+        final bidItems = argsMap['bidItems'];
+        return MaterialPageRoute(
+            builder: (_) =>
+                BuyerBidConfirmationScreen(seller: seller, bidItems: bidItems));
       default:
         return null;
     }

@@ -17,14 +17,4 @@ class BuyerBidData {
   DateTime pDateTime;
   String contactName;
   String status;
-
-  Map<String, dynamic> toMap() => {
-        'details': bidItems.map((item) => item.toJson()).toList().toString(),
-        'sellerId': 1497,
-        'buyerId': 2,
-        'totalBid': 15,
-        'pDateTime': pDateTime.toUtc().toString(),
-        'contactName': contactName,
-        'status': 'pending',
-      };
 }

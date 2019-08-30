@@ -8,7 +8,7 @@ class BidItem {
   double bidCost;
 
   static List<BidItem> mapItemListToBidItemList(List<Item> items) {
-    return items.map((item) => BidItem(item: item));
+    return items.map((item) => BidItem(item: item)).toList();
   }
 
   Map<String, dynamic> toJson() => {
