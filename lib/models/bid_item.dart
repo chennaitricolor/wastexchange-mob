@@ -2,7 +2,7 @@ import 'item.dart';
 
 class BidItem extends Item{
 
-  BidItem(name,quantity,price) : super(name:name,qty:quantity,price:price);
+  BidItem(name, displayName, quantity, price) : super(name : name, displayName : displayName, qty : quantity, price : price);
 
   double bidQuantity;
   double bidPrice;
@@ -10,6 +10,7 @@ class BidItem extends Item{
   static BidItem mapItemToBidItem(Item item) {
     final BidItem bidItem = BidItem(
         item.name,
+        item.displayName,
         item.qty,
         item.price);
     return bidItem;

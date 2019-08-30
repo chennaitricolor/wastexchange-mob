@@ -86,7 +86,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                bidItem.name,
+                                bidItem.displayName,
                                 style: TextStyle(
                                     fontSize: 22, color: AppColors.green),
                               ),
