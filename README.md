@@ -12,7 +12,7 @@ samples, guidance on mobile development, and a full API reference.
 
 Install [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
-## Starting local API server
+## Starting Local API Server
 
 This setup assumes that the [backend](https://github.com/chennaitricolor/wastexchange-be) repository is present in the same directory as this project. For example:
 ```
@@ -30,7 +30,7 @@ docker-compose up
 docker-compose up --build
 ```
 
-API is started in port `7000` and Postgres database is started in port `5432`.
+API will run on port `7000` and Postgres database will run on port `5432`.
 
 To seed test data in to the database refer the [backend readme](https://github.com/chennaitricolor/wastexchange-be#dev-machine-setup).
 
@@ -65,7 +65,7 @@ For disabling a lint rule inline use (not recommended)
 
 ## Test Coverage
 
-To run tests and view coverage, run the following command from project root (wastexchange_mobile/) dir
+To run tests and view coverage, run the following command from project root directory (wastexchange_mobile/)
 
 ``./test/coverage_lcov.sh``
 
