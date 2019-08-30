@@ -9,6 +9,8 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
+  static String routeName = "/buyerBidConfirmationScreen";
+
   @override
   _BuyerBidConfirmationScreenState createState() => _BuyerBidConfirmationScreenState();
 }

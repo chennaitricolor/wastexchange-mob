@@ -3,6 +3,8 @@ import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
@@ -54,6 +56,8 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           onButtonPressed: () {
             if(_formKey.currentState.validate()){
               logger.d("Succes validation " + bidItems.toString());
+              Map<String, dynamic> sellerInfoMap = { "seller" : widget.sellerInfo.seller, "bidItems" : bidItems};
+              Router.pushNamed(context, BuyerBidConfirmationScreen.routeName, arguments: sellerInfoMap);
             } else {
               logger.d("Failure validation " + bidItems.toString());
             }
