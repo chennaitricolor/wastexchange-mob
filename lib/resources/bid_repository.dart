@@ -14,6 +14,6 @@ class BidRepository {
   }
 
   Future<dynamic> placeBid(BuyerBidData data) async {
-    return await _client.placeBid('10', data);
+    return await _client.placeBid('2', data);
   }
 }

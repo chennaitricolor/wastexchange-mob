@@ -33,17 +33,9 @@ class _BuyerBidConfirmationScreenState
 
   final List<BidItem> _itemsList = [
     BidItem(
-        bidPrice: 5.5,
+        bidCost: 5,
         bidQuantity: 5,
-        item: Item(name: 'Plastic', price: 20, qty: 10)),
-    BidItem(
-        bidPrice: 5.5,
-        bidQuantity: 5,
-        item: Item(name: 'Plastic', price: 20, qty: 10)),
-    BidItem(
-        bidPrice: 5.5,
-        bidQuantity: 5,
-        item: Item(name: 'Plastic', price: 20, qty: 10))
+        item: Item(name: 'glassBottles', price: 20, qty: 10)),
   ];
 
   @override

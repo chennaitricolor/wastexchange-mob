@@ -62,14 +62,14 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
 
   void saveBidItem(int index, double bidQty, double bidAmount) {
     setState(() {
-      _bidItems.elementAt(index).bidPrice = bidAmount;
+      _bidItems.elementAt(index).bidCost = bidAmount;
       _bidItems.elementAt(index).bidQuantity = bidQty;
     });
   }
 
   void deleteBidItem(int index) {
     setState(() {
-      _bidItems.elementAt(index).bidPrice = null;
+      _bidItems.elementAt(index).bidCost = null;
       _bidItems.elementAt(index).bidQuantity = null;
     });
   }
