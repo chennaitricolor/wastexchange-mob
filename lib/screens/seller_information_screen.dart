@@ -41,15 +41,15 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
             if (_formKey.currentState.validate()) {
-              logger.d("Succes validation " + bidItems.toString());
-              Map<String, dynamic> sellerInfoMap = {
-                "seller": widget.sellerInfo.seller,
-                "bidItems": bidItems
+              logger.d('Succes validation ' + bidItems.toString());
+              final Map<String, dynamic> sellerInfoMap = {
+                'seller': widget.sellerInfo.seller,
+                'bidItems': bidItems
               };
               Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
                   arguments: sellerInfoMap);
             } else {
-              logger.d("Failure validation " + bidItems.toString());
+              logger.d('Failure validation ' + bidItems.toString());
             }
           },
           buttonText: Constants.BUTTON_SUBMIT,

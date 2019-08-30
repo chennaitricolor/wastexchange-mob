@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:wastexchange_mobile/utils/constants.dart';
-
 class AnnouncementMessage extends StatelessWidget {
 
   AnnouncementMessage(this.text);

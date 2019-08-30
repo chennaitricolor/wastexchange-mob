@@ -117,7 +117,7 @@ class _BuyerBidConfirmationScreenState
                           lastDate: DateTime(2100));
                     },
                     validator: (value) {
-                      final int diffDays =
+                      final diffDays =
                           value.difference(initialPickupTime).inDays;
                       if (diffDays < 0) {
                         return Constants.FIELD_PICKUP_DATE_ERROR_MSG;

@@ -59,4 +59,9 @@ class Router {
     Navigator.pushNamedAndRemoveUntil(
         context, routeName, (Route<dynamic> route) => false);
   }
+
+  static void popToRoot(BuildContext context, {dynamic arguments}) {
+    Navigator.popUntil(
+        context, ModalRoute.withName(Navigator.defaultRouteName));
+  }
 }
