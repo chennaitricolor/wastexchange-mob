@@ -65,7 +65,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           ),
         ),
         body: bidItems != null && bidItems.isEmpty
-            ? Center(child: Text('No data found'))
+            ? Center(child: const Text('No data found'))
             : Form(
                 key: _formKey,
                 child: Padding(
@@ -73,7 +73,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                   child: ListView.builder(
                     itemCount: bidItems.length,
                     itemBuilder: (BuildContext context, int index) {
-                      BidItem bidItem = bidItems[index];
+                      final BidItem bidItem = bidItems[index];
                       return CardView(
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -129,7 +129,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                   Flexible(
                                     flex: 3,
                                     child: Text(
-                                      'Quoted Price : Rs.${bidItem.bidCost.toString()}',
+                                      'Quoted Price : Rs.${bidItem.item.price.toString()}',
                                       style: TextStyle(
                                           color: AppColors.text_black),
                                     ),
