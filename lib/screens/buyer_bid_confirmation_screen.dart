@@ -72,10 +72,11 @@ class _BuyerBidConfirmationScreenState
     return Scaffold(
         key: _scafffoldState,
         appBar: AppBar(
-          title: Text(Constants.TITLE_BUYER_BID),
-          backgroundColor: AppColors.colorPrimary,
+          title: Text(Constants.TITLE_ORDER_FORM),
+          backgroundColor: AppColors.colorAccent,
         ),
-        body: Form(
+        body: SingleChildScrollView(
+            child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +115,8 @@ class _BuyerBidConfirmationScreenState
                           lastDate: DateTime(2100));
                     },
                     validator: (value) {
-                      int diffDays = value.difference(initialPickupTime).inDays;
+                      final int diffDays =
+                          value.difference(initialPickupTime).inDays;
                       if (diffDays < 0) {
                         return Constants.FIELD_PICKUP_DATE_ERROR_MSG;
                       }
@@ -217,7 +219,7 @@ class _BuyerBidConfirmationScreenState
               )
             ],
           ),
-        ));
+        )));
   }
 
   //implementation yet to add

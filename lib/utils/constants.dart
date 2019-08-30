@@ -72,7 +72,7 @@ class Constants {
   static const int INTERNAL_SERVER_ERROR = 500;
 
   //Buyer's bid form
-  static const TITLE_BUYER_BID = 'Buyer\'s Bid';
+  static const TITLE_ORDER_FORM = 'Order Form';
   static const DATE_FORMAT = 'yyyy-MM-dd';
   static const TIME_FORMAT = 'HH:mm a';
   static const FIELD_CONTACT_NAME = 'Contact name';
