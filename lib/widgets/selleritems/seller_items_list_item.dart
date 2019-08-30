@@ -15,7 +15,7 @@ class SellerItemsListItem extends StatelessWidget {
         margin: const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
         child: ListTile(
             title: Text(
-              item.name,
+              item.displayName,
               style:
                   const TextStyle(fontSize: 16.0, color: AppColors.text_black),
             ),
