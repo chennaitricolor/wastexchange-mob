@@ -13,9 +13,9 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 //TODO Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
-  SellerInformation sellerInfo;
-
   SellerInformationScreen({this.sellerInfo});
+
+  SellerInformation sellerInfo;
 //    final User dummyUser = User(
 //        id: 1,
 //        name: 'Chennai Dump Yard',
@@ -55,11 +55,11 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
             if(_formKey.currentState.validate()){
-              logger.d("Succes validation " + bidItems.toString());
-              Map<String, dynamic> sellerInfoMap = { "seller" : widget.sellerInfo.seller, "bidItems" : bidItems};
+              logger.d('Succes validation ' + bidItems.toString());
+              final sellerInfoMap = { 'seller' : widget.sellerInfo.seller, 'bidItems' : bidItems};
               Router.pushNamed(context, BuyerBidConfirmationScreen.routeName, arguments: sellerInfoMap);
             } else {
-              logger.d("Failure validation " + bidItems.toString());
+              logger.d('Failure validation ' + bidItems.toString());
             }
           },
           buttonText: Constants.BUTTON_SUBMIT,
@@ -75,7 +75,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           ),
         ),
         body: bidItems != null && bidItems.isEmpty
-            ? Center(child: Text('No data found'))
+            ? Center(child: const Text('No data found'))
             : Form(
                 key: _formKey,
                 child: Padding(
@@ -83,7 +83,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                   child: ListView.builder(
                     itemCount: bidItems.length,
                     itemBuilder: (BuildContext context, int index) {
-                      BidItem bidItem = bidItems[index];
+                      final bidItem = bidItems[index];
                       return CardView(
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -117,14 +117,13 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                         if (value == null || value.isEmpty) {
                                           return 'Should not be empty';
                                         }
-                                        var quantity = double.parse(value);
+                                        final quantity = double.parse(value);
                                         if (quantity <= bidItem.qty) {
                                           bidItem.bidQuantity = quantity;
                                           updateBidItems(index, bidItem);
                                           return null;
                                         } else {
                                           return 'Quantity should be greater than the given quantity';
-                                          ;
                                         }
                                       },
                                     ),

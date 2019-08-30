@@ -19,7 +19,7 @@ class Item {
       name: itemName,
       displayName: itemDisplayNames[itemName],
       qty: json['quantity'],
-      price: json['cost'].toDouble(),
+      price: json['cost'],
     );
   }
 
@@ -45,7 +45,7 @@ class Item {
   String name;
   String displayName;
   int qty;
-  double price;
+  int price;
 
   Map<String, dynamic> toJson() => {
         'qty': qty,

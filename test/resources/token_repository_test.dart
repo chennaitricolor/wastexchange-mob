@@ -12,7 +12,7 @@ void main() {
   String token;
 
   setUp(() {
-    tokenRepository = TokenRepository(CachedSecureStorage(MockStorage()));
+    tokenRepository = TokenRepository.testInit(CachedSecureStorage(MockStorage()));
   });
 
   test('Setting jwt token THEN expect it to retrieve the same', () async {

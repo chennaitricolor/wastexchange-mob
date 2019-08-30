@@ -19,7 +19,7 @@ void main() {
 
   setUp(() {
     tokenRepository =
-        TokenRepository(CachedSecureStorage(MockFlutterStorage()));
+        TokenRepository.testInit(CachedSecureStorage(MockFlutterStorage()));
     authInterceptor = AuthInterceptor(tokenRepository);
   });
 
