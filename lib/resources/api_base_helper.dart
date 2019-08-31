@@ -9,7 +9,7 @@ import 'package:wastexchange_mobile/resources/api_response_codes.dart';
 import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/log_interceptor.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
 
 class ApiBaseHelper {

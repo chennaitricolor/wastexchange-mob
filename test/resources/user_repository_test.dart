@@ -5,7 +5,7 @@ import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 

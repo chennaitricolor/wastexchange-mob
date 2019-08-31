@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';

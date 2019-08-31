@@ -4,7 +4,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_information_screen.dart';

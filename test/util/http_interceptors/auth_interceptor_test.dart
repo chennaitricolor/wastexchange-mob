@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';

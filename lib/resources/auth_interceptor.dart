@@ -1,6 +1,6 @@
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/resources/api_response_codes.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 
 /// Interceptor that modify API Request by adding authentication information to the request.
 class AuthInterceptor implements InterceptorContract {

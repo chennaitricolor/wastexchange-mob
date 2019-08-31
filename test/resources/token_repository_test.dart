@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -12,7 +12,8 @@ void main() {
   String token;
 
   setUp(() {
-    tokenRepository = TokenRepository.testInit(CachedSecureStorage(MockStorage()));
+    tokenRepository =
+        TokenRepository.testInit(CachedSecureStorage(MockStorage()));
   });
 
   test('Setting jwt token THEN expect it to retrieve the same', () async {

@@ -7,7 +7,7 @@ import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
-import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 
 class UserRepository {
