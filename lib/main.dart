@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:wastexchange_mobile/resources/token_repository.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
-import 'package:wastexchange_mobile/routes/router.dart';
 
 Future main() async {
   await DotEnv().load('.env');
+  await TokenRepository().getToken();
 
   //set logger level
   Logger.level = getLoggerLevel(DotEnv().env['LOGGER_LEVEL']);

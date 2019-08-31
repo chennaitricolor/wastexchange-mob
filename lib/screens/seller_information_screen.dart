@@ -13,9 +13,9 @@ import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 
 //TODO Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
-  SellerInformationScreen({this.sellerInfo});
-
   SellerInformation sellerInfo;
+
+  SellerInformationScreen({this.sellerInfo});
 
   static const routeName = '/sellerInformationScreen';
 
@@ -33,10 +33,22 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
 
   @override
   void initState() {
-    bidItems = BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems);
-    quantityTextEditingControllers = bidItems.map((bidItem) => TextEditingController()).toList();
-    priceTextEditingControllers = bidItems.map((bidItem) => TextEditingController()).toList();
+    bidItems = BidItem.bidItemsForItems(widget.sellerInfo.sellerItems);
+    quantityTextEditingControllers =
+        bidItems.map((bidItem) => TextEditingController()).toList();
+    priceTextEditingControllers =
+        bidItems.map((bidItem) => TextEditingController()).toList();
     super.initState();
+  }
+
+  void _routeToBuyerBidConfirmationScreen() {
+    bidItems.forEach((item) => debugPrint(item.toJson().toString()));
+    final Map<String, dynamic> sellerInfoMap = {
+      'seller': widget.sellerInfo.seller,
+      'bidItems': bidItems
+    };
+    Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
+        arguments: sellerInfoMap);
   }
 
   @override
@@ -45,10 +57,8 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
-            if(_formKey.currentState.validate()){
-              logger.d('Succes validation ' + bidItems.toString());
-              final sellerInfoMap = { 'seller' : widget.sellerInfo.seller, 'bidItems' : bidItems};
-              Router.pushNamed(context, BuyerBidConfirmationScreen.routeName, arguments: sellerInfoMap);
+            if (_formKey.currentState.validate()) {
+              _routeToBuyerBidConfirmationScreen();
             } else {
               logger.d('Failure validation ' + bidItems.toString());
             }
@@ -67,7 +77,9 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: CustomScrollView(
                     slivers: <Widget>[
-                      SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
                         BidItem bidItem = bidItems[index];
                         return CardView(
                           child: Padding(
@@ -76,7 +88,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                               children: <Widget>[
                                 Align(
                                   child: Text(
-                                    bidItem.displayName,
+                                    bidItem.item.displayName,
                                     style: TextStyle(
                                         fontSize: 22, color: AppColors.green),
                                   ),
@@ -85,19 +97,21 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                 const SizedBox(height: 8),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Flexible(
                                       flex: 3,
                                       child: Text(
-                                          'Available Qty : ${bidItem.qty.toString()} Kgs',
+                                          'Available Qty : ${bidItem.item.qty.toString()} Kgs',
                                           style: TextStyle(
                                               color: AppColors.text_black)),
                                     ),
                                     Flexible(
                                       flex: 1,
                                       child: TextFormField(
-                                        controller: quantityTextEditingControllers[index],
+                                        controller:
+                                            quantityTextEditingControllers[
+                                                index],
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           hintText: 'Quantity',
@@ -119,13 +133,13 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Flexible(
                                       flex: 3,
                                       child: Text(
-                                        'Quoted Price : Rs.${bidItem.price.toString()}',
+                                        'Quoted Price : Rs.${bidItem.item.price.toString()}',
                                         style: TextStyle(
                                             color: AppColors.text_black),
                                       ),
@@ -133,21 +147,25 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                     Flexible(
                                         flex: 1,
                                         child: TextFormField(
-                                            controller: priceTextEditingControllers[index],
+                                            controller:
+                                                priceTextEditingControllers[
+                                                    index],
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                               hintText: 'Price',
                                             ),
 //                          controller: priceController,
                                             validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                bidItem.bidPrice = 0;
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                bidItem.bidCost = 0;
                                                 updateBidItems(index, bidItem);
                                                 return null;
                                               }
-                                                bidItem.bidPrice = double.parse(value);
-                                                updateBidItems(index, bidItem);
-                                                return null;
+                                              bidItem.bidCost =
+                                                  double.parse(value);
+                                              updateBidItems(index, bidItem);
+                                              return null;
                                             })),
                                   ],
                                 ),
@@ -166,5 +184,3 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     bidItems[index] = bidItem;
   }
 }
-
-

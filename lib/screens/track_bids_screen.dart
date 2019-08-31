@@ -9,6 +9,8 @@ import 'package:wastexchange_mobile/models/result.dart';
 class TrackBidsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _TrackBidsScreenState();
+
+  static const routeName = '/trackBidsScreen';
 }
 
 class _TrackBidsScreenState extends State<TrackBidsScreen> {
