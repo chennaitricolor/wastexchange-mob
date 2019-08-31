@@ -4,8 +4,8 @@ class BidItem extends Item{
 
   BidItem(name, displayName, quantity, price) : super(name : name, displayName : displayName, qty : quantity, price : price);
 
-  double bidQuantity;
-  double bidPrice;
+  double bidQuantity = 0;
+  double bidPrice = 0;
 
   static BidItem mapItemToBidItem(Item item) {
     final BidItem bidItem = BidItem(
