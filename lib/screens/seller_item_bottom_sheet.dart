@@ -7,7 +7,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_items_list.dart';
@@ -77,7 +77,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToSellerInformationScreen() {
-    Router.pushNamed(context, SellerInformationScreen.routeName,
+    Router.pushNamed(context, SellerItemScreen.routeName,
         arguments: _getSellerInfo());
   }
 

@@ -8,7 +8,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _routeToSellerInfo() {
-    Router.pushReplacementNamed(context, SellerInformationScreen.routeName,
+    Router.pushReplacementNamed(context, SellerItemScreen.routeName,
         arguments: _sellerInformation());
   }
 

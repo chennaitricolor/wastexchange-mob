@@ -10,20 +10,19 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
-// TODO(Chandru): Rename this to SellerItemsScreen
-class SellerInformationScreen extends StatefulWidget {
-  const SellerInformationScreen({this.sellerInfo});
+class SellerItemScreen extends StatefulWidget {
+  const SellerItemScreen({this.sellerInfo});
 
   final SellerInformation sellerInfo;
 
   static const routeName = '/sellerInformationScreen';
 
   @override
-  _SellerInformationScreenState createState() =>
-      _SellerInformationScreenState();
+  _SellerItemScreenState createState() =>
+      _SellerItemScreenState();
 }
 
-class _SellerInformationScreenState extends State<SellerInformationScreen> {
+class _SellerItemScreenState extends State<SellerItemScreen> {
   final _formKey = GlobalKey<FormState>();
   List<BidItem> bidItems;
   final logger = getLogger('Seller Information Screen');
