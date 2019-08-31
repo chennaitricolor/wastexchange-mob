@@ -13,9 +13,9 @@ import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 class SellerItemScreen extends StatefulWidget {
   const SellerItemScreen({this.sellerInfo});
 
-  final SellerInformation sellerInfo;
+  final SellerItem sellerInfo;
 
-  static const routeName = '/sellerInformationScreen';
+  static const routeName = '/sellerItemScreen';
 
   @override
   _SellerItemScreenState createState() =>

@@ -16,11 +16,11 @@ import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen(this._sellerInformation);
+  const LoginScreen(this._sellerItem);
 
   static const routeName = '/loginScreen';
 
-  final SellerInformation _sellerInformation;
+  final SellerItem _sellerItem;
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -34,8 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
-  SellerInformation _sellerInformation() => widget._sellerInformation;
-  bool isSellerInfoAvailable() => _sellerInformation() != null;
+  SellerItem _sellerItem() => widget._sellerItem;
+  bool isSellerInfoAvailable() => _sellerItem() != null;
 
   void _routeToNextScreen() {
     if (isSellerInfoAvailable()) {
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _routeToSellerInfo() {
     Router.pushReplacementNamed(context, SellerItemScreen.routeName,
-        arguments: _sellerInformation());
+        arguments: _sellerItem());
   }
 
   void _routeToMapScreen() {

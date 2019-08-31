@@ -1,9 +1,9 @@
 import 'item.dart';
 import 'user.dart';
 
-class SellerInformation {
+class SellerItem {
  
-  SellerInformation({
+  SellerItem({
     this.seller,
     this.sellerItems
   });

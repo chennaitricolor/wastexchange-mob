@@ -51,17 +51,17 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
 
   void _routeToNextScreen() {
     if (TokenRepository().isAuthorized()) {
-      _routeToSellerInformationScreen();
+      _routeToSellerItemScreen();
     } else {
       _routeToLoginScreen();
     }
   }
 
-  SellerInformation _getSellerInfo() {
+  SellerItem _getSellerInfo() {
     if (_seller() == null || _sellerItemDetails == null) {
       return null;
     }
-    return SellerInformation(
+    return SellerItem(
       sellerItems: _sellerItemDetails.items,
       seller: _seller(),
     );
@@ -76,7 +76,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
     Router.pushNamed(context, LoginScreen.routeName);
   }
 
-  void _routeToSellerInformationScreen() {
+  void _routeToSellerItemScreen() {
     Router.pushNamed(context, SellerItemScreen.routeName,
         arguments: _getSellerInfo());
   }
