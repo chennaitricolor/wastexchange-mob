@@ -4,16 +4,16 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 
 class HomeAppBar extends AppBar {
   final List<Widget> actions;
-  final title;
+  final String text;
 
-  HomeAppBar({Key key, this.actions, this.title})
+  HomeAppBar({Key key, this.actions, this.text})
       : super(
             backgroundColor: Colors.transparent,
             elevation: 0,
             key: key,
             centerTitle: true,
             actions: actions,
-            title: title ?? Text(Constants.APP_TITLE,
+            title: Text(text ?? Constants.APP_TITLE,
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppColors.text_black,

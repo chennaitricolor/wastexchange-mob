@@ -68,7 +68,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           buttonStyle: ButtonStyle.DEFAULT,
         ),
         appBar: HomeAppBar(
-          title: Text(widget.sellerInfo.seller.name, style: TextStyle(color: AppColors.text_black))),
+            text: widget.sellerInfo.seller.name),
         body: bidItems != null && bidItems.isEmpty
             ? Center(child: const Text('No data found'))
             : Form(

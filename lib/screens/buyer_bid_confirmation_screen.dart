@@ -77,8 +77,7 @@ class _BuyerBidConfirmationScreenState
     return Scaffold(
         key: _scafffoldState,
         appBar: HomeAppBar(
-            title: Text(Constants.TITLE_ORDER_FORM,
-                style: TextStyle(color: AppColors.text_black))),
+            text: Constants.TITLE_ORDER_FORM),
         body: SingleChildScrollView(
             child: Form(
           key: _formKey,
