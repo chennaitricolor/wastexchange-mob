@@ -5,10 +5,10 @@ import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 
 class RegistrationBloc {
-  final logger = getLogger('RegistrationBloc');
+  final logger = AppLogger.get('RegistrationBloc');
   final UserRepository _userRepository = UserRepository();
   final StreamController _registerController =
       StreamController<Result<RegistrationResponse>>();

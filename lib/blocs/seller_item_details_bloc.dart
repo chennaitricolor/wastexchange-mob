@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 
 class SellerItemDetailsBloc {
-  final logger = getLogger('SellerMapsBloc');
+  final logger = AppLogger.get('SellerMapsBloc');
   final _userRepository = UserRepository();
   final StreamController _sellerItemDetailsController =
       StreamController<Result<SellerItemDetails>>();

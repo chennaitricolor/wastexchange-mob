@@ -4,8 +4,8 @@ import 'package:wastexchange_mobile/models/seller_item.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -18,14 +18,13 @@ class SellerItemScreen extends StatefulWidget {
   static const routeName = '/sellerItemScreen';
 
   @override
-  _SellerItemScreenState createState() =>
-      _SellerItemScreenState();
+  _SellerItemScreenState createState() => _SellerItemScreenState();
 }
 
 class _SellerItemScreenState extends State<SellerItemScreen> {
   final _formKey = GlobalKey<FormState>();
   List<BidItem> bidItems;
-  final logger = getLogger('Seller Information Screen');
+  final logger = AppLogger.get('SellerInformationScreen');
   List<TextEditingController> quantityTextEditingControllers = [];
   List<TextEditingController> priceTextEditingControllers = [];
 

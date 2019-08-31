@@ -5,17 +5,11 @@ import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
 
 Future<void> main() async {
-  LaunchSetup([EnvRepository(), TokenRepository()]).load();
-
-  //set logger level
-  Logger.level =
-      getLoggerLevel(EnvRepository().getValue(key: EnvRepository.loggerLevel));
-
-  //launch app
+  LaunchSetup([EnvRepository(), TokenRepository(), AppLogger()]).load();
   runApp(MyApp());
 }
 

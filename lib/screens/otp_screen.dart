@@ -10,9 +10,9 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
@@ -33,7 +33,7 @@ class _OTPScreenState extends State<OTPScreen> {
   OtpBloc _otpBloc;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final logger = getLogger('OTPScreen');
+  final logger = AppLogger.get('OTPScreen');
 
   @override
   void initState() {

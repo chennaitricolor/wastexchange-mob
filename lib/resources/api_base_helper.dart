@@ -10,7 +10,7 @@ import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/log_interceptor.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
-import 'package:wastexchange_mobile/utils/logger.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper(
@@ -33,7 +33,7 @@ class ApiBaseHelper {
 
   final String _baseApiUrl =
       EnvRepository().getValue(key: EnvRepository.baseApiUrl);
-  final logger = getLogger('ApiBaseHelper');
+  final logger = AppLogger.get('ApiBaseHelper');
 
   HttpClientWithInterceptor _client(bool authenticated) =>
       authenticated ? httpClientWithAuth : httpClient;
