@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/models/seller_information.dart';
+import 'package:wastexchange_mobile/models/seller_item.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';

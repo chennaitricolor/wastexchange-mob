@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
-import 'package:wastexchange_mobile/models/seller_information.dart';
+import 'package:wastexchange_mobile/models/seller_item.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
