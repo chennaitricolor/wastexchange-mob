@@ -7,7 +7,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
 
-Future main() async {
+Future<void> main() async {
   await DotEnv().load('.env');
   await TokenRepository().getToken();
 

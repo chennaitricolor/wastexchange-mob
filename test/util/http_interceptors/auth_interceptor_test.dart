@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
-import 'package:wastexchange_mobile/utils/http_interceptors/auth_interceptor.dart';
+import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,12 +28,12 @@ void main() {
       () async {
     final MockRequest mockRequest = MockRequest();
 
-    await tokenRepository.setToken('abbc');
+    await tokenRepository.setToken('abc');
 
     final RequestData requestData = RequestData.fromHttpRequest(mockRequest);
     await authInterceptor.interceptRequest(data: requestData);
 
-    expect(requestData.headers['Authorization'], 'Bearer abbc');
+    expect(requestData.headers['x-access-token'], 'abc');
   });
 
   test(
