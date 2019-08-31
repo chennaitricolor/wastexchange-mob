@@ -25,6 +25,14 @@ class MyApp extends StatelessWidget {
       home: SellerInformationScreen(),
       title: Constants.APP_TITLE,
       onGenerateRoute: Router.generateRoute,
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 72.0, fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
+          title: TextStyle(fontSize: 36.0, fontFamily: 'OpenSans', fontWeight: FontWeight.w600),
+          body1: TextStyle(fontSize: 14.0, fontFamily: 'OpenSans', fontWeight: FontWeight.w400),
+        ),
+      )
     );
   }
 }
