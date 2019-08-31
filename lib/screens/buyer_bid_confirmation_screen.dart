@@ -9,6 +9,8 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
+  static const String routeName = '/buyerBidConfirmationScreen';
+
   @override
   _BuyerBidConfirmationScreenState createState() => _BuyerBidConfirmationScreenState();
 }
@@ -104,7 +106,7 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                           lastDate: DateTime(2100));
                     },
                     validator: (value) {
-                      int diffDays = value.difference(initialPickupTime).inDays;
+                      final diffDays = value.difference(initialPickupTime).inDays;
                       if (diffDays < 0) {
                         return Constants.FIELD_PICKUP_DATE_ERROR_MSG;
                       }
@@ -126,14 +128,14 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
                         context: context,
                         initialTime: TimeOfDay.fromDateTime(initialPickupTime),
                       );
-                      var combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), time);
+                      final combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), time);
                       return combinedDateTime;
                     },
                     validator: (value) {
-                      TimeOfDay timeOfDay = TimeOfDay.fromDateTime(value);
-                      var combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), timeOfDay);
-                      int diffHours = combinedDateTime.difference(initialPickupTime).inHours;
-                      int diffMinutes = combinedDateTime.difference(initialPickupTime).inMinutes;
+                      final timeOfDay = TimeOfDay.fromDateTime(value);
+                      final combinedDateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), timeOfDay);
+                      final diffHours = combinedDateTime.difference(initialPickupTime).inHours;
+                      final diffMinutes = combinedDateTime.difference(initialPickupTime).inMinutes;
                       if (diffHours < 0 && diffMinutes < 0) {
                         return Constants.FIELD_PICKUP_TIME_ERROR_MSG;
                       }

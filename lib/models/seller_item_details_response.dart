@@ -24,9 +24,11 @@ class SellerItemDetails {
   }
 
   static List<Item> mapDetailsJsonToList(dynamic detailsJson) {
+    // TODO(Sayeed): See if you can move the api response parsing to user_client.
     final List<Item> itemsList = [];
     detailsJson.forEach((k, v) => itemsList.add(itemFromJson(k, v)));
-    return itemsList;
+    itemsList.sort((i1, i2) => i1.displayName.compareTo(i2.displayName));
+    return itemsList.where((item) => item.qty > 0).toList();
   }
 
   int sellerId;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 
 import 'package:wastexchange_mobile/utils/constants.dart';
 
@@ -8,8 +9,10 @@ class TapSellerForDetails extends StatelessWidget {
     return Text(
       Constants.TAP_SELLER_FOR_DETAILS,
       style: const TextStyle(
-        fontSize: 25.0,
+        fontSize: 20.0,
+        color: AppColors.text_black,
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

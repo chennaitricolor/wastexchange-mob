@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SellerInformationScreen(),
+      home: MapScreen(),
       title: Constants.APP_TITLE,
       onGenerateRoute: Router.generateRoute,
       theme: ThemeData(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/card_view.dart';
 
 class SellerItemsListItem extends StatelessWidget {
   const SellerItemsListItem(this.item);
@@ -10,12 +11,10 @@ class SellerItemsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 2,
-        margin: const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+    return CardView(
         child: ListTile(
             title: Text(
-              item.name,
+              item.displayName,
               style:
                   const TextStyle(fontSize: 16.0, color: AppColors.text_black),
             ),

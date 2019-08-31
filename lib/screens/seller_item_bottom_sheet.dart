@@ -52,7 +52,7 @@ class _SellerItemBottomSheetState
   }
 
   void _routeToNextScreen() {
-    if (TokenRepository.sharedInstance.isAuthorized()) {
+    if (TokenRepository().isAuthorized()) {
       _routeToSellerInformationScreen();
     } else {
       _routeToLoginScreen();
@@ -60,6 +60,9 @@ class _SellerItemBottomSheetState
   }
 
   SellerInformation _getSellerInfo() {
+    if (_seller() == null || _sellerItemDetails == null) {
+      return null;
+    }
     return SellerInformation(
       sellerItems: _sellerItemDetails.items,
       seller: _seller(),
@@ -67,8 +70,12 @@ class _SellerItemBottomSheetState
   }
 
   void _routeToLoginScreen() {
-    Router.pushNamed(context, LoginScreen.routeName,
+    if (_getSellerInfo() != null) {
+      Router.pushNamed(context, LoginScreen.routeName,
         arguments: _getSellerInfo());
+        return;
+    }
+    Router.pushNamed(context, LoginScreen.routeName);
   }
 
   void _routeToSellerInformationScreen() {

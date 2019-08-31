@@ -15,7 +15,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonTitle = TokenRepository.sharedInstance.isAuthorized()
+    final buttonTitle = TokenRepository().isAuthorized()
         ? Constants.BID_TO_BUY
         : Constants.LOGIN_TO_BUY;
     return Padding(
