@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:wastexchange_mobile/launch_setup.dart';
 
-class EnvRepository {
+class EnvRepository implements SetUpCompliant {
   EnvRepository({DotEnv env}) {
     _env = env ?? DotEnv();
   }
@@ -10,6 +11,7 @@ class EnvRepository {
   static const baseApiUrl = 'BASE_API_URL';
   DotEnv _env;
 
+  @override
   Future<void> load() async {
     await _env.load('.env');
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
@@ -8,8 +9,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
 
 Future<void> main() async {
-  await EnvRepository().load();
-  await TokenRepository().getToken();
+  LaunchSetup([EnvRepository(), TokenRepository()]).load();
 
   //set logger level
   Logger.level =

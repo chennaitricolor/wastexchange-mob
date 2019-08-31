@@ -1,6 +1,7 @@
+import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
 
-class TokenRepository {
+class TokenRepository implements SetUpCompliant {
   factory TokenRepository() {
     return _singleton;
   }
@@ -40,7 +41,8 @@ class TokenRepository {
     return token;
   }
 
-  Future<void> loadTokenFromCache() async {
+  @override
+  Future<void> load() async {
     await getToken();
   }
 }
