@@ -16,20 +16,6 @@ class SellerInformationScreen extends StatefulWidget {
   SellerInformationScreen({this.sellerInfo});
 
   SellerInformation sellerInfo;
-//    final User dummyUser = User(
-//        id: 1,
-//        name: 'Chennai Dump Yard',
-//        address: 'No :1120, Perungudi , Chennai City');
-//    items = [
-//      Item(name: 'Plastic', price: 20, qty: 10),
-//      Item(name: 'Paper', price: 10, qty: 100),
-//      Item(name: 'PET', price: 10, qty: 100)
-//    ];
-//
-//    sellerInfo = SellerInformation(seller: dummyUser, sellerItems: items);
-//  }
-
-//  SellerInformation sellerInfo;
 
   static const routeName = '/sellerInformationScreen';
 
@@ -42,15 +28,20 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   final _formKey = GlobalKey<FormState>();
   List<BidItem> bidItems;
   final logger = getLogger('Seller Information Screen');
+  List<TextEditingController> quantityTextEditingControllers = [];
+  List<TextEditingController> priceTextEditingControllers = [];
 
   @override
   void initState() {
     bidItems = BidItem.mapItemListToBidItemList(widget.sellerInfo.sellerItems);
+    quantityTextEditingControllers = bidItems.map((bidItem) => TextEditingController()).toList();
+    priceTextEditingControllers = bidItems.map((bidItem) => TextEditingController()).toList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    logger.d('recreating build');
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
@@ -80,94 +71,95 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                 key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListView.builder(
-                    itemCount: bidItems.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final bidItem = bidItems[index];
-                      return CardView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                bidItem.displayName,
-                                style: TextStyle(
-                                    fontSize: 22, color: AppColors.green),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Flexible(
-                                    flex: 3,
-                                    child: Text(
-                                        'Available Qty : ${bidItem.qty.toString()} Kgs',
-                                        style: TextStyle(
-                                            color: AppColors.text_black)),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        hintText: 'Quantity',
-                                      ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Should not be empty';
-                                        }
-                                        final quantity = double.parse(value);
-                                        if (quantity <= bidItem.qty) {
+                  child: CustomScrollView(
+                    slivers: <Widget>[
+                      SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                        BidItem bidItem = bidItems[index];
+                        return CardView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  bidItem.displayName,
+                                  style: TextStyle(
+                                      fontSize: 22, color: AppColors.green),
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 3,
+                                      child: Text(
+                                          'Available Qty : ${bidItem.qty.toString()} Kgs',
+                                          style: TextStyle(
+                                              color: AppColors.text_black)),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: TextFormField(
+                                        controller: quantityTextEditingControllers[index],
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          hintText: 'Quantity',
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            bidItem.bidQuantity = 0;
+                                            updateBidItems(index, bidItem);
+                                            return null;
+                                          }
+                                          final quantity = double.parse(value);
                                           bidItem.bidQuantity = quantity;
                                           updateBidItems(index, bidItem);
                                           return null;
-                                        } else {
-                                          return 'Quantity should be greater than the given quantity';
-                                        }
-                                      },
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Flexible(
-                                    flex: 3,
-                                    child: Text(
-                                      'Quoted Price : Rs.${bidItem.price.toString()}',
-                                      style: TextStyle(
-                                          color: AppColors.text_black),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 3,
+                                      child: Text(
+                                        'Quoted Price : Rs.${bidItem.price.toString()}',
+                                        style: TextStyle(
+                                            color: AppColors.text_black),
+                                      ),
                                     ),
-                                  ),
-                                  Flexible(
-                                      flex: 1,
-                                      child: TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            hintText: 'Price',
-                                          ),
+                                    Flexible(
+                                        flex: 1,
+                                        child: TextFormField(
+                                            controller: priceTextEditingControllers[index],
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              hintText: 'Price',
+                                            ),
 //                          controller: priceController,
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Should not be empty';
-                                            } else {
-                                              bidItem.bidPrice = double.parse(value);
-                                              updateBidItems(index, bidItem);
-                                              return null;
-                                            }
-
-                                          })),
-                                ],
-                              ),
-                            ],
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                bidItem.bidPrice = 0;
+                                                updateBidItems(index, bidItem);
+                                                return null;
+                                              }
+                                                bidItem.bidPrice = double.parse(value);
+                                                updateBidItems(index, bidItem);
+                                                return null;
+                                            })),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      }, childCount: bidItems.length))
+                    ],
                   ),
                 ),
               ));
