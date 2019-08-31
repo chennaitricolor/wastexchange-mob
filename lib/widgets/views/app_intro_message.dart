@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppIntroMessage extends StatelessWidget {
-
-  AppIntroMessage(this.text);
-  String text;
+  const AppIntroMessage(this.text);
+  final String text;
 
   @override
   Widget build(BuildContext context) {

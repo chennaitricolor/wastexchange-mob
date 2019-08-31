@@ -29,12 +29,10 @@ class BidClient {
   }
 
   dynamic _placeBidPostData(String buyerId, BuyerBidData data) {
-    final Map<String, dynamic> details = {};
-    data.bidItems.forEach((item) => details[item.item.name] = {
-          'bidCost': item.bidCost,
-          'bidQuantity': item.bidQuantity
-        });
-
+    final Map<String, dynamic> details = Map.fromIterable(data.bidItems,
+        key: (item) => item.item.name,
+        value: (item) =>
+            {'bidCost': item.bidCost, 'bidQuantity': item.bidQuantity});
     return {
       'details': details,
       'sellerId': data.sellerId,

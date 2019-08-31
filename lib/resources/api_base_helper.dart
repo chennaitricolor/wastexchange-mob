@@ -7,7 +7,6 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:wastexchange_mobile/resources/api_response_codes.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/log_interceptor.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';

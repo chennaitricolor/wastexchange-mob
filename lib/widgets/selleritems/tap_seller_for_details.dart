@@ -6,9 +6,9 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 class TapSellerForDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       Constants.TAP_SELLER_FOR_DETAILS,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 20.0,
         color: AppColors.text_black,
       ),

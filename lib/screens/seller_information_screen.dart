@@ -11,11 +11,11 @@ import 'package:wastexchange_mobile/utils/logger.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
-//TODO Rename this to SellerItemsScreen
+// TODO(Chandru): Rename this to SellerItemsScreen
 class SellerInformationScreen extends StatefulWidget {
-  SellerInformation sellerInfo;
+  const SellerInformationScreen({this.sellerInfo});
 
-  SellerInformationScreen({this.sellerInfo});
+  final SellerInformation sellerInfo;
 
   static const routeName = '/sellerInformationScreen';
 
@@ -42,7 +42,6 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   }
 
   void _routeToBuyerBidConfirmationScreen() {
-    bidItems.forEach((item) => debugPrint(item.toJson().toString()));
     final Map<String, dynamic> sellerInfoMap = {
       'seller': widget.sellerInfo.seller,
       'bidItems': bidItems
@@ -67,8 +66,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
           margin: const EdgeInsets.all(24),
           buttonStyle: ButtonStyle.DEFAULT,
         ),
-        appBar: HomeAppBar(
-            text: widget.sellerInfo.seller.name),
+        appBar: HomeAppBar(text: widget.sellerInfo.seller.name),
         body: bidItems != null && bidItems.isEmpty
             ? Center(child: const Text('No data found'))
             : Form(
@@ -80,7 +78,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                        BidItem bidItem = bidItems[index];
+                        final BidItem bidItem = bidItems[index];
                         return CardView(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

@@ -15,9 +15,9 @@ import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  static const String routeName = "/buyerBidConfirmationScreen";
+  const BuyerBidConfirmationScreen({this.seller, this.bidItems});
 
-  BuyerBidConfirmationScreen({this.seller, this.bidItems});
+  static const String routeName = '/buyerBidConfirmationScreen';
 
   final User seller;
   final List<BidItem> bidItems;
@@ -75,8 +75,7 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scafffoldState,
-        appBar: HomeAppBar(
-            text: Constants.TITLE_ORDER_FORM),
+        appBar: HomeAppBar(text: Constants.TITLE_ORDER_FORM),
         body: SingleChildScrollView(
             child: Form(
           key: _formKey,
