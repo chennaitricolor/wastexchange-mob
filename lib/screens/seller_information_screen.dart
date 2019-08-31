@@ -80,10 +80,13 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  bidItem.displayName,
-                                  style: TextStyle(
-                                      fontSize: 22, color: AppColors.green),
+                                Align(
+                                  child: Text(
+                                    bidItem.displayName,
+                                    style: TextStyle(
+                                        fontSize: 22, color: AppColors.green),
+                                  ),
+                                  alignment: Alignment.centerLeft,
                                 ),
                                 const SizedBox(height: 8),
                                 Row(
