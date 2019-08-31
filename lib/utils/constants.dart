@@ -60,7 +60,8 @@ class Constants {
       '''We have listed all 210 Resource recovery points of Chennai Corporation. Buyers registration is increasing every day. Soon Platform will be open to all sellers.''';
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
-  static const String TAP_SELLER_FOR_DETAILS = 'Tap on a seller to view their inventory details';
+  static const String TAP_SELLER_FOR_DETAILS =
+      'Tap on a seller to view their inventory details';
 
   // Response codes //TODO:: Move to enum, seems like dart does not support type enums out of the box
   static const int SUCCESS = 200;
@@ -74,7 +75,7 @@ class Constants {
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';
   static const DATE_FORMAT = 'yyyy-MM-dd';
-  static const TIME_FORMAT = 'HH:mm a';
+  static const TIME_FORMAT = 'h:mm a';
   static const FIELD_CONTACT_NAME = 'Contact name';
   static const FIELD_PICKUP_DATE = 'Pick up date';
   static const FIELD_PICKUP_TIME = 'Pick up time';

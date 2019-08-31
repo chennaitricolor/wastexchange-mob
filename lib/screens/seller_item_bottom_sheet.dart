@@ -23,12 +23,10 @@ class SellerItemBottomSheet extends StatefulWidget {
   }
 
   @override
-  _SellerItemBottomSheetState createState() =>
-      _SellerItemBottomSheetState();
+  _SellerItemBottomSheetState createState() => _SellerItemBottomSheetState();
 }
 
-class _SellerItemBottomSheetState
-    extends State<SellerItemBottomSheet> {
+class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   SellerItemDetailsBloc _bloc;
   User _seller() => widget.seller;
   SellerItemDetails _sellerItemDetails;
@@ -72,8 +70,8 @@ class _SellerItemBottomSheetState
   void _routeToLoginScreen() {
     if (_getSellerInfo() != null) {
       Router.pushNamed(context, LoginScreen.routeName,
-        arguments: _getSellerInfo());
-        return;
+          arguments: _getSellerInfo());
+      return;
     }
     Router.pushNamed(context, LoginScreen.routeName);
   }

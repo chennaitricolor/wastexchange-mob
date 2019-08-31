@@ -35,22 +35,23 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     super.initState();
   }
 
+  void _routeToBuyerBidConfirmationScreen() {
+    final Map<String, dynamic> sellerInfoMap = {
+      'seller': widget.sellerInfo.seller,
+      'bidItems': bidItems
+    };
+    Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
+        arguments: sellerInfoMap);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
-            if (_formKey.currentState.validate()) {
-              logger.d('Succes validation ' + bidItems.toString());
-              final Map<String, dynamic> sellerInfoMap = {
-                'seller': widget.sellerInfo.seller,
-                'bidItems': bidItems
-              };
-              Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
-                  arguments: sellerInfoMap);
-            } else {
-              logger.d('Failure validation ' + bidItems.toString());
-            }
+            bidItems
+                .forEach((item) => {item.bidCost = 1, item.bidQuantity = 1});
+            _routeToBuyerBidConfirmationScreen();
           },
           buttonText: Constants.BUTTON_SUBMIT,
           margin: const EdgeInsets.all(24),
@@ -107,7 +108,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
                                         if (value == null || value.isEmpty) {
                                           return 'Should not be empty';
                                         }
-                                        var quantity = double.parse(value);
+                                        final quantity = double.parse(value);
                                         if (quantity <= bidItem.item.qty) {
                                           bidItem.bidQuantity = quantity;
                                           updateBidItems(index, bidItem);

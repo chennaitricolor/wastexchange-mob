@@ -1,5 +1,6 @@
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 
 class BidClient {
@@ -17,12 +18,14 @@ class BidClient {
     return bidsFromJson(response);
   }
 
-  Future<void> placeBid(String buyerId, BuyerBidData data) async {
-    final response = await _helper.post(
-        true,
-        PATH_PLACE_BID.replaceFirst(':buyerId', buyerId),
-        _placeBidPostData(buyerId, data));
-    return bidsFromJson(response);
+  Future<Result<String>> placeBid(String buyerId, BuyerBidData data) async {
+    try {
+      await _helper.post(true, PATH_PLACE_BID.replaceFirst(':buyerId', buyerId),
+          _placeBidPostData(buyerId, data));
+      return Result.completed('');
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 
   dynamic _placeBidPostData(String buyerId, BuyerBidData data) {

@@ -34,6 +34,8 @@ class _BuyerBidConfirmationScreenState
   final dateFormat = DateFormat(Constants.DATE_FORMAT);
   final timeFormat = DateFormat(Constants.TIME_FORMAT);
   var initialPickupTime = DateTime.now().add(Duration(hours: 18));
+  DateTime date;
+  DateTime time;
 
   final _formKey = GlobalKey<FormState>();
   final _scafffoldState = GlobalKey<ScaffoldState>();
@@ -52,16 +54,13 @@ class _BuyerBidConfirmationScreenState
           DisplayUtil.instance.dismissDialog(context);
           break;
         case Status.COMPLETED:
-          if (_snapshot.data.auth) {
-            DisplayUtil.instance.dismissDialog(context);
-            //Success Message
-            setState(() {
-              _scafffoldState.currentState.showSnackBar(SnackBar(
-                content: Text(Constants.BID_SUCCESS_MSG),
-                duration: Duration(seconds: 3),
-              ));
-            });
-          }
+          DisplayUtil.instance.dismissDialog(context);
+          setState(() {
+            _scafffoldState.currentState.showSnackBar(SnackBar(
+              content: Text(Constants.BID_SUCCESS_MSG),
+              duration: Duration(seconds: 3),
+            ));
+          });
           break;
       }
     });
@@ -93,7 +92,7 @@ class _BuyerBidConfirmationScreenState
                     ),
                     enabled: _isEnabled,
                     validator: (value) {
-                      if (value != null && value.length > 5) {
+                      if (value != null && value.length < 5) {
                         return Constants.FIELD_CONTACT_NAME_ERROR_MSG;
                       }
                       return null;
@@ -122,6 +121,7 @@ class _BuyerBidConfirmationScreenState
                       if (diffDays < 0) {
                         return Constants.FIELD_PICKUP_DATE_ERROR_MSG;
                       }
+                      date = value;
                       return null;
                     },
                   )),
@@ -157,6 +157,7 @@ class _BuyerBidConfirmationScreenState
                       if (diffHours < 0 && diffMinutes < 0) {
                         return Constants.FIELD_PICKUP_TIME_ERROR_MSG;
                       }
+                      time = value;
                       return null;
                     },
                   )),
@@ -228,21 +229,19 @@ class _BuyerBidConfirmationScreenState
   //send data to bid form api
   //disable fields after success
   void sendBidFormData() {
-    // setState(() {
-    //   _isEnabled = false;
-    // });
+    setState(() {
+      _isEnabled = false;
+    });
 
     final totalBid = widget.bidItems
         .fold(0, (acc, item) => acc + item.bidQuantity * item.bidCost);
-
-    // final TimeOfDay timeOfDay = TimeOfDay.fromDateTime(pickupTimeController.text);
-    // final dateTime = DateTimeField.combine(DateTime.parse(pickupDateController.text), DateTime.parse(pickupTimeController.text));
+    final dateTime = DateTimeField.combine(date, TimeOfDay.fromDateTime(time));
 
     final BuyerBidData data = BuyerBidData(
         bidItems: widget.bidItems,
         sellerId: widget.seller.id,
         totalBid: totalBid.toInt(),
-        pDateTime: DateTime.now(),
+        pDateTime: dateTime,
         contactName: contactNameController.text,
         status: 'pending');
     _bloc.placeBid(data);
