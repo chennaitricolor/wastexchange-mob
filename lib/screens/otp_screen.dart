@@ -13,7 +13,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
-import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
 import 'package:authentication_view/authentication_view.dart';
 
 class OTPScreen extends StatefulWidget {
@@ -48,14 +48,14 @@ class _OTPScreenState extends State<OTPScreen> {
     _otpBloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
-          DisplayUtil.instance.showLoadingDialog(context);
+          showLoadingDialog(context);
           break;
         case Status.ERROR:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           _showToast(Constants.SEND_OTP_FAIL);
           break;
         case Status.COMPLETED:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           _showToast(Constants.SEND_OTP_SUCCESS);
           break;
       }
@@ -67,14 +67,14 @@ class _OTPScreenState extends State<OTPScreen> {
     _registrationBloc.registrationStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
-          DisplayUtil.instance.showLoadingDialog(context);
+          showLoadingDialog(context);
           break;
         case Status.ERROR:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           _showToast(Constants.REGISTRATION_FAILED);
           break;
         case Status.COMPLETED:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           _showMap();
           break;
       }
