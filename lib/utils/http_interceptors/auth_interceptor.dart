@@ -14,7 +14,7 @@ class AuthInterceptor implements InterceptorContract {
   Future<RequestData> interceptRequest({RequestData data}) async {
     final String token = await _tokenRepository.getToken();
     if (token != null && data != null) {
-      data.headers['Authorization'] = 'Bearer ' + token;
+      data.headers['x-access-token'] = token;
     }
     return data;
   }

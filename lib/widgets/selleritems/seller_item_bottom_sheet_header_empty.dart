@@ -15,8 +15,7 @@ class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAuthenticated = TokenRepository().isAuthorized();
-    if (isAuthenticated) {
+    if (TokenRepository().isAuthorized()) {
       return TapSellerForDetails();
     }
     return Column(

@@ -1,27 +1,21 @@
-import 'item.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 
-class BidItem extends Item{
+class BidItem {
+  BidItem({this.item, this.bidQuantity = 0, this.bidCost = 0});
 
-  BidItem(name, displayName, quantity, price) : super(name : name, displayName : displayName, qty : quantity, price : price);
-
+  Item item;
   double bidQuantity = 0;
-  double bidPrice = 0;
+  double bidCost = 0;
 
-  static BidItem mapItemToBidItem(Item item) {
-    final BidItem bidItem = BidItem(
-        item.name,
-        item.displayName,
-        item.qty,
-        item.price);
-    return bidItem;
+  static List<BidItem> bidItemsForItems(List<Item> items) {
+    return items.map((item) => BidItem(item: item)).toList();
   }
 
-  static List<BidItem> mapItemListToBidItemList(List<Item> items) {
-      return items.map((item) => mapItemToBidItem(item)).toList();
-  }
-
-  @override
-  String toString() {
-    return "$qty = $bidQuantity , $price = $bidPrice";
-  }
+  Map<String, dynamic> toJson() => {
+        'name': item.name,
+        'quantity': item.qty,
+        'price': item.price,
+        'bidQuantity': bidQuantity,
+        'bidCost': bidCost
+      };
 }

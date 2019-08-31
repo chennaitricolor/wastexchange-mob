@@ -1,30 +1,20 @@
-import 'dart:convert';
+import 'package:wastexchange_mobile/models/bid_item.dart';
 
-String buyerBidDataToJson(dynamic data) => json.encode(data.toJson());
+String buyerBidDataToJson(dynamic data) => data.toJson();
 
 class BuyerBidData {
-  BuyerBidData({
-    this.details,
-    this.sellerId,
-    this.totalBid,
-    this.pDateTime,
-    this.contactName,
-    this.status
-  });
+  BuyerBidData(
+      {this.sellerId,
+      this.totalBid,
+      this.pDateTime,
+      this.contactName,
+      this.status,
+      this.bidItems});
 
-  var details;
+  List<BidItem> bidItems;
   int sellerId;
   int totalBid;
   DateTime pDateTime;
   String contactName;
   String status;
-
-  Map<String, dynamic> toMap() => {
-    'details': details,
-    'sellerId': sellerId,
-    'totalBid': totalBid,
-    'pDateTime': pDateTime,
-    'contactName': contactName,
-    'status': status,
-  };
 }
