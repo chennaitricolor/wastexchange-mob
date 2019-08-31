@@ -5,9 +5,9 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:wastexchange_mobile/resources/api_response_codes.dart';
 import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
+import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/log_interceptor.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
@@ -31,7 +31,8 @@ class ApiBaseHelper {
   @visibleForTesting
   HttpClientWithInterceptor httpClient;
 
-  final String _baseApiUrl = DotEnv().env['BASE_API_URL'];
+  final String _baseApiUrl =
+      EnvRepository().getValue(key: EnvRepository.baseApiUrl);
   final logger = getLogger('ApiBaseHelper');
 
   HttpClientWithInterceptor _client(bool authenticated) =>
