@@ -42,6 +42,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
   }
 
   void _routeToBuyerBidConfirmationScreen() {
+    bidItems.forEach((item) => debugPrint(item.toJson().toString()));
     final Map<String, dynamic> sellerInfoMap = {
       'seller': widget.sellerInfo.seller,
       'bidItems': bidItems
@@ -56,9 +57,11 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
-            bidItems
-                .forEach((item) => {item.bidCost = 1, item.bidQuantity = 1});
-            _routeToBuyerBidConfirmationScreen();
+            if (_formKey.currentState.validate()) {
+              _routeToBuyerBidConfirmationScreen();
+            } else {
+              logger.d('Failure validation ' + bidItems.toString());
+            }
           },
           buttonText: Constants.BUTTON_SUBMIT,
           margin: const EdgeInsets.all(24),

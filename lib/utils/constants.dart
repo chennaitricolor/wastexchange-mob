@@ -82,8 +82,9 @@ class Constants {
   static const FIELD_CONTACT_NAME_ERROR_MSG = 'Please enter contact name';
   static const FIELD_PICKUP_DATE_ERROR_MSG = 'Please enter pick up date';
   static const FIELD_PICKUP_TIME_ERROR_MSG = 'Please enter pick up time';
+  static const CONFIRM_BUTTON = 'Confirm';
   static const BUTTON_HOME_PAGE = 'Home page';
-  static const BUTTON_LIST_OF_BIDS = 'List of bids';
+  static const BUTTON_LIST_OF_BIDS = 'View Bids';
   static const BID_SUCCESS_MSG = 'Bid successful';
   static const BUTTON_SUBMIT = 'Submit';
 }

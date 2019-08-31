@@ -1,3 +1,5 @@
+import 'package:authentication_view/button_style.dart';
+import 'package:authentication_view/button_view.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +14,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/track_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
@@ -75,10 +78,9 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scafffoldState,
-        appBar: AppBar(
-          title: Text(Constants.TITLE_ORDER_FORM),
-          backgroundColor: AppColors.colorAccent,
-        ),
+        appBar: HomeAppBar(
+            title: Text(Constants.TITLE_ORDER_FORM,
+                style: TextStyle(color: AppColors.text_black))),
         body: SingleChildScrollView(
             child: Form(
           key: _formKey,
@@ -172,29 +174,16 @@ class _BuyerBidConfirmationScreenState
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Expanded(
-                              child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: IconButton(
-                                    icon: Icon(Icons.check),
-                                    color: AppColors.colorAccent,
-                                    iconSize: 32,
-                                    onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        sendBidFormData();
-                                      }
-                                    },
-                                  ))),
-                          Expanded(
-                              child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                  child: IconButton(
-                                    icon: Icon(Icons.cancel),
-                                    color: AppColors.colorAccent,
-                                    iconSize: 32,
-                                    onPressed: () {},
-                                  ))),
+                              child: ButtonView(
+                            onButtonPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                sendBidFormData();
+                              }
+                            },
+                            buttonText: Constants.CONFIRM_BUTTON,
+                            margin: const EdgeInsets.all(16),
+                            buttonStyle: ButtonStyle.DEFAULT,
+                          )),
                         ],
                       ))),
               Offstage(
@@ -206,26 +195,27 @@ class _BuyerBidConfirmationScreenState
                       children: <Widget>[
                         Expanded(
                             child: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                child: RaisedButton(
-                                  color: AppColors.colorAccent,
-                                  child: Text(Constants.BUTTON_HOME_PAGE),
-                                  onPressed: () {
-                                    Router.removeAllAndPush(
-                                        context, MapScreen.routeName);
-                                  },
-                                ))),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          child: ButtonView(
+                            onButtonPressed: () {
+                              Router.removeAllAndPush(
+                                  context, MapScreen.routeName);
+                            },
+                            buttonText: Constants.BUTTON_HOME_PAGE,
+                            margin: const EdgeInsets.all(16),
+                            buttonStyle: ButtonStyle.DEFAULT,
+                          ),
+                        )),
                         Expanded(
                             child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                child: RaisedButton(
-                                  color: AppColors.colorAccent,
-                                  child: Text(Constants.BUTTON_LIST_OF_BIDS),
-                                  onPressed: () {
-                                    Router.removeAllAndPush(
-                                        context, MapScreen.routeName);
-                                  },
-                                ))),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          child: ButtonView(
+                            onButtonPressed: () {},
+                            buttonText: Constants.BUTTON_LIST_OF_BIDS,
+                            margin: const EdgeInsets.all(16),
+                            buttonStyle: ButtonStyle.DEFAULT,
+                          ),
+                        ))
                       ],
                     )),
               )

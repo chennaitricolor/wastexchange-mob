@@ -51,7 +51,6 @@ class ApiBaseHelper {
 
   Future<dynamic> post(bool authenticated, String path, dynamic body) async {
     try {
-      print(_baseApiUrl + path);
       final response = await _client(authenticated).post(_baseApiUrl + path,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(body));

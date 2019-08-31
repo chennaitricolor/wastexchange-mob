@@ -1,7 +1,7 @@
 import 'package:wastexchange_mobile/models/item.dart';
 
 class BidItem {
-  BidItem({this.item, this.bidQuantity, this.bidCost});
+  BidItem({this.item, this.bidQuantity = 0, this.bidCost = 0});
 
   Item item;
   double bidQuantity = 0;
