@@ -1,8 +1,8 @@
-abstract class SetUpCompliant {
+mixin SetUpCompliant {
   Future<void> load();
 }
 
-class LaunchSetup implements SetUpCompliant {
+class LaunchSetup with SetUpCompliant {
   LaunchSetup([this.setUpParticipants]);
   final List<SetUpCompliant> setUpParticipants;
   @override
