@@ -8,7 +8,7 @@ import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
-import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 
 class MapScreen extends StatefulWidget {

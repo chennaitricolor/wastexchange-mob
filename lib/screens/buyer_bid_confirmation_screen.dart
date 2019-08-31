@@ -12,7 +12,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
@@ -52,13 +52,13 @@ class _BuyerBidConfirmationScreenState
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
-          DisplayUtil.instance.showLoadingDialog(context);
+          showLoadingDialog(context);
           break;
         case Status.ERROR:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           break;
         case Status.COMPLETED:
-          DisplayUtil.instance.dismissDialog(context);
+          dismissDialog(context);
           setState(() {
             _scafffoldState.currentState.showSnackBar(SnackBar(
               content: Text(Constants.BID_SUCCESS_MSG),

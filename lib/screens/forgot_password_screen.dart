@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
-import 'package:wastexchange_mobile/widgets/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   static const routeName = '/forgotPasswordScreen';

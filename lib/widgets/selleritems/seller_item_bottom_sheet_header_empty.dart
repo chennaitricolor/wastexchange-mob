@@ -3,7 +3,7 @@ import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/announcement_message.dart';
+import 'package:wastexchange_mobile/widgets/commons/app_intro_message.dart';
 import 'package:wastexchange_mobile/widgets/tap_seller_for_details.dart';
 
 class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
@@ -27,8 +27,8 @@ class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
           margin: const EdgeInsets.all(16),
           buttonStyle: ButtonStyle.DEFAULT,
         ),
-        AnnouncementMessage(Constants.ANNOUNCEMENT_MESSAGE),
-        AnnouncementMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
+        AppIntroMessage(Constants.ANNOUNCEMENT_MESSAGE),
+        AppIntroMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
       ],
     );
   }

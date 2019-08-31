@@ -12,7 +12,7 @@ class ErrorDialog extends StatelessWidget {
         type: MaterialType.transparency,
         child: InkWell(
           onTap: () {
-            DisplayUtil.instance.dismissDialog(context);
+            dismissDialog(context);
           },
           child: Container(
             width: double.infinity,
