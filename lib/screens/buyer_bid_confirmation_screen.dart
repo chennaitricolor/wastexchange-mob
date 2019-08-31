@@ -1,5 +1,4 @@
 import 'package:authentication_view/button_style.dart';
-import 'package:authentication_view/button_view.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,8 +10,9 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/views/button_view.dart';
+import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
   const BuyerBidConfirmationScreen({this.seller, this.bidItems});
@@ -175,9 +175,7 @@ class _BuyerBidConfirmationScreenState
                                 sendBidFormData();
                               }
                             },
-                            buttonText: Constants.CONFIRM_BUTTON,
-                            margin: const EdgeInsets.all(16),
-                            buttonStyle: ButtonStyle.DEFAULT,
+                            text: Constants.CONFIRM_BUTTON,
                           )),
                         ],
                       ))),
@@ -196,9 +194,7 @@ class _BuyerBidConfirmationScreenState
                               Router.removeAllAndPush(
                                   context, MapScreen.routeName);
                             },
-                            buttonText: Constants.BUTTON_HOME_PAGE,
-                            margin: const EdgeInsets.all(16),
-                            buttonStyle: ButtonStyle.DEFAULT,
+                            text: Constants.BUTTON_HOME_PAGE,
                           ),
                         )),
                         Expanded(
@@ -206,9 +202,7 @@ class _BuyerBidConfirmationScreenState
                           padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                           child: ButtonView(
                             onButtonPressed: () {},
-                            buttonText: Constants.BUTTON_LIST_OF_BIDS,
-                            margin: const EdgeInsets.all(16),
-                            buttonStyle: ButtonStyle.DEFAULT,
+                            text: Constants.BUTTON_LIST_OF_BIDS,
                           ),
                         ))
                       ],

@@ -1,5 +1,3 @@
-import 'package:authentication_view/button_style.dart';
-import 'package:authentication_view/button_view.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
@@ -8,6 +6,7 @@ import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
+import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
@@ -62,9 +61,7 @@ class _SellerInformationScreenState extends State<SellerInformationScreen> {
               logger.d('Failure validation ' + bidItems.toString());
             }
           },
-          buttonText: Constants.BUTTON_SUBMIT,
-          margin: const EdgeInsets.all(24),
-          buttonStyle: ButtonStyle.DEFAULT,
+          text: Constants.BUTTON_SUBMIT,
         ),
         appBar: HomeAppBar(text: widget.sellerInfo.seller.name),
         body: bidItems != null && bidItems.isEmpty
