@@ -217,7 +217,7 @@ class _BuyerBidConfirmationScreenState extends State<BuyerBidConfirmationScreen>
     setState(() {
       _isEnabled = false;
     });
-    final BuyerBidData data =
+    //final BuyerBidData data =
     BuyerBidData(details: null, sellerId: 0, totalBid: 0, pDateTime: null, contactName: '');
     // _bloc.doBid(data);
   }

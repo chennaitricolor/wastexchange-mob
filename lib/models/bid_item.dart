@@ -22,6 +22,6 @@ class BidItem extends Item{
 
   @override
   String toString() {
-    return "$qty = $bidQuantity , $price = $bidPrice";
+    return '$qty = $bidQuantity , $price = $bidPrice';
   }
 }
