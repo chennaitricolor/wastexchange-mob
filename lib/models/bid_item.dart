@@ -4,10 +4,10 @@ class BidItem {
   BidItem({this.item, this.bidQuantity, this.bidCost});
 
   Item item;
-  double bidQuantity;
-  double bidCost;
+  double bidQuantity = 0;
+  double bidCost = 0;
 
-  static List<BidItem> mapItemListToBidItemList(List<Item> items) {
+  static List<BidItem> bidItemsForItems(List<Item> items) {
     return items.map((item) => BidItem(item: item)).toList();
   }
 
