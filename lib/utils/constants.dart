@@ -63,15 +63,6 @@ class Constants {
   static const String TAP_SELLER_FOR_DETAILS =
       'Tap on a seller to view their inventory details';
 
-  // Response codes //TODO:: Move to enum, seems like dart does not support type enums out of the box
-  static const int SUCCESS = 200;
-  static const int MULTIPLE_CHOICE = 300;
-  static const int BAD_REQUEST = 400;
-  static const int UNAUTHORIZED = 401;
-  static const int FORBIDDEN = 403;
-  static const int NOT_FOUND = 404;
-  static const int INTERNAL_SERVER_ERROR = 500;
-
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';
   static const DATE_FORMAT = 'yyyy-MM-dd';
