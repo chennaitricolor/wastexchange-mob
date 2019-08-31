@@ -13,9 +13,9 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
-import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/views/user_type_selector.dart';
+import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const routeName = '/registrationScreen';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/widgets/commons/error_dialog.dart';
-import 'package:wastexchange_mobile/widgets/backdrop_loading_indicator.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/error_dialog.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/loading_dialog.dart';
 
   void showLoadingDialog(BuildContext buildContext) {
     showDialog(
       context: buildContext,
       builder: (BuildContext context) {
-        return BackdropLoadingProgressIndicator();
+        return LoadingDialog();
       },
     );
   }

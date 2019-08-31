@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/widgets/user_type_selector.dart';
+import 'package:wastexchange_mobile/widgets/views/user_type_selector.dart';
 
 class RadioButtonHorizontal extends StatelessWidget {
   const RadioButtonHorizontal(

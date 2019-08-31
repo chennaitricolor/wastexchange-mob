@@ -1,20 +1,20 @@
+import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
-import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/logger.dart';
-import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
-import 'package:authentication_view/authentication_view.dart';
+import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen(this._registrationData);

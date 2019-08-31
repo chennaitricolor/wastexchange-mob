@@ -3,17 +3,17 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
-import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_information.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
-import 'package:wastexchange_mobile/widgets/commons/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen(this._sellerInformation);

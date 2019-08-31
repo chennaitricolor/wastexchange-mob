@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/widgets/radio_button_horizontal.dart';
+import 'package:wastexchange_mobile/widgets/views/radio_button_horizontal.dart';
 
 enum UserType { BUYER, SELLER }
 

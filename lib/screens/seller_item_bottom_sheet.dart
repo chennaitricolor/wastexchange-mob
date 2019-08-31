@@ -8,10 +8,10 @@ import 'package:wastexchange_mobile/resources/token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
-import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_items_list.dart';
+import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 
 class SellerItemBottomSheet extends StatefulWidget {
   const SellerItemBottomSheet(this.seller);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/widgets/loading_progress_indicator.dart';
+import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 
-class BackdropLoadingProgressIndicator extends StatelessWidget {
+class LoadingDialog extends StatelessWidget {
   final Alignment alignment = Alignment.center;
   final double width = 36.0;
   final double height = 36.0;
