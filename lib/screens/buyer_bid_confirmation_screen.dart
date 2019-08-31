@@ -7,6 +7,9 @@ import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/screens/track_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
@@ -207,7 +210,10 @@ class _BuyerBidConfirmationScreenState
                                 child: RaisedButton(
                                   color: AppColors.colorAccent,
                                   child: Text(Constants.BUTTON_HOME_PAGE),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Router.removeAllAndPush(
+                                        context, MapScreen.routeName);
+                                  },
                                 ))),
                         Expanded(
                             child: Padding(
@@ -215,7 +221,10 @@ class _BuyerBidConfirmationScreenState
                                 child: RaisedButton(
                                   color: AppColors.colorAccent,
                                   child: Text(Constants.BUTTON_LIST_OF_BIDS),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Router.removeAllAndPush(
+                                        context, MapScreen.routeName);
+                                  },
                                 ))),
                       ],
                     )),

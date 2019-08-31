@@ -7,6 +7,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_information_screen.dart';
+import 'package:wastexchange_mobile/screens/track_bids_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -39,6 +40,10 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 BuyerBidConfirmationScreen(seller: seller, bidItems: bidItems));
+
+      case TrackBidsScreen.routeName:
+        return MaterialPageRoute(builder: (_) => TrackBidsScreen());
+
       default:
         return null;
     }
