@@ -104,7 +104,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
                           if (value != null && value.isNotEmpty && double.parse(value) <= bidItem.qty) {
                             return null;
                           }
-                          return 'Quantity should be greater than the given quantity';;
+                          return 'Quantity should be greater than the given quantity';
                         },
                       ),
                     ),
@@ -133,7 +133,7 @@ class _BidItemWidgetState extends State<BidItemWidget> {
 
                                 return null;
                               }
-                              return 'Should not be empty';;
+                              return 'Should not be empty';
                             })),
                   ],
                 ),
