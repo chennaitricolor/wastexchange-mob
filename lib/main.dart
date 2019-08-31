@@ -8,7 +8,7 @@ import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 Future<void> main() async {
-  LaunchSetup([EnvRepository(), TokenRepository(), AppLogger()]).load();
+  await LaunchSetup([EnvRepository(), TokenRepository(), AppLogger()]).load();
   runApp(MyApp());
 }
 

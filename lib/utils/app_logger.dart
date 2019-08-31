@@ -24,7 +24,7 @@ class AppLogger implements SetUpCompliant {
   }
 
   @override
-  void load() {
+  Future<void> load() async {
     Logger.level = _getLoggerLevel(
         EnvRepository().getValue(key: EnvRepository.loggerLevel));
   }

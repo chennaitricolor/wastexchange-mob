@@ -1,14 +1,14 @@
 abstract class SetUpCompliant {
-  void load();
+  Future<void> load();
 }
 
 class LaunchSetup implements SetUpCompliant {
   LaunchSetup([this.setUpParticipants]);
   final List<SetUpCompliant> setUpParticipants;
   @override
-  void load() {
+  Future<void> load() async {
     for (SetUpCompliant participant in setUpParticipants) {
-      participant.load();
+      await participant.load();
     }
   }
 }
