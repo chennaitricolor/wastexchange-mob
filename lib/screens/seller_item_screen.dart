@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_item.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -23,18 +25,24 @@ class SellerItemScreen extends StatefulWidget {
 
 class _SellerItemScreenState extends State<SellerItemScreen> {
   final _formKey = GlobalKey<FormState>();
-  List<BidItem> bidItems;
   final logger = AppLogger.get('SellerInformationScreen');
+  List<Item> items;
   List<TextEditingController> quantityTextEditingControllers = [];
   List<TextEditingController> priceTextEditingControllers = [];
+  Map<int, List<int>> validationMap = {};
+  List<BidItem> bidItems = [];
 
+  static const EMPTY = 0;
+  static const ERROR = 1;
+  static const SUCCESS = 2;
+  
   @override
   void initState() {
-    bidItems = BidItem.bidItemsForItems(widget.sellerInfo.sellerItems);
+    items = widget.sellerInfo.sellerItems;
     quantityTextEditingControllers =
-        bidItems.map((bidItem) => TextEditingController()).toList();
+        items.map((_) => TextEditingController()).toList();
     priceTextEditingControllers =
-        bidItems.map((bidItem) => TextEditingController()).toList();
+        items.map((_) => TextEditingController()).toList();
     super.initState();
   }
 
@@ -53,16 +61,45 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
-            if (_formKey.currentState.validate()) {
-              _routeToBuyerBidConfirmationScreen();
-            } else {
-              logger.d('Failure validation ' + bidItems.toString());
+            validationMap.clear();
+            bidItems.clear();
+            for(int index = 0; index < items.length; index ++) {
+              final quantityValue = quantityTextEditingControllers[index].text;
+              final priceValue = priceTextEditingControllers[index].text;
+              final item = items[index];
+
+              if((isNullOrEmpty(quantityValue) || isZero(quantityValue))
+                  && (isNullOrEmpty(priceValue) || isZero(priceValue))) {
+                updateValueMap(EMPTY, index);
+                continue;
+              }
+
+              if((isNullOrEmpty(quantityValue)) || (isNullOrEmpty(priceValue) || !isDouble(quantityValue) || !isDouble(priceValue))) {
+                updateValueMap(ERROR, index);
+                continue;
+              }
+
+              updateValueMap(SUCCESS, index);
+              bidItems.add(BidItem(item: item, bidCost: double.parse(priceValue), bidQuantity: double.parse(quantityValue)));
             }
+
+            if(validationMap.containsKey(ERROR)) {
+              logger.d('Validation error');
+              return;
+            }
+
+            if(validationMap.containsKey(SUCCESS)) {
+              logger.d('Validation success');
+              _routeToBuyerBidConfirmationScreen();
+              return;
+            }
+
+            logger.d('Validation Empty');
           },
           text: Constants.BUTTON_SUBMIT,
         ),
         appBar: HomeAppBar(text: widget.sellerInfo.seller.name),
-        body: bidItems != null && bidItems.isEmpty
+        body: items != null && items.isEmpty
             ? Center(child: const Text('No data found'))
             : Form(
                 key: _formKey,
@@ -73,7 +110,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                        final BidItem bidItem = bidItems[index];
+                        final Item item = items[index];
                         return CardView(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -81,7 +118,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                               children: <Widget>[
                                 Align(
                                   child: Text(
-                                    bidItem.item.displayName,
+                                    item.displayName,
                                     style: TextStyle(
                                         fontSize: 22, color: AppColors.green),
                                   ),
@@ -95,7 +132,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                                     Flexible(
                                       flex: 3,
                                       child: Text(
-                                          'Available Qty : ${bidItem.item.qty.toString()} Kgs',
+                                          'Available Qty : ${item.qty.toString()} Kgs',
                                           style: TextStyle(
                                               color: AppColors.text_black)),
                                     ),
@@ -109,17 +146,6 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                                         decoration: InputDecoration(
                                           hintText: 'Quantity',
                                         ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            bidItem.bidQuantity = 0;
-                                            updateBidItems(index, bidItem);
-                                            return null;
-                                          }
-                                          final quantity = double.parse(value);
-                                          bidItem.bidQuantity = quantity;
-                                          updateBidItems(index, bidItem);
-                                          return null;
-                                        },
                                       ),
                                     ),
                                   ],
@@ -132,7 +158,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                                     Flexible(
                                       flex: 3,
                                       child: Text(
-                                        'Quoted Price : Rs.${bidItem.item.price.toString()}',
+                                        'Quoted Price : Rs.${item.price.toString()}',
                                         style: TextStyle(
                                             color: AppColors.text_black),
                                       ),
@@ -146,34 +172,27 @@ class _SellerItemScreenState extends State<SellerItemScreen> {
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                               hintText: 'Price',
-                                            ),
-//                          controller: priceController,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                bidItem.bidCost = 0;
-                                                updateBidItems(index, bidItem);
-                                                return null;
-                                              }
-                                              bidItem.bidCost =
-                                                  double.parse(value);
-                                              updateBidItems(index, bidItem);
-                                              return null;
-                                            })),
+                                            ))),
                                   ],
                                 ),
                               ],
                             ),
                           ),
                         );
-                      }, childCount: bidItems.length))
+                      }, childCount: items.length))
                     ],
                   ),
                 ),
               ));
   }
 
-  void updateBidItems(int index, BidItem bidItem) {
-    bidItems[index] = bidItem;
+  void updateValueMap(int key, int index) {
+    if(validationMap.containsKey(key)) {
+      final valuesList = validationMap[key];
+      valuesList.add(index);
+      validationMap[key] = valuesList;
+    } else {
+      validationMap[key] = [index];
+    }
   }
 }
