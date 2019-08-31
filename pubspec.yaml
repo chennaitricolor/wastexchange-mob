@@ -63,6 +63,17 @@ flutter:
     - assets/images/ministry-logo.png
     - assets/images/smart-city-logo.png
 
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: font/OpenSans-Regular.ttf
+          weight: 400
+        - asset: font/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: font/OpenSans-Bold.ttf
+          weight: 700
+        - asset: font/OpenSans-ExtraBold.ttf
+          weight: 900
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

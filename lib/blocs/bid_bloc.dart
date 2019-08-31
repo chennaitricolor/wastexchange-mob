@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/rendering.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/bid_repository.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
 
 class BidBloc {
   final BidRepository _bidRepository = BidRepository();

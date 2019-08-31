@@ -11,6 +11,10 @@ class BidItem {
     return items.map((item) => BidItem(item: item)).toList();
   }
 
+  @override
+  String toString() {
+    return 'bidQuantity = $bidQuantity , bidCost = $bidCost';
+  }
   Map<String, dynamic> toJson() => {
         'name': item.name,
         'quantity': item.qty,
