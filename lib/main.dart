@@ -9,10 +9,10 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 
 Future<void> main() async {
   await LaunchSetup([EnvRepository(), TokenRepository(), AppLogger()]).load();
-  runApp(MyApp());
+  runApp(WasteExchange());
 }
 
-class MyApp extends StatelessWidget {
+class WasteExchange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -61,7 +61,8 @@ flutter:
   assets:
     - .env
     - assets/images/ministry-logo.png
-    - assets/images/smart-city-logo.png
+    - assets/images/smart-cities-mission-logo.png
+    - assets/images/indian-emblem.png
 
   fonts:
     - family: OpenSans
