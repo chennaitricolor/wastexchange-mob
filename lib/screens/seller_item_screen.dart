@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
@@ -11,6 +12,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 
 class SellerItemScreen extends StatefulWidget {
   const SellerItemScreen({this.sellerInfo});
@@ -55,7 +57,10 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
 
   @override
   void onValidationError(String message) {
-    logger.d(message);
+    Flushbar(
+      duration: Duration(seconds: 3),
+      title: 'Validation Error',
+      message: message,)..show(context);
   }
 
   @override
