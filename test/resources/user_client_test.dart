@@ -29,7 +29,8 @@ void main() {
 
       when(mockApiHelper.post(false, UserClient.PATH_LOGIN,
               LoginData(loginId: 'a', password: 'b').toMap()))
-          .thenAnswer((_) async => '{"auth":true,"token":"token"}');
+          .thenAnswer(
+              (_) async => '{"auth":true,"token":"token","approved":true}');
 
       final UserClient provider = UserClient(mockApiHelper);
       final result =
