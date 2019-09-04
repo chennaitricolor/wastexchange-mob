@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -54,6 +55,6 @@ class UserClient {
   Future<SellerItemDetails> getSellerDetails(int id) async {
     final pathSellerItems = '/seller/$id/items';
     final response = await _helper.get(false, pathSellerItems);
-    return SellerItemDetails.fromJson(response);
+    return SellerItemDetails.fromJson(json.decode(response));
   }
 }

@@ -18,8 +18,7 @@ class SellerItemDetails {
     ArgumentError.checkNotNull(id, 'id is missing in SellerItemDetails');
   }
 
-  static SellerItemDetails fromJson(String str) {
-    final Map<String, dynamic> sellerDetailsJson = json.decode(str);
+  static SellerItemDetails fromJson(Map<String, dynamic> sellerDetailsJson) {
     final sellerItems = mapDetailsJsonToList(sellerDetailsJson['details']);
     return SellerItemDetails(
         sellerId: sellerDetailsJson['sellerId'],
