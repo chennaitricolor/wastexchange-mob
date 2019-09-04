@@ -59,7 +59,7 @@ class _BuyerBidConfirmationScreenState
           dismissDialog(context);
           setState(() {
             _scafffoldState.currentState.showSnackBar(SnackBar(
-              content: Text(Constants.BID_SUCCESS_MSG),
+              content: const Text(Constants.BID_SUCCESS_MSG),
               duration: Duration(seconds: 3),
             ));
           });
