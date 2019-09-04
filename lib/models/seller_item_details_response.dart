@@ -12,7 +12,11 @@ String sellerItemDetailsToJson(SellerItemDetails data) =>
     json.encode(data.toJson());
 
 class SellerItemDetails {
-  SellerItemDetails({this.sellerId, this.id, this.items});
+  SellerItemDetails({this.sellerId, this.id, this.items}) {
+    ArgumentError.checkNotNull(
+        sellerId, 'sellerId is missing in SellerItemDetails');
+    ArgumentError.checkNotNull(id, 'id is missing in SellerItemDetails');
+  }
 
   static SellerItemDetails fromJson(String str) {
     final Map<String, dynamic> sellerDetailsJson = json.decode(str);
