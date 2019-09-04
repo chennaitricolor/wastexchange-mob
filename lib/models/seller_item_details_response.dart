@@ -3,7 +3,7 @@
 //     final sellerItemDetails = sellerItemDetailsFromJson(jsonString);
 
 import 'dart:convert';
-import './item.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 
 SellerItemDetails sellerItemDetailsFromJson(String str) =>
     SellerItemDetails.fromJson(json.decode(str));
