@@ -11,6 +11,7 @@ class Constants {
   static const LOGIN_NOT_MEMBER = 'Not a member ? ';
   static const SIGNUP_BUTTON = 'Join now';
   static const LOGIN_FAILED = 'Login failed';
+  static const LOGIN_UNAPPROVED = 'Your registration is not approved yet.';
 
   //registration screen
   static const FIELD_ALTERNATE_NUMBER = 'Alternate Number';

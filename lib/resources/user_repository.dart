@@ -32,7 +32,6 @@ class UserRepository {
     final Result<LoginResponse> response = await _client.login(loginData);
 
     if (response.status == Status.COMPLETED) {
-      //Set response to TokenRepository to persist access token information and wait for completeness.
       await _tokenRepository.setToken(response.data.token);
     }
 

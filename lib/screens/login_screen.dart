@@ -58,6 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
     Router.pushNamed(context, RegistrationScreen.routeName);
   }
 
+  void _showSnackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   void initState() {
     _bloc = LoginBloc();
@@ -68,14 +72,19 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(content: const Text(Constants.LOGIN_FAILED)));
+          _showSnackBar(Constants.LOGIN_FAILED);
           break;
         case Status.COMPLETED:
-          if (_snapshot.data.success) {
-            dismissDialog(context);
-            _routeToNextScreen();
+          dismissDialog(context);
+          if (!_snapshot.data.approved) {
+            _showSnackBar(Constants.LOGIN_UNAPPROVED);
+            return;
           }
+          if (!_snapshot.data.success) {
+            _showSnackBar(Constants.LOGIN_FAILED);
+            return;
+          }
+          _routeToNextScreen();
           break;
       }
     });

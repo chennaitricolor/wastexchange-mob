@@ -14,8 +14,8 @@ class LoginResponse {
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     final auth = json['auth'];
     final token = json['token'];
-    // final approved = json['approved'];
-    return LoginResponse(auth: auth, token: token, approved: true);
+    final approved = json['approved'];
+    return LoginResponse(auth: auth, token: token, approved: approved);
   }
 
   final bool auth;
