@@ -74,7 +74,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
           },
           text: Constants.BUTTON_SUBMIT,
         ),
-        appBar: HomeAppBar(text: widget.sellerInfo.seller.name),
+        appBar: HomeAppBar(text: widget.sellerInfo.seller.name, onBackPressed: () { Navigator.pop(context, false); }),
         body: Form(
                 key: _formKey,
                 child: Padding(

@@ -74,7 +74,7 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scafffoldState,
-        appBar: HomeAppBar(text: Constants.TITLE_ORDER_FORM),
+        appBar: HomeAppBar(text: Constants.TITLE_ORDER_FORM, onBackPressed: () { Navigator.pop(context, false); },),
         body: SingleChildScrollView(
             child: Form(
           key: _formKey,

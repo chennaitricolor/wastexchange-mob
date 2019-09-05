@@ -28,7 +28,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           fieldValidator: (hintAsKey, valueMap) =>
               FieldValidator.validateEmailAddress(
                   valueMap[Constants.FIELD_EMAIL]),
-          headerLayout: HomeAppBar(),
+          headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldTypes: [_email],
           onValidation: (isValidationSuccess, textEditingControllers) {}),
     );

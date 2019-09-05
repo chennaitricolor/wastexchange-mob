@@ -4,7 +4,7 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 class HomeAppBar extends AppBar {
-  HomeAppBar({Key key, this.actionItems, this.text})
+  HomeAppBar({Key key, this.actionItems, this.text, @required this.onBackPressed})
       : super(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -15,22 +15,21 @@ class HomeAppBar extends AppBar {
             text ?? Constants.APP_TITLE,
             style: AppTheme.headline,
           ),
-          leading: Image.asset(
-            Constants.LOGO_SMART_CITY,
-            height: 64,
-          ),
-        );
+      leading: IconButton(icon:Icon(Icons.arrow_back, color: AppTheme.dark_grey),
+          onPressed: onBackPressed,
+        ));
   final List<Widget> actionItems;
+  final VoidCallback onBackPressed;
   final String text;
 
-  static Widget _indianEmblem() => Image.asset(
-        Constants.INDIAN_EMBLEM,
-        height: 64,
+  static Widget _defaultActionItem() => Image.asset(
+    Constants.LOGO_SMART_CITY,
+    height: 32,
       );
 
   static List<Widget> _actionItems(List<Widget> actionItems) {
     final totalItems = actionItems ?? <Widget>[];
-    totalItems.add(_indianEmblem());
+    totalItems.add(_defaultActionItem());
     return totalItems;
   }
 }

@@ -136,7 +136,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 return null;
             }
           },
-          headerLayout: HomeAppBar(),
+          headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldTypes: [
             FieldType.value(
                 Constants.FIELD_OTP, 10, TextInputType.number, false)

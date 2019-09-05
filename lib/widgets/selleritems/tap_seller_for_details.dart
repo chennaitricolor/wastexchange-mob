@@ -9,7 +9,7 @@ class TapSellerForDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Text(
       Constants.TAP_SELLER_FOR_DETAILS,
-      style: AppTheme.title,
+      style: AppTheme.headline,
       textAlign: TextAlign.center,
     );
   }

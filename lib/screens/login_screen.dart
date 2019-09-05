@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
               }
             },
-            headerLayout: HomeAppBar(),
+            headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
             fieldTypes: [_email, _password],
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {

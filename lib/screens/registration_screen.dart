@@ -118,7 +118,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           }),
           fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
               AppColors.green, AppColors.text_grey),
-          headerLayout: HomeAppBar(),
+          headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldValidator: (hintAsKey, values) {
             final String value = values[hintAsKey];
             switch (hintAsKey) {
