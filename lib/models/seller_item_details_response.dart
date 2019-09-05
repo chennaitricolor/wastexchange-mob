@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 import 'package:wastexchange_mobile/models/item.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 SellerItemDetails sellerItemDetailsFromJson(String str) =>
     SellerItemDetails.fromJson(json.decode(str));
@@ -28,6 +29,9 @@ class SellerItemDetails {
 
   static List<Item> mapDetailsJsonToList(dynamic detailsJson) {
     // TODO(Sayeed): See if you can move the api response parsing to user_client.
+    if (isNull(detailsJson)) {
+      return [];
+    }
     final List<Item> itemsList = [];
     detailsJson.forEach((k, v) => itemsList.add(itemFromJson(k, v)));
     itemsList.sort((i1, i2) => i1.displayName.compareTo(i2.displayName));

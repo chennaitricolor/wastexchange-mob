@@ -1,15 +1,17 @@
-  bool isNullOrEmpty(String value) => value == null || value.isEmpty;
+bool isNull(Object object) => object == null;
 
-  bool isListNullOrEmpty(List value) => value == null || value.isEmpty;
+bool isListNullOrEmpty(List value) => value == null || value.isEmpty;
 
-  bool isMapNullOrEmpty(Map value) => value == null || value.isEmpty;
+bool isMapNullOrEmpty(Map value) => value == null || value.isEmpty;
 
-  bool isValidIndex(int size, int index) => index < size;
+bool isValidIndex(int size, int index) => index < size;
 
-  bool isInValidIndex(int size, int index) => index >= size;
+bool isInValidIndex(int size, int index) => index >= size;
 
-  bool isNotNullOrEmpty(String value) => value != null && value.isNotEmpty;
+bool isNullOrEmpty(String value) => isNull(value) || value.isEmpty;
 
-  bool isZero(String value) => value == '0';
+bool isNotNullOrEmpty(String value) => !isNull(value) && value.isNotEmpty;
 
-  bool isDouble(String value) => double.tryParse(value) != null;
+bool isZero(String value) => value == '0';
+
+bool isDouble(String value) => double.tryParse(value) != null;
