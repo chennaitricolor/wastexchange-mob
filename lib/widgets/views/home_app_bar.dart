@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 class HomeAppBar extends AppBar {
@@ -12,10 +13,7 @@ class HomeAppBar extends AppBar {
           actions: _actionItems(actionItems),
           title: Text(
             text ?? Constants.APP_TITLE,
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: AppColors.text_black,
-                fontSize: 20),
+            style: AppTheme.headline,
           ),
           leading: Image.asset(
             Constants.LOGO_SMART_CITY,

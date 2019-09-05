@@ -8,6 +8,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
@@ -92,8 +93,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
                                 Align(
                                   child: Text(
                                     item.displayName,
-                                    style: TextStyle(
-                                        fontSize: 22, color: AppColors.green),
+                                    style: AppTheme.title,
                                   ),
                                   alignment: Alignment.centerLeft,
                                 ),
@@ -106,8 +106,8 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
                                       flex: 3,
                                       child: Text(
                                           'Available Qty : ${item.qty.toString()} Kgs',
-                                          style: TextStyle(
-                                              color: AppColors.text_black)),
+                                          style: AppTheme.subtitle
+                                      ),
                                     ),
                                     Flexible(
                                       flex: 1,
@@ -130,8 +130,7 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
                                       flex: 3,
                                       child: Text(
                                         'Quoted Price : Rs.${item.price.toString()}',
-                                        style: TextStyle(
-                                            color: AppColors.text_black),
+                                        style: AppTheme.subtitle,
                                       ),
                                     ),
                                     Flexible(

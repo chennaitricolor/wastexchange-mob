@@ -10,6 +10,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -104,11 +105,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RichText(
                     text: TextSpan(
                         text: Constants.LOGIN_NOT_MEMBER,
-                        style: TextStyle(color: AppColors.text_grey),
+                        style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
                           text: Constants.SIGNUP_BUTTON,
-                          style: TextStyle(color: AppColors.green))
+                          style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class ErrorDialog extends StatelessWidget {
@@ -22,7 +23,7 @@ class ErrorDialog extends StatelessWidget {
               child: Center(
                   child: Text(message,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 18))),
+                      style: AppTheme.subtitle)),
             ),
           ),
         ));

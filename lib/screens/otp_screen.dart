@@ -11,6 +11,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -114,16 +115,16 @@ class _OTPScreenState extends State<OTPScreen> {
               child: RichText(
                   text: TextSpan(
                 text: Constants.RESEND_OTP,
-                style: TextStyle(color: AppColors.green),
+                style: AppTheme.subtitleGreen,
               ))),
           titleLayout: Center(
               child: const Text(Constants.OTP_TITLE,
-                  style: TextStyle(fontSize: 20, color: AppColors.text_black))),
+                  style: AppTheme.headline)),
           messageLayout: Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(24),
               child: Text(Constants.OTP_MESSAGE,
-                  style: TextStyle(fontSize: 16, color: AppColors.grey))),
+                  style: AppTheme.subtitle)),
           fieldStyle: FieldStyle.value(24, 8, 24, 36, AppColors.underline,
               AppColors.green, AppColors.text_grey),
           fieldValidator: (hintAsKey, values) {

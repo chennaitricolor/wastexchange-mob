@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class AppIntroMessage extends StatelessWidget {
   const AppIntroMessage(this.text);
@@ -10,9 +11,7 @@ class AppIntroMessage extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 18.0,
-        ),
+        style: AppTheme.subtitle,
       ),
     );
   }
