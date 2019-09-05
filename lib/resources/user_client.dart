@@ -19,6 +19,7 @@ class UserClient {
   static const PATH_LOGIN = '/users/login';
   static const PATH_REGISTER = '/users/register';
   static const PATH_USERS = '/users';
+  static const PATH_ME = '/users/me';
 
   ApiBaseHelper _helper;
 
@@ -56,5 +57,15 @@ class UserClient {
     final pathSellerItems = '/seller/$id/items';
     final response = await _helper.get(false, pathSellerItems);
     return SellerItemDetails.fromJson(json.decode(response));
+  }
+
+  Future<Result<User>> myProfile() async {
+    try {
+      final String response = await _helper.get(true, PATH_ME);
+      final User user = User.fromJson(json.decode(response));
+      return Result.completed(user);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 }

@@ -5,18 +5,23 @@ import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
+import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
 
 class MockUserClient extends Mock implements UserClient {}
 
 class MockTokenRepository extends Mock implements TokenRepository {}
 
+class MockCachedSecureStorage extends Mock implements CachedSecureStorage {}
+
 ///Test case to check reading and writing flutter secure storage.
 void main() {
   MockUserClient mockUserClient;
   MockTokenRepository mockTokenRepository;
+  MockCachedSecureStorage mockCachedSecureStorage;
   UserRepository userRepository;
 
   const email = 'email';
@@ -36,8 +41,11 @@ void main() {
   setUp(() {
     mockUserClient = MockUserClient();
     mockTokenRepository = MockTokenRepository();
+    mockCachedSecureStorage = MockCachedSecureStorage();
     userRepository = UserRepository(
-        client: mockUserClient, tokenRepository: mockTokenRepository);
+        client: mockUserClient,
+        tokenRepository: mockTokenRepository,
+        secureStorage: mockCachedSecureStorage);
   });
 
   test('GIVEN otp data CHECK send otp is called from client', () async {
@@ -89,8 +97,12 @@ void main() {
 
     final expectedResponse =
         LoginResponse(auth: true, token: 'token_id', approved: true);
+
     when(mockUserClient.login(loginData))
         .thenAnswer((_) async => Result.completed(expectedResponse));
+    when(mockUserClient.myProfile())
+        .thenAnswer((_) async => Result.completed(User()));
+
     userRepository.login(loginData).then((loginResponse) {
       final String capturedData =
           verify(mockTokenRepository.setToken(captureAny)).captured.single;
