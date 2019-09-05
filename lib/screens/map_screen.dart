@@ -90,7 +90,7 @@ class _MapState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
+      appBar: HomeAppBar(onBackPressed: () {}, showBack: false),
       body: SlidingUpPanel(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         controller: _panelController,
