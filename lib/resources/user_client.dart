@@ -49,7 +49,7 @@ class UserClient {
 
   Future<List<User>> getAllUsers() async {
     final response = await _helper.get(false, PATH_USERS);
-    return userFromJson(response);
+    return userFromJson(json.decode(response));
   }
 
   Future<SellerItemDetails> getSellerDetails(int id) async {

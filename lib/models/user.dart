@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-List<User> userFromJson(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+List<User> userFromJson(List<dynamic> str) =>
+    List<User>.from(str.map((x) => User.fromJson(x)));
 
 String userToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
