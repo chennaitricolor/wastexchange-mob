@@ -10,8 +10,6 @@ bool isInValidIndex(int size, int index) => index >= size;
 
 bool isNullOrEmpty(String value) => isNull(value) || value.isEmpty;
 
-bool isNotNullOrEmpty(String value) => !isNull(value) && value.isNotEmpty;
-
 bool isZero(String value) => value == '0';
 
 bool isDouble(String value) => double.tryParse(value) != null;
