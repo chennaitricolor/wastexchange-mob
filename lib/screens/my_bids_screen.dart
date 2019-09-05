@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/blocs/track_bids_bloc.dart';
+import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/bid_card.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 
-class TrackBidsScreen extends StatefulWidget {
+class MyBidsScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TrackBidsScreenState();
+  State<StatefulWidget> createState() => _MyBidsScreenState();
 
-  static const routeName = '/trackBidsScreen';
+  static const routeName = '/myBidsScreen';
 }
 
-class _TrackBidsScreenState extends State<TrackBidsScreen> {
-  TrackBidsBloc _bloc;
+class _MyBidsScreenState extends State<MyBidsScreen> {
+  MyBidsBloc _bloc;
   //todo
   final _bids = [
     Bid(
@@ -48,8 +48,8 @@ class _TrackBidsScreenState extends State<TrackBidsScreen> {
 
   @override
   void initState() {
-    _bloc = TrackBidsBloc();
-    _bloc.trackBidsStream.listen((_snapshot) {
+    _bloc = MyBidsBloc();
+    _bloc.myBidsStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
           break;

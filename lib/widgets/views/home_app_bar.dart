@@ -8,7 +8,7 @@ class HomeAppBar extends AppBar {
       {Key key,
       this.actionItems,
       this.text,
-      @required this.onBackPressed,
+      this.onBackPressed,
       this.showBack = true})
       : super(
             backgroundColor: Colors.transparent,

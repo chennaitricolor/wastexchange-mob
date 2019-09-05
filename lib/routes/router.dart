@@ -4,10 +4,10 @@ import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
-import 'package:wastexchange_mobile/screens/track_bids_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,8 +30,7 @@ class Router {
 
       case SellerItemScreen.routeName:
         return MaterialPageRoute(
-            builder: (_) =>
-                SellerItemScreen(sellerInfo: settings.arguments));
+            builder: (_) => SellerItemScreen(sellerInfo: settings.arguments));
 
       case BuyerBidConfirmationScreen.routeName:
         final Map<String, dynamic> argsMap = settings.arguments;
@@ -41,8 +40,8 @@ class Router {
             builder: (_) =>
                 BuyerBidConfirmationScreen(seller: seller, bidItems: bidItems));
 
-      case TrackBidsScreen.routeName:
-        return MaterialPageRoute(builder: (_) => TrackBidsScreen());
+      case MyBidsScreen.routeName:
+        return MaterialPageRoute(builder: (_) => MyBidsScreen());
 
       default:
         return null;
