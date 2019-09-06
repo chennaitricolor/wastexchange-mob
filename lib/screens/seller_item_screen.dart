@@ -10,6 +10,7 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -26,9 +27,8 @@ class SellerItemScreen extends StatefulWidget {
   _SellerItemScreenState createState() => _SellerItemScreenState();
 }
 
-
-
-class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemListener {
+class _SellerItemScreenState extends State<SellerItemScreen>
+    with SellerItemListener {
   final _formKey = GlobalKey<FormState>();
   final logger = AppLogger.get('SellerInformationScreen');
   Map<int, List<int>> validationMap = {};
@@ -61,12 +61,13 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
     Flushbar(
       duration: Duration(seconds: 3),
       title: 'Validation Error',
-      message: message,)..show(context);
+      message: message,
+    )..show(context);
   }
 
   @override
   Widget build(BuildContext context) {
-     final List<Item> items = sellerItemBloc.items;
+    final List<Item> items = sellerItemBloc.items;
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
@@ -74,90 +75,37 @@ class _SellerItemScreenState extends State<SellerItemScreen> with SellerItemList
           },
           text: Constants.BUTTON_SUBMIT,
         ),
-        appBar: HomeAppBar(text: widget.sellerInfo.seller.name, onBackPressed: () { Navigator.pop(context, false); }),
+        appBar: HomeAppBar(
+            text: widget.sellerInfo.seller.name,
+            onBackPressed: () {
+              Navigator.pop(context, false);
+            }),
         body: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                        final Item item = items[index];
-                        return CardView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              children: <Widget>[
-                                Align(
-                                  child: Text(
-                                    item.displayName,
-                                    style: AppTheme.title,
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Flexible(
-                                      flex: 3,
-                                      child: Text(
-                                          'Available Qty : ${item.qty.toString()} Kgs',
-                                          style: AppTheme.subtitle
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 1,
-                                      child: TextFormField(
-                                        controller: sellerItemBloc.quantityTextEditingController(index),
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                          hintText: 'Quantity',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Flexible(
-                                      flex: 3,
-                                      child: Text(
-                                        'Quoted Price : Rs.${item.price.toString()}',
-                                        style: AppTheme.subtitle,
-                                      ),
-                                    ),
-                                    Flexible(
-                                        flex: 1,
-                                        child: TextFormField(
-                                            controller: sellerItemBloc.priceTextEditingController(index),
-                                            keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
-                                              hintText: 'Price',
-                                            ))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }, childCount: items.length))
-                    ],
-                  ),
-                ),
-              ));
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                  final Item item = items[index];
+                  return SellerItemListItem(
+                      item: item,
+                      quantityTextEditingController:
+                          sellerItemBloc.quantityTextEditingController(index),
+                      priceTextEditingController:
+                          sellerItemBloc.priceTextEditingController(index));
+                }, childCount: items.length))
+              ],
+            ),
+          ),
+        ));
   }
-
-
 }
 
 mixin SellerItemListener {
   void goToBidConfirmationPage(List<BidItem> bidItems);
+
   void onValidationError(String message);
 }
