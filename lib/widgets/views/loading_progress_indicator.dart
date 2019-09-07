@@ -10,7 +10,7 @@ class LoadingProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: alignment,
-      child: CircularProgressIndicator(
+      child: const CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(AppColors.green),
           strokeWidth: 3),
     );

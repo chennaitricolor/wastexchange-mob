@@ -28,7 +28,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   SellerItemDetails _sellerItemDetails;
 
   bool hasSeller() => !isNull(widget.seller);
-  bool hasSellerItemDetails() => !isNull(_sellerItemDetails);
+  bool isAuthorized() => TokenRepository().isAuthorized();
 
   @override
   void initState() {
@@ -47,15 +47,12 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToNextScreen() {
-    TokenRepository().isAuthorized()
+    isAuthorized()
         ? _routeToSellerItemScreen()
-        : _routeToLoginScreen();
+        : _routeToLoginScreenWithSellerInfo();
   }
 
   SellerItems _getSellerInfo() {
-    if (!hasSellerItemDetails()) {
-      return null;
-    }
     return SellerItems(
       sellerItems: _sellerItemDetails.items,
       seller: widget.seller,
@@ -63,10 +60,10 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToLoginScreen() {
-    if (!hasSellerItemDetails()) {
-      Router.pushNamed(context, LoginScreen.routeName);
-      return;
-    }
+    Router.pushNamed(context, LoginScreen.routeName);
+  }
+
+  void _routeToLoginScreenWithSellerInfo() {
     Router.pushNamed(context, LoginScreen.routeName,
         arguments: _getSellerInfo());
   }
@@ -80,7 +77,8 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   Widget build(BuildContext context) {
     if (!hasSeller()) {
       return SellerItemBottomSheetHeaderEmpty(
-        onPressed: _routeToNextScreen,
+        onPressed: _routeToLoginScreen,
+        isAuthorized: isAuthorized(),
       );
     }
 
@@ -109,7 +107,8 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
         }
 
         _sellerItemDetails = result.data;
-        final items = _sellerItemDetails.items;
+        final items = _sellerItemDetails.items ?? [];
+
         return Column(
           children: <Widget>[
             Icon(
@@ -119,6 +118,8 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
             SellerItemBottomSheetHeader(
               onPressed: _routeToNextScreen,
               name: widget.seller.name,
+              authorized: isAuthorized(),
+              hasItems: items.isNotEmpty,
             ),
             Expanded(
               child: Padding(

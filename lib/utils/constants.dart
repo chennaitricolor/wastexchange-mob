@@ -64,6 +64,7 @@ class Constants {
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
   static const String TAP_SELLER_FOR_DETAILS =
       'Tap on a blue pin\nto view seller inventory';
+  static const String ITEMS_UNAVAILABLE = 'No items available';
 
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';

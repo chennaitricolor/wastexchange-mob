@@ -3,10 +3,10 @@ import 'package:authentication_view/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class ButtonView extends CustomButton {
-  ButtonView({@required text, @required onButtonPressed})
+  ButtonView({@required text, @required onButtonPressed, double inset = 24})
       : super(
             buttonText: text,
             onButtonPressed: onButtonPressed,
-            margin: const EdgeInsets.all(24),
+            margin: EdgeInsets.all(inset),
             buttonStyle: ButtonStyle.DEFAULT);
 }
