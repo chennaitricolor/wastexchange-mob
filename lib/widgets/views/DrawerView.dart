@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
 
 class DrawerView extends StatelessWidget {

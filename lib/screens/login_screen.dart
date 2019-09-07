@@ -21,7 +21,7 @@ class LoginScreen extends StatefulWidget {
 
   static const routeName = '/loginScreen';
 
-  final SellerItem _sellerItem;
+  final SellerItems _sellerItems;
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
-  SellerItem _sellerItem() => widget._sellerItem;
+  SellerItems _sellerItem() => widget._sellerItem;
   bool isSellerInfoAvailable() => _sellerItem() != null;
 
   void _routeToNextScreen() {
@@ -124,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
               }
             },
-            headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
+            headerLayout: HomeAppBar(onBackPressed: () {
+              Navigator.pop(context, false);
+            }),
             fieldTypes: [_email, _password],
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
