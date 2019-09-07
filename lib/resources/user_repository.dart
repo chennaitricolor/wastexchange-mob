@@ -53,8 +53,8 @@ class UserRepository {
     return await _client.getAllUsers();
   }
 
-  Future<SellerItemDetails> getSellerDetails(int id) async {
-    return await _client.getSellerDetails(id);
+  Future<Result<SellerItemDetails>> getSellerDetails(int sellerId) async {
+    return await _client.getSellerDetails(sellerId);
   }
 
   Future<String> getProfileId() async {

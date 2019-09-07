@@ -42,6 +42,7 @@ class Constants {
   static const LOADING_LOGIN = 'Logging In';
   static const LOADING_OTP = 'Sending OTP';
   static const LOADING_REGISTRATION = 'Registration OTP';
+  static const LOADING = 'Loading';
 
   // user type
   static const USER_SELLER = 'seller';
@@ -62,7 +63,7 @@ class Constants {
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
   static const String TAP_SELLER_FOR_DETAILS =
-      'Tap on a seller to view their inventory details';
+      'Tap on a seller to\nview their inventory details';
 
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';

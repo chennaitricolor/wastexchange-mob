@@ -53,10 +53,16 @@ class UserClient {
     return userFromJson(json.decode(response));
   }
 
-  Future<SellerItemDetails> getSellerDetails(int id) async {
-    final pathSellerItems = '/seller/$id/items';
-    final response = await _helper.get(false, pathSellerItems);
-    return SellerItemDetails.fromJson(json.decode(response));
+  Future<Result<SellerItemDetails>> getSellerDetails(int sellerId) async {
+    final pathSellerItems = '/seller/$sellerId/items';
+    try {
+      final response = await _helper.get(false, pathSellerItems);
+      final SellerItemDetails details =
+          SellerItemDetails.fromJson(json.decode(response));
+      return Result.completed(details);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 
   Future<Result<User>> myProfile() async {

@@ -8,6 +8,7 @@ import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list.dart';
@@ -18,18 +19,16 @@ class SellerItemBottomSheet extends StatefulWidget {
 
   final User seller;
 
-  void updateSeller(User seller) {
-    seller = seller;
-  }
-
   @override
   _SellerItemBottomSheetState createState() => _SellerItemBottomSheetState();
 }
 
 class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   SellerItemDetailsBloc _bloc;
-  User _seller() => widget.seller;
   SellerItemDetails _sellerItemDetails;
+
+  bool hasSeller() => !isNull(widget.seller);
+  bool hasSellerItemDetails() => !isNull(_sellerItemDetails);
 
   @override
   void initState() {
@@ -44,36 +43,32 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _fetchSellerDetails() {
-    if (widget.seller != null) {
-      _bloc.getSellerDetails(widget.seller.id);
-    }
+    _bloc.getSellerDetails(widget.seller.id);
   }
 
   void _routeToNextScreen() {
-    if (TokenRepository().isAuthorized()) {
-      _routeToSellerItemScreen();
-    } else {
-      _routeToLoginScreen();
-    }
+    TokenRepository().isAuthorized()
+        ? _routeToSellerItemScreen()
+        : _routeToLoginScreen();
   }
 
   SellerItem _getSellerInfo() {
-    if (_seller() == null || _sellerItemDetails == null) {
+    if (!hasSellerItemDetails()) {
       return null;
     }
     return SellerItem(
       sellerItems: _sellerItemDetails.items,
-      seller: _seller(),
+      seller: widget.seller,
     );
   }
 
   void _routeToLoginScreen() {
-    if (_getSellerInfo() != null) {
-      Router.pushNamed(context, LoginScreen.routeName,
-          arguments: _getSellerInfo());
+    if (!hasSellerItemDetails()) {
+      Router.pushNamed(context, LoginScreen.routeName);
       return;
     }
-    Router.pushNamed(context, LoginScreen.routeName);
+    Router.pushNamed(context, LoginScreen.routeName,
+        arguments: _getSellerInfo());
   }
 
   void _routeToSellerItemScreen() {
@@ -83,13 +78,14 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    if (_seller() == null) {
+    if (!hasSeller()) {
       return SellerItemBottomSheetHeaderEmpty(
         onPressed: _routeToNextScreen,
       );
     }
 
     _fetchSellerDetails();
+
     return StreamBuilder(
       stream: _bloc.sellerItemDetailsStream,
       builder: (context, snapShot) {
@@ -124,7 +120,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
             ),
             SellerItemBottomSheetHeader(
               onPressed: _routeToNextScreen,
-              name: _seller().name,
+              name: widget.seller.name,
             ),
             Expanded(
               child: Padding(

@@ -6,10 +6,13 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 class TapSellerForDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      Constants.TAP_SELLER_FOR_DETAILS,
-      style: AppTheme.headline,
-      textAlign: TextAlign.center,
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Text(
+        Constants.TAP_SELLER_FOR_DETAILS,
+        style: TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
