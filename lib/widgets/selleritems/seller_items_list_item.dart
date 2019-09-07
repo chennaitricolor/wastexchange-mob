@@ -4,8 +4,8 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 
-class SellerItemBottomSheetListItem extends StatelessWidget {
-  const SellerItemBottomSheetListItem(this.item);
+class SellerItemsListItem extends StatelessWidget {
+  const SellerItemsListItem(this.item);
 
   final Item item;
 

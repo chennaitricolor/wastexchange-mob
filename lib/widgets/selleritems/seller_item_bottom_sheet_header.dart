@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/login_to_buy_button.dart';
