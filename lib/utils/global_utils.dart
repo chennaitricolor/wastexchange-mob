@@ -1,5 +1,3 @@
-String EMPTY = '';
-
 bool isNull(Object object) => object == null;
 
 bool isListNullOrEmpty(List value) => value == null || value.isEmpty;

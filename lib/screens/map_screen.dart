@@ -92,7 +92,7 @@ class _MapState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: DrawerView(
+        child: const DrawerView(
             name: 'Chandrasekar K',
             email: 'abcd1234xyz@abcd.com',
             avatorText: 'C'),

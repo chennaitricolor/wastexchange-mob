@@ -5,6 +5,13 @@ import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
 
 class DrawerView extends StatelessWidget {
+  const DrawerView(
+      {@required this.name, @required this.email, @required this.avatorText})
+      : assert(name != null, 'Name should not be empty'),
+        assert(email != null, 'Email should not be empty'),
+        assert(avatorText != null,
+            'At least one character should be passed for circle avator');
+
   final String name;
   final String email;
   final String avatorText;
@@ -15,11 +22,11 @@ class DrawerView extends StatelessWidget {
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: AppColors.green),
-          accountName: Text(name ?? EMPTY, style: AppTheme.titleWhite),
-          accountEmail: Text(email ?? EMPTY, style: AppTheme.subtitleWhite),
+          accountName: Text(name ?? '', style: AppTheme.titleWhite),
+          accountEmail: Text(email ?? '', style: AppTheme.subtitleWhite),
           currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.yellow,
-              child: Text(avatorText ?? EMPTY, style: AppTheme.title)),
+              child: Text(avatorText ?? '', style: AppTheme.title)),
         ),
         DrawerItemView(
           iconData: Icons.home,
@@ -40,10 +47,4 @@ class DrawerView extends StatelessWidget {
       ],
     );
   }
-
-  DrawerView({@required this.name, @required this.email, @required this.avatorText})
-      : assert(name != null, 'Name should not be empty'),
-        assert(email != null, 'Email should not be empty'),
-        assert(avatorText != null,
-            'At least one character should be passed for circle avator');
 }

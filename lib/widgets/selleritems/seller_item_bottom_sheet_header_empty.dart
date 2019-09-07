@@ -24,8 +24,8 @@ class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
           onButtonPressed: _onPressed,
           text: Constants.LOGIN_TO_BUY,
         ),
-        AppIntroMessage(Constants.ANNOUNCEMENT_MESSAGE),
-        AppIntroMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
+        const AppIntroMessage(Constants.ANNOUNCEMENT_MESSAGE),
+        const AppIntroMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
       ],
     );
   }
