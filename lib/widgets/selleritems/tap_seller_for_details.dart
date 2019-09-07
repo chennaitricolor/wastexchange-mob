@@ -10,7 +10,7 @@ class TapSellerForDetails extends StatelessWidget {
       padding: EdgeInsets.all(16.0),
       child: Text(
         Constants.TAP_SELLER_FOR_DETAILS,
-        style: TextStyle(fontSize: 18),
+        style: AppTheme.body1,
         textAlign: TextAlign.center,
       ),
     );

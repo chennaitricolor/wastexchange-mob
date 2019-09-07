@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/models/seller_item.dart';
+import 'package:wastexchange_mobile/models/seller_items.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
@@ -52,11 +52,11 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
         : _routeToLoginScreen();
   }
 
-  SellerItem _getSellerInfo() {
+  SellerItems _getSellerInfo() {
     if (!hasSellerItemDetails()) {
       return null;
     }
-    return SellerItem(
+    return SellerItems(
       sellerItems: _sellerItemDetails.items,
       seller: widget.seller,
     );

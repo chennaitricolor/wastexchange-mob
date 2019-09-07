@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/models/seller_item.dart';
+import 'package:wastexchange_mobile/models/seller_items.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
@@ -17,7 +17,7 @@ import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen(this._sellerItem);
+  const LoginScreen(this._sellerItems);
 
   static const routeName = '/loginScreen';
 
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
-  SellerItems _sellerItem() => widget._sellerItem;
+  SellerItems _sellerItem() => widget._sellerItems;
   bool isSellerInfoAvailable() => _sellerItem() != null;
 
   void _routeToNextScreen() {
