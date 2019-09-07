@@ -8,8 +8,9 @@ import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/views/DrawerView.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
+import 'package:wastexchange_mobile/widgets/views/menu_app_bar.dart';
 
 class MapScreen extends StatefulWidget {
   static const routeName = '/mapScreen';
@@ -90,7 +91,13 @@ class _MapState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(onBackPressed: () {}, showBack: false),
+      drawer: Drawer(
+        child: DrawerView(
+            name: 'Chandrasekar K',
+            email: 'abcd1234xyz@abcd.com',
+            avatorText: 'C'),
+      ),
+      appBar: MenuAppBar(),
       body: SlidingUpPanel(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         controller: _panelController,

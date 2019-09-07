@@ -10,7 +10,7 @@ import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
-import 'package:wastexchange_mobile/widgets/selleritems/seller_items_list.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 
 class SellerItemBottomSheet extends StatefulWidget {
@@ -131,7 +131,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
                 padding: const EdgeInsets.symmetric(
                   vertical: 16,
                 ),
-                child: SellerItemList(
+                child: SellerItemBottomSheetList(
                   items: items,
                 ),
               ),

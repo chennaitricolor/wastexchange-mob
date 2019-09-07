@@ -18,6 +18,10 @@ class AppTheme {
   static const Color chipBackground = Color(0xFFEEF1F3);
   static const Color spacer = Color(0xFFF2F2F2);
 
+  static const IconThemeData iconTheme = IconThemeData(
+      color: AppTheme.dark_grey
+  );
+
   static const TextTheme textTheme = TextTheme(
     display1: display1,
     headline: headline,
@@ -29,7 +33,7 @@ class AppTheme {
   );
 
   static const TextStyle display1 = TextStyle( // h4 -> display1
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
     fontSize: 36,
     letterSpacing: 0.4,
@@ -38,7 +42,7 @@ class AppTheme {
   );
 
   static const TextStyle headline = TextStyle( // h5 -> headline
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
     fontSize: 20,
     letterSpacing: 0.27,
@@ -46,23 +50,47 @@ class AppTheme {
   );
 
   static const TextStyle title = TextStyle( // h6 -> title
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
     fontSize: 16,
     letterSpacing: 0.18,
     color: darkerText,
   );
 
+  static const TextStyle titleWhite = TextStyle( // h6 -> title
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    letterSpacing: 0.18,
+    color: nearlyWhite,
+  );
+
+  static const TextStyle navigationItem = TextStyle( // h6 -> title
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    letterSpacing: 0.18,
+    color: dark_grey,
+  );
+
   static const TextStyle subtitle = TextStyle( // subtitle2 -> subtitle
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: -0.04,
     color: darkText,
   );
 
+  static const TextStyle subtitleWhite = TextStyle( // subtitle2 -> subtitle
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    letterSpacing: -0.04,
+    color: nearlyWhite,
+  );
+
   static const TextStyle subtitleGreen = TextStyle( // subtitle2 -> subtitle
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: -0.04,
@@ -70,7 +98,7 @@ class AppTheme {
   );
 
   static const TextStyle body2 = TextStyle( // body1 -> body2
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: 0.2,
@@ -78,7 +106,7 @@ class AppTheme {
   );
 
   static const TextStyle body1 = TextStyle( // body2 -> body1
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: -0.05,
@@ -86,7 +114,7 @@ class AppTheme {
   );
 
   static const TextStyle caption = TextStyle( // Caption -> caption
-    fontFamily: 'WorkSans',
+    fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 12,
     letterSpacing: 0.2,

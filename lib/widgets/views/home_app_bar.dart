@@ -15,30 +15,16 @@ class HomeAppBar extends AppBar {
             elevation: 0,
             key: key,
             centerTitle: true,
-            actions: _actionItems(actionItems),
             title: Text(
               text ?? Constants.APP_TITLE,
               style: AppTheme.headline,
             ),
-            leading: showBack
-                ? IconButton(
-                    icon: Icon(Icons.arrow_back, color: AppTheme.dark_grey),
-                    onPressed: onBackPressed,
-                  )
-                : null);
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: onBackPressed,
+            ));
   final List<Widget> actionItems;
   final VoidCallback onBackPressed;
   final String text;
   final bool showBack;
-
-  static Widget _defaultActionItem() => Image.asset(
-        Constants.LOGO_SMART_CITY,
-        height: 32,
-      );
-
-  static List<Widget> _actionItems(List<Widget> actionItems) {
-    final totalItems = actionItems ?? <Widget>[];
-    totalItems.add(_defaultActionItem());
-    return totalItems;
-  }
 }
