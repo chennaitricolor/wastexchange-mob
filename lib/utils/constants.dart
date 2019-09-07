@@ -50,7 +50,7 @@ class Constants {
   // Map configuration
   static const double CHENNAI_LAT = 12.9838;
   static const double CHENNAI_LONG = 80.2459;
-  static const double DEFAULT_ZOOM = 15;
+  static const double DEFAULT_MAP_ZOOM = 12;
 
   //Seller Information Screen
   static const String CHECKOUT = 'Checkout';

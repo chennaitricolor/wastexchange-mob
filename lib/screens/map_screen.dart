@@ -29,7 +29,6 @@ class _MapState extends State<MapScreen> {
 
   static final _options = CameraPosition(
     target: const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
-    zoom: Constants.DEFAULT_ZOOM,
   );
 
   @override
@@ -46,6 +45,9 @@ class _MapState extends State<MapScreen> {
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    controller.animateCamera(CameraUpdate.newLatLngZoom(
+        const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
+        Constants.DEFAULT_MAP_ZOOM));
   }
 
   void _onMarkerTapped(int userId) {
