@@ -57,8 +57,8 @@ class UserClient {
     final pathSellerItems = '/seller/$sellerId/items';
     try {
       final response = await _helper.get(false, pathSellerItems);
-      final SellerItemDetails details =
-          SellerItemDetails.fromJson(json.decode(response));
+      final SellerItemDetails details = SellerItemDetails.fromJson(
+          _codecForQuantityConversionToDouble().decode(response));
       return Result.completed(details);
     } catch (e) {
       return Result.error(e.toString());
@@ -73,5 +73,15 @@ class UserClient {
     } catch (e) {
       return Result.error(e.toString());
     }
+  }
+
+  //Courtesy: https://stackoverflow.com/questions/49611724/dart-how-to-json-decode-0-as-double
+  JsonCodec _codecForQuantityConversionToDouble() {
+    return JsonCodec.withReviver((dynamic key, dynamic value) {
+      if (key == 'quantity' && value is int) {
+        return value.toDouble();
+      }
+      return value;
+    });
   }
 }

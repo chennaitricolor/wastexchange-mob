@@ -44,7 +44,7 @@ class Item {
 
   String name;
   String displayName;
-  int qty;
+  double qty;
   int price;
 
   Map<String, dynamic> toJson() => {
