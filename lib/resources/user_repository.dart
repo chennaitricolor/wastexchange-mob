@@ -49,7 +49,7 @@ class UserRepository {
     return loginResponse;
   }
 
-  Future<List<User>> getAllUsers() async {
+  Future<Result<List<User>>> getAllUsers() async {
     return await _client.getAllUsers();
   }
 

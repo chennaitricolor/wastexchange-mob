@@ -2,6 +2,9 @@ class Constants {
   static const APP_TITLE = 'India Waste Exchange';
   static const LOGO_SMART_CITY = 'assets/images/smart-cities-mission-logo.png';
   static const INDIAN_EMBLEM = 'assets/images/indian-emblem.png';
+  static const String GENERIC_ERROR_MESSAGE =
+      'Something went wrong. Please try again.';
+
   //Currency
   static const INR_UNICODE = '\u20B9';
 
@@ -51,6 +54,7 @@ class Constants {
   static const double CHENNAI_LAT = 12.9838;
   static const double CHENNAI_LONG = 80.2459;
   static const double DEFAULT_MAP_ZOOM = 12;
+  static const String MAP_LOADING_FAILED = 'Failed to load map';
 
   //Seller Information Screen
   static const String CHECKOUT = 'Checkout';
