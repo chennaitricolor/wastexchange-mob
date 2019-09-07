@@ -89,23 +89,21 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
     return StreamBuilder(
       stream: _bloc.sellerItemDetailsStream,
       builder: (context, snapShot) {
-        if (!snapShot.hasData) {
-          return LoadingProgressIndicator(
-            alignment: Alignment.topCenter,
-          );
-        }
-
         final Result result = snapShot.data;
         switch (result.status) {
           case Status.LOADING:
-            return LoadingProgressIndicator(
-              alignment: Alignment.topCenter,
-            );
+            return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: LoadingProgressIndicator(
+                  alignment: Alignment.topCenter,
+                ));
           case Status.ERROR:
-            return Align(
-              alignment: Alignment.topCenter,
-              child: Text(result.message),
-            );
+            return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(result.message),
+                ));
           case Status.COMPLETED:
             break;
         }
@@ -116,7 +114,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
           children: <Widget>[
             Icon(
               Icons.drag_handle,
-              size: 14.0,
+              size: 25.0,
             ),
             SellerItemBottomSheetHeader(
               onPressed: _routeToNextScreen,

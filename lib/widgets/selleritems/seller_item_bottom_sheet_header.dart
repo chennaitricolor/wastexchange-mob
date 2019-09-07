@@ -27,7 +27,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           Expanded(
             child: Text(
               name,
-              style: AppTheme.title,
+              style: AppTheme.body1,
             ),
           ),
           const SizedBox(

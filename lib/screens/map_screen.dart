@@ -25,7 +25,6 @@ class _MapState extends State<MapScreen> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   User _selectedUser;
   List<User> _users;
-  final _panelController = PanelController();
   StreamController<User> sellerStreamController;
 
   static final _options = CameraPosition(
@@ -60,10 +59,10 @@ class _MapState extends State<MapScreen> {
   }
 
   void populateUsers(List<User> users) {
+    users.removeWhere((user) => user.persona != Constants.USER_SELLER);
     _users = users;
     final markers = users.map((user) {
-      final isSeller = user.persona == Constants.USER_SELLER;
-      final hue = isSeller ? 200.0 : 0.0;
+      const hue = 200.0;
       void callback() => _onMarkerTapped(user.id);
       return Marker(
         markerId: MarkerId(
@@ -100,7 +99,6 @@ class _MapState extends State<MapScreen> {
       appBar: MenuAppBar(),
       body: SlidingUpPanel(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
-        controller: _panelController,
         backdropEnabled: true,
         backdropOpacity: 0.4,
         backdropColor: Colors.black,

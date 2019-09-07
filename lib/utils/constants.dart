@@ -63,7 +63,7 @@ class Constants {
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
   static const String TAP_SELLER_FOR_DETAILS =
-      'Tap on a seller to\nview their inventory details';
+      'Tap on a blue pin\nto view seller inventory';
 
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';
