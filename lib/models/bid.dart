@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:wastexchange_mobile/models/item.dart';
 
 List<Bid> bidsFromJson(String str) =>
-    List<Bid>.from(json.decode(str).map((x) => null));
+    List<Bid>.from(json.decode(str).map((x) => Bid.fromJson(x)));
 
 class Bid {
   Bid(
@@ -26,23 +26,24 @@ class Bid {
   }
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
-      orderId: json['id'],
-      createdDate: json['created_at'],
-      sellerId: json['seller_id'],
-      amount: json['total_bid'],
-      pickupDate: json['p_date_time'],
-      status: json['status'],
-      contactName: json['contact_name'],
-      bidItems: json['details'].map((k, v) => itemFromJson(k, v)));
+      orderId: json['id'].toString(),
+      createdDate: DateTime.parse(json['createdAt']),
+      sellerId: json['sellerId'].toString(),
+      amount: json['totalBid'].toDouble().toStringAsFixed(2),
+      pickupDate: DateTime.parse(json['pDateTime']),
+      status: BidStatus.values.firstWhere((s) => s.toString().contains(json['status'])),
+      contactName: json['contactName'],
+      bidItems: json['details']
+  );
 
   String orderId;
   final DateTime createdDate;
   final String sellerId;
-  final double amount;
+  final String amount;
   final DateTime pickupDate;
   final BidStatus status;
   final String contactName;
-  final List<Item> bidItems;
+  final Map<String, dynamic> bidItems;
 }
 
 enum BidStatus { cancelled, pending, successful }

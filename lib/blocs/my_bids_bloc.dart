@@ -13,17 +13,13 @@ class MyBidsBloc {
       StreamController<Result<List<Bid>>>();
 
   StreamSink<Result<List<Bid>>> get _myBidsSink => _myBidsController.sink;
+
   Stream<Result<List<Bid>>> get myBidsStream => _myBidsController.stream;
 
-  Future<void> getMyBids() async {
-    _myBidsSink.add(Result.loading(Constants.LOADING_OTP));
-    try {
-      final List<Bid> response = await _bidRepository.getMyBids();
-      _myBidsSink.add(Result.completed(response));
-    } catch (e) {
-      _myBidsSink.add(Result.error(e.toString()));
-      logger.e(e.toString());
-    }
+  Future<void> trackBid() async {
+    _myBidsSink.add(Result.loading('loading'));
+    final Result<List<Bid>> response = await _bidRepository.getMyBids();
+    _myBidsSink.add(response);
   }
 
   void dispose() {

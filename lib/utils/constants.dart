@@ -85,4 +85,6 @@ class Constants {
   static const BUTTON_LIST_OF_BIDS = 'View Bids';
   static const BID_SUCCESS_MSG = 'Bid successful';
   static const BUTTON_SUBMIT = 'Submit';
+  static const TRACK_BIDS = 'Track Bids';
+  static const NO_BIDS = 'No Bids';
 }
