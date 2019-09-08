@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:intl/intl.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
+
+import 'commons/card_view.dart';
 
 class BidCard extends StatelessWidget {
   const BidCard(this._bid);
@@ -9,91 +12,111 @@ class BidCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(right: 8, left: 8, top: 4, bottom: 4),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('Order number: ' + _bid.orderId),
+    return CardView(
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: _getStatusColor(_bid.status),
+                child: _getStatus(_bid.status),
               ),
-              Container(
-                child: Row(
+            ),
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: Column(
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text('Status: '),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Seller: ' + _bid.sellerId,
+                            style: AppTheme.title,
+                          )
+                        ],
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: _getStatus(_bid.status),
-                    )
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Order number: ' + _bid.orderId),
+                          Text(
+                            'Amount: ' + _bid.amount.toString(),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text('Order date: ' +
+                              _getFormattedDate(_bid.createdDate)),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Pickup Date: ' +
+                              _getFormattedDate(_bid.pickupDate)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('Seller: ' + _bid.sellerId),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child:
-                    Text('Order date: ' + _getFormattedDate(_bid.createdDate)),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('amount: ' + _bid.amount.toString()),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child:
-                    Text('Pickup Date: ' + _getFormattedDate(_bid.pickupDate)),
-              )
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    final f = DateFormat('yyyy-MM-dd h:mm a');
+    final f = DateFormat('dd MMM yy h:mm a');
     return f.format(date).toString();
   }
 
-  Icon _getStatus(BidStatus bidStatus) {
+  Widget _getStatus(BidStatus bidStatus) {
     switch (bidStatus) {
       case BidStatus.pending:
-        {
-          return Icon(
-            Icons.access_time,
-            color: Colors.yellow,
-          );
-        }
+        return Icon(
+          Icons.timelapse,
+        );
       case BidStatus.cancelled:
         return Icon(
           Icons.cancel,
-          color: Colors.red,
         );
       case BidStatus.successful:
         return Icon(
-          Icons.check,
-          color: Colors.green,
+          Icons.check_circle,
         );
+      default:
+        return null;
+    }
+  }
+
+  MaterialColor _getStatusColor(BidStatus status) {
+    switch (status) {
+      case BidStatus.pending:
+        return Colors.yellow;
+      case BidStatus.cancelled:
+        return Colors.red;
+      case BidStatus.successful:
+        return Colors.green;
       default:
         return null;
     }
