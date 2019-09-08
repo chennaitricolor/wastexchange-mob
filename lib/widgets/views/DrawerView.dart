@@ -30,20 +30,30 @@ class DrawerView extends StatelessWidget {
         DrawerItemView(
           iconData: Icons.home,
           text: 'Home',
-          onItemPressed: () {},
+          onItemPressed: () {
+            closeDrawer(context);
+          },
         ),
         DrawerItemView(
           iconData: Icons.casino,
           text: 'My Bids',
-          onItemPressed: () {},
+          onItemPressed: () {
+            closeDrawer(context);
+          },
         ),
         Divider(),
         DrawerItemView(
           iconData: Icons.power_settings_new,
           text: 'Logout',
-          onItemPressed: () {},
+          onItemPressed: () {
+            closeDrawer(context);
+          },
         ),
       ],
     );
+  }
+
+  void closeDrawer(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }
