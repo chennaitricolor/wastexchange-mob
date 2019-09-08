@@ -6,24 +6,16 @@ import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class SellerItemBloc {
-  SellerItemBloc(SellerItemListener listener, List<Item> items) {
-    _items = items ?? [];
+  SellerItemBloc(SellerItemListener listener, List<Item> items){
     _listener = listener;
-    _quantityTextEditingControllers = items != null
-        ? items.map((_) => TextEditingController()).toList()
-        : null;
-    _priceTextEditingControllers = items != null
-        ? items.map((_) => TextEditingController()).toList()
-        : null;
+    _items = items ?? [];
+    _validationMap = {};
   }
 
   final logger = AppLogger.get('SellerItemBloc');
 
-  List<TextEditingController> _quantityTextEditingControllers = [];
-  List<TextEditingController> _priceTextEditingControllers = [];
-  final List<BidItem> _bidItems = [];
-  final Map<int, List<int>> _validationMap = {};
   List<Item> _items;
+  Map<int, List<int>> _validationMap;
 
   static const EMPTY = 0;
   static const ERROR = 1;
@@ -31,33 +23,26 @@ class SellerItemBloc {
 
   SellerItemListener _listener;
 
-  void onSubmitBids() {
+  void onSubmitBids(List<String> quantityValues, List<String> priceValues) {
     _validationMap.clear();
-    _bidItems.clear();
-    for (int index = 0; index < items.length; index++) {
-      final quantityValue = _quantityTextEditingControllers[index].text;
-      final priceValue = _priceTextEditingControllers[index].text;
-      final item = items[index];
+    final List<BidItem> _bidItems = [];
+    for(int index = 0; index < _items.length; index ++) {
+      final quantityValue = isListNullOrEmpty(quantityValues) ? null : quantityValues[index];
+      final priceValue = isListNullOrEmpty(priceValues) ? null : priceValues[index];
+      final item = _items[index];
 
-      if ((isNullOrEmpty(quantityValue) || isZero(quantityValue)) &&
-          (isNullOrEmpty(priceValue) || isZero(priceValue))) {
-        updateValueMap(EMPTY, index);
+      if(isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue)) {
+        _updateValueMap(EMPTY, index);
         continue;
       }
 
-      if ((isNullOrEmpty(quantityValue)) ||
-          (isNullOrEmpty(priceValue) ||
-              !isDouble(quantityValue) ||
-              !isDouble(priceValue))) {
-        updateValueMap(ERROR, index);
+      if(isNullOrEmpty(quantityValue) || isNullOrEmpty(priceValue) || isZero(quantityValue) || isZero(priceValue) || !isDouble(quantityValue) || !isDouble(priceValue)) {
+        _updateValueMap(ERROR, index);
         continue;
       }
 
-      updateValueMap(SUCCESS, index);
-      _bidItems.add(BidItem(
-          item: item,
-          bidCost: double.parse(priceValue),
-          bidQuantity: double.parse(quantityValue)));
+      _updateValueMap(SUCCESS, index);
+      _bidItems.add(BidItem(item: item, bidCost: double.parse(priceValue), bidQuantity: double.parse(quantityValue)));
     }
 
     if (_validationMap.containsKey(ERROR)) {
@@ -78,8 +63,8 @@ class SellerItemBloc {
     _listener.onValidationError('Please fill all the values');
   }
 
-  void updateValueMap(int key, int index) {
-    if (_validationMap.containsKey(key)) {
+  void _updateValueMap(int key, int index) {
+    if(_validationMap.containsKey(key)) {
       final valuesList = _validationMap[key];
       valuesList.add(index);
       _validationMap[key] = valuesList;
@@ -87,17 +72,4 @@ class SellerItemBloc {
       _validationMap[key] = [index];
     }
   }
-
-  List<Item> get items => _items;
-
-  TextEditingController quantityTextEditingController(int position) =>
-      isListNullOrEmpty(_quantityTextEditingControllers) ||
-              isInValidIndex(_quantityTextEditingControllers.length, position)
-          ? null
-          : _quantityTextEditingControllers[position];
-  TextEditingController priceTextEditingController(int position) =>
-      isListNullOrEmpty(_priceTextEditingControllers) ||
-              isInValidIndex(_priceTextEditingControllers.length, position)
-          ? null
-          : _priceTextEditingControllers[position];
 }
