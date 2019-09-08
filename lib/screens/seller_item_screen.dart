@@ -29,10 +29,18 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   final logger = AppLogger.get('SellerInformationScreen');
   Map<int, List<int>> validationMap = {};
   SellerItemBloc sellerItemBloc;
+  List<TextEditingController> _quantityTextEditingControllers;
+  List<TextEditingController> _priceTextEditingControllers;
+  List<Item> _items;
+  String sellerName;
 
   @override
   void initState() {
-    sellerItemBloc = SellerItemBloc(this, widget.sellerInfo.sellerItems);
+    _items = widget.sellerInfo?.sellerItems ?? [];
+    sellerName = widget.sellerInfo?.seller?.name ?? '';
+    sellerItemBloc = SellerItemBloc(this, _items);
+    _quantityTextEditingControllers = _items != null ? _items.map((_) => TextEditingController()).toList() : [];
+    _priceTextEditingControllers = _items != null ? _items.map((_) => TextEditingController()).toList() : [];
     super.initState();
   }
 
@@ -55,24 +63,24 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   @override
   void onValidationError(String message) {
     Flushbar(
-      duration: Duration(seconds: 3),
-      title: 'Validation Error',
+      forwardAnimationCurve: Curves.ease,
+      duration: Duration(seconds: 2),
+      title: 'Something went wrong',
       message: message,
     )..show(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Item> items = sellerItemBloc.items;
     return Scaffold(
         bottomNavigationBar: ButtonView(
           onButtonPressed: () {
-            sellerItemBloc.onSubmitBids();
+            sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
           },
           text: Constants.BUTTON_SUBMIT,
         ),
         appBar: HomeAppBar(
-            text: widget.sellerInfo.seller.name,
+            text: sellerName,
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
@@ -85,19 +93,26 @@ class _SellerItemScreenState extends State<SellerItemScreen>
                 SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                  final Item item = items[index];
+                  final Item item = _items[index];
+                  final TextEditingController quantityEditingController = _quantityTextEditingControllers[index];
+                  final TextEditingController priceEditingController = _priceTextEditingControllers[index];
                   return SellerItemListItem(
                       item: item,
                       quantityTextEditingController:
-                          sellerItemBloc.quantityTextEditingController(index),
+                          quantityEditingController,
                       priceTextEditingController:
-                          sellerItemBloc.priceTextEditingController(index));
-                }, childCount: items.length))
+                          priceEditingController);
+                }, childCount: _items.length))
               ],
             ),
           ),
         ));
   }
+
+  List<String> _quantityValues() => _quantityTextEditingControllers.map((textEditingController) => textEditingController.text).toList() ?? [];
+
+  List<String> _priceValues() => _priceTextEditingControllers.map((textEditingController) => textEditingController.text).toList() ?? [];
+
 }
 
 mixin SellerItemListener {
