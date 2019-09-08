@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class SellerItemRow extends Row {
-  SellerItemRow({this.text, this.hintText, this.textEditingController})
+  SellerItemRow({this.isEditable, this.text, this.hintText, this.textEditingController})
       : super(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -12,7 +12,7 @@ class SellerItemRow extends Row {
             ),
             Flexible(
               flex: 1,
-              child: TextFormField(
+              child: isEditable != null && isEditable ? Align(alignment: Alignment.centerLeft, child: Text(hintText, style: AppTheme.subtitle)) : TextFormField(
                 controller: textEditingController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -26,4 +26,5 @@ class SellerItemRow extends Row {
   final TextEditingController textEditingController;
   final String text;
   final String hintText;
+  final bool isEditable;
 }
