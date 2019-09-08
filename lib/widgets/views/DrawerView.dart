@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
@@ -38,7 +40,7 @@ class DrawerView extends StatelessWidget {
           iconData: Icons.casino,
           text: 'My Bids',
           onItemPressed: () {
-            closeDrawer(context);
+            Router.pushNamed(context, MyBidsScreen.routeName);
           },
         ),
         Divider(),

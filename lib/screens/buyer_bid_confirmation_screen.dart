@@ -8,6 +8,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
+import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
@@ -200,7 +201,9 @@ class _BuyerBidConfirmationScreenState
                             child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                           child: ButtonView(
-                            onButtonPressed: () {},
+                            onButtonPressed: () {
+                              Router.pushNamed(context, MyBidsScreen.routeName);
+                            },
                             text: Constants.BUTTON_LIST_OF_BIDS,
                           ),
                         ))
