@@ -100,6 +100,7 @@ class _MapState extends State<MapScreen> {
       ),
       appBar: MenuAppBar(),
       body: SlidingUpPanel(
+        minHeight: 120,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         backdropEnabled: true,
         backdropOpacity: 0.4,
