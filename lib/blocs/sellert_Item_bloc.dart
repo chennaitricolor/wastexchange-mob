@@ -31,12 +31,12 @@ class SellerItemBloc {
       final priceValue = isListNullOrEmpty(priceValues) ? null : priceValues[index];
       final item = _items[index];
 
-      if(isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue)) {
+      if(isEmptyScenario(quantityValue, priceValue)) {
         _updateValueMap(EMPTY, index);
         continue;
       }
 
-      if(isNullOrEmpty(quantityValue) || isNullOrEmpty(priceValue) || isZero(quantityValue) || isZero(priceValue) || !isDouble(quantityValue) || !isDouble(priceValue)) {
+      if(isErrorScenario(quantityValue, priceValue)) {
         _updateValueMap(ERROR, index);
         continue;
       }
@@ -48,7 +48,7 @@ class SellerItemBloc {
     if (_validationMap.containsKey(ERROR)) {
       logger.d('Validation error');
       if (_listener != null) {
-        _listener.onValidationError('Both the fields should not be empty');
+        _listener.onValidationError('It is mandatory to provide both quantity and price');
       }
       return;
     }
@@ -60,8 +60,12 @@ class SellerItemBloc {
       }
       return;
     }
-    _listener.onValidationError('Please fill all the values');
+    _listener.onValidationEmpty('Please fill all the values');
   }
+
+  bool isEmptyScenario(String quantityValue, String priceValue) => isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue);
+
+  bool isErrorScenario(String quantityValue, String priceValue) => isNullOrEmpty(quantityValue) || isNullOrEmpty(priceValue) || isZero(quantityValue) || isZero(priceValue) || !isDouble(quantityValue) || !isDouble(priceValue);
 
   void _updateValueMap(int key, int index) {
     if(_validationMap.containsKey(key)) {

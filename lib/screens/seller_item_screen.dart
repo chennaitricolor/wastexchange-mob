@@ -62,13 +62,24 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   @override
   void onValidationError(String message) {
+    showErrorMessage(message);
+  }
+
+  @override
+  void onValidationEmpty(String message) {
+    showErrorMessage(message);
+  }
+
+  void showErrorMessage(String message) {
     Flushbar(
       forwardAnimationCurve: Curves.ease,
       duration: Duration(seconds: 2),
-      title: 'Something went wrong',
+      title: message,
       message: message,
     )..show(context);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -119,4 +130,6 @@ mixin SellerItemListener {
   void goToBidConfirmationPage(List<BidItem> bidItems);
 
   void onValidationError(String message);
+
+  void onValidationEmpty(String message);
 }
