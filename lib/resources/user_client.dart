@@ -48,9 +48,14 @@ class UserClient {
     return otpResponse;
   }
 
-  Future<List<User>> getAllUsers() async {
-    final response = await _helper.get(false, PATH_USERS);
-    return userFromJson(json.decode(response));
+  Future<Result<List<User>>> getAllUsers() async {
+    try {
+      final response = await _helper.get(false, PATH_USERS);
+      final List<User> users = userFromJson(json.decode(response));
+      return Result.completed(users);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 
   Future<Result<SellerItemDetails>> getSellerDetails(int sellerId) async {

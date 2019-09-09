@@ -1,5 +1,7 @@
 bool isNull(Object object) => object == null;
 
+bool isNotNull(Object object) => object != null;
+
 bool isListNullOrEmpty(List value) => value == null || value.isEmpty;
 
 bool isMapNullOrEmpty(Map value) => value == null || value.isEmpty;
