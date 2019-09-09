@@ -31,7 +31,7 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
-                text: 'Available Qty: ${item.qty.toString()} Kgs',
+                text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
