@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -27,7 +24,8 @@ class _MapState extends State<MapScreen> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MapBloc _bloc;
   _MapStatus _mapStatus = _MapStatus.LOADING;
-  SellerItemBottomSheet _bottomSheet = SellerItemBottomSheet(seller: null);
+  final SellerItemBottomSheet _bottomSheet =
+      SellerItemBottomSheet(seller: null);
 
   static final _initialCameraPosition = CameraPosition(
     target: const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),

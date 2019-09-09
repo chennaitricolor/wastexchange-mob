@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:wastexchange_mobile/models/item.dart';
-
 List<Bid> bidsFromJson(String str) =>
     List<Bid>.from(json.decode(str).map((x) => Bid.fromJson(x)));
 
@@ -31,10 +29,10 @@ class Bid {
       sellerId: json['sellerId'].toString(),
       amount: json['totalBid'].toDouble().toStringAsFixed(2),
       pickupDate: DateTime.parse(json['pDateTime']),
-      status: BidStatus.values.firstWhere((s) => s.toString().contains(json['status'])),
+      status: BidStatus.values
+          .firstWhere((s) => s.toString().contains(json['status'])),
       contactName: json['contactName'],
-      bidItems: json['details']
-  );
+      bidItems: json['details']);
 
   String orderId;
   final DateTime createdDate;
