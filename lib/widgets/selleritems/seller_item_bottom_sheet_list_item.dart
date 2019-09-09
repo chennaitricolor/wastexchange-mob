@@ -20,7 +20,7 @@ class SellerItemBottomSheetListItem extends StatelessWidget {
             subtitle: RichText(
               text: TextSpan(style: AppTheme.subtitle, children: [
                 TextSpan(text: '${item.qty.toString()}'),
-                const TextSpan(text: ' kg(s)'),
+                const TextSpan(text: ' kg '),
               ]),
             ),
             trailing: RichText(
