@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
@@ -6,7 +5,7 @@ import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class SellerItemBloc {
-  SellerItemBloc(SellerItemListener listener, List<Item> items){
+  SellerItemBloc(SellerItemListener listener, List<Item> items) {
     _listener = listener;
     _items = items ?? [];
     _validationMap = {};
@@ -26,29 +25,35 @@ class SellerItemBloc {
   void onSubmitBids(List<String> quantityValues, List<String> priceValues) {
     _validationMap.clear();
     final List<BidItem> _bidItems = [];
-    for(int index = 0; index < _items.length; index ++) {
-      final quantityValue = isListNullOrEmpty(quantityValues) ? null : quantityValues[index];
-      final priceValue = isListNullOrEmpty(priceValues) ? null : priceValues[index];
+    for (int index = 0; index < _items.length; index++) {
+      final quantityValue =
+          isListNullOrEmpty(quantityValues) ? null : quantityValues[index];
+      final priceValue =
+          isListNullOrEmpty(priceValues) ? null : priceValues[index];
       final item = _items[index];
 
-      if(isEmptyScenario(quantityValue, priceValue)) {
+      if (isEmptyScenario(quantityValue, priceValue)) {
         _updateValueMap(EMPTY, index);
         continue;
       }
 
-      if(isErrorScenario(quantityValue, priceValue)) {
+      if (isErrorScenario(quantityValue, priceValue)) {
         _updateValueMap(ERROR, index);
         continue;
       }
 
       _updateValueMap(SUCCESS, index);
-      _bidItems.add(BidItem(item: item, bidCost: double.parse(priceValue), bidQuantity: double.parse(quantityValue)));
+      _bidItems.add(BidItem(
+          item: item,
+          bidCost: double.parse(priceValue),
+          bidQuantity: double.parse(quantityValue)));
     }
 
     if (_validationMap.containsKey(ERROR)) {
       logger.d('Validation error');
       if (_listener != null) {
-        _listener.onValidationError('It is mandatory to provide both quantity and price');
+        _listener.onValidationError(
+            'It is mandatory to provide both quantity and price');
       }
       return;
     }
@@ -63,12 +68,19 @@ class SellerItemBloc {
     _listener.onValidationEmpty('Please fill all the values');
   }
 
-  bool isEmptyScenario(String quantityValue, String priceValue) => isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue);
+  bool isEmptyScenario(String quantityValue, String priceValue) =>
+      isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue);
 
-  bool isErrorScenario(String quantityValue, String priceValue) => isNullOrEmpty(quantityValue) || isNullOrEmpty(priceValue) || isZero(quantityValue) || isZero(priceValue) || !isDouble(quantityValue) || !isDouble(priceValue);
+  bool isErrorScenario(String quantityValue, String priceValue) =>
+      isNullOrEmpty(quantityValue) ||
+      isNullOrEmpty(priceValue) ||
+      isZero(quantityValue) ||
+      isZero(priceValue) ||
+      !isDouble(quantityValue) ||
+      !isDouble(priceValue);
 
   void _updateValueMap(int key, int index) {
-    if(_validationMap.containsKey(key)) {
+    if (_validationMap.containsKey(key)) {
       final valuesList = _validationMap[key];
       valuesList.add(index);
       _validationMap[key] = valuesList;
