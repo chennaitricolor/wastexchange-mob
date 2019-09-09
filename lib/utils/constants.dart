@@ -4,7 +4,6 @@ class Constants {
   static const INDIAN_EMBLEM = 'assets/images/indian-emblem.png';
   static const GENERIC_ERROR_MESSAGE =
       'Something went wrong. Please try again.';
-  static const RUPEE_UNICODE = '\u{20B9}';
 
   //Currency
   static const INR_UNICODE = '\u20B9';

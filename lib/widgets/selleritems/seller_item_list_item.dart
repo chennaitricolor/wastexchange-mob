@@ -36,7 +36,7 @@ class SellerItemListItem extends StatelessWidget {
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
                 text:
-                    'Estimated Price: ${Constants.RUPEE_UNICODE} ${item.price.toString()}/Kg',
+                    'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
                 hintText: 'Bid Price',
                 textEditingController: priceTextEditingController),
           ],
