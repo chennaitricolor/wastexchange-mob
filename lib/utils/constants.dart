@@ -2,8 +2,9 @@ class Constants {
   static const APP_TITLE = 'India Waste Exchange';
   static const LOGO_SMART_CITY = 'assets/images/smart-cities-mission-logo.png';
   static const INDIAN_EMBLEM = 'assets/images/indian-emblem.png';
-  static const String GENERIC_ERROR_MESSAGE =
+  static const GENERIC_ERROR_MESSAGE =
       'Something went wrong. Please try again.';
+  static const RUPEE_UNICODE = '\u{20B9}';
 
   //Currency
   static const INR_UNICODE = '\u20B9';
