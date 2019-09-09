@@ -39,8 +39,12 @@ class _SellerItemScreenState extends State<SellerItemScreen>
     _items = widget.sellerInfo?.sellerItems ?? [];
     sellerName = widget.sellerInfo?.seller?.name ?? '';
     sellerItemBloc = SellerItemBloc(this, _items);
-    _quantityTextEditingControllers = _items != null ? _items.map((_) => TextEditingController()).toList() : [];
-    _priceTextEditingControllers = _items != null ? _items.map((_) => TextEditingController()).toList() : [];
+    _quantityTextEditingControllers = _items != null
+        ? _items.map((_) => TextEditingController()).toList()
+        : [];
+    _priceTextEditingControllers = _items != null
+        ? _items.map((_) => TextEditingController()).toList()
+        : [];
     super.initState();
   }
 
@@ -79,17 +83,16 @@ class _SellerItemScreenState extends State<SellerItemScreen>
     )..show(context);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: ButtonView(
-          onButtonPressed: () {
-            sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-          },
-          text: Constants.BUTTON_SUBMIT,
-        ),
+            onButtonPressed: () {
+              sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+            },
+            text: Constants.BUTTON_SUBMIT,
+            insetT: 10.0,
+            insetB: 10.0),
         appBar: HomeAppBar(
             text: sellerName,
             onBackPressed: () {
@@ -105,14 +108,14 @@ class _SellerItemScreenState extends State<SellerItemScreen>
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                   final Item item = _items[index];
-                  final TextEditingController quantityEditingController = _quantityTextEditingControllers[index];
-                  final TextEditingController priceEditingController = _priceTextEditingControllers[index];
+                  final TextEditingController quantityEditingController =
+                      _quantityTextEditingControllers[index];
+                  final TextEditingController priceEditingController =
+                      _priceTextEditingControllers[index];
                   return SellerItemListItem(
                       item: item,
-                      quantityTextEditingController:
-                          quantityEditingController,
-                      priceTextEditingController:
-                          priceEditingController);
+                      quantityTextEditingController: quantityEditingController,
+                      priceTextEditingController: priceEditingController);
                 }, childCount: _items.length))
               ],
             ),
@@ -120,10 +123,17 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         ));
   }
 
-  List<String> _quantityValues() => _quantityTextEditingControllers.map((textEditingController) => textEditingController.text).toList() ?? [];
+  List<String> _quantityValues() =>
+      _quantityTextEditingControllers
+          .map((textEditingController) => textEditingController.text)
+          .toList() ??
+      [];
 
-  List<String> _priceValues() => _priceTextEditingControllers.map((textEditingController) => textEditingController.text).toList() ?? [];
-
+  List<String> _priceValues() =>
+      _priceTextEditingControllers
+          .map((textEditingController) => textEditingController.text)
+          .toList() ??
+      [];
 }
 
 mixin SellerItemListener {

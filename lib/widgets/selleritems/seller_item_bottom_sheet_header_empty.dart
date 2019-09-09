@@ -17,10 +17,12 @@ class SellerItemBottomSheetHeaderEmpty extends StatelessWidget {
   Widget build(BuildContext context) {
     final loggedOutWidgets = [
       ButtonView(
-        onButtonPressed: _onPressed,
-        text: Constants.LOGIN_TO_BUY,
-        inset: 10,
-      ),
+          onButtonPressed: _onPressed,
+          text: Constants.LOGIN_TO_BUY,
+          insetL: 10.0,
+          insetT: 10.0,
+          insetR: 10.0,
+          insetB: 10.0),
       const AppIntroMessage(Constants.ANNOUNCEMENT_MESSAGE),
       const AppIntroMessage(Constants.USER_ENCOURAGE_LOGIN_MESSAGE),
     ];
