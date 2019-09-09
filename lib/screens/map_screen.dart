@@ -27,6 +27,10 @@ class _MapState extends State<MapScreen> {
   final SellerItemBottomSheet _bottomSheet =
       SellerItemBottomSheet(seller: null);
 
+  static const double _bottomSheetMinHeight = 120.0;
+  static const double _mapPinHue = 200.0;
+  double _screenHeight() => MediaQuery.of(context).size.height;
+
   static final _initialCameraPosition = CameraPosition(
     target: const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
   );
@@ -79,7 +83,6 @@ class _MapState extends State<MapScreen> {
 
   void _setMarkers(List<User> users) {
     final markers = users.map((user) {
-      const hue = 200.0;
       void callback() => _onMarkerTapped(user.id);
       return Marker(
         markerId: MarkerId(
@@ -90,7 +93,7 @@ class _MapState extends State<MapScreen> {
           user.long,
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(
-          hue,
+          _mapPinHue,
         ),
         infoWindow: InfoWindow(
           title: '${user.name}',
@@ -114,8 +117,8 @@ class _MapState extends State<MapScreen> {
       ),
       appBar: MenuAppBar(),
       body: SlidingUpPanel(
-        minHeight: 120,
-        maxHeight: MediaQuery.of(context).size.height * 0.6,
+        minHeight: _bottomSheetMinHeight,
+        maxHeight: _screenHeight() * 0.6,
         backdropEnabled: true,
         backdropOpacity: 0.4,
         backdropColor: Colors.black,
@@ -127,10 +130,12 @@ class _MapState extends State<MapScreen> {
 
   Widget _widgetForMapStatus() {
     if (_mapStatus == _MapStatus.LOADING) {
-      return Center(
-        child: const LoadingProgressIndicator(),
-      );
-    } else if (_mapStatus == _MapStatus.ERROR) {
+      return FractionallySizedBox(
+          heightFactor:
+              (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
+          alignment: Alignment.topCenter,
+          child: const LoadingProgressIndicator());
+    } else if (_mapStatus == _MapStatus.LOADING) {
       return const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
