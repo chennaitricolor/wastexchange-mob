@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
-import 'package:wastexchange_mobile/models/bid.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
-import 'package:wastexchange_mobile/widgets/bid_card.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/bid_card.dart';
 
 class MyBidsScreen extends StatefulWidget {
   @override
@@ -15,51 +16,29 @@ class MyBidsScreen extends StatefulWidget {
 
 class _MyBidsScreenState extends State<MyBidsScreen> {
   MyBidsBloc _bloc;
-  //todo
-  final _bids = [
-    Bid(
-        orderId: '123fgh47',
-        createdDate: DateTime(2019, 08, 10, 9, 21),
-        sellerId: 'PK Steels',
-        amount: 109.50,
-        pickupDate: DateTime(2019, 09, 02, 5, 30),
-        status: BidStatus.pending,
-        contactName: 'Azhagu',
-        bidItems: []),
-    Bid(
-        orderId: '2647jfj4',
-        createdDate: DateTime(2019, 08, 11, 11, 10),
-        sellerId: 'JK Plastics',
-        amount: 109.50,
-        pickupDate: DateTime(2019, 09, 02, 3, 45),
-        status: BidStatus.cancelled,
-        contactName: 'Azhagu',
-        bidItems: []),
-    Bid(
-        orderId: '2647jfj4',
-        createdDate: DateTime(2019, 08, 11, 17, 19),
-        sellerId: 'JK Plastics',
-        amount: 109.50,
-        pickupDate: DateTime(2019, 09, 01, 21, 20),
-        status: BidStatus.successful,
-        contactName: 'Azhagu',
-        bidItems: []),
-  ];
+  var _bids = [];
 
   @override
   void initState() {
     _bloc = MyBidsBloc();
     _bloc.myBidsStream.listen((_snapshot) {
+      _bids = _snapshot.data;
       switch (_snapshot.status) {
         case Status.LOADING:
+          showLoadingDialog(context);
           break;
         case Status.ERROR:
+          dismissDialog(context);
           break;
         case Status.COMPLETED:
+          dismissDialog(context);
+          setState(() {
+            _bids = _snapshot.data;
+          });
           break;
       }
     });
-
+    _bloc.trackBid();
     super.initState();
   }
 
@@ -68,17 +47,19 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     return Scaffold(
         backgroundColor: AppColors.chrome_grey,
         appBar: AppBar(
-          title: const Text('Track Bids'),
+          title: const Text(Constants.TRACK_BIDS),
           backgroundColor: AppColors.green,
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 4),
-          child: ListView.builder(
-            itemCount: _bids.length,
-            itemBuilder: (context, index) {
-              return BidCard(_bids[index]);
-            },
-          ),
+          child: _bids.isEmpty
+              ? Center(child: Text(Constants.NO_BIDS))
+              : ListView.builder(
+                  itemCount: _bids.length,
+                  itemBuilder: (context, index) {
+                    return BidCard(_bids[index]);
+                  },
+                ),
         ));
   }
 

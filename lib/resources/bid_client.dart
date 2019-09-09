@@ -13,11 +13,6 @@ class BidClient {
 
   ApiBaseHelper _helper;
 
-  Future<List<Bid>> getMyBids() async {
-    final response = await _helper.get(true, PATH_MY_BIDS);
-    return bidsFromJson(response);
-  }
-
   Future<Result<String>> placeBid(String buyerId, BuyerBidData data) async {
     try {
       await _helper.post(true, PATH_PLACE_BID.replaceFirst(':buyerId', buyerId),
@@ -42,5 +37,15 @@ class BidClient {
       'contactName': data.contactName,
       'status': data.status,
     };
+  }
+
+  Future<Result<List<Bid>>> getMyBids(String userId) async {
+    try {
+      final result = await _helper.get(true, PATH_PLACE_BID.replaceFirst(':buyerId', userId));
+      return Result.completed(bidsFromJson(result));
+    } catch(e) {
+      return Result.error(e.toString());
+    }
+
   }
 }
