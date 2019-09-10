@@ -118,7 +118,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           }),
           fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
               AppColors.green, AppColors.text_grey),
-          headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
+          headerLayout: HomeAppBar(onBackPressed: () {
+            Navigator.pop(context, false);
+          }),
           fieldValidator: (hintAsKey, values) {
             final String value = values[hintAsKey];
             switch (hintAsKey) {
@@ -160,7 +162,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             if (isValidationSuccess) {
               if (_latitude == 0 && _longitude == 0) {
                 showErrorDialog(context,
-                    'Location should be enabled to proceed with the registration');
+                    'Location should be enabled to proceed with registration');
               } else {
                 sendOtp(valueMap);
               }
