@@ -6,8 +6,12 @@ import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class SellerItemBloc {
   SellerItemBloc(SellerItemListener listener, List<Item> items) {
+    ArgumentError.checkNotNull(listener);
+    if (items.isEmpty) {
+      throw Exception('Seller Items is empty');
+    }
     _listener = listener;
-    _items = items ?? [];
+    _items = items;
     _validationMap = {};
   }
 
@@ -18,18 +22,18 @@ class SellerItemBloc {
 
   static const EMPTY = 0;
   static const ERROR = 1;
-  static const SUCCESS = 2;
+  static const ABOVEMAXQTY = 2;
+  static const SUCCESS = 3;
 
   SellerItemListener _listener;
 
   void onSubmitBids(List<String> quantityValues, List<String> priceValues) {
-    _validationMap.clear();
+    _resetValueMap();
     final List<BidItem> _bidItems = [];
+
     for (int index = 0; index < _items.length; index++) {
-      final quantityValue =
-          isListNullOrEmpty(quantityValues) ? null : quantityValues[index];
-      final priceValue =
-          isListNullOrEmpty(priceValues) ? null : priceValues[index];
+      final quantityValue = quantityValues[index];
+      final priceValue = priceValues[index];
       final item = _items[index];
 
       if (isEmptyScenario(quantityValue, priceValue)) {
@@ -37,55 +41,88 @@ class SellerItemBloc {
         continue;
       }
 
-      if (isErrorScenario(quantityValue, priceValue)) {
+      if (isErrorScenario(quantityValue, priceValue, index)) {
         _updateValueMap(ERROR, index);
         continue;
       }
 
+      if (isAboveMaxQty(quantityValue, index)) {
+        _updateValueMap(ABOVEMAXQTY, index);
+        continue;
+      }
+
       _updateValueMap(SUCCESS, index);
+
       _bidItems.add(BidItem(
           item: item,
           bidCost: double.parse(priceValue),
           bidQuantity: double.parse(quantityValue)));
     }
 
-    if (_validationMap.containsKey(ERROR)) {
-      logger.d('Validation error');
-      if (_listener != null) {
-        _listener.onValidationError(
-            'It is mandatory to provide both quantity and price');
-      }
+    final List<int> empty = _validationMap[EMPTY];
+
+    if (empty?.length == _items.length) {
+      _listener.onValidationEmpty('Please bid for at least one item');
       return;
     }
 
-    if (_validationMap.containsKey(SUCCESS)) {
-      logger.d('Validation success');
-      if (_listener != null) {
-        _listener.goToBidConfirmationPage(_bidItems);
-      }
+    final List<int> error = _validationMap[ERROR];
+
+    if (!isListNullOrEmpty(error)) {
+      final String invalidItems =
+          error.map((index) => _items[index].displayName).join(', ');
+      _listener.onValidationError('Invalid values for $invalidItems');
       return;
     }
-    _listener.onValidationEmpty('Please fill all the values');
+
+    final List<int> aboveMaxQty = _validationMap[ABOVEMAXQTY];
+
+    if (!isListNullOrEmpty(aboveMaxQty)) {
+      final String aboveMaxQtyItems =
+          aboveMaxQty.map((index) => _items[index].displayName).join(', ');
+      _listener
+          .onValidationError('Qty above Available Qty for $aboveMaxQtyItems');
+      return;
+    }
+
+    _listener.onValidationSuccess(_bidItems);
   }
 
   bool isEmptyScenario(String quantityValue, String priceValue) =>
-      isNullOrEmpty(quantityValue) && isNullOrEmpty(priceValue);
+      quantityValue.isEmpty && priceValue.isEmpty;
 
-  bool isErrorScenario(String quantityValue, String priceValue) =>
-      isNullOrEmpty(quantityValue) ||
-      isNullOrEmpty(priceValue) ||
-      isZero(quantityValue) ||
-      isZero(priceValue) ||
-      !isDouble(quantityValue) ||
-      !isDouble(priceValue);
+  bool isErrorScenario(String quantityValue, String priceValue, int index) {
+    if (_validationMap[EMPTY].contains(index)) {
+      throw Exception('Both Quantity and Price are empty');
+    }
+
+    final bool isOneOfTwoEmpty =
+        quantityValue.isEmpty && priceValue.isNotEmpty ||
+            quantityValue.isNotEmpty && priceValue.isEmpty;
+    final bool isOneOrTwoZero = quantityValue == '0' || priceValue == '0';
+    final bool isOneOrTwoInvalid =
+        !isDouble(quantityValue) || !isDouble(priceValue);
+    return isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoInvalid;
+  }
+
+  bool isAboveMaxQty(String quantityValue, int index) {
+    if (_validationMap[EMPTY].contains(index) ||
+        _validationMap[ERROR].contains(index)) {
+      throw Exception(
+          'Empty or Error case should not happen here because of order of code execution');
+    }
+    return double.parse(quantityValue) > _items[index].qty;
+  }
+
+  void _resetValueMap() {
+    _validationMap.clear();
+    _validationMap[ERROR] = [];
+    _validationMap[EMPTY] = [];
+    _validationMap[ABOVEMAXQTY] = [];
+    _validationMap[SUCCESS] = [];
+  }
 
   void _updateValueMap(int key, int index) {
-    if (_validationMap.containsKey(key)) {
-      final valuesList = _validationMap[key];
-      valuesList.add(index);
-      _validationMap[key] = valuesList;
-    } else {
-      _validationMap[key] = [index];
-    }
+    _validationMap[key].add(index);
   }
 }

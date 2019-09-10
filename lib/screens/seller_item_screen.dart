@@ -13,7 +13,14 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class SellerItemScreen extends StatefulWidget {
-  const SellerItemScreen({this.sellerInfo});
+  SellerItemScreen({this.sellerInfo}) {
+    ArgumentError.checkNotNull(sellerInfo);
+    ArgumentError.checkNotNull(sellerInfo.seller);
+    ArgumentError.checkNotNull(sellerInfo.sellerItems);
+    if (sellerInfo.sellerItems.isEmpty) {
+      throw Exception('Seller Items is empty');
+    }
+  }
 
   final SellerItems sellerInfo;
 
@@ -36,26 +43,18 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   @override
   void initState() {
-    _items = widget.sellerInfo?.sellerItems ?? [];
-    sellerName = widget.sellerInfo?.seller?.name ?? '';
+    _items = widget.sellerInfo.sellerItems;
+    sellerName = widget.sellerInfo.seller.name;
     _sellerItemBloc = SellerItemBloc(this, _items);
-    _quantityTextEditingControllers = _items != null
-        ? _items.map((_) => TextEditingController()).toList()
-        : [];
-    _priceTextEditingControllers = _items != null
-        ? _items.map((_) => TextEditingController()).toList()
-        : [];
+    _quantityTextEditingControllers =
+        _items.map((_) => TextEditingController()).toList();
+    _priceTextEditingControllers =
+        _items.map((_) => TextEditingController()).toList();
     super.initState();
   }
 
   @override
-  void dispose() {
-    _sellerItemBloc = null;
-    super.dispose();
-  }
-
-  @override
-  void goToBidConfirmationPage(List<BidItem> bidItems) {
+  void onValidationSuccess(List<BidItem> bidItems) {
     final Map<String, dynamic> sellerInfoMap = {
       'seller': widget.sellerInfo.seller,
       'bidItems': bidItems
@@ -122,23 +121,17 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         ));
   }
 
-  List<String> _quantityValues() =>
-      _quantityTextEditingControllers
-          .map((textEditingController) => textEditingController.text)
-          .toList() ??
-      [];
+  List<String> _quantityValues() => _quantityTextEditingControllers
+      .map((textEditingController) => textEditingController.text)
+      .toList();
 
-  List<String> _priceValues() =>
-      _priceTextEditingControllers
-          .map((textEditingController) => textEditingController.text)
-          .toList() ??
-      [];
+  List<String> _priceValues() => _priceTextEditingControllers
+      .map((textEditingController) => textEditingController.text)
+      .toList();
 }
 
 mixin SellerItemListener {
-  void goToBidConfirmationPage(List<BidItem> bidItems);
-
+  void onValidationSuccess(List<BidItem> bidItems);
   void onValidationError(String message);
-
   void onValidationEmpty(String message);
 }
