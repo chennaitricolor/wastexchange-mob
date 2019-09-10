@@ -28,7 +28,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   final _formKey = GlobalKey<FormState>();
   final logger = AppLogger.get('SellerInformationScreen');
   Map<int, List<int>> validationMap = {};
-  SellerItemBloc sellerItemBloc;
+  SellerItemBloc _sellerItemBloc;
   List<TextEditingController> _quantityTextEditingControllers;
   List<TextEditingController> _priceTextEditingControllers;
   List<Item> _items;
@@ -38,7 +38,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   void initState() {
     _items = widget.sellerInfo?.sellerItems ?? [];
     sellerName = widget.sellerInfo?.seller?.name ?? '';
-    sellerItemBloc = SellerItemBloc(this, _items);
+    _sellerItemBloc = SellerItemBloc(this, _items);
     _quantityTextEditingControllers = _items != null
         ? _items.map((_) => TextEditingController()).toList()
         : [];
@@ -50,7 +50,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   @override
   void dispose() {
-    sellerItemBloc = null;
+    _sellerItemBloc = null;
     super.dispose();
   }
 
@@ -76,11 +76,10 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   void showErrorMessage(String message) {
     Flushbar(
-      forwardAnimationCurve: Curves.ease,
-      duration: Duration(seconds: 2),
-      title: message,
-      message: message,
-    )..show(context);
+        forwardAnimationCurve: Curves.ease,
+        duration: Duration(seconds: 2),
+        message: message)
+      ..show(context);
   }
 
   @override
@@ -88,7 +87,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
     return Scaffold(
         bottomNavigationBar: ButtonView(
             onButtonPressed: () {
-              sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+              _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
             },
             text: Constants.BUTTON_SUBMIT,
             insetT: 10.0,
