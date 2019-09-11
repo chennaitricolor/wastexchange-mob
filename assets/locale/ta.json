@@ -1,4 +1,9 @@
 {
     "app_title": "இந்திய கழிவு பரிமாற்றம்",
-    "login_to_buy": "இந்திய"
+    "email_field":"மின்னஞ்சல் முகவரி",
+    "password_field": "கடவுச்சொல்",
+    "login_not_member": "உறுப்பினர் அல்ல? ",
+    "signup_button": "இப்போது சேருங்கள்",
+    "login_failed": "உள்நுழைவு தோல்வியுற்றது",
+    "continue": "தொடர்க"
 }

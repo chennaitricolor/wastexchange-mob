@@ -1,4 +1,9 @@
 {
     "app_title": "India Waste Exchange",
-    "login_to_buy": "Login to Buy"
+    "email_field": "Email address",
+    "password_field": "Password",
+    "login_not_member": "Not a member ? ",
+    "signup_button": "Join now",
+    "login_failed": "Login Failed",
+    "continue": "Continue"
 }

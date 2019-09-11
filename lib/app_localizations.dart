@@ -3,15 +3,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class AppLocalizations {
-
+  
   AppLocalizations(this.locale);
   final Locale locale;
   static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
-
+  static final List<Locale> supportedLocales = [ const Locale('en', 'US'), const Locale('ta', 'IN') ];
+  static final List<LocalizationsDelegate<Object>> localizationDelagates = [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationsDelegate();
 
@@ -33,7 +39,18 @@ class AppLocalizations {
     if(_localizedStrings.containsKey(key)){
       return _localizedStrings[key];
     }
-    return '';
+    throw Exception('No Translations found for '+key);
+  }
+  static Locale getCurrentLocale(locale){
+    if(locale != null){
+      for (var supportedLocale in supportedLocales) {
+        if (supportedLocale.languageCode == locale.languageCode &&
+            supportedLocale.countryCode == locale.countryCode) {
+          return supportedLocale;
+        }
+      }
+    }
+    return supportedLocales.first;
   }
 }
 

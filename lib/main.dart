@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
@@ -38,22 +37,10 @@ class WasteExchange extends StatelessWidget {
         appBarTheme: AppBarTheme(iconTheme: AppTheme.iconTheme),
         textTheme: AppTheme.textTheme,
       ),
-      supportedLocales: [ Locale('en', 'US'), Locale('ta', 'IN') ],
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationDelagates,
       localeResolutionCallback: (locale, supportedLocales) {
-        if(locale != null){
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode &&
-                supportedLocale.countryCode == locale.countryCode) {
-              return supportedLocale;
-            }
-          }
-        }
-        return supportedLocales.first;
+        return AppLocalizations.getCurrentLocale(locale);
       },
       home: MapScreen()
     );
