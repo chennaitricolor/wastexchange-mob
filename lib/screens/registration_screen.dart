@@ -13,9 +13,12 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/views/user_type_selector.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+
+import '../app_localizations.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const routeName = '/registrationScreen';
@@ -33,12 +36,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final FieldType _name =
       FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
-  final FieldType _email = FieldType.value(
-      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
+  
   final FieldType _mobile =
       FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
-  final FieldType _password =
-      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  
   final FieldType _confirmPassword = FieldType.value(
       Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
   final FieldType _address =
@@ -108,6 +109,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final FieldType _email = FieldType.value(
+      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
+
+    final FieldType _password =
+      FieldType.value(AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD), 15, TextInputType.text, true);
+
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -134,13 +141,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return FieldValidator.validateCity(value);
               case Constants.FIELD_ADDRESS:
                 return FieldValidator.validateAddress(value);
-              case Constants.FIELD_EMAIL:
+              case LocaleConstants.EMAIL_FIELD:
                 return FieldValidator.validateEmailAddress(value);
-              case Constants.FIELD_PASSWORD:
+              case LocaleConstants.PASSWORD_FIELD:
                 return FieldValidator.validatePassword(value);
               case Constants.FIELD_CONFIRM_PASSWORD:
                 return FieldValidator.validateConfirmPassword(
-                    values[Constants.FIELD_PASSWORD], value);
+                    values[LocaleConstants.PASSWORD_FIELD], value);
               default:
                 return null;
             }
@@ -183,8 +190,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
             ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
             : 0;
-    final email = valueMap[Constants.FIELD_EMAIL];
-    final password = valueMap[Constants.FIELD_PASSWORD];
+    final email = valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
+    final password = valueMap[LocaleConstants.PASSWORD_FIELD];
     final String persona = (userType == UserType.BUYER) ? 'buyer' : 'seller';
 
     _registrationData = RegistrationData(
