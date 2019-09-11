@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
@@ -29,13 +30,19 @@ class WasteExchange extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: Constants.APP_TITLE,
-        onGenerateRoute: Router.generateRoute,
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(iconTheme: AppTheme.iconTheme),
-          textTheme: AppTheme.textTheme,
-        ),
-        home: MapScreen());
+      debugShowCheckedModeBanner: false,
+      title: Constants.APP_TITLE,
+      onGenerateRoute: Router.generateRoute,
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(iconTheme: AppTheme.iconTheme),
+        textTheme: AppTheme.textTheme,
+      ),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationDelagates,
+      localeResolutionCallback: (locale, supportedLocales) {
+        return AppLocalizations.getCurrentLocale(locale);
+      },
+      home: MapScreen()
+    );
   }
 }

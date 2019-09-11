@@ -13,8 +13,11 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+
+import '../app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen(this._sellerInfo);
@@ -28,10 +31,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
-  final FieldType _email = FieldType.value(
-      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
-  final FieldType _password =
-      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
+  
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showSnackBar(Constants.LOGIN_FAILED);
+          _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             return;
           }
           if (!_snapshot.data.success) {
-            _showSnackBar(Constants.LOGIN_FAILED);
+            _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
             return;
           }
           _routeToNextScreen();
@@ -94,6 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final FieldType _email = FieldType.value(
+      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
+    final FieldType _password = FieldType.value(
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD), 15, TextInputType.text, true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -103,11 +107,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: RichText(
                     text: TextSpan(
-                        text: Constants.LOGIN_NOT_MEMBER,
+                        text: AppLocalizations.of(context).translate(LocaleConstants.LOGIN_NOT_MEMBER),
                         style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
-                          text: Constants.SIGNUP_BUTTON,
+                          text: AppLocalizations.of(context).translate(LocaleConstants.SIGNUP_BUTTON),
                           style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
@@ -115,9 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
             fieldValidator: (hintAsKey, values) {
               final String value = values[hintAsKey];
               switch (hintAsKey) {
-                case Constants.FIELD_EMAIL:
+                case LocaleConstants.EMAIL_FIELD:
                   return FieldValidator.validateEmailAddress(value);
-                case Constants.FIELD_PASSWORD:
+                case LocaleConstants.PASSWORD_FIELD:
                   return FieldValidator.validatePassword(value);
                 default:
                   return null;
@@ -127,12 +131,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pop(context, false);
             }),
             fieldTypes: [_email, _password],
+            buttonText: AppLocalizations.of(context).translate(LocaleConstants.CONTINUE),
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[Constants.FIELD_EMAIL];
-              final password = valueMap[Constants.FIELD_PASSWORD];
+              final email = valueMap[LocaleConstants.EMAIL_FIELD];
+              final password = valueMap[LocaleConstants.PASSWORD_FIELD];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);

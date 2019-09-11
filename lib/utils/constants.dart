@@ -11,9 +11,6 @@ class Constants {
   //login screen
   static const LOGIN_BUTTON = 'LOGIN';
   static const LOGIN_FORGOT_PASSWORD = 'Forgot Password?';
-  static const LOGIN_NOT_MEMBER = 'Not a member ? ';
-  static const SIGNUP_BUTTON = 'Join now';
-  static const LOGIN_FAILED = 'Login failed';
   static const LOGIN_UNAPPROVED = 'Your registration is not approved yet.';
 
   //registration screen
@@ -21,10 +18,8 @@ class Constants {
   static const FIELD_PINCODE = 'Pincode';
   static const FIELD_CITY = 'City';
   static const FIELD_ADDRESS = 'Address';
-  static const FIELD_PASSWORD = 'Password';
   static const FIELD_CONFIRM_PASSWORD = 'Confirm Password';
   static const FIELD_MOBILE = 'Mobile number';
-  static const FIELD_EMAIL = 'Email address';
   static const FIELD_NAME = 'Name';
 
   //OTP screen
@@ -89,4 +84,5 @@ class Constants {
   static const NO_BIDS = 'No Bids';
   static const RUPEE = '₹';
   static const PICKUP_AT  = 'Pickup: ';
+  static const LANGUAGE_SETTINGS='Choose Preferred Language';
 }

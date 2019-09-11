@@ -6,16 +6,18 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+
+import '../app_localizations.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   static const routeName = '/forgotPasswordScreen';
 
-  final FieldType _email = FieldType.value(
-      Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
-
   @override
   Widget build(BuildContext context) {
+    final FieldType _email = FieldType.value(
+      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
     return Scaffold(
       body: AuthenticationView(
           messageLayout: Container(
@@ -27,7 +29,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               AppColors.green, AppColors.text_grey),
           fieldValidator: (hintAsKey, valueMap) =>
               FieldValidator.validateEmailAddress(
-                  valueMap[Constants.FIELD_EMAIL]),
+                  valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)]),
           headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldTypes: [_email],
           onValidation: (isValidationSuccess, textEditingControllers) {}),

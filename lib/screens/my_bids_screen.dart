@@ -53,7 +53,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
         body: Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 4),
           child: _bids.isEmpty
-              ? Center(child: Text(Constants.NO_BIDS))
+              ? Center(child: const Text(Constants.NO_BIDS))
               : ListView.builder(
                   itemCount: _bids.length,
                   itemBuilder: (context, index) {
