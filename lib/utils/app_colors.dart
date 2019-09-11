@@ -8,7 +8,7 @@ class AppColors {
   static const Color orange = Color.fromARGB(255, 252, 109, 38);
   static const Color grey_unselected = Color.fromARGB(255, 96, 96, 96);
   static const Color white_card = Color.fromARGB(255, 250, 250, 250);
-  static const Color chrome_grey = Color.fromARGB(255, 240, 240, 240);
+  static const Color chrome_grey = Color.fromARGB(255, 245, 245, 245);
   static const Color white = Color.fromARGB(255, 255, 255, 255);
   static const Color white_secondary = Color.fromARGB(255, 220, 220, 220);
   static const Color white_un_selected = Color.fromARGB(255, 180, 180, 180);

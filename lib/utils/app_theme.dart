@@ -130,4 +130,12 @@ class AppTheme {
     letterSpacing: 0.2,
     color: lightText, // was lightText
   );
+
+  static const TextStyle body3 = TextStyle(
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+    letterSpacing: 0.2,
+    color: lightText, // was lightText
+  );
 }
