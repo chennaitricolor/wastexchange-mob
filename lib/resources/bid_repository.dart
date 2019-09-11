@@ -14,16 +14,12 @@ class BidRepository {
   UserRepository _userRepository;
 
   Future<Result<String>> placeBid(BuyerBidData data) async {
-    final userId = await _userRepository.getProfileId();
-    return await _client.placeBid(userId, data);
+    final thisUser = await _userRepository.getProfile();
+    return await _client.placeBid(buyerId: thisUser.id, data: data);
   }
 
   Future<Result<List<Bid>>> getMyBids() async {
-    final userId = await _userRepository.getProfileId();
-    if (userId != null) {
-      return await _client.getMyBids(userId);
-    } else {
-      return Result.error('please log in');
-    }
+    final thisUser = await _userRepository.getProfile();
+    return _client.getBids(userId: thisUser.id);
   }
 }

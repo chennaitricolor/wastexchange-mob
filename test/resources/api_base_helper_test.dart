@@ -51,7 +51,7 @@ void main() {
     when(_mockHttpClient.get(_baseUrl + path)).thenAnswer(
         (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
-    expect(_apiBaseHelper.get(false, path),
+    expect(_apiBaseHelper.get(path, authenticated: false),
         throwsA(const TypeMatcher<ApiException>()));
   });
 
@@ -61,7 +61,7 @@ void main() {
           throw const SocketException('');
         }));
 
-    expect(_apiBaseHelper.get(false, path),
+    expect(_apiBaseHelper.get(path, authenticated: false),
         throwsA(const TypeMatcher<FetchDataException>()));
   });
 

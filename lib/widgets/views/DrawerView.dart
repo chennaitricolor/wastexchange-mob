@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
@@ -6,16 +8,17 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
 
 class DrawerView extends StatelessWidget {
-  const DrawerView(
-      {@required this.name, @required this.email, @required this.avatorText})
-      : assert(name != null, 'Name should not be empty'),
-        assert(email != null, 'Email should not be empty'),
-        assert(avatorText != null,
-            'At least one character should be passed for circle avator');
+  DrawerView({UserRepository userRepository}) {
+    _userRepository = userRepository ?? UserRepository();
+    load();
+  }
 
-  final String name;
-  final String email;
-  final String avatorText;
+  UserRepository _userRepository;
+  User _thisUser;
+
+  Future<void> load() async {
+    _thisUser = await _userRepository.getProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +26,14 @@ class DrawerView extends StatelessWidget {
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: AppColors.green),
-          accountName: Text(name ?? '', style: AppTheme.titleWhite),
-          accountEmail: Text(email ?? '', style: AppTheme.subtitleWhite),
+          accountName:
+              Text(_thisUser.name ?? 'Guest', style: AppTheme.titleWhite),
+          accountEmail:
+              Text(_thisUser.emailId ?? '', style: AppTheme.subtitleWhite),
           currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.yellow,
-              child: Text(avatorText ?? '', style: AppTheme.title)),
+              child: Text(_thisUser.name.substring(0, 1).toUpperCase() ?? 'G',
+                  style: AppTheme.title)),
         ),
         DrawerItemView(
           iconData: Icons.home,
@@ -40,7 +46,7 @@ class DrawerView extends StatelessWidget {
           iconData: Icons.casino,
           text: 'My Bids',
           onItemPressed: () {
-            Router.pushNamed(context, MyBidsScreen.routeName);
+            Router.popAndPushNamed(context, MyBidsScreen.routeName);
           },
         ),
         Divider(),

@@ -24,9 +24,9 @@ class Bid {
   }
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
-      orderId: json['id'].toString(),
+      orderId: json['id'],
       createdDate: DateTime.parse(json['createdAt']),
-      sellerId: json['sellerId'].toString(),
+      sellerId: json['sellerId'],
       amount: json['totalBid'].toDouble().toStringAsFixed(2),
       pickupDate: DateTime.parse(json['pDateTime']),
       status: BidStatus.values
@@ -34,9 +34,9 @@ class Bid {
       contactName: json['contactName'],
       bidItems: json['details']);
 
-  String orderId;
+  final int orderId;
   final DateTime createdDate;
-  final String sellerId;
+  final int sellerId;
   final String amount;
   final DateTime pickupDate;
   final BidStatus status;

@@ -1,7 +1,6 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
-import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
@@ -290,10 +289,12 @@ void main() {
   test(
       'GIVEN items as more than one size, WHEN both quantity and price has valid content in first item, BUT invalid some invalid on second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
-        SellerInfo(items: [Item(), Item()], seller: null));
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener,
+        SellerInfo(
+            items: [Item(displayName: 'Blaah', qty: 1), Item()], seller: null));
 
-    sellerItemBloc.onSubmitBids([null, '2'], [null, null]);
+    sellerItemBloc.onSubmitBids(['10', '2'], ['1', '0']);
 
     final errorMessage =
         verify(mockSellerItemListener.onValidationError(captureAny))

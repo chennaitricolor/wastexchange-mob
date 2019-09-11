@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
+import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
@@ -13,7 +14,9 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 Future<void> main() async {
-  await LaunchSetup([EnvRepository(), TokenRepository(), AppLogger()]).load();
+  await LaunchSetup(
+          [EnvRepository(), TokenRepository(), AppLogger(), UserRepository()])
+      .load();
   runApp(WasteExchange());
 }
 

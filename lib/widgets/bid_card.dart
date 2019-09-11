@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:intl/intl.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 import 'commons/card_view.dart';
 
 class BidCard extends StatelessWidget {
-  const BidCard(this._bid);
+  const BidCard(this._bid, this._seller);
 
   final Bid _bid;
+  final User _seller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +25,10 @@ class BidCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                    decoration: BoxDecoration(
-                    color: AppColors.chrome_grey,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8))),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _getStatus(_bid.status),
-                    )),
+                  padding: const EdgeInsets.all(8.0),
+                  child: _getStatus(_bid.status),
+                )),
               ),
             ),
             Flexible(
@@ -43,7 +40,7 @@ class BidCard extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Text(_bid.sellerId),
+                      child: Text(_seller.name),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2.0),
@@ -55,14 +52,15 @@ class BidCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
-                        Constants.PICKUP_AT+_getFormattedDate(_bid.pickupDate),
+                        Constants.PICKUP_AT +
+                            _getFormattedDate(_bid.pickupDate),
                         style: AppTheme.body3,
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -72,7 +70,7 @@ class BidCard extends StatelessWidget {
 //helpers
   String _getFormattedDate(DateTime date) {
     final f = DateFormat('dd MMM h:mm a');
-    return f.format(date).toString();
+    return f.format(date.toLocal());
   }
 
   Widget _getStatus(BidStatus bidStatus) {

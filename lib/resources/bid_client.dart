@@ -13,9 +13,11 @@ class BidClient {
 
   ApiBaseHelper _helper;
 
-  Future<Result<String>> placeBid(String buyerId, BuyerBidData data) async {
+  Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
     try {
-      await _helper.post(true, PATH_PLACE_BID.replaceFirst(':buyerId', buyerId),
+      await _helper.post(
+          true,
+          PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
           _placeBidPostData(buyerId, data));
       return Result.completed('');
     } catch (e) {
@@ -23,7 +25,7 @@ class BidClient {
     }
   }
 
-  dynamic _placeBidPostData(String buyerId, BuyerBidData data) {
+  dynamic _placeBidPostData(int userId, BuyerBidData data) {
     final Map<String, dynamic> details = Map.fromIterable(data.bidItems,
         key: (item) => item.item.name,
         value: (item) =>
@@ -31,7 +33,7 @@ class BidClient {
     return {
       'details': details,
       'sellerId': data.sellerId,
-      'buyerId': buyerId,
+      'buyerId': userId,
       'totalBid': data.totalBid,
       'pDateTime': data.pDateTime.toUtc().toString(),
       'contactName': data.contactName,
@@ -39,13 +41,13 @@ class BidClient {
     };
   }
 
-  Future<Result<List<Bid>>> getMyBids(String userId) async {
+  Future<Result<List<Bid>>> getBids({int userId}) async {
     try {
-      final result = await _helper.get(true, PATH_PLACE_BID.replaceFirst(':buyerId', userId));
+      final result = await _helper
+          .get(PATH_PLACE_BID.replaceFirst(':buyerId', userId.toString()));
       return Result.completed(bidsFromJson(result));
-    } catch(e) {
+    } catch (e) {
       return Result.error(e.toString());
     }
-
   }
 }

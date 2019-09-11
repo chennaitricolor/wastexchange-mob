@@ -21,7 +21,6 @@ class MockCachedSecureStorage extends Mock implements CachedSecureStorage {}
 void main() {
   MockUserClient mockUserClient;
   MockTokenRepository mockTokenRepository;
-  MockCachedSecureStorage mockCachedSecureStorage;
   UserRepository userRepository;
 
   const email = 'email';
@@ -41,11 +40,8 @@ void main() {
   setUp(() {
     mockUserClient = MockUserClient();
     mockTokenRepository = MockTokenRepository();
-    mockCachedSecureStorage = MockCachedSecureStorage();
     userRepository = UserRepository(
-        client: mockUserClient,
-        tokenRepository: mockTokenRepository,
-        secureStorage: mockCachedSecureStorage);
+        client: mockUserClient, tokenRepository: mockTokenRepository);
   });
 
   test('GIVEN otp data CHECK send otp is called from client', () async {
@@ -121,10 +117,5 @@ void main() {
       verifyNever(mockTokenRepository.setToken(any));
       expect(loginResponse, const TypeMatcher<Result<LoginResponse>>());
     });
-  });
-
-  test('SHOULD check get all users are called from client only once', () async {
-    userRepository.getAllUsers();
-    verify(mockUserClient.getAllUsers()).called(1);
   });
 }

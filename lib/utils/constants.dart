@@ -80,9 +80,9 @@ class Constants {
   static const BUTTON_LIST_OF_BIDS = 'View Bids';
   static const BID_SUCCESS_MSG = 'Bid successful';
   static const BUTTON_SUBMIT = 'Submit';
-  static const TRACK_BIDS = 'Current Orders';
+  static const MY_BIDS = 'Current Orders';
   static const NO_BIDS = 'No Bids';
   static const RUPEE = '₹';
-  static const PICKUP_AT  = 'Pickup: ';
-  static const LANGUAGE_SETTINGS='Choose Preferred Language';
+  static const PICKUP_AT = 'Pickup: ';
+  static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
 }

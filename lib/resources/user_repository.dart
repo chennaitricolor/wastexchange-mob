@@ -1,3 +1,4 @@
+import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -9,21 +10,22 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/user_data_store.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 
-class UserRepository {
+class UserRepository implements SetUpCompliant {
   UserRepository(
       {UserClient client,
       TokenRepository tokenRepository,
-      CachedSecureStorage secureStorage}) {
+      UserDataStore userDataStore}) {
     _client = client ?? UserClient();
     _tokenRepository = tokenRepository ?? TokenRepository();
-    _secureStorage = secureStorage ?? CachedSecureStorage();
+    _userDataStore = userDataStore ?? UserDataStore();
   }
 
   UserClient _client;
   TokenRepository _tokenRepository;
-  CachedSecureStorage _secureStorage;
+  UserDataStore _userDataStore;
 
   Future<OtpResponse> sendOTP(OtpData otpData) async {
     return await _client.sendOTP(otpData);
@@ -39,8 +41,10 @@ class UserRepository {
 
     if (loginResponse.status == Status.COMPLETED) {
       await _tokenRepository.setToken(loginResponse.data.token);
-      final Result<User> userResponse = await _getProfileFromNetwork();
-      if (userResponse.status != Status.COMPLETED) {
+      final Result<User> userResponse = await _client.myProfile();
+      if (userResponse.status == Status.COMPLETED) {
+        _userDataStore.saveProfile(userResponse.data);
+      } else {
         _tokenRepository.deleteToken();
       }
       loginResponse.status = userResponse.status;
@@ -50,26 +54,31 @@ class UserRepository {
   }
 
   Future<Result<List<User>>> getAllUsers() async {
-    return await _client.getAllUsers();
+    final Result<List<User>> allUsersResponse = await _client.getAllUsers();
+    if (allUsersResponse.status == Status.COMPLETED) {
+      _userDataStore.saveUsers(allUsersResponse.data);
+    }
+    return allUsersResponse;
   }
 
   Future<Result<SellerItemDetails>> getSellerDetails(int sellerId) async {
     return await _client.getSellerDetails(sellerId);
   }
 
-  Future<String> getProfileId() async {
-    return _secureStorage.getValue('id');
+  Future<User> getProfile() async {
+    return _userDataStore.getProfile();
   }
 
-  Future<Result<User>> _getProfileFromNetwork() async {
-    final Result<User> userResponse = await _client.myProfile();
-    if (userResponse.status == Status.COMPLETED) {
-      _saveProfile(userResponse.data);
+  Future<Result<User>> getUser({int id, bool forceNetwork = false}) async {
+    final User user = _userDataStore.getUser(id: id);
+    if (isNotNull(user)) {
+      return Result.completed(user);
     }
-    return userResponse;
+    return _client.getUser(id: id);
   }
 
-  void _saveProfile(User user) {
-    user.toJson().forEach((k, v) => _secureStorage.setValue(k, v.toString()));
+  @override
+  Future<void> load() async {
+    await UserDataStore().getProfile();
   }
 }

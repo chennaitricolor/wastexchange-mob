@@ -38,7 +38,7 @@ class ApiBaseHelper {
   HttpClientWithInterceptor _client(bool authenticated) =>
       authenticated ? httpClientWithAuth : httpClient;
 
-  Future<dynamic> get(bool authenticated, String path) async {
+  Future<dynamic> get(String path, {bool authenticated = true}) async {
     try {
       final response = await _client(authenticated).get(_baseApiUrl + path);
       return _returnResponse(response);

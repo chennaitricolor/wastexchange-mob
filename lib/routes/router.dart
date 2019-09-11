@@ -58,6 +58,11 @@ class Router {
     Navigator.pushNamed(context, routeName, arguments: arguments);
   }
 
+  static void popAndPushNamed(BuildContext context, String routeName,
+      {dynamic arguments}) {
+    Navigator.popAndPushNamed(context, routeName, arguments: arguments);
+  }
+
   static void removeAllAndPush(BuildContext context, String routeName,
       {dynamic arguments}) {
     Navigator.pushNamedAndRemoveUntil(
