@@ -1,23 +1,23 @@
 import 'package:wastexchange_mobile/models/bid_item.dart';
-import 'package:wastexchange_mobile/models/item.dart';
+import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class SellerItemBloc {
-  SellerItemBloc(SellerItemListener listener, List<Item> items) {
+  SellerItemBloc(SellerItemListener listener, SellerInfo sellerInfo) {
     ArgumentError.checkNotNull(listener);
-    if (items.isEmpty) {
+    if (sellerInfo.items.isEmpty) {
       throw Exception('Seller Items is empty');
     }
+    _sellerInfo = sellerInfo;
     _listener = listener;
-    _items = items;
     _validationMap = {};
   }
 
   final logger = AppLogger.get('SellerItemBloc');
 
-  List<Item> _items;
+  SellerInfo _sellerInfo;
   Map<int, List<int>> _validationMap;
 
   static const EMPTY = 0;
@@ -31,10 +31,10 @@ class SellerItemBloc {
     _resetValueMap();
     final List<BidItem> _bidItems = [];
 
-    for (int index = 0; index < _items.length; index++) {
+    for (int index = 0; index < _sellerInfo.items.length; index++) {
       final quantityValue = quantityValues[index];
       final priceValue = priceValues[index];
-      final item = _items[index];
+      final item = _sellerInfo.items[index];
 
       if (isEmptyScenario(quantityValue, priceValue)) {
         _updateValueMap(EMPTY, index);
@@ -61,7 +61,7 @@ class SellerItemBloc {
 
     final List<int> empty = _validationMap[EMPTY];
 
-    if (empty?.length == _items.length) {
+    if (empty?.length == _sellerInfo.items.length) {
       _listener.onValidationEmpty('Please bid for at least one item');
       return;
     }
@@ -70,7 +70,7 @@ class SellerItemBloc {
 
     if (!isListNullOrEmpty(error)) {
       final String invalidItems =
-          error.map((index) => _items[index].displayName).join(', ');
+          error.map((index) => _sellerInfo.items[index].displayName).join(', ');
       _listener.onValidationError('Invalid values for $invalidItems');
       return;
     }
@@ -78,14 +78,16 @@ class SellerItemBloc {
     final List<int> aboveMaxQty = _validationMap[ABOVEMAXQTY];
 
     if (!isListNullOrEmpty(aboveMaxQty)) {
-      final String aboveMaxQtyItems =
-          aboveMaxQty.map((index) => _items[index].displayName).join(', ');
+      final String aboveMaxQtyItems = aboveMaxQty
+          .map((index) => _sellerInfo.items[index].displayName)
+          .join(', ');
       _listener
           .onValidationError('Qty above Available Qty for $aboveMaxQtyItems');
       return;
     }
 
-    _listener.onValidationSuccess(_bidItems);
+    _listener.onValidationSuccess(
+        sellerInfo: {'seller': _sellerInfo.seller, 'bidItems': _bidItems});
   }
 
   bool isEmptyScenario(String quantityValue, String priceValue) =>
@@ -111,7 +113,7 @@ class SellerItemBloc {
       throw Exception(
           'Empty or Error case should not happen here because of order of code execution');
     }
-    return double.parse(quantityValue) > _items[index].qty;
+    return double.parse(quantityValue) > _sellerInfo.items[index].qty;
   }
 
   void _resetValueMap() {

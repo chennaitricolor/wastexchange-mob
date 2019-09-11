@@ -75,7 +75,12 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scafffoldState,
-        appBar: HomeAppBar(text: Constants.TITLE_ORDER_FORM, onBackPressed: () { Navigator.pop(context, false); },),
+        appBar: HomeAppBar(
+          text: Constants.TITLE_ORDER_FORM,
+          onBackPressed: () {
+            Navigator.pop(context, false);
+          },
+        ),
         body: SingleChildScrollView(
             child: Form(
           key: _formKey,
@@ -87,7 +92,6 @@ class _BuyerBidConfirmationScreenState
                   child: TextFormField(
                     controller: contactNameController,
                     decoration: InputDecoration(
-                      hintText: Constants.FIELD_CONTACT_NAME,
                       labelText: Constants.FIELD_CONTACT_NAME,
                     ),
                     enabled: _isEnabled,

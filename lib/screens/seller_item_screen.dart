@@ -1,9 +1,8 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
-import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
-import 'package:wastexchange_mobile/models/seller_items.dart';
+import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
@@ -16,13 +15,13 @@ class SellerItemScreen extends StatefulWidget {
   SellerItemScreen({this.sellerInfo}) {
     ArgumentError.checkNotNull(sellerInfo);
     ArgumentError.checkNotNull(sellerInfo.seller);
-    ArgumentError.checkNotNull(sellerInfo.sellerItems);
-    if (sellerInfo.sellerItems.isEmpty) {
+    ArgumentError.checkNotNull(sellerInfo.items);
+    if (sellerInfo.items.isEmpty) {
       throw Exception('Seller Items is empty');
     }
   }
 
-  final SellerItems sellerInfo;
+  final SellerInfo sellerInfo;
 
   static const routeName = '/sellerItemScreen';
 
@@ -38,29 +37,23 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   SellerItemBloc _sellerItemBloc;
   List<TextEditingController> _quantityTextEditingControllers;
   List<TextEditingController> _priceTextEditingControllers;
-  List<Item> _items;
   String sellerName;
 
   @override
   void initState() {
-    _items = widget.sellerInfo.sellerItems;
     sellerName = widget.sellerInfo.seller.name;
-    _sellerItemBloc = SellerItemBloc(this, _items);
+    _sellerItemBloc = SellerItemBloc(this, widget.sellerInfo);
     _quantityTextEditingControllers =
-        _items.map((_) => TextEditingController()).toList();
+        widget.sellerInfo.items.map((_) => TextEditingController()).toList();
     _priceTextEditingControllers =
-        _items.map((_) => TextEditingController()).toList();
+        widget.sellerInfo.items.map((_) => TextEditingController()).toList();
     super.initState();
   }
 
   @override
-  void onValidationSuccess(List<BidItem> bidItems) {
-    final Map<String, dynamic> sellerInfoMap = {
-      'seller': widget.sellerInfo.seller,
-      'bidItems': bidItems
-    };
+  void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
-        arguments: sellerInfoMap);
+        arguments: sellerInfo);
   }
 
   @override
@@ -105,7 +98,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
                 SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                  final Item item = _items[index];
+                  final Item item = widget.sellerInfo.items[index];
                   final TextEditingController quantityEditingController =
                       _quantityTextEditingControllers[index];
                   final TextEditingController priceEditingController =
@@ -114,7 +107,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
                       item: item,
                       quantityTextEditingController: quantityEditingController,
                       priceTextEditingController: priceEditingController);
-                }, childCount: _items.length))
+                }, childCount: widget.sellerInfo.items.length))
               ],
             ),
           ),
@@ -131,7 +124,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 }
 
 mixin SellerItemListener {
-  void onValidationSuccess(List<BidItem> bidItems);
+  void onValidationSuccess({Map<String, dynamic> sellerInfo});
   void onValidationError(String message);
   void onValidationEmpty(String message);
 }

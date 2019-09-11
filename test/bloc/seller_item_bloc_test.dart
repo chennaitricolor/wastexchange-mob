@@ -3,6 +3,7 @@ import 'package:test/test.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
+import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 
 class MockSellerItemListener extends Mock implements SellerItemListener {}
@@ -33,8 +34,8 @@ void main() {
   test(
       'GIVEN items as empty, WHEN quantity and price values are null, THEN show validation empty message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, []);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [], seller: null));
 
     sellerItemBloc.onSubmitBids(null, null);
 
@@ -49,8 +50,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity and price values are null, THEN show validation empty message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(null, null);
 
@@ -65,8 +66,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity is empty and price is null, THEN show validation empty message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([], null);
 
@@ -81,8 +82,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity has value 0 and price is null THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(['0'], null);
 
@@ -97,8 +98,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity has valid text and price is null THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(['something'], null);
 
@@ -113,8 +114,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity has valid text and price is null THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(['something'], []);
 
@@ -129,8 +130,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity has valid text and price has value 0 THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(['something'], ['0']);
 
@@ -145,8 +146,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity and price is empty THEN show validation empty message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([], []);
 
@@ -161,8 +162,8 @@ void main() {
   test(
       'GIVEN items as size one, WHEN quantity and price has value 0 THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(
+        mockSellerItemListener, SellerInfo(items: [Item()], seller: null));
 
     sellerItemBloc.onSubmitBids(['0'], ['0']);
 
@@ -177,8 +178,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN quantity is null and price has valid value for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, null], [null, '2']);
 
@@ -193,8 +194,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN quantity is empty and price has valid value for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, ''], [null, '2']);
 
@@ -209,8 +210,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN quantity has valid value and price is null for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, '2'], [null, null]);
 
@@ -225,8 +226,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN quantity has valid value and price is empty for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, '2'], [null, '']);
 
@@ -241,8 +242,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN both quantity and price are not null, BUT quantity data type is not double for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, 'not a double value'], [null, '']);
 
@@ -257,8 +258,8 @@ void main() {
   test(
       'GIVEN items as more than one, WHEN both quantity and price are not null, BUT price data type is not double for second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, ''], [null, 'not a double value']);
 
@@ -273,24 +274,24 @@ void main() {
   test(
       'GIVEN items as size one, WHEN both quantity and price has valid content THEN validation is success and bid items has size one',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, '2'], [null, '2']);
 
-    final List<BidItem> bidItems =
-        verify(mockSellerItemListener.onValidationSuccess(captureAny))
-            .captured
-            .single;
+    final Map<String, dynamic> sellerInfo = verify(
+            mockSellerItemListener.onValidationSuccess(sellerInfo: captureAny))
+        .captured
+        .single;
 
-    expect(bidItems.length, 1);
+    expect(sellerInfo['bidItems'].length, 1);
   });
 
   test(
       'GIVEN items as more than one size, WHEN both quantity and price has valid content in first item, BUT invalid some invalid on second item THEN show validation error message',
       () async {
-    final SellerItemBloc sellerItemBloc =
-        SellerItemBloc(mockSellerItemListener, [Item(), Item()]);
+    final SellerItemBloc sellerItemBloc = SellerItemBloc(mockSellerItemListener,
+        SellerInfo(items: [Item(), Item()], seller: null));
 
     sellerItemBloc.onSubmitBids([null, '2'], [null, null]);
 

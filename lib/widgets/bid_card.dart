@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:intl/intl.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 
 import 'commons/card_view.dart';
 
@@ -13,71 +15,54 @@ class BidCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardView(
-      child: IntrinsicHeight(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
+            Flexible(
               flex: 1,
-              child: Container(
-                color: _getStatusColor(_bid.status),
-                child: _getStatus(_bid.status),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    decoration: BoxDecoration(
+                    color: AppColors.chrome_grey,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _getStatus(_bid.status),
+                    )),
               ),
             ),
-            Expanded(
-              flex: 6,
+            Flexible(
+              flex: 4,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Seller: ' + _bid.sellerId,
-                            style: AppTheme.title,
-                          )
-                        ],
+                      child: Text(_bid.sellerId),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text(
+                        Constants.RUPEE + _bid.amount,
+                        style: AppTheme.title,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Order number: ' + _bid.orderId),
-                          Text(
-                            'Amount: ' + _bid.amount.toString(),
-                          )
-                        ],
+                      child: Text(
+                        Constants.PICKUP_AT+_getFormattedDate(_bid.pickupDate),
+                        style: AppTheme.body3,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text('Order date: ' +
-                              _getFormattedDate(_bid.createdDate)),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Pickup Date: ' +
-                              _getFormattedDate(_bid.pickupDate)),
-                        ],
-                      ),
-                    ),
+                    )
                   ],
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -86,7 +71,7 @@ class BidCard extends StatelessWidget {
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    final f = DateFormat('dd MMM yy h:mm a');
+    final f = DateFormat('dd MMM h:mm a');
     return f.format(date).toString();
   }
 
@@ -95,28 +80,21 @@ class BidCard extends StatelessWidget {
       case BidStatus.pending:
         return Icon(
           Icons.timelapse,
+          size: 36,
+          color: Colors.yellow.shade700,
         );
       case BidStatus.cancelled:
         return Icon(
           Icons.cancel,
+          size: 36,
+          color: Colors.red.shade300,
         );
       case BidStatus.successful:
         return Icon(
           Icons.check_circle,
+          size: 36,
+          color: Colors.green.shade300,
         );
-      default:
-        return null;
-    }
-  }
-
-  MaterialColor _getStatusColor(BidStatus status) {
-    switch (status) {
-      case BidStatus.pending:
-        return Colors.yellow;
-      case BidStatus.cancelled:
-        return Colors.red;
-      case BidStatus.successful:
-        return Colors.green;
       default:
         return null;
     }
