@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -46,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _routeToSellerInfo() {
-    Router.pushReplacementNamed(context, SellerItemScreen.routeName,
-        arguments: widget._sellerInfo);
+    Router.pushReplacementNamed(context, SellerBidScreen.routeNameForSellerItem,
+        arguments: SellerBidData(sellerInfo: widget._sellerInfo));
   }
 
   void _routeToMapScreen() {
@@ -136,8 +137,14 @@ class _LoginScreenState extends State<LoginScreen> {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[LocaleConstants.EMAIL_FIELD];
-              final password = valueMap[LocaleConstants.PASSWORD_FIELD];
+              print("debugging");
+              print(valueMap);
+              print(AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD));
+              print(AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD));
+              final email = valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
+              print(email);
+              final password = valueMap[AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD)];
+              print(password);
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);

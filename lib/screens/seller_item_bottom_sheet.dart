@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
@@ -97,8 +98,8 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToSellerItemScreen() {
-    Router.pushNamed(context, SellerItemScreen.routeName,
-        arguments: _getSellerInfo());
+    Router.pushNamed(context, SellerBidScreen.routeNameForSellerItem,
+        arguments: SellerBidData(sellerInfo:_getSellerInfo()));
   }
 
   Widget _widgetForUIStatus() {

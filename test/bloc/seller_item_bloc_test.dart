@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
-import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 
 class MockSellerItemListener extends Mock implements SellerItemListener {}
 
