@@ -82,10 +82,9 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToNextScreen() {
-    if (isAuthorized())
-      isAuthorized()
-          ? _routeToSellerItemScreen()
-          : _routeToLoginScreenWithSellerInfo();
+    isAuthorized()
+        ? _routeToSellerItemScreen()
+        : _routeToLoginScreenWithSellerInfo();
   }
 
   void _routeToLoginScreen() {
@@ -125,9 +124,11 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
             size: 25.0,
           ),
           SellerItemBottomSheetHeader(
-              onPressed: _routeToNextScreen,
-              name: widget.seller.name,
-              isAuthorized: isAuthorized()),
+            onPressed: _routeToNextScreen,
+            name: widget.seller.name,
+            isAuthorized: isAuthorized(),
+            hasItems: items.isNotEmpty,
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(

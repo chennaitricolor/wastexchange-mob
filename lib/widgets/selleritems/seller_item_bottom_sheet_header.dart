@@ -7,11 +7,13 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
   const SellerItemBottomSheetHeader(
       {@required this.onPressed,
       @required this.name,
-      @required this.isAuthorized});
+      @required this.isAuthorized,
+      @required this.hasItems});
 
   final VoidCallback onPressed;
   final String name;
   final bool isAuthorized;
+  final bool hasItems;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           LoginToBuyButton(
             title: buttonTitle,
             onPressed: onPressed,
+            enabled: hasItems,
           )
         ],
       ),
