@@ -97,7 +97,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
           var _sellerItemDetails = _snapshot.data;
             UserRepository().getUser(id: bid.sellerId, forceNetwork: false).then((value) {
               Router.pushReplacementNamed(context, SellerBidScreen.routeNameForBid,
-                  arguments: SellerBidData(sellerInfo: SellerInfo(seller: value.data, items: _sellerItemDetails.items), bid: bid));
+                  arguments: SellerBidData(sellerInfo: SellerInfo(seller: value.data, items: _sellerItemDetails.items)));
             });
           break;
       }

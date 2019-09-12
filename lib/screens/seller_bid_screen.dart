@@ -81,7 +81,6 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         bottomNavigationBar: ButtonView(
             onButtonPressed: () {
@@ -114,8 +113,7 @@ class _SellerBidScreenState extends State<SellerBidScreen>
                       item: item,
                       bidData: BidDataItem,
                       quantityTextEditingController: quantityEditingController,
-                      priceTextEditingController: priceEditingController,
-                  sellerBidFlow: widget.sellerBidFlow);
+                      priceTextEditingController: priceEditingController);
                 }, childCount: widget.sellerBidData.sellerInfo.items.length))
               ],
             ),
@@ -137,7 +135,7 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
     int i=-1;
     for(Item item in widget.sellerBidData.sellerInfo.items) {
-      if(!ignoreNonBiddedItem || (widget.sellerBidData.sellerItemBidMap[item] != null)) {
+      if(!ignoreNonBiddedItem || widget.sellerBidData.sellerItemBidMap[item] != null) {
         i++;
       }
 
@@ -145,7 +143,6 @@ class _SellerBidScreenState extends State<SellerBidScreen>
         return item;
       }
     }
-
     return null;
   }
 
@@ -153,8 +150,6 @@ class _SellerBidScreenState extends State<SellerBidScreen>
     if(widget.sellerBidData.bid != null && widget.sellerBidData.bid.bidItems != null && index < widget.sellerBidData.bid.bidItems.length) {
       return widget.sellerBidData.bid.bidItems.values.toList()[index];
     }
-
-
     return null;
   }
 }
