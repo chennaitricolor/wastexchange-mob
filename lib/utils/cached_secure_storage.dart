@@ -8,7 +8,7 @@ class CachedSecureStorage {
   }
 
   CachedSecureStorage._internal([FlutterSecureStorage flutterSecureStorage]) {
-    _flutterSecureStorage = flutterSecureStorage ?? FlutterSecureStorage();
+    _flutterSecureStorage = flutterSecureStorage ?? const FlutterSecureStorage();
   }
 
   static CachedSecureStorage _instance;
