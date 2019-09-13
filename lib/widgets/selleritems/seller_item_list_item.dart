@@ -22,6 +22,9 @@ class SellerItemListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print(bidData);
+
     return CardView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +41,7 @@ class SellerItemListItem extends StatelessWidget {
             sellerBidFlow == SellerBidFlow.bidFlow
                 ? SellerItemRow(
                 text: 'Bidded Qty:',
-                hintText: "${bidData.bidQuantity}  Kg",
+                hintText: "${bidData["bidQuantity"]}  Kg",
                 textEditingController: quantityTextEditingController, isEditable: false,):
             SellerItemRow(
                 text: 'Available Qty: ${item.qty.toString()} Kg',
@@ -48,7 +51,7 @@ class SellerItemListItem extends StatelessWidget {
             SellerItemRow(
                 text:
                 'Estimated Price:',
-                hintText: "${Constants.INR_UNICODE} ${bidData.bidCost}/Kg",
+                hintText: "${Constants.INR_UNICODE} ${bidData["bidCost"]}/Kg",
                 textEditingController: priceTextEditingController, isEditable: false)
                 :SellerItemRow(text:
                 'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',

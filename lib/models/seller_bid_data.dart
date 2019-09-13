@@ -19,8 +19,8 @@ class SellerBidData {
   void mapSellerAndBidItems() {
     for(Item item in sellerInfo.items) {
       if(bid != null && bid.bidItems != null) {
-        var bidData = bid.bidItems[item.displayName];
-        sellerItemBidMap[item] = bidData;
+        var bidData = bid.bidItems[item.name];
+          sellerItemBidMap[item] = bidData;
       }
     }
   }
