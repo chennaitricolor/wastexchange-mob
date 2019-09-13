@@ -83,9 +83,18 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToNextScreen() {
-    isAuthorized()
-        ? _routeToSellerItemScreen()
-        : _routeToLoginScreenWithSellerInfo();
+    // TODO(Sayeed): Fix this items usage later.
+    final items = _sellerItemDetails.items ?? [];
+
+    if (isAuthorized()) {
+      _routeToSellerItemScreen();
+    } else {
+      if (items.isNotEmpty) {
+        _routeToLoginScreenWithSellerInfo();
+      } else {
+        _routeToLoginScreen();
+      }
+    }
   }
 
   void _routeToLoginScreen() {

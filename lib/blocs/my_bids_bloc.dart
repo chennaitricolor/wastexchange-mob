@@ -32,6 +32,7 @@ class MyBidsBloc {
     final Result<List<Bid>> response = await _bidRepository.getMyBids();
     if (response.status == Status.COMPLETED) {
       _bids = response.data;
+      _bids.sort((bid1, bid2) => bid2.pickupDate.compareTo(bid1.pickupDate));
       for (Bid bid in _bids) {
         final Result<User> seller =
             await _userRepository.getUser(id: bid.sellerId);

@@ -19,6 +19,8 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonTitle =
         isAuthorized ? Constants.BID_TO_BUY : Constants.LOGIN_TO_BUY;
+    // TODO(Sayeed): Fix this
+    final buttonEnabled = isAuthorized ? hasItems : true;
     return Padding(
       padding: const EdgeInsets.all(
         16,
@@ -37,7 +39,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           LoginToBuyButton(
             title: buttonTitle,
             onPressed: onPressed,
-            enabled: hasItems,
+            enabled: buttonEnabled,
           )
         ],
       ),

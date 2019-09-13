@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -32,7 +31,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
-  
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
@@ -47,8 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _routeToSellerInfo() {
-    Router.pushReplacementNamed(context, SellerBidScreen.routeNameForSellerItem,
-        arguments: SellerBidData(sellerInfo: widget._sellerInfo));
+    Router.pushReplacementNamed(context, SellerItemScreen.routeName,
+        arguments: widget._sellerInfo);
   }
 
   void _routeToMapScreen() {
@@ -73,7 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
+          _showSnackBar(AppLocalizations.of(context)
+              .translate(LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -82,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
             return;
           }
           if (!_snapshot.data.success) {
-            _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
+            _showSnackBar(AppLocalizations.of(context)
+                .translate(LocaleConstants.LOGIN_FAILED));
             return;
           }
           _routeToNextScreen();
@@ -96,9 +97,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final FieldType _email = FieldType.value(
-      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
+        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD),
+        50,
+        TextInputType.emailAddress,
+        false);
     final FieldType _password = FieldType.value(
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD), 15, TextInputType.text, true);
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD),
+        15,
+        TextInputType.text,
+        true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -108,43 +115,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: RichText(
                     text: TextSpan(
-                        text: AppLocalizations.of(context).translate(LocaleConstants.LOGIN_NOT_MEMBER),
+                        text: AppLocalizations.of(context)
+                            .translate(LocaleConstants.LOGIN_NOT_MEMBER),
                         style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
-                          text: AppLocalizations.of(context).translate(LocaleConstants.SIGNUP_BUTTON),
+                          text: AppLocalizations.of(context)
+                              .translate(LocaleConstants.SIGNUP_BUTTON),
                           style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (hintAsKey, values) {
               final String value = values[hintAsKey];
-              switch (hintAsKey) {
-                case LocaleConstants.EMAIL_FIELD:
-                  return FieldValidator.validateEmailAddress(value);
-                case LocaleConstants.PASSWORD_FIELD:
-                  return FieldValidator.validatePassword(value);
-                default:
-                  return null;
+              if (hintAsKey ==
+                  AppLocalizations.of(context)
+                      .translate(LocaleConstants.EMAIL_FIELD)) {
+                return FieldValidator.validateEmailAddress(value);
+              } else if (hintAsKey ==
+                  AppLocalizations.of(context)
+                      .translate(LocaleConstants.PASSWORD_FIELD)) {
+                return FieldValidator.validatePassword(value);
               }
+              return null;
             },
             headerLayout: HomeAppBar(onBackPressed: () {
               Navigator.pop(context, false);
             }),
             fieldTypes: [_email, _password],
-            buttonText: AppLocalizations.of(context).translate(LocaleConstants.CONTINUE),
+            buttonText: AppLocalizations.of(context)
+                .translate(LocaleConstants.CONTINUE),
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
               }
-              print("debugging");
-              print(valueMap);
-              print(AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD));
-              print(AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD));
-              final email = valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
-              print(email);
-              final password = valueMap[AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD)];
-              print(password);
+              final email = valueMap[AppLocalizations.of(context)
+                  .translate(LocaleConstants.EMAIL_FIELD)];
+              final password = valueMap[AppLocalizations.of(context)
+                  .translate(LocaleConstants.PASSWORD_FIELD)];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);
