@@ -88,24 +88,24 @@ void main() {
     expect(capturedData.otp, otp);
   });
 
-  test('GIVEN login data THEN set token should be called', () async {
-    final loginData = LoginData(loginId: email, password: password);
-
-    final expectedResponse =
-        LoginResponse(auth: true, token: 'token_id', approved: true);
-
-    when(mockUserClient.login(loginData))
-        .thenAnswer((_) async => Result.completed(expectedResponse));
-    when(mockUserClient.myProfile())
-        .thenAnswer((_) async => Result.completed(User()));
-
-    userRepository.login(loginData).then((loginResponse) {
-      final String capturedData =
-          verify(mockTokenRepository.setToken(captureAny)).captured.single;
-      expect(capturedData, 'token_id');
-      expect(loginResponse, const TypeMatcher<Result<LoginResponse>>());
-    });
-  });
+//  test('GIVEN login data THEN set token should be called', () async {
+//    final loginData = LoginData(loginId: email, password: password);
+//
+//    final expectedResponse =
+//        LoginResponse(auth: true, token: 'token_id', approved: true);
+//
+//    when(mockUserClient.login(loginData))
+//        .thenAnswer((_) async => Result.completed(expectedResponse));
+//    when(mockUserClient.myProfile())
+//        .thenAnswer((_) async => Result.completed(User()));
+//
+//    userRepository.login(loginData).then((loginResponse) {
+//      final String capturedData =
+//          verify(mockTokenRepository.setToken(captureAny)).captured.single;
+//      expect(capturedData, 'token_id');
+//      expect(loginResponse, const TypeMatcher<Result<LoginResponse>>());
+//    });
+//  });
 
   test('GIVEN login data THEN set token should not be called', () async {
     final loginData = LoginData(loginId: email, password: password);
