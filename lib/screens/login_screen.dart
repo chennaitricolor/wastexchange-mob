@@ -31,7 +31,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
-  
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // TODO(Sayeed): Why do we need this method
@@ -72,7 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
+          _showSnackBar(AppLocalizations.of(context)
+              .translate(LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -81,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
             return;
           }
           if (!_snapshot.data.success) {
-            _showSnackBar(AppLocalizations.of(context).translate(LocaleConstants.LOGIN_FAILED));
+            _showSnackBar(AppLocalizations.of(context)
+                .translate(LocaleConstants.LOGIN_FAILED));
             return;
           }
           _routeToNextScreen();
@@ -95,9 +97,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final FieldType _email = FieldType.value(
-      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
+        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD),
+        50,
+        TextInputType.emailAddress,
+        false);
     final FieldType _password = FieldType.value(
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD), 15, TextInputType.text, true);
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD),
+        15,
+        TextInputType.text,
+        true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -107,37 +115,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: RichText(
                     text: TextSpan(
-                        text: AppLocalizations.of(context).translate(LocaleConstants.LOGIN_NOT_MEMBER),
+                        text: AppLocalizations.of(context)
+                            .translate(LocaleConstants.LOGIN_NOT_MEMBER),
                         style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
-                          text: AppLocalizations.of(context).translate(LocaleConstants.SIGNUP_BUTTON),
+                          text: AppLocalizations.of(context)
+                              .translate(LocaleConstants.SIGNUP_BUTTON),
                           style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (hintAsKey, values) {
               final String value = values[hintAsKey];
-              switch (hintAsKey) {
-                case LocaleConstants.EMAIL_FIELD:
-                  return FieldValidator.validateEmailAddress(value);
-                case LocaleConstants.PASSWORD_FIELD:
-                  return FieldValidator.validatePassword(value);
-                default:
-                  return null;
+              if (hintAsKey ==
+                  AppLocalizations.of(context)
+                      .translate(LocaleConstants.EMAIL_FIELD)) {
+                return FieldValidator.validateEmailAddress(value);
+              } else if (hintAsKey ==
+                  AppLocalizations.of(context)
+                      .translate(LocaleConstants.PASSWORD_FIELD)) {
+                return FieldValidator.validatePassword(value);
               }
+              return null;
             },
             headerLayout: HomeAppBar(onBackPressed: () {
               Navigator.pop(context, false);
             }),
             fieldTypes: [_email, _password],
-            buttonText: AppLocalizations.of(context).translate(LocaleConstants.CONTINUE),
+            buttonText: AppLocalizations.of(context)
+                .translate(LocaleConstants.CONTINUE),
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[LocaleConstants.EMAIL_FIELD];
-              final password = valueMap[LocaleConstants.PASSWORD_FIELD];
+              final email = valueMap[AppLocalizations.of(context)
+                  .translate(LocaleConstants.EMAIL_FIELD)];
+              final password = valueMap[AppLocalizations.of(context)
+                  .translate(LocaleConstants.PASSWORD_FIELD)];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);
