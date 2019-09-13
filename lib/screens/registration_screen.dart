@@ -109,11 +109,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final FieldType _email = FieldType.value(
-      AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD), 50, TextInputType.emailAddress, false);
+    final FieldType _email = FieldType.value(Constants.FIELD_EMAIL, 50, TextInputType.emailAddress, false);
 
     final FieldType _password =
-      FieldType.value(AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD), 15, TextInputType.text, true);
+      FieldType.value(Constants.FIELD_PASSWORD, 15, TextInputType.text, true);
 
     return Scaffold(
         key: _scaffoldKey,
@@ -143,13 +142,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return FieldValidator.validateCity(value);
               case Constants.FIELD_ADDRESS:
                 return FieldValidator.validateAddress(value);
-              case LocaleConstants.EMAIL_FIELD:
+              case Constants.FIELD_EMAIL:
                 return FieldValidator.validateEmailAddress(value);
-              case LocaleConstants.PASSWORD_FIELD:
+              case Constants.FIELD_PASSWORD:
                 return FieldValidator.validatePassword(value);
               case Constants.FIELD_CONFIRM_PASSWORD:
                 return FieldValidator.validateConfirmPassword(
-                    values[LocaleConstants.PASSWORD_FIELD], value);
+                    values[Constants.FIELD_PASSWORD], value);
               default:
                 return null;
             }
@@ -192,8 +191,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
             ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
             : 0;
-    final email = valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
-    final password = valueMap[LocaleConstants.PASSWORD_FIELD];
+    final email = valueMap[[Constants.FIELD_EMAIL]];
+    final password = valueMap[Constants.FIELD_PASSWORD];
     final String persona = (userType == UserType.BUYER) ? 'buyer' : 'seller';
 
     _registrationData = RegistrationData(

@@ -96,13 +96,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final FieldType _email = FieldType.value(
-        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD),
+    final FieldType _email = FieldType.value(Constants.FIELD_EMAIL,
         50,
         TextInputType.emailAddress,
         false);
-    final FieldType _password = FieldType.value(
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD),
+    final FieldType _password = FieldType.value(Constants.FIELD_PASSWORD,
         15,
         TextInputType.text,
         true);
@@ -120,21 +118,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
-                          text: AppLocalizations.of(context)
-                              .translate(LocaleConstants.SIGNUP_BUTTON),
+                          text: Constants.SIGNUP_BUTTON,
                           style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (hintAsKey, values) {
               final String value = values[hintAsKey];
-              if (hintAsKey ==
-                  AppLocalizations.of(context)
-                      .translate(LocaleConstants.EMAIL_FIELD)) {
+              if (hintAsKey == Constants.FIELD_EMAIL) {
                 return FieldValidator.validateEmailAddress(value);
-              } else if (hintAsKey ==
-                  AppLocalizations.of(context)
-                      .translate(LocaleConstants.PASSWORD_FIELD)) {
+              } else if (hintAsKey == Constants.FIELD_PASSWORD) {
                 return FieldValidator.validatePassword(value);
               }
               return null;
@@ -149,10 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[AppLocalizations.of(context)
-                  .translate(LocaleConstants.EMAIL_FIELD)];
-              final password = valueMap[AppLocalizations.of(context)
-                  .translate(LocaleConstants.PASSWORD_FIELD)];
+              final email = valueMap[Constants.FIELD_EMAIL];
+              final password = valueMap[Constants.FIELD_PASSWORD];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);
