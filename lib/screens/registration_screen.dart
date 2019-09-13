@@ -36,10 +36,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final FieldType _name =
       FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
-  
+
   final FieldType _mobile =
       FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
-  
+
   final FieldType _confirmPassword = FieldType.value(
       Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
   final FieldType _address =
@@ -109,22 +109,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String localeEmailId = 
+    final String localeEmailId =
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
-    final String localePasswordText = AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
-    final FieldType _email = FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
+    final String localePasswordText =
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
+    final FieldType _email =
+        FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
 
     final FieldType _password =
-      FieldType.value(localePasswordText, 15, TextInputType.text, true);
+        FieldType.value(localePasswordText, 15, TextInputType.text, true);
 
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
-          placeHolderAboveButton:
-              UserTypeSelector(onValueChanged: (UserType userType) {
-            this.userType = userType;
-            _logger.i(userType.toString());
-          }),
           fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
               AppColors.green, AppColors.text_grey),
           headerLayout: HomeAppBar(onBackPressed: () {
@@ -149,10 +146,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return FieldValidator.validateConfirmPassword(
                     values[localePasswordText], value);
             }
-            if(hintAsKey == localeEmailId){
+            if (hintAsKey == localeEmailId) {
               return FieldValidator.validateEmailAddress(value);
-            }
-            else if(hintAsKey == localePasswordText){
+            } else if (hintAsKey == localePasswordText) {
               return FieldValidator.validatePassword(value);
             }
             return null;
@@ -195,9 +191,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
             ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
             : 0;
-    final email = valueMap[AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
-    final password = valueMap[AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD)];
-    final String persona = (userType == UserType.BUYER) ? 'buyer' : 'seller';
+    final email = valueMap[
+        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
+    final password = valueMap[
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD)];
 
     _registrationData = RegistrationData(
         name: name,
@@ -210,7 +207,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         password: password,
         lat: _latitude,
         long: _longitude,
-        persona: persona);
+        persona: 'buyer');
 
     final OtpData otpData =
         OtpData(emailId: email, mobileNo: mobile.toString());
