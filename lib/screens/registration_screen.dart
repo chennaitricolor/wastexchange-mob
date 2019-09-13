@@ -148,8 +148,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               case Constants.FIELD_CONFIRM_PASSWORD:
                 return FieldValidator.validateConfirmPassword(
                     values[localePasswordText], value);
-              // default:
-              //   return null;
             }
             if(hintAsKey == localeEmailId){
               return FieldValidator.validateEmailAddress(value);
@@ -157,6 +155,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             else if(hintAsKey == localePasswordText){
               return FieldValidator.validatePassword(value);
             }
+            return null;
           },
           fieldTypes: [
             _name,
