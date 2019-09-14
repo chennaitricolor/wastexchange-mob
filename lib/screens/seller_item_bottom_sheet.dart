@@ -107,7 +107,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   }
 
   void _routeToSellerItemScreen() {
-    Router.pushNamed(context, SellerBidScreen.routeNameForSellerItem,
+    Router.pushNamed(context, SellerBidScreen.routeName,
         arguments: SellerBidData(sellerInfo:_getSellerInfo()));
   }
 

@@ -12,7 +12,7 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class SellerBidScreen extends StatefulWidget {
-  SellerBidScreen({this.sellerBidData, this.sellerBidFlow}) {
+  SellerBidScreen({this.sellerBidData, this.sellerBidFlow, this.onEditClickedCallback}) {
     ArgumentError.checkNotNull(sellerBidData);
     ArgumentError.checkNotNull(sellerBidFlow);
     ArgumentError.checkNotNull(sellerBidData.sellerInfo);
@@ -24,18 +24,20 @@ class SellerBidScreen extends StatefulWidget {
   }
 
   final SellerBidData sellerBidData;
-  final SellerBidFlow sellerBidFlow;
+  SellerBidFlow sellerBidFlow;
+  final void Function() onEditClickedCallback;
 
-  static const routeNameForSellerItem = '/sellerItemScreen';
+  static const routeName = '/sellerItemScreen';
+
   
-  static const routeNameForBid = '/bidItemScreen';
-
   @override
   _SellerBidScreenState createState() => _SellerBidScreenState();
 }
 
 class _SellerBidScreenState extends State<SellerBidScreen>
     with SellerItemListener {
+
+
   final _formKey = GlobalKey<FormState>();
   final logger = AppLogger.get('SellerInformationScreen');
   Map<int, List<int>> validationMap = {};
@@ -46,12 +48,9 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
   @override
   void initState() {
+    print("init called");
     sellerName = widget.sellerBidData.sellerInfo.seller.name;
     _sellerItemBloc = SellerItemBloc(this, widget.sellerBidData.sellerInfo);
-    _quantityTextEditingControllers =
-        widget.sellerBidData.sellerInfo.items.map((_) => TextEditingController()).toList();
-    _priceTextEditingControllers =
-        widget.sellerBidData.sellerInfo.items.map((_) => TextEditingController()).toList();
     super.initState();
   }
 
@@ -82,8 +81,20 @@ class _SellerBidScreenState extends State<SellerBidScreen>
   @override
   Widget build(BuildContext context) {
 
+    _quantityTextEditingControllers =
+        getSellerBidMap().keys.map((_) => TextEditingController()).toList();
+    _priceTextEditingControllers =
+        getSellerBidMap().keys.map((_) => TextEditingController()).toList();
+
     return Scaffold(
-        bottomNavigationBar: ButtonView(
+        bottomNavigationBar: widget.sellerBidFlow == SellerBidFlow.bidFlow ? ButtonView(
+            onButtonPressed: () {
+              widget.onEditClickedCallback();
+            },
+            text: Constants.BUTTON_EDIT,
+            insetT: 10.0,
+            insetB: 10.0):
+        ButtonView(
             onButtonPressed: () {
               _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
             },
@@ -105,18 +116,27 @@ class _SellerBidScreenState extends State<SellerBidScreen>
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                   final Item item = getItem(index);
-                  final dynamic BidDataItem = getBidDataItem(index);
+                  final dynamic bidDataItem = getBidDataItem(index);
                   final TextEditingController quantityEditingController =
                       _quantityTextEditingControllers[index];
                   final TextEditingController priceEditingController =
                       _priceTextEditingControllers[index];
+
+                  if(bidDataItem != null && bidDataItem["bidQuantity"] != null) {
+                    _quantityTextEditingControllers[index].text = bidDataItem['bidQuantity'].toString();
+                  }
+
+                  if(bidDataItem != null && bidDataItem["bidCost"] != null) {
+                    _priceTextEditingControllers[index].text = bidDataItem["bidCost"].toString();
+                  }
+
                   return SellerItemListItem(
                       item: item,
-                      bidData: BidDataItem,
+                      bidData: bidDataItem,
                       quantityTextEditingController: quantityEditingController,
                       priceTextEditingController: priceEditingController,
                   sellerBidFlow: widget.sellerBidFlow);
-                }, childCount: widget.sellerBidData.sellerInfo.items.length))
+                }, childCount: getChildCount()))
               ],
             ),
           ),
@@ -133,29 +153,23 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
   Item getItem(int index) {
 
-    final bool ignoreNonBiddedItem = widget.sellerBidFlow == SellerBidFlow.bidFlow;
+    return getSellerBidMap().keys.toList()[index];
+  }
 
-    int i=-1;
-    for(Item item in widget.sellerBidData.sellerInfo.items) {
-      if(!ignoreNonBiddedItem || (widget.sellerBidData.sellerItemBidMap[item] != null)) {
-        i++;
-      }
-
-      if(i == index) {
-        return item;
-      }
+  Map getSellerBidMap() {
+    if(widget.sellerBidFlow == SellerBidFlow.bidFlow) {
+      return Map.from(widget.sellerBidData.sellerItemBidMap)..removeWhere((k,v)=> v==null);
     }
 
-    return null;
+    return widget.sellerBidData.sellerItemBidMap;
   }
 
   dynamic getBidDataItem(int index) {
-    if(widget.sellerBidData.bid != null && widget.sellerBidData.bid.bidItems != null && index < widget.sellerBidData.bid.bidItems.length) {
-      return widget.sellerBidData.bid.bidItems.values.toList()[index];
-    }
+    return getSellerBidMap()[getSellerBidMap().keys.toList()[index]];
+  }
 
-
-    return null;
+  int getChildCount() {
+    return getSellerBidMap().length;
   }
 }
 

@@ -21,6 +21,8 @@ class SellerBidData {
       if(bid != null && bid.bidItems != null) {
         var bidData = bid.bidItems[item.name];
           sellerItemBidMap[item] = bidData;
+      } else {
+        sellerItemBidMap[item] = null;
       }
     }
   }

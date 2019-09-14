@@ -7,6 +7,7 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_controller_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 
 class Router {
@@ -28,13 +29,13 @@ class Router {
       case RegistrationScreen.routeName:
         return MaterialPageRoute(builder: (_) => RegistrationScreen());
 
-      case SellerBidScreen.routeNameForSellerItem:
+      case SellerBidScreen.routeName:
         return MaterialPageRoute(
             builder: (_) => SellerBidScreen(sellerBidData: settings.arguments, sellerBidFlow: SellerBidFlow.sellerItemFlow,));
 
-      case SellerBidScreen.routeNameForBid:
+      case SellerBidController.routeName:
         return MaterialPageRoute(
-            builder: (_) => SellerBidScreen(sellerBidData: settings.arguments, sellerBidFlow: SellerBidFlow.bidFlow,));
+            builder: (_) => SellerBidController(bid: settings.arguments));
 
       case BuyerBidConfirmationScreen.routeName:
         final Map<String, dynamic> argsMap = settings.arguments;

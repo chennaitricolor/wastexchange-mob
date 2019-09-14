@@ -9,6 +9,7 @@ import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_controller_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -25,14 +26,10 @@ class MyBidsScreen extends StatefulWidget {
 
 class _MyBidsScreenState extends State<MyBidsScreen> {
   MyBidsBloc _bidBloc;
-  SellerItemDetailsBloc _sellerItemDetailBloc;
-  MapBloc _mapBloc;
 
   @override
   void initState() {
     _bidBloc = MyBidsBloc();
-    _sellerItemDetailBloc = SellerItemDetailsBloc();
-    _mapBloc = MapBloc();
     _bidBloc.myBidsStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -70,7 +67,8 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                   itemBuilder: (context, index) {
                     final Bid bid = _bidBloc.bidAtIndex(index);
                     return BidCard(bid, _bidBloc.user(id: bid.sellerId), () {
-                      getSellerItemDetailAndOpenSellerBidPage(bid);
+                      Router.pushReplacementNamed(context, SellerBidController.routeName,
+                          arguments: bid);
                     });
                   },
                 ),
@@ -80,29 +78,6 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
   @override
   void dispose() {
     _bidBloc.dispose();
-    _sellerItemDetailBloc.dispose();
-    _mapBloc.dispose();
     super.dispose();
-  }
-
-  void getSellerItemDetailAndOpenSellerBidPage(Bid bid) {
-    _sellerItemDetailBloc.sellerItemDetailsStream.listen((_snapshot) {
-      switch (_snapshot.status) {
-        case Status.LOADING:
-          break;
-        case Status.ERROR:
-          break;
-        case Status.COMPLETED:
-          //_mapBloc.getUser(bid.sellerId);
-          var _sellerItemDetails = _snapshot.data;
-            UserRepository().getUser(id: bid.sellerId, forceNetwork: false).then((value) {
-              Router.pushReplacementNamed(context, SellerBidScreen.routeNameForBid,
-                  arguments: SellerBidData(sellerInfo: SellerInfo(seller: value.data, items: _sellerItemDetails.items), bid: bid));
-            });
-          break;
-      }
-    });
-
-    _sellerItemDetailBloc.getSellerDetails(bid.sellerId);
   }
 }

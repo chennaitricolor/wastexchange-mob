@@ -23,8 +23,6 @@ class SellerItemListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(bidData);
-
     return CardView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

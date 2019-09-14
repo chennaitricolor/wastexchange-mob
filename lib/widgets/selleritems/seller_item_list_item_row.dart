@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class SellerItemRow extends Row {
+
   SellerItemRow(
       {this.isEditable, this.text, this.hintText, this.textEditingController})
       : super(

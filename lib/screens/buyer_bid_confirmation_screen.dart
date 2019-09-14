@@ -2,6 +2,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/blocs/bid_bloc.dart';
+import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
@@ -15,12 +16,13 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  const BuyerBidConfirmationScreen({this.seller, this.bidItems});
+  const BuyerBidConfirmationScreen({this.seller, this.bidItems, this.bid});
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
   final User seller;
   final List<BidItem> bidItems;
+  final Bid bid;
 
   @override
   _BuyerBidConfirmationScreenState createState() =>
