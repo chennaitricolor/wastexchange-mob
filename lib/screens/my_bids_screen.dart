@@ -52,15 +52,17 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
             }),
         body: Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 4),
-          child: _bloc.bidCount() == 0
-              ? Center(child: Text(Constants.NO_BIDS))
-              : ListView.builder(
-                  itemCount: _bloc.bidCount(),
-                  itemBuilder: (context, index) {
-                    final Bid bid = _bloc.bidAtIndex(index);
-                    return BidCard(bid, _bloc.user(id: bid.sellerId));
-                  },
-                ),
+          child: Scrollbar(
+            child: _bloc.bidCount() == 0
+                ? Center(child: Text(Constants.NO_BIDS))
+                : ListView.builder(
+                    itemCount: _bloc.bidCount(),
+                    itemBuilder: (context, index) {
+                      final Bid bid = _bloc.bidAtIndex(index);
+                      return BidCard(bid, _bloc.user(id: bid.sellerId));
+                    },
+                  ),
+          ),
         ));
   }
 
