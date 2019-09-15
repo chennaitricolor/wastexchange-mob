@@ -91,7 +91,7 @@ class _SellerBidScreenState extends State<SellerBidScreen>
             onButtonPressed: () {
               widget.onEditClickedCallback();
             },
-            text: Constants.BUTTON_EDIT,
+            text: Constants.BUTTON_EDIT_BID,
             insetT: 10.0,
             insetB: 10.0):
         ButtonView(
