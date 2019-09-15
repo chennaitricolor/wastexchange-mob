@@ -69,3 +69,9 @@ To run tests and view coverage, run the following command from project root dire
 
 ``./test/coverage_lcov.sh``
 
+
+## Contributing
+
+Follow this convention while committing
+
+``git commit -m "[Sayeed] Simplify drawer logic" --author "Sayeed <sayeedhussain19@gmail.com>"``
