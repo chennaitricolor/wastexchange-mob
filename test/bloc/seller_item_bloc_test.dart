@@ -3,8 +3,9 @@ import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 
 class MockSellerItemListener extends Mock implements SellerItemListener {}
 
+// TODO(Sayeed): Fix it
 void main() {
- /* MockSellerItemListener mockSellerItemListener;
+  /* MockSellerItemListener mockSellerItemListener;
 
   setUp(() {
     mockSellerItemListener = MockSellerItemListener();
