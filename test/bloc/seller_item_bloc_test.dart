@@ -1,5 +1,5 @@
 import 'package:mockito/mockito.dart';
-import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
 
 class MockSellerItemListener extends Mock implements SellerItemListener {}
 
