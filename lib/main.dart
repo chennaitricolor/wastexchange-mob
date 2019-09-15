@@ -26,8 +26,6 @@ class WasteExchange extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness:
-          Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.grey,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -37,7 +35,10 @@ class WasteExchange extends StatelessWidget {
       title: Constants.APP_TITLE,
       onGenerateRoute: Router.generateRoute,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(iconTheme: AppTheme.iconTheme),
+        appBarTheme: AppBarTheme(
+            iconTheme: AppTheme.iconTheme,
+          brightness: Brightness.light
+        ),
         textTheme: AppTheme.textTheme,
       ),
       supportedLocales: AppLocalizations.supportedLocales,
