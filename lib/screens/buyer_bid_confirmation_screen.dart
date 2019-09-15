@@ -16,13 +16,13 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  const BuyerBidConfirmationScreen({this.seller, this.bidItems, this.bid});
+  const BuyerBidConfirmationScreen({this.seller, this.bidItems, this.previousBidIfAny});
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
   final User seller;
   final List<BidItem> bidItems;
-  final Bid bid;
+  final Bid previousBidIfAny;
 
   @override
   _BuyerBidConfirmationScreenState createState() =>
@@ -69,6 +69,12 @@ class _BuyerBidConfirmationScreenState
           break;
       }
     });
+
+    if(widget.previousBidIfAny != null) {
+      //pickupDateController.text = widget.previousBidIfAny.createdDate.toLocal().year.toString() + '-' + widget.previousBidIfAny.createdDate.toLocal().month.toString() + '-' + widget.previousBidIfAny.createdDate.toLocal().day.toString();
+      contactNameController.text = widget.previousBidIfAny.contactName;
+      //pickupTimeController.text = widget.previousBidIfAny.pickupDate.toLocal().hour.toString() + ':' + widget.previousBidIfAny.pickupDate.toLocal().minute.toString();
+    }
 
     super.initState();
   }
@@ -240,7 +246,8 @@ class _BuyerBidConfirmationScreenState
         pDateTime: dateTime,
         contactName: contactNameController.text,
         status: 'pending');
-    _bloc.placeBid(data);
+
+    _bloc.placeBid(data,widget.previousBidIfAny?.orderId);
   }
 
   @override

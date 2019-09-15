@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
+import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
@@ -12,7 +13,7 @@ import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class SellerBidScreen extends StatefulWidget {
-  SellerBidScreen({this.sellerBidData, this.sellerBidFlow, this.onEditClickedCallback}) {
+  SellerBidScreen({this.sellerBidData, this.sellerBidFlow}) {
     ArgumentError.checkNotNull(sellerBidData);
     ArgumentError.checkNotNull(sellerBidFlow);
     ArgumentError.checkNotNull(sellerBidData.sellerInfo);
@@ -25,7 +26,6 @@ class SellerBidScreen extends StatefulWidget {
 
   final SellerBidData sellerBidData;
   SellerBidFlow sellerBidFlow;
-  final void Function() onEditClickedCallback;
 
   static const routeName = '/sellerItemScreen';
 
@@ -48,7 +48,6 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
   @override
   void initState() {
-    print("init called");
     sellerName = widget.sellerBidData.sellerInfo.seller.name;
     _sellerItemBloc = SellerItemBloc(this, widget.sellerBidData.sellerInfo);
     super.initState();
@@ -87,20 +86,7 @@ class _SellerBidScreenState extends State<SellerBidScreen>
         getSellerBidMap().keys.map((_) => TextEditingController()).toList();
 
     return Scaffold(
-        bottomNavigationBar: widget.sellerBidFlow == SellerBidFlow.bidFlow ? ButtonView(
-            onButtonPressed: () {
-              widget.onEditClickedCallback();
-            },
-            text: Constants.BUTTON_EDIT_BID,
-            insetT: 10.0,
-            insetB: 10.0):
-        ButtonView(
-            onButtonPressed: () {
-              _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-            },
-            text: Constants.BUTTON_SUBMIT,
-            insetT: 10.0,
-            insetB: 10.0),
+        bottomNavigationBar: widget.sellerBidFlow == SellerBidFlow.bidFlow ? getBidActionView(): getSubmitButton(),
         appBar: HomeAppBar(
             text: sellerName,
             onBackPressed: () {
@@ -143,6 +129,10 @@ class _SellerBidScreenState extends State<SellerBidScreen>
         ));
   }
 
+  bool isPendingBid() {
+    return widget.sellerBidData.bid?.status == BidStatus.pending;
+  }
+
   List<String> _quantityValues() => _quantityTextEditingControllers
       .map((textEditingController) => textEditingController.text)
       .toList();
@@ -170,6 +160,35 @@ class _SellerBidScreenState extends State<SellerBidScreen>
 
   int getChildCount() {
     return getSellerBidMap().length;
+  }
+
+  Widget getBidActionView() {
+    if(isPendingBid()) {
+      return ButtonView(
+          onButtonPressed: () {
+            setState(() {
+              widget.sellerBidFlow = SellerBidFlow.editBidFlow;
+            });
+          },
+          text: Constants.BUTTON_EDIT_BID,
+          insetT: 10.0,
+          insetB: 10.0);
+    } else {
+      return RaisedButton(
+        onPressed: () {},
+          textColor: Colors.grey,
+          child: Text(widget.sellerBidData.bid.status.toString()));
+    }
+  }
+
+  Widget getSubmitButton() {
+    return ButtonView(
+        onButtonPressed: () {
+          _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues(), widget.sellerBidData.bid);
+        },
+        text: Constants.BUTTON_SUBMIT,
+        insetT: 10.0,
+        insetB: 10.0);
   }
 }
 

@@ -9,28 +9,36 @@ class BidClient {
   }
 
   static const PATH_MY_BIDS = '/bids';
+  static const PATH_EDIT_BIDS = '/bids/:bidId';
   static const PATH_PLACE_BID = '/buyer/:buyerId/bids';
 
   ApiBaseHelper _helper;
 
-  Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
+  Future<Result<String>> placeBid({int buyerId, BuyerBidData data, int bidId}) async {
     try {
-      await _helper.post(
-          true,
-          PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
-          _placeBidPostData(buyerId, data));
+      if(bidId != null) {
+        await _helper.put(
+            true,
+            PATH_EDIT_BIDS.replaceFirst(':bidId', bidId.toString()),
+            _placeBidPostData(buyerId, data, bidId));
+      } else {
+        await _helper.post(
+            true,
+            PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
+            _placeBidPostData(buyerId, data, null));
+      }
       return Result.completed('');
     } catch (e) {
       return Result.error(e.toString());
     }
   }
 
-  dynamic _placeBidPostData(int userId, BuyerBidData data) {
+  dynamic _placeBidPostData(int userId, BuyerBidData data, int bidId) {
     final Map<String, dynamic> details = Map.fromIterable(data.bidItems,
         key: (item) => item.item.name,
         value: (item) =>
             {'bidCost': item.bidCost, 'bidQuantity': item.bidQuantity});
-    return {
+    Map<String,dynamic> payload =  {
       'details': details,
       'sellerId': data.sellerId,
       'buyerId': userId,
@@ -39,6 +47,12 @@ class BidClient {
       'contactName': data.contactName,
       'status': data.status,
     };
+
+    if(bidId != null) {
+      payload['id'] = bidId;
+    }
+
+    return payload;
   }
 
   Future<Result<List<Bid>>> getBids({int userId}) async {

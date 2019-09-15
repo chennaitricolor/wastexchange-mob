@@ -1,3 +1,4 @@
+import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
@@ -27,7 +28,7 @@ class SellerItemBloc {
 
   SellerItemListener _listener;
 
-  void onSubmitBids(List<String> quantityValues, List<String> priceValues) {
+  void onSubmitBids(List<String> quantityValues, List<String> priceValues, Bid previousBid) {
     _resetValueMap();
     final List<BidItem> _bidItems = [];
 
@@ -86,8 +87,9 @@ class SellerItemBloc {
       return;
     }
 
+    print(previousBid);
     _listener.onValidationSuccess(
-        sellerInfo: {'seller': _sellerInfo.seller, 'bidItems': _bidItems});
+        sellerInfo: {'seller': _sellerInfo.seller, 'bidItems': _bidItems, 'previousBid':previousBid});
   }
 
   bool isEmptyScenario(String quantityValue, String priceValue) =>

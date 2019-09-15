@@ -41,9 +41,13 @@ class Router {
         final Map<String, dynamic> argsMap = settings.arguments;
         final seller = argsMap['seller'];
         final bidItems = argsMap['bidItems'];
+        final previousBid = argsMap['previousBid'];
+        print("ddd");
+        print(seller);
+        print(previousBid);
         return MaterialPageRoute(
             builder: (_) =>
-                BuyerBidConfirmationScreen(seller: seller, bidItems: bidItems));
+                BuyerBidConfirmationScreen(seller: seller, bidItems: bidItems, previousBidIfAny : previousBid));
 
       case MyBidsScreen.routeName:
         return MaterialPageRoute(builder: (_) => MyBidsScreen());

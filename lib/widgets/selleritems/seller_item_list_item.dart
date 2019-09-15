@@ -36,29 +36,40 @@ class SellerItemListItem extends StatelessWidget {
               alignment: Alignment.centerLeft,
             ),
             const SizedBox(height: 8),
-            sellerBidFlow == SellerBidFlow.bidFlow
-                ? SellerItemRow(
-                text: 'Bidded Qty:',
-                hintText: "${bidData["bidQuantity"]}  Kg",
-                textEditingController: quantityTextEditingController, isEditable: true,):
-            SellerItemRow(
-                text: 'Available Qty: ${item.qty.toString()} Kg',
-                hintText: 'Order Qty',
-                textEditingController: quantityTextEditingController),
-            sellerBidFlow == SellerBidFlow.bidFlow ?
-            SellerItemRow(
-                text:
-                'Estimated Price:',
-                hintText: "${Constants.INR_UNICODE} ${bidData["bidCost"]}/Kg",
-                textEditingController: priceTextEditingController, isEditable: true)
-                :SellerItemRow(text:
-                'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
-                hintText: 'Bid Price',
-                textEditingController: priceTextEditingController),
-
+            sellerBidFlow == SellerBidFlow.bidFlow ? displayBidQuantity(): displayAvailableQuantityBidEditView(),
+            sellerBidFlow == SellerBidFlow.bidFlow ? displayBidPrice() :displayEstimatedPriceAndBidPriceEditView(),
           ],
         ),
       ),
     );
+  }
+
+  Widget displayBidQuantity() {
+    return SellerItemRow(
+      text: 'Bid Qty:',
+      hintText: "${bidData["bidQuantity"]}  Kg",
+      textEditingController: quantityTextEditingController, isEditable: true);
+  }
+
+  Widget displayBidPrice() {
+    return SellerItemRow(
+        text:
+        'Bid Price:',
+        hintText: "${Constants.INR_UNICODE} ${bidData["bidCost"]}/Kg",
+        textEditingController: priceTextEditingController, isEditable: true);
+  }
+
+  Widget displayEstimatedPriceAndBidPriceEditView() {
+    return SellerItemRow(text:
+    'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
+        hintText: 'Bid Price',
+        textEditingController: priceTextEditingController);
+  }
+
+  Widget displayAvailableQuantityBidEditView() {
+    return SellerItemRow(
+        text: 'Available Qty: ${item.qty.toString()} Kg',
+        hintText: 'Order Qty',
+        textEditingController: quantityTextEditingController);
   }
 }

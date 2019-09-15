@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/models/seller_bid_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/screens/seller_bid_screen.dart';
+import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class SellerBidController extends StatefulWidget {
 
@@ -17,11 +18,15 @@ class SellerBidController extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return SellerBidState();
+    return SellerBidState(bid);
   }
 }
 
 class SellerBidState extends State<SellerBidController> {
+
+  SellerBidState(this.bid);
+
+  final Bid bid;
 
   SellerItemDetailsBloc _sellerItemDetailBloc;
 
@@ -29,18 +34,13 @@ class SellerBidState extends State<SellerBidController> {
   bool _isDataFetchError = false;
   SellerBidData sellerBidData;
   SellerBidFlow sellerBidFlow = SellerBidFlow.bidFlow;
+  SellerBidScreen _sellerBidScreen;
 
   @override
   Widget build(BuildContext context) {
 
-    print("build called");
-
     if(_isDataFetched) {
-      return SellerBidScreen(sellerBidData: sellerBidData, sellerBidFlow: sellerBidFlow, onEditClickedCallback: () {
-       setState(() {
-         sellerBidFlow = SellerBidFlow.editBidFlow;
-       });
-      });
+      return getSellerBidScreen();
     } else if(_isDataFetchError) {
       return _errorView;
     } else {
@@ -50,8 +50,11 @@ class SellerBidState extends State<SellerBidController> {
 
   Widget get _loadingView {
     return Scaffold(
+        appBar: HomeAppBar(
+            text: 'Bid Details'),
       body: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+        ),
       )
     );
   }
@@ -79,11 +82,11 @@ class SellerBidState extends State<SellerBidController> {
           break;
         case Status.COMPLETED:
           final _sellerItemDetails = _snapshot.data;
-          UserRepository().getUser(id: widget.bid.sellerId, forceNetwork: false).then((value) {
+          UserRepository().getUser(id: bid.sellerId, forceNetwork: false).then((value) {
             if(value.status == Status.COMPLETED) {
               setState(() {
                 _isDataFetched = true;
-                sellerBidData = SellerBidData(sellerInfo: SellerInfo(seller: value.data, items: _sellerItemDetails.items), bid: widget.bid);
+                sellerBidData = SellerBidData(sellerInfo: SellerInfo(seller: value.data, items: _sellerItemDetails.items), bid: bid);
               });
             } else {
               setState(() {
@@ -95,8 +98,14 @@ class SellerBidState extends State<SellerBidController> {
       }
     });
 
-    _sellerItemDetailBloc.getSellerDetails(widget.bid.sellerId);
+    _sellerItemDetailBloc.getSellerDetails(bid.sellerId);
     super.initState();
+  }
+
+  SellerBidScreen getSellerBidScreen() {
+    _sellerBidScreen ??= SellerBidScreen(sellerBidData: sellerBidData, sellerBidFlow: sellerBidFlow);
+
+    return _sellerBidScreen;
   }
 
   @override

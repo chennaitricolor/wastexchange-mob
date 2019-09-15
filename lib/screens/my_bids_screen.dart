@@ -64,11 +64,10 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
               ? Center(child: Text(Constants.NO_BIDS))
               : ListView.builder(
                   itemCount: _bidBloc.bidCount(),
-                  itemBuilder: (context, index) {
+                  itemBuilder: (itemContext, index) {
                     final Bid bid = _bidBloc.bidAtIndex(index);
                     return BidCard(bid, _bidBloc.user(id: bid.sellerId), () {
-                      Router.pushReplacementNamed(context, SellerBidController.routeName,
-                          arguments: bid);
+                      goToBitDetailPage(bid);
                     });
                   },
                 ),
@@ -79,5 +78,10 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
   void dispose() {
     _bidBloc.dispose();
     super.dispose();
+  }
+
+  void goToBitDetailPage(Bid bid) {
+    Router.pushNamed(context, SellerBidController.routeName,
+        arguments: bid);
   }
 }

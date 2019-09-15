@@ -8,18 +8,18 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'commons/card_view.dart';
 
 class BidCard extends StatelessWidget {
-  const BidCard(this._bid, this._seller, this.callback);
+  const BidCard(this._bid, this._seller, this.itemClicked);
 
   final Bid _bid;
   final User _seller;
-  final void Function() callback;
+  final void Function() itemClicked;
 
   @override
   Widget build(BuildContext context) {
     return CardView(
     child: InkWell(
       onTap: () {
-        callback();
+        itemClicked();
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
