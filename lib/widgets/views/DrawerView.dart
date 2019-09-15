@@ -23,16 +23,16 @@ class DrawerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
+      children: _thisUser != null ? <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: AppColors.green),
           accountName:
-              Text(_thisUser.name ?? 'Guest', style: AppTheme.titleWhite),
+          Text(_thisUser?.name ?? 'Guest', style: AppTheme.titleWhite),
           accountEmail:
-              Text(_thisUser.emailId ?? '', style: AppTheme.subtitleWhite),
+          Text(_thisUser?.emailId ?? '', style: AppTheme.subtitleWhite),
           currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.yellow,
-              child: Text(_thisUser.name.substring(0, 1).toUpperCase() ?? 'G',
+              child: Text(_thisUser?.name??"G".substring(0, 1).toUpperCase() ?? 'G',
                   style: AppTheme.title)),
         ),
         DrawerItemView(
@@ -57,6 +57,25 @@ class DrawerView extends StatelessWidget {
             closeDrawer(context);
           },
         ),
+      ]:<Widget>[
+        UserAccountsDrawerHeader(
+          decoration: BoxDecoration(color: AppColors.green),
+          accountName: Text('Guest', style: AppTheme.titleWhite),
+          accountEmail:
+          Text(_thisUser?.emailId ?? '', style: AppTheme.subtitleWhite),
+          currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.yellow,
+              child: Text(_thisUser?.name??"G".substring(0, 1).toUpperCase() ?? 'G',
+                  style: AppTheme.title)),
+        ),
+        DrawerItemView(
+          iconData: Icons.home,
+          text: 'Home',
+          onItemPressed: () {
+            closeDrawer(context);
+          },
+        ),
+        Divider(),
       ],
     );
   }
