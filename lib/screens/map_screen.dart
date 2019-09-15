@@ -81,6 +81,7 @@ class _MapState extends State<MapScreen> {
     _bottomSheet.setUser(_bloc.getUser(userId));
   }
 
+  // TODO(Sayeed): Should we move markers logic to its own class
   void _setMarkers(List<User> users) {
     final markers = users.map((user) {
       void callback() => _onMarkerTapped(user.id);
