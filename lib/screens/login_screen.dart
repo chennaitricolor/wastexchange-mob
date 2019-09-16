@@ -13,6 +13,7 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
@@ -34,11 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // TODO(Sayeed): Why do we need this method
-  bool isSellerInfoAvailable() => widget._sellerInfo != null;
-
   void _routeToNextScreen() {
-    if (isSellerInfoAvailable()) {
+    if (isNotNull(widget._sellerInfo)) {
       _routeToSellerInfo();
     } else {
       _routeToMapScreen();
@@ -96,18 +94,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String localeEmailId = 
+    final String localeEmailId =
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
-    final String localePasswordText = AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
-    final FieldType _email = FieldType.value(localeEmailId,
-        50,
-        TextInputType.emailAddress,
-        false);
-    final FieldType _password = FieldType.value(
-        localePasswordText,
-        15,
-        TextInputType.text,
-        true);
+    final String localePasswordText =
+        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
+    final FieldType _email =
+        FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
+    final FieldType _password =
+        FieldType.value(localePasswordText, 15, TextInputType.text, true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
