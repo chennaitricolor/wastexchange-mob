@@ -31,10 +31,12 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
+                isEditable: true,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
+                isEditable: true,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
                 hintText: 'Bid Price',
