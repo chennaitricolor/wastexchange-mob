@@ -124,12 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (idAsKey, values) {
               final String value = values[idAsKey];
-              if (idAsKey == localeEmailId) {
-                return FieldValidator.validateEmailAddress(value);
-              } else if (idAsKey == localePasswordText) {
-                return FieldValidator.validatePassword(value);
+              switch(idAsKey){
+                case Constants.ID_EMAIL: return FieldValidator.validateEmailAddress(value);
+                case Constants.ID_PASSWORD: return FieldValidator.validatePassword(value);
+                default: return null;
               }
-              return null;
             },
             headerLayout: HomeAppBar(onBackPressed: () {
               Navigator.pop(context, false);
@@ -141,8 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[localeEmailId];
-              final password = valueMap[localePasswordText];
+              final email = valueMap[Constants.ID_EMAIL];
+              final password = valueMap[Constants.ID_PASSWORD];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);

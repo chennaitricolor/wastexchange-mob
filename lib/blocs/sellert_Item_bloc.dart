@@ -104,7 +104,8 @@ class SellerItemBloc {
     final bool isOneOrTwoZero = quantityValue == '0' || priceValue == '0';
     final bool isOneOrTwoInvalid =
         !isDouble(quantityValue) || !isDouble(priceValue);
-    return isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoInvalid;
+    final bool isAnyOneNegative = double.parse(quantityValue) > 0 || double.parse(priceValue) > 0;
+    return isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoInvalid || isAnyOneNegative;
   }
 
   bool isAboveMaxQty(String quantityValue, int index) {
