@@ -127,10 +127,10 @@ class _OTPScreenState extends State<OTPScreen> {
                   style: AppTheme.subtitle)),
           fieldStyle: FieldStyle.value(24, 8, 24, 36, AppColors.underline,
               AppColors.green, AppColors.text_grey),
-          fieldValidator: (hintAsKey, values) {
-            final String value = values[hintAsKey];
-            switch (hintAsKey) {
-              case Constants.FIELD_OTP:
+          fieldValidator: (idAsKey, values) {
+            final String value = values[idAsKey];
+            switch (idAsKey) {
+              case Constants.ID_OTP:
                 return FieldValidator.validateOTP(value);
               default:
                 return null;
@@ -139,7 +139,7 @@ class _OTPScreenState extends State<OTPScreen> {
           headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldTypes: [
             FieldType.value(
-                Constants.FIELD_OTP, 10, TextInputType.number, false)
+                Constants.ID_OTP, Constants.FIELD_OTP, 10, TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {

@@ -35,21 +35,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final FieldType _name =
-      FieldType.value(Constants.FIELD_NAME, 30, TextInputType.text, false);
+      FieldType.value(Constants.ID_NAME, Constants.FIELD_NAME, 30, TextInputType.text, false);
 
   final FieldType _mobile =
-      FieldType.value(Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
+      FieldType.value(Constants.ID_MOBILE, Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
 
   final FieldType _confirmPassword = FieldType.value(
-      Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
+      Constants.ID_CONFIRM_PASSWORD, Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
   final FieldType _address =
-      FieldType.value(Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
+      FieldType.value(Constants.ID_ADDRESS, Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
   final FieldType _city =
-      FieldType.value(Constants.FIELD_CITY, 20, TextInputType.text, false);
+      FieldType.value(Constants.ID_CITY, Constants.FIELD_CITY, 20, TextInputType.text, false);
   final FieldType _pincode =
-      FieldType.value(Constants.FIELD_PINCODE, 6, TextInputType.number, false);
+      FieldType.value(Constants.ID_PINCODE, Constants.FIELD_PINCODE, 6, TextInputType.number, false);
   final FieldType _alternateNumber = FieldType.value(
-      Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
+      Constants.ID_ALTERNATE_NUMBER, Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
 
   UserType userType = UserType.BUYER;
 
@@ -114,10 +114,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final String localePasswordText =
         AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
     final FieldType _email =
-        FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
+        FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
 
     final FieldType _password =
-        FieldType.value(localePasswordText, 15, TextInputType.text, true);
+        FieldType.value(Constants.ID_PASSWORD, localePasswordText, 15, TextInputType.text, true);
 
     return Scaffold(
         key: _scaffoldKey,
@@ -127,28 +127,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           headerLayout: HomeAppBar(onBackPressed: () {
             Navigator.pop(context, false);
           }),
-          fieldValidator: (hintAsKey, values) {
-            final String value = values[hintAsKey];
-            switch (hintAsKey) {
-              case Constants.FIELD_NAME:
+          fieldValidator: (idAsKey, values) {
+            final String value = values[idAsKey];
+            switch (idAsKey) {
+              case Constants.ID_NAME:
                 return FieldValidator.validateName(value);
-              case Constants.FIELD_MOBILE:
+              case Constants.ID_MOBILE:
                 return FieldValidator.validateMobileNumber(value);
-              case Constants.FIELD_ALTERNATE_NUMBER:
+              case Constants.ID_ALTERNATE_NUMBER:
                 return FieldValidator.validateMobileNumber(value);
-              case Constants.FIELD_PINCODE:
+              case Constants.ID_PINCODE:
                 return FieldValidator.validatePincode(value);
-              case Constants.FIELD_CITY:
+              case Constants.ID_CITY:
                 return FieldValidator.validateCity(value);
-              case Constants.FIELD_ADDRESS:
+              case Constants.ID_ADDRESS:
                 return FieldValidator.validateAddress(value);
-              case Constants.FIELD_CONFIRM_PASSWORD:
+              case Constants.ID_CONFIRM_PASSWORD:
                 return FieldValidator.validateConfirmPassword(
                     values[localePasswordText], value);
             }
-            if (hintAsKey == localeEmailId) {
+            if (idAsKey == localeEmailId) {
               return FieldValidator.validateEmailAddress(value);
-            } else if (hintAsKey == localePasswordText) {
+            } else if (idAsKey == localePasswordText) {
               return FieldValidator.validatePassword(value);
             }
             return null;

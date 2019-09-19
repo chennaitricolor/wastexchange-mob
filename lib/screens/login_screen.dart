@@ -99,9 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final String localePasswordText =
         AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
     final FieldType _email =
-        FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
+        FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
     final FieldType _password =
-        FieldType.value(localePasswordText, 15, TextInputType.text, true);
+        FieldType.value(Constants.ID_PASSWORD, localePasswordText, 15, TextInputType.text, true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -122,11 +122,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
-            fieldValidator: (hintAsKey, values) {
-              final String value = values[hintAsKey];
-              if (hintAsKey == localeEmailId) {
+            fieldValidator: (idAsKey, values) {
+              final String value = values[idAsKey];
+              if (idAsKey == localeEmailId) {
                 return FieldValidator.validateEmailAddress(value);
-              } else if (hintAsKey == localePasswordText) {
+              } else if (idAsKey == localePasswordText) {
                 return FieldValidator.validatePassword(value);
               }
               return null;

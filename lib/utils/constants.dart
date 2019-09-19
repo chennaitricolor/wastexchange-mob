@@ -22,6 +22,18 @@ class Constants {
   static const FIELD_MOBILE = 'Mobile number';
   static const FIELD_NAME = 'Name';
 
+  //field ids
+  static const ID_ALTERNATE_NUMBER = 'alternate_number';
+  static const ID_PINCODE = 'pincode';
+  static const ID_CITY = 'city';
+  static const ID_ADDRESS = 'address';
+  static const ID_PASSWORD = 'password';
+  static const ID_CONFIRM_PASSWORD = 'confirm_password';
+  static const ID_MOBILE = 'mobile_number';
+  static const ID_EMAIL = 'email_address';
+  static const ID_NAME = 'name';
+  static const ID_OTP = 'otp';
+
   //OTP screen
   static const FIELD_OTP = 'OTP';
   static const OTP_TITLE = 'OTP Sent';
