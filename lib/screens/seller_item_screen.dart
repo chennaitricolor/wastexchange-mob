@@ -1,10 +1,12 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
+import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
+import 'package:wastexchange_mobile/screens/seller_item_list.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
@@ -31,18 +33,20 @@ class SellerItemScreen extends StatefulWidget {
 
 class _SellerItemScreenState extends State<SellerItemScreen>
     with SellerItemListener {
-  final _formKey = GlobalKey<FormState>();
   final logger = AppLogger.get('SellerInformationScreen');
   Map<int, List<int>> validationMap = {};
   SellerItemBloc _sellerItemBloc;
   List<TextEditingController> _quantityTextEditingControllers;
   List<TextEditingController> _priceTextEditingControllers;
   String sellerName;
+  List<BidItem> bidItems;
 
   @override
   void initState() {
     sellerName = widget.sellerInfo.seller.name;
     _sellerItemBloc = SellerItemBloc(this, widget.sellerInfo);
+    final sellerItems = widget.sellerInfo.items;
+    bidItems = sellerItems.map((item) => BidItem(item: item)).toList();
     _quantityTextEditingControllers =
         widget.sellerInfo.items.map((_) => TextEditingController()).toList();
     _priceTextEditingControllers =
@@ -89,28 +93,9 @@ class _SellerItemScreenState extends State<SellerItemScreen>
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
-        body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                  final Item item = widget.sellerInfo.items[index];
-                  final TextEditingController quantityEditingController =
-                      _quantityTextEditingControllers[index];
-                  final TextEditingController priceEditingController =
-                      _priceTextEditingControllers[index];
-                  return SellerItemListItem(
-                      item: item,
-                      quantityTextEditingController: quantityEditingController,
-                      priceTextEditingController: priceEditingController);
-                }, childCount: widget.sellerInfo.items.length))
-              ],
-            ),
-          ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: SellerItemList(bidItems: bidItems, quantityEditingControllers: _quantityTextEditingControllers, priceEditingControllers: _priceTextEditingControllers),
         ));
   }
 
