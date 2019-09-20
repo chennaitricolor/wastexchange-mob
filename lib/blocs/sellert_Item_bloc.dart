@@ -106,7 +106,7 @@ class SellerItemBloc {
         !isDouble(quantityValue) || !isDouble(priceValue);
     
     bool isAnyOneNegative = false;
-    if(!isOneOrTwoNotDouble && (double.parse(quantityValue) > 0 || double.parse(priceValue) > 0)){ 
+    if(!isOneOrTwoNotDouble && (double.parse(quantityValue) > 0 && double.parse(priceValue) > 0)){ 
         isAnyOneNegative = true;
     }
     return isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoNotDouble || isAnyOneNegative;
