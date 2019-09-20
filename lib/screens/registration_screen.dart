@@ -178,18 +178,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void sendOtp(Map<String, String> valueMap) {
-    final name = valueMap[Constants.FIELD_NAME];
-    final address = valueMap[Constants.FIELD_ADDRESS];
-    final city = valueMap[Constants.FIELD_CITY];
-    final pincode = valueMap[Constants.FIELD_PINCODE] != null
-        ? int.parse(valueMap[Constants.FIELD_PINCODE])
+    final name = valueMap[Constants.ID_NAME];
+    final address = valueMap[Constants.ID_ADDRESS];
+    final city = valueMap[Constants.ID_CITY];
+    final pincode = valueMap[Constants.ID_PINCODE] != null
+        ? int.parse(valueMap[Constants.ID_PINCODE])
         : 0;
-    final int mobile = valueMap[Constants.FIELD_MOBILE] != null
-        ? int.parse(valueMap[Constants.FIELD_MOBILE])
+    final int mobile = valueMap[Constants.ID_MOBILE] != null
+        ? int.parse(valueMap[Constants.ID_MOBILE])
         : 0;
     final int alternateNumber =
-        valueMap[Constants.FIELD_ALTERNATE_NUMBER] != null
-            ? int.parse(valueMap[Constants.FIELD_ALTERNATE_NUMBER])
+        valueMap[Constants.ID_ALTERNATE_NUMBER] != null
+            ? int.parse(valueMap[Constants.ID_ALTERNATE_NUMBER])
             : 0;
     final email = valueMap[
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
