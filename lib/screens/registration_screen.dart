@@ -1,6 +1,7 @@
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
@@ -32,7 +33,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   double _latitude = 0;
   double _longitude = 0;
   final _logger = AppLogger.get('RegistrationScreen');
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final FieldType _name = FieldType.value(
       Constants.ID_NAME, Constants.FIELD_NAME, 30, TextInputType.text, false);
@@ -71,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showToast(Constants.SEND_OTP_FAIL);
+          _showMessage(Constants.SEND_OTP_FAIL);
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -82,8 +82,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.initState();
   }
 
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  void _showMessage(String message) {
+    Flushbar(
+        forwardAnimationCurve: Curves.ease,
+        duration: Duration(seconds: 2),
+        message: message)
+      ..show(context);
   }
 
   void _showOTPScreen() {
@@ -125,60 +129,59 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         localePasswordText, 15, TextInputType.text, true);
 
     return Scaffold(
-        key: _scaffoldKey,
         body: AuthenticationView(
-          fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
-              AppColors.green, AppColors.text_grey),
-          headerLayout: HomeAppBar(onBackPressed: () {
-            Navigator.pop(context, false);
-          }),
-          fieldValidator: (idAsKey, values) {
-            final String value = values[idAsKey];
-            switch (idAsKey) {
-              case Constants.ID_NAME:
-                return FieldValidator.validateName(value);
-              case Constants.ID_MOBILE:
-                return FieldValidator.validateMobileNumber(value);
-              case Constants.ID_ALTERNATE_NUMBER:
-                return FieldValidator.validateMobileNumber(value);
-              case Constants.ID_PINCODE:
-                return FieldValidator.validatePincode(value);
-              case Constants.ID_CITY:
-                return FieldValidator.validateCity(value);
-              case Constants.ID_ADDRESS:
-                return FieldValidator.validateAddress(value);
-              case Constants.ID_CONFIRM_PASSWORD:
-                return FieldValidator.validateConfirmPassword(
-                    values[localePasswordText], value);
-              case Constants.ID_EMAIL:
-                return FieldValidator.validateEmailAddress(value);
-              case Constants.ID_PASSWORD:
-                return FieldValidator.validatePassword(value);
-            }
-            return null;
-          },
-          fieldTypes: [
-            _name,
-            _address,
-            _city,
-            _pincode,
-            _mobile,
-            _alternateNumber,
-            _email,
-            _password,
-            _confirmPassword
-          ],
-          onValidation: (bool isValidationSuccess, valueMap) {
-            if (isValidationSuccess) {
-              if (_latitude == 0 && _longitude == 0) {
-                showErrorDialog(context,
-                    'Location should be enabled to proceed with registration');
-              } else {
-                sendOtp(valueMap);
-              }
-            }
-          },
-        ));
+      fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
+          AppColors.green, AppColors.text_grey),
+      headerLayout: HomeAppBar(onBackPressed: () {
+        Navigator.pop(context, false);
+      }),
+      fieldValidator: (idAsKey, values) {
+        final String value = values[idAsKey];
+        switch (idAsKey) {
+          case Constants.ID_NAME:
+            return FieldValidator.validateName(value);
+          case Constants.ID_MOBILE:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.ID_ALTERNATE_NUMBER:
+            return FieldValidator.validateMobileNumber(value);
+          case Constants.ID_PINCODE:
+            return FieldValidator.validatePincode(value);
+          case Constants.ID_CITY:
+            return FieldValidator.validateCity(value);
+          case Constants.ID_ADDRESS:
+            return FieldValidator.validateAddress(value);
+          case Constants.ID_CONFIRM_PASSWORD:
+            return FieldValidator.validateConfirmPassword(
+                values[localePasswordText], value);
+          case Constants.ID_EMAIL:
+            return FieldValidator.validateEmailAddress(value);
+          case Constants.ID_PASSWORD:
+            return FieldValidator.validatePassword(value);
+        }
+        return null;
+      },
+      fieldTypes: [
+        _name,
+        _address,
+        _city,
+        _pincode,
+        _mobile,
+        _alternateNumber,
+        _email,
+        _password,
+        _confirmPassword
+      ],
+      onValidation: (bool isValidationSuccess, valueMap) {
+        if (isValidationSuccess) {
+          if (_latitude == 0 && _longitude == 0) {
+            showErrorDialog(context,
+                'Location should be enabled to proceed with registration');
+          } else {
+            sendOtp(valueMap);
+          }
+        }
+      },
+    ));
   }
 
   void sendOtp(Map<String, String> valueMap) {
