@@ -71,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.SEND_OTP_FAIL);
+          _showMessage(Constants.REGISTRATION_FAILED);
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -152,7 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             return FieldValidator.validateAddress(value);
           case Constants.ID_CONFIRM_PASSWORD:
             return FieldValidator.validateConfirmPassword(
-                values[localePasswordText], value);
+                values[Constants.ID_PASSWORD], value);
           case Constants.ID_EMAIL:
             return FieldValidator.validateEmailAddress(value);
           case Constants.ID_PASSWORD:
@@ -172,18 +172,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         _confirmPassword
       ],
       onValidation: (bool isValidationSuccess, valueMap) {
-        if (isValidationSuccess) {
-          if (_latitude == 0 && _longitude == 0) {
-            showErrorDialog(context,
-                'Location should be enabled to proceed with registration');
-          } else {
-            sendOtp(valueMap);
-          }
+        if (!isValidationSuccess) {
+          return;
         }
+        if (_latitude == 0 && _longitude == 0) {
+          _showMessage(
+              'Location should be enabled to proceed with registration. Please go to Settings > Location and enable location access for this app.');
+          return;
+        }
+        sendOtp(valueMap);
       },
     ));
   }
 
+// TODO(Sayeed): Move this to bLoc
   void sendOtp(Map<String, String> valueMap) {
     final name = valueMap[Constants.ID_NAME];
     final address = valueMap[Constants.ID_ADDRESS];
@@ -197,10 +199,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final int alternateNumber = valueMap[Constants.ID_ALTERNATE_NUMBER] != null
         ? int.parse(valueMap[Constants.ID_ALTERNATE_NUMBER])
         : 0;
-    final email = valueMap[
-        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
-    final password = valueMap[
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD)];
+    final email = valueMap[Constants.ID_EMAIL];
+    final password = valueMap[Constants.ID_PASSWORD];
 
     _registrationData = RegistrationData(
         name: name,
