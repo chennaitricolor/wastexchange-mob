@@ -98,10 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
     final String localePasswordText =
         AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
-    final FieldType _email =
-        FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
-    final FieldType _password =
-        FieldType.value(Constants.ID_PASSWORD, localePasswordText, 15, TextInputType.text, true);
+    final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId,
+        50, TextInputType.emailAddress, false);
+    final FieldType _password = FieldType.value(Constants.ID_PASSWORD,
+        localePasswordText, 15, TextInputType.text, true);
     return Scaffold(
         key: _scaffoldKey,
         body: AuthenticationView(
@@ -124,10 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (idAsKey, values) {
               final String value = values[idAsKey];
-              if (idAsKey == localeEmailId) {
-                return FieldValidator.validateEmailAddress(value);
-              } else if (idAsKey == localePasswordText) {
-                return FieldValidator.validatePassword(value);
+              switch (idAsKey) {
+                case Constants.ID_EMAIL:
+                  return FieldValidator.validateEmailAddress(value);
+                case Constants.ID_PASSWORD:
+                  return FieldValidator.validatePassword(value);
               }
               return null;
             },
@@ -137,12 +138,13 @@ class _LoginScreenState extends State<LoginScreen> {
             fieldTypes: [_email, _password],
             buttonText: AppLocalizations.of(context)
                 .translate(LocaleConstants.CONTINUE),
+            // TODO(Sayeed): Move this to bloc
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
               }
-              final email = valueMap[localeEmailId];
-              final password = valueMap[localePasswordText];
+              final email = valueMap[Constants.ID_EMAIL];
+              final password = valueMap[Constants.ID_PASSWORD];
               final LoginData data =
                   LoginData(loginId: email, password: password);
               _bloc.login(data);

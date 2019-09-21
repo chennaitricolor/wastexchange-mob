@@ -34,22 +34,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _logger = AppLogger.get('RegistrationScreen');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final FieldType _name =
-      FieldType.value(Constants.ID_NAME, Constants.FIELD_NAME, 30, TextInputType.text, false);
-
-  final FieldType _mobile =
-      FieldType.value(Constants.ID_MOBILE, Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
-
+  final FieldType _name = FieldType.value(
+      Constants.ID_NAME, Constants.FIELD_NAME, 30, TextInputType.text, false);
+  final FieldType _mobile = FieldType.value(Constants.ID_MOBILE,
+      Constants.FIELD_MOBILE, 10, TextInputType.phone, false);
   final FieldType _confirmPassword = FieldType.value(
-      Constants.ID_CONFIRM_PASSWORD, Constants.FIELD_CONFIRM_PASSWORD, 15, TextInputType.text, true);
-  final FieldType _address =
-      FieldType.value(Constants.ID_ADDRESS, Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
-  final FieldType _city =
-      FieldType.value(Constants.ID_CITY, Constants.FIELD_CITY, 20, TextInputType.text, false);
-  final FieldType _pincode =
-      FieldType.value(Constants.ID_PINCODE, Constants.FIELD_PINCODE, 6, TextInputType.number, false);
+      Constants.ID_CONFIRM_PASSWORD,
+      Constants.FIELD_CONFIRM_PASSWORD,
+      15,
+      TextInputType.text,
+      true);
+  final FieldType _address = FieldType.value(Constants.ID_ADDRESS,
+      Constants.FIELD_ADDRESS, 30, TextInputType.text, false);
+  final FieldType _city = FieldType.value(
+      Constants.ID_CITY, Constants.FIELD_CITY, 20, TextInputType.text, false);
+  final FieldType _pincode = FieldType.value(Constants.ID_PINCODE,
+      Constants.FIELD_PINCODE, 6, TextInputType.number, false);
   final FieldType _alternateNumber = FieldType.value(
-      Constants.ID_ALTERNATE_NUMBER, Constants.FIELD_ALTERNATE_NUMBER, 10, TextInputType.phone, false);
+      Constants.ID_ALTERNATE_NUMBER,
+      Constants.FIELD_ALTERNATE_NUMBER,
+      10,
+      TextInputType.phone,
+      false);
 
   UserType userType = UserType.BUYER;
 
@@ -113,11 +119,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
     final String localePasswordText =
         AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
-    final FieldType _email =
-        FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
-
-    final FieldType _password =
-        FieldType.value(Constants.ID_PASSWORD, localePasswordText, 15, TextInputType.text, true);
+    final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId,
+        50, TextInputType.emailAddress, false);
+    final FieldType _password = FieldType.value(Constants.ID_PASSWORD,
+        localePasswordText, 15, TextInputType.text, true);
 
     return Scaffold(
         key: _scaffoldKey,
@@ -145,11 +150,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               case Constants.ID_CONFIRM_PASSWORD:
                 return FieldValidator.validateConfirmPassword(
                     values[localePasswordText], value);
-            }
-            if (idAsKey == localeEmailId) {
-              return FieldValidator.validateEmailAddress(value);
-            } else if (idAsKey == localePasswordText) {
-              return FieldValidator.validatePassword(value);
+              case Constants.ID_EMAIL:
+                return FieldValidator.validateEmailAddress(value);
+              case Constants.ID_PASSWORD:
+                return FieldValidator.validatePassword(value);
             }
             return null;
           },
@@ -187,10 +191,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final int mobile = valueMap[Constants.ID_MOBILE] != null
         ? int.parse(valueMap[Constants.ID_MOBILE])
         : 0;
-    final int alternateNumber =
-        valueMap[Constants.ID_ALTERNATE_NUMBER] != null
-            ? int.parse(valueMap[Constants.ID_ALTERNATE_NUMBER])
-            : 0;
+    final int alternateNumber = valueMap[Constants.ID_ALTERNATE_NUMBER] != null
+        ? int.parse(valueMap[Constants.ID_ALTERNATE_NUMBER])
+        : 0;
     final email = valueMap[
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD)];
     final password = valueMap[
