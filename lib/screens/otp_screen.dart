@@ -1,6 +1,7 @@
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
@@ -53,11 +54,11 @@ class _OTPScreenState extends State<OTPScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showToast(Constants.SEND_OTP_FAIL);
+          _showMessage(Constants.SEND_OTP_FAIL);
           break;
         case Status.COMPLETED:
           dismissDialog(context);
-          _showToast(Constants.SEND_OTP_SUCCESS);
+          _showMessage(Constants.SEND_OTP_SUCCESS);
           break;
       }
     });
@@ -72,7 +73,7 @@ class _OTPScreenState extends State<OTPScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showToast(Constants.REGISTRATION_FAILED);
+          _showMessage(Constants.REGISTRATION_FAILED);
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -82,8 +83,12 @@ class _OTPScreenState extends State<OTPScreen> {
     });
   }
 
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  void _showMessage(String message) {
+    Flushbar(
+        forwardAnimationCurve: Curves.ease,
+        duration: Duration(seconds: 2),
+        message: message)
+      ..show(context);
   }
 
   void _showMap() {
@@ -118,13 +123,11 @@ class _OTPScreenState extends State<OTPScreen> {
                 style: AppTheme.subtitleGreen,
               ))),
           titleLayout: Center(
-              child: const Text(Constants.OTP_TITLE,
-                  style: AppTheme.headline)),
+              child: const Text(Constants.OTP_TITLE, style: AppTheme.headline)),
           messageLayout: Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(24),
-              child: Text(Constants.OTP_MESSAGE,
-                  style: AppTheme.subtitle)),
+              child: Text(Constants.OTP_MESSAGE, style: AppTheme.subtitle)),
           fieldStyle: FieldStyle.value(24, 8, 24, 36, AppColors.underline,
               AppColors.green, AppColors.text_grey),
           fieldValidator: (idAsKey, values) {
@@ -136,10 +139,12 @@ class _OTPScreenState extends State<OTPScreen> {
                 return null;
             }
           },
-          headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
+          headerLayout: HomeAppBar(onBackPressed: () {
+            Navigator.pop(context, false);
+          }),
           fieldTypes: [
-            FieldType.value(
-                Constants.ID_OTP, Constants.FIELD_OTP, 10, TextInputType.number, false)
+            FieldType.value(Constants.ID_OTP, Constants.FIELD_OTP, 10,
+                TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {
