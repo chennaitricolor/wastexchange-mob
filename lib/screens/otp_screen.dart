@@ -94,7 +94,7 @@ class _OTPScreenState extends State<OTPScreen> {
     Router.pushReplacementNamed(context, MapScreen.routeName);
   }
 
-  void _doRegister(String otp) {
+  void _registerUser(String otp) {
     final int value = otp != null ? int.parse(otp) : 0;
     _registrationData.otp = value;
     _registrationBloc.register(_registrationData);
@@ -146,7 +146,7 @@ class _OTPScreenState extends State<OTPScreen> {
           ],
           onValidation: (isValidationSuccess, valueMap) {
             if (isValidationSuccess) {
-              _doRegister(valueMap[Constants.FIELD_OTP]);
+              _registerUser(valueMap[Constants.ID_OTP]);
             }
           }),
     );
