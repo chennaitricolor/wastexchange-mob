@@ -34,7 +34,6 @@ class _OTPScreenState extends State<OTPScreen> {
   RegistrationBloc _registrationBloc;
   OtpBloc _otpBloc;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final logger = AppLogger.get('OTPScreen');
 
   @override
@@ -111,7 +110,6 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       body: AuthenticationView(
           placeHolderBelowButton: MaterialButton(
               onPressed: () {
