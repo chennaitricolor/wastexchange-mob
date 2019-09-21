@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Router.pushNamed(context, RegistrationScreen.routeName);
   }
 
-  void _showErrorMessage(String message) {
+  void _showMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
         duration: Duration(seconds: 2),
@@ -73,17 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showErrorMessage(AppLocalizations.of(context)
+          _showMessage(AppLocalizations.of(context)
               .translate(LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
           if (!_snapshot.data.approved) {
-            _showErrorMessage(Constants.LOGIN_UNAPPROVED);
+            _showMessage(Constants.LOGIN_UNAPPROVED);
             return;
           }
           if (!_snapshot.data.success) {
-            _showErrorMessage(AppLocalizations.of(context)
+            _showMessage(AppLocalizations.of(context)
                 .translate(LocaleConstants.LOGIN_FAILED));
             return;
           }
