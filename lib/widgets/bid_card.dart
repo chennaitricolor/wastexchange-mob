@@ -4,8 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-
-import 'commons/card_view.dart';
+import 'package:wastexchange_mobile/widgets/commons/card_view.dart';
 
 class BidCard extends StatelessWidget {
   const BidCard(this._bid, this._seller);
