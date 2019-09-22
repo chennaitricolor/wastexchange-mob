@@ -98,7 +98,6 @@ class _MapState extends State<MapScreen> {
         ),
         infoWindow: InfoWindow(
           title: '${user.name}',
-          snippet: '${user.address}',
         ),
         onTap: callback,
       );
