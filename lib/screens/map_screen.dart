@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:clustering_google_maps/clustering_google_maps.dart' show AggregationSetup, LatLngAndGeohash;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/resources/clustering_helper.dart';
 import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -20,6 +22,10 @@ class MapScreen extends StatefulWidget {
 enum _MapStatus { LOADING, ERROR, COMPLETED }
 
 class _MapState extends State<MapScreen> {
+ ClusteringHelper clusteringHelper;
+  Set<Marker> clusterMarkers;
+  List<LatLngAndGeohash> locationList;
+
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MapBloc _bloc;
@@ -28,7 +34,6 @@ class _MapState extends State<MapScreen> {
       SellerItemBottomSheet(seller: null);
 
   static const double _bottomSheetMinHeight = 120.0;
-  static const double _mapPinHue = 200.0;
   double _screenHeight() => MediaQuery.of(context).size.height;
 
   static final _initialCameraPosition = CameraPosition(
@@ -57,7 +62,8 @@ class _MapState extends State<MapScreen> {
         case Status.COMPLETED:
           setState(() {
             _mapStatus = _MapStatus.COMPLETED;
-            _setMarkers(_snapshot.data);
+            initializeLocationList(_snapshot.data);
+            initMemoryClustering(_snapshot.data);
           });
           break;
       }
@@ -72,41 +78,38 @@ class _MapState extends State<MapScreen> {
     super.dispose();
   }
 
-  void onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-    controller.animateCamera(_animateCameraTo);
+  Future onMapCreated(GoogleMapController mapController) async {
+    clusteringHelper.mapController = mapController;
+    clusteringHelper.updateMap();
+    mapController.animateCamera(_animateCameraTo);
   }
 
-  void _onMarkerTapped(int userId) {
+  void onMarkerTapped(int userId) {
     _bottomSheet.setUser(_bloc.getUser(userId));
   }
-
-  // TODO(Sayeed): Should we move markers logic to its own class
-  void _setMarkers(List<User> users) {
-    final markers = users.map((user) {
-      void callback() => _onMarkerTapped(user.id);
-      return Marker(
-        markerId: MarkerId(
-          user.id.toString(),
-        ),
-        position: LatLng(
-          user.lat,
-          user.long,
-        ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-          _mapPinHue,
-        ),
-        infoWindow: InfoWindow(
-          title: '${user.name}',
-          snippet: '${user.address}',
-        ),
-        onTap: callback,
-      );
+  
+  void updateMarkers(Set<Marker> markers) {
+    setState(() {
+      clusterMarkers = markers;
     });
-    this.markers = Map.fromIterable(markers,
-        key: (marker) => marker.markerId, value: (marker) => marker);
   }
 
+  void initMemoryClustering(List<User> userList) {
+    clusteringHelper = ClusteringHelper.forMemory(
+      list:locationList,
+      users: userList,
+      updateMarkers: updateMarkers,
+      onMarkerTapped: onMarkerTapped,
+      aggregationSetup: AggregationSetup(markerSize: 50),
+    );
+  }
+void initializeLocationList(List<User> users) {
+    locationList= [];
+    for(int i=0;i<users.length;i++){
+      final user = users[i];
+      locationList.add(LatLngAndGeohash(LatLng(user.lat, user.long)));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,11 +145,15 @@ class _MapState extends State<MapScreen> {
             textAlign: TextAlign.center,
           ));
     } else {
-      return GoogleMap(
+      return 
+        GoogleMap(
           initialCameraPosition: _initialCameraPosition,
           onMapCreated: onMapCreated,
-          mapType: MapType.normal,
-          markers: Set<Marker>.of(markers.values));
+          markers: clusterMarkers,
+          onCameraMove: (newPosition) =>
+              clusteringHelper.onCameraMove(newPosition, forceUpdate: true),
+          onCameraIdle: clusteringHelper?.onMapIdle,
+        );
     }
-  }
+  }  
 }
