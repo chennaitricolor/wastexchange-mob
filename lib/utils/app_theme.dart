@@ -6,6 +6,7 @@ class AppTheme {
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
+  static const Color white = Color(0xFFFFFFFF);
   static const Color nearlyBlack = Color(0xFF213333);
   static const Color grey = Color(0xFF3A5160);
   static const Color dark_grey = Color(0xFF313A44);
@@ -54,7 +55,16 @@ class AppTheme {
     // h6 -> title
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
-    fontSize: 16,
+    fontSize: 18,
+    letterSpacing: 0.18,
+    color: darkerText,
+  );
+
+  static const TextStyle body = TextStyle(
+    // h6 -> title
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
     letterSpacing: 0.18,
     color: darkerText,
   );
@@ -104,6 +114,15 @@ class AppTheme {
     color: AppColors.green,
   );
 
+  static const TextStyle body1 = TextStyle(
+    // body2 -> body1
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: -0.05,
+    color: darkText,
+  );
+
   static const TextStyle body2 = TextStyle(
     // body1 -> body2
     fontFamily: 'OpenSans',
@@ -113,13 +132,12 @@ class AppTheme {
     color: darkText,
   );
 
-  static const TextStyle body1 = TextStyle(
-    // body2 -> body1
+  static const TextStyle body3 = TextStyle(
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
-    fontSize: 16,
-    letterSpacing: -0.05,
-    color: darkText,
+    fontSize: 13,
+    letterSpacing: 0.2,
+    color: lightText, // was lightText
   );
 
   static const TextStyle caption = TextStyle(
@@ -131,11 +149,20 @@ class AppTheme {
     color: lightText, // was lightText
   );
 
-  static const TextStyle body3 = TextStyle(
+  static const TextStyle buttonTitle = TextStyle(
+    // Caption -> caption
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    color: white, // was lightText
+  );
+
+  static const TextStyle hintText = TextStyle(
+    // body1 -> body2
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
-    fontSize: 13,
+    fontSize: 14,
     letterSpacing: 0.2,
-    color: lightText, // was lightText
+    color: lightText,
   );
 }

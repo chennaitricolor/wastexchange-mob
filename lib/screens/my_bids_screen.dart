@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/bid_card.dart';
@@ -44,7 +43,6 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.chrome_grey,
         appBar: HomeAppBar(
             text: Constants.MY_BIDS,
             onBackPressed: () {
