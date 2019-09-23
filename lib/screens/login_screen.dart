@@ -131,9 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   return FieldValidator.validateEmailAddress(value);
                 case Constants.ID_PASSWORD:
                   return FieldValidator.validatePassword(value);
-                default:
-                  return null;
               }
+              return null;
             },
             headerLayout: HomeAppBar(onBackPressed: () {
               Navigator.pop(context, false);
