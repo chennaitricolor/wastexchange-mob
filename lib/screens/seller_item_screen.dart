@@ -93,7 +93,10 @@ class _SellerItemScreenState extends State<SellerItemScreen>
             }),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: SellerItemList(bidItems: bidItems, quantityEditingControllers: _quantityTextEditingControllers, priceEditingControllers: _priceTextEditingControllers),
+          child: SellerItemList(
+              bidItems: bidItems,
+              quantityEditingControllers: _quantityTextEditingControllers,
+              priceEditingControllers: _priceTextEditingControllers),
         ));
   }
 

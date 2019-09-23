@@ -22,29 +22,26 @@ class WasteExchange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: Colors.white,
       statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.grey,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Constants.APP_TITLE,
-      onGenerateRoute: Router.generateRoute,
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-            iconTheme: AppTheme.iconTheme,
-          brightness: Brightness.light
+        debugShowCheckedModeBanner: false,
+        title: Constants.APP_TITLE,
+        onGenerateRoute: Router.generateRoute,
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+              iconTheme: AppTheme.iconTheme, brightness: Brightness.light),
+          textTheme: AppTheme.textTheme,
         ),
-        textTheme: AppTheme.textTheme,
-      ),
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationDelagates,
-      localeResolutionCallback: (locale, supportedLocales) {
-        return AppLocalizations.getCurrentLocale(locale);
-      },
-      home: MapScreen()
-    );
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationDelagates,
+        localeResolutionCallback: (locale, supportedLocales) {
+          return AppLocalizations.getCurrentLocale(locale);
+        },
+        home: MapScreen());
   }
 }

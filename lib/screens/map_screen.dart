@@ -7,7 +7,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/DrawerView.dart';
+import 'package:wastexchange_mobile/widgets/views/drawer_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/widgets/views/menu_app_bar.dart';
 
@@ -98,7 +98,6 @@ class _MapState extends State<MapScreen> {
         ),
         infoWindow: InfoWindow(
           title: '${user.name}',
-          snippet: '${user.address}',
         ),
         onTap: callback,
       );

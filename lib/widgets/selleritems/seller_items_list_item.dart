@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/card_view.dart';
+import 'package:wastexchange_mobile/widgets/commons/card_view.dart';
 
 class SellerItemsListItem extends StatelessWidget {
   const SellerItemsListItem(this.item);

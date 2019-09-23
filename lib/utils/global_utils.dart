@@ -1,3 +1,4 @@
+// TODO(Sayeed): Is this a good design. Discuss with others.
 bool isNull(Object object) => object == null;
 
 bool isNotNull(Object object) => object != null;

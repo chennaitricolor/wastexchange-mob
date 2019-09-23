@@ -1,6 +1,7 @@
 import 'package:authentication_view/authentication_view.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
@@ -33,8 +34,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc _bloc;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   void _routeToNextScreen() {
     if (isNotNull(widget._sellerInfo)) {
       _routeToSellerInfo();
@@ -56,8 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
     Router.pushNamed(context, RegistrationScreen.routeName);
   }
 
-  void _showSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  void _showMessage(String message) {
+    Flushbar(
+        forwardAnimationCurve: Curves.ease,
+        duration: Duration(seconds: 2),
+        message: message)
+      ..show(context);
   }
 
   @override
@@ -70,17 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showSnackBar(AppLocalizations.of(context)
+          _showMessage(AppLocalizations.of(context)
               .translate(LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
           if (!_snapshot.data.approved) {
-            _showSnackBar(Constants.LOGIN_UNAPPROVED);
+            _showMessage(Constants.LOGIN_UNAPPROVED);
             return;
           }
           if (!_snapshot.data.success) {
-            _showSnackBar(AppLocalizations.of(context)
+            _showMessage(AppLocalizations.of(context)
                 .translate(LocaleConstants.LOGIN_FAILED));
             return;
           }
@@ -98,12 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
     final String localePasswordText =
         AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
-    final FieldType _email =
-        FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
-    final FieldType _password =
-        FieldType.value(Constants.ID_PASSWORD, localePasswordText, 15, TextInputType.text, true);
+    final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId,
+        50, TextInputType.emailAddress, false);
+    final FieldType _password = FieldType.value(Constants.ID_PASSWORD,
+        localePasswordText, 15, TextInputType.text, true);
     return Scaffold(
-        key: _scaffoldKey,
         body: AuthenticationView(
             placeHolderBelowButton: MaterialButton(
                 onPressed: () {
@@ -124,10 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (idAsKey, values) {
               final String value = values[idAsKey];
-              switch(idAsKey){
-                case Constants.ID_EMAIL: return FieldValidator.validateEmailAddress(value);
-                case Constants.ID_PASSWORD: return FieldValidator.validatePassword(value);
-                default: return null;
+              switch (idAsKey) {
+                case Constants.ID_EMAIL:
+                  return FieldValidator.validateEmailAddress(value);
+                case Constants.ID_PASSWORD:
+                  return FieldValidator.validatePassword(value);
+                default:
+                  return null;
               }
             },
             headerLayout: HomeAppBar(onBackPressed: () {
@@ -136,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
             fieldTypes: [_email, _password],
             buttonText: AppLocalizations.of(context)
                 .translate(LocaleConstants.CONTINUE),
+            // TODO(Sayeed): Move this to bloc
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {
                 return;
