@@ -7,63 +7,66 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/commons/card_view.dart';
 
 class BidCard extends StatelessWidget {
-  const BidCard(this._bid, this._seller);
+  const BidCard(this._bid, this._seller, this.itemClicked);
 
   final Bid _bid;
   final User _seller;
+  final Function itemClicked;
 
   @override
   Widget build(BuildContext context) {
     return CardView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _getStatus(_bid.status),
-                )),
-              ),
-            ),
-            Flexible(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(_seller.name),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        Constants.RUPEE + _bid.amount,
-                        style: AppTheme.title,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        Constants.PICKUP_AT +
-                            _getFormattedDate(_bid.pickupDate),
-                        style: AppTheme.body3,
-                      ),
-                    )
-                  ],
+        child:InkWell(
+          onTap: itemClicked,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: _getStatus(_bid.status),
+                        )),
+                  ),
                 ),
-              ),
+                Flexible(
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Text(_seller.name),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Text(
+                            Constants.RUPEE + _bid.amount,
+                            style: AppTheme.title,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Text(
+                            Constants.PICKUP_AT +
+                                _getFormattedDate(_bid.pickupDate),
+                            style: AppTheme.body3,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
 //helpers
