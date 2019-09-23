@@ -16,3 +16,5 @@ bool isNullOrEmpty(String value) => isNull(value) || value.isEmpty;
 bool isZero(String value) => value == '0';
 
 bool isDouble(String value) => double.tryParse(value) != null;
+
+bool isPositive(String value) => double.tryParse(value) > 0;
