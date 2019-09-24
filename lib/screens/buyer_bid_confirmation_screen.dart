@@ -1,11 +1,11 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/place_bid_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
-import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/order_summary.dart';
@@ -54,6 +54,7 @@ class _BuyerBidConfirmationScreenState
           break;
         case Status.COMPLETED:
           dismissDialog(context);
+          Router.pushNamed(context, BidSuccessfulScreen.routeName);
           break;
       }
     });

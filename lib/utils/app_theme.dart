@@ -69,6 +69,15 @@ class AppTheme {
     color: darkerText,
   );
 
+  static const TextStyle bodyThin = TextStyle(
+    // h6 -> title
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.normal,
+    fontSize: 18,
+    letterSpacing: 0.18,
+    color: darkerText,
+  );
+
   static const TextStyle titleWhite = TextStyle(
     // h6 -> title
     fontFamily: 'OpenSans',

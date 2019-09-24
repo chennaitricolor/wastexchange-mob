@@ -65,6 +65,7 @@ flutter:
     - assets/images/ministry-logo.png
     - assets/images/smart-cities-mission-logo.png
     - assets/images/indian-emblem.png
+    - assets/images/tick.png
     - assets/locale/en.json
     - assets/locale/ta.json
 
