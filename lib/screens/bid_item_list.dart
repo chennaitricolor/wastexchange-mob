@@ -12,16 +12,13 @@ class BidItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverList(
-            delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
-          final Item item = bidItems[index].item;
-          return BidItemListItem(
-              item: item);
-        }, childCount: bidItems.length))
-      ],
-    );
+    return
+      SliverList(
+          delegate:
+          SliverChildBuilderDelegate((BuildContext context, int index) {
+            final Item item = bidItems[index].item;
+            return BidItemListItem(
+                item: item);
+          }, childCount: bidItems.length));
   }
 }

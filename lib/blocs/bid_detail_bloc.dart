@@ -43,8 +43,10 @@ class BidDetailBloc {
     final List<BidItem> bidItems = [];
     for(final sellerItem in sellerItems) {
       final Item buyerItem = buyerItems[sellerItem.name];
-      final BidItem bidItem = BidItem(item: sellerItem, bidQuantity: buyerItem.qty, bidCost: buyerItem.price);
-      bidItems.add(bidItem);
+      if(buyerItem != null) {
+        final BidItem bidItem = BidItem(item: sellerItem, bidQuantity: buyerItem.qty, bidCost: buyerItem.price);
+        bidItems.add(bidItem);
+      }
     }
 
     return bidItems;
