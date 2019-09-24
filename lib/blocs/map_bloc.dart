@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:clustering_google_maps/clustering_google_maps.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
@@ -38,5 +40,14 @@ class MapBloc {
 
   void dispose() {
     _allUsersController.close();
+  }
+
+  List<LatLngAndGeohash> getUsersLocationList() {
+    final List<LatLngAndGeohash> locationList= [];
+    for(int i=0; i < _users.length; i++){
+      final user = _users[i];
+      locationList.add(LatLngAndGeohash(LatLng(user.lat, user.long)));
+    }
+    return locationList;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:clustering_google_maps/clustering_google_maps.dart' show AggregationSetup, LatLngAndGeohash;
+import 'package:clustering_google_maps/clustering_google_maps.dart' show AggregationSetup;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
@@ -24,8 +24,6 @@ enum _MapStatus { LOADING, ERROR, COMPLETED }
 class _MapState extends State<MapScreen> {
  ClusteringHelper clusteringHelper;
   Set<Marker> clusterMarkers;
-  List<LatLngAndGeohash> locationList;
-
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MapBloc _bloc;
@@ -62,7 +60,6 @@ class _MapState extends State<MapScreen> {
         case Status.COMPLETED:
           setState(() {
             _mapStatus = _MapStatus.COMPLETED;
-            initializeLocationList(_snapshot.data);
             initMemoryClustering(_snapshot.data);
           });
           break;
@@ -96,20 +93,14 @@ class _MapState extends State<MapScreen> {
 
   void initMemoryClustering(List<User> userList) {
     clusteringHelper = ClusteringHelper.forMemory(
-      list:locationList,
+      list:_bloc.getUsersLocationList(),
       users: userList,
       updateMarkers: updateMarkers,
       onMarkerTapped: onMarkerTapped,
-      aggregationSetup: AggregationSetup(markerSize: 50),
+      aggregationSetup: AggregationSetup(markerSize: Constants.CLUSTER_MARKER_SIZE),
     );
   }
-void initializeLocationList(List<User> users) {
-    locationList= [];
-    for(int i=0;i<users.length;i++){
-      final user = users[i];
-      locationList.add(LatLngAndGeohash(LatLng(user.lat, user.long)));
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
