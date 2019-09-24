@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/commons/card_view.dart';
@@ -44,7 +45,7 @@ class BidCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
-                        Constants.RUPEE + _bid.amount,
+                        Constants.INR_UNICODE + _bid.amount,
                         style: AppTheme.title,
                       ),
                     ),
@@ -68,7 +69,8 @@ class BidCard extends StatelessWidget {
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    final f = DateFormat('dd MMM h:mm a');
+    final f =
+        DateFormat('${AppDateFormat.shortDate} ${AppDateFormat.defaultTime}');
     return f.format(date.toLocal());
   }
 

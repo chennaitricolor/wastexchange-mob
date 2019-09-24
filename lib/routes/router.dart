@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
@@ -43,6 +44,9 @@ class Router {
       case MyBidsScreen.routeName:
         return MaterialPageRoute(builder: (_) => MyBidsScreen());
 
+      case BidSuccessfulScreen.routeName:
+        return MaterialPageRoute(builder: (_) => BidSuccessfulScreen());
+
       default:
         return null;
     }
@@ -56,6 +60,11 @@ class Router {
   static void pushNamed(BuildContext context, String routeName,
       {dynamic arguments}) {
     Navigator.pushNamed(context, routeName, arguments: arguments);
+  }
+
+  static void popToRootAndPushNamed(BuildContext context, String routeName) {
+    popToRoot(context);
+    pushNamed(context, routeName);
   }
 
   static void popAndPushNamed(BuildContext context, String routeName,
