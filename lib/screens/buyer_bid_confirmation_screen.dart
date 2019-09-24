@@ -1,9 +1,9 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:wastexchange_mobile/blocs/bid_bloc.dart';
+import 'package:wastexchange_mobile/blocs/place_bid_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -28,17 +28,9 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
 
 class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
-  BidBloc _bloc;
-  final contactNameController = TextEditingController();
-  final pickupDateController = TextEditingController();
-  final pickupTimeController = TextEditingController();
-
-  final dateFormat = DateFormat(Constants.DATE_FORMAT);
-  final timeFormat = DateFormat(Constants.TIME_FORMAT);
-  var initialPickupTime = DateTime.now().add(Duration(hours: 18));
-
-  DateTime date;
-  DateTime time;
+  PlaceBidBloc _bloc;
+  // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
+  final GlobalKey<OrderPickupState> _keyOrderPickup = GlobalKey();
 
   void _showMessage(String message) {
     Flushbar(
@@ -50,7 +42,7 @@ class _BuyerBidConfirmationScreenState
 
   @override
   void initState() {
-    _bloc = BidBloc(items: widget.bidItems, sellerId: widget.seller.id);
+    _bloc = PlaceBidBloc(items: widget.bidItems, sellerId: widget.seller.id);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -81,12 +73,19 @@ class _BuyerBidConfirmationScreenState
       bottomNavigationBar: OrderTotal(
         total: _bloc.bidTotal(),
         itemsCount: widget.bidItems.length,
-        onPressed: () {},
+        onPressed: () {
+          final result = _keyOrderPickup.currentState.pickupInfoData();
+          if (result.status == Status.ERROR) {
+            _showMessage(result.message);
+            return;
+          }
+          _bloc.placeBid(result.data);
+        },
       ),
       body: SingleChildScrollView(
           child: Column(
         children: <Widget>[
-          OrderPickup(),
+          OrderPickup(key: _keyOrderPickup),
           Padding(
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 20, bottom: 16),
@@ -94,14 +93,6 @@ class _BuyerBidConfirmationScreenState
         ],
       )),
     );
-  }
-
-  void sendBidFormData() {
-    final pickupDate =
-        DateTimeField.combine(date, TimeOfDay.fromDateTime(time));
-
-    _bloc.placeBid(
-        pickupDate: pickupDate, contactName: contactNameController.text);
   }
 
   @override

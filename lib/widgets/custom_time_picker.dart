@@ -57,11 +57,13 @@ class CustomTimePicker extends CommonPickerModel {
 
   @override
   DateTime finalTime() {
-    if (_is12AMSelected() || _is0PMSelected()) {
+    if (_is0PMSelected()) {
       return null;
     }
 
-    final int pmOffset = _isPMSelected() ? 12 : 0;
+    final int pmOffset =
+        _isAfter1PMSelected() ? 12 : _is12AMSelected() ? -12 : 0;
+
     final int hour = currentLeftIndex() + pmOffset;
     final int minute = currentMiddleIndex();
     const int second = 0;
@@ -72,6 +74,10 @@ class CustomTimePicker extends CommonPickerModel {
         : DateTime(currentTime.year, currentTime.month, currentTime.day, hour,
             minute, second);
   }
+
+  bool _isAfter1PMSelected() => _isPMSelected() && !_is12Selected();
+
+  bool _is12Selected() => currentLeftIndex() == 12;
 
   bool _is12AMSelected() =>
       currentLeftIndex() == 12 && currentRightIndex() == 0;

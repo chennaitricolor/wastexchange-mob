@@ -82,7 +82,7 @@ class SellerItemBloc {
           .map((index) => _sellerInfo.items[index].displayName)
           .join(', ');
       _listener
-          .onValidationError('Qty above Available Qty for $aboveMaxQtyItems');
+          .onValidationError('qty above available qty for $aboveMaxQtyItems');
       return;
     }
 
@@ -104,8 +104,12 @@ class SellerItemBloc {
     final bool isOneOrTwoZero = quantityValue == '0' || priceValue == '0';
     final bool isOneOrTwoNotDouble =
         !isDouble(quantityValue) || !isDouble(priceValue);
-    final bool isOneOrTwoNegative = !isPositive(quantityValue) || !isPositive(priceValue);
-    return isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoNotDouble || isOneOrTwoNegative;
+    final bool isOneOrTwoNegative =
+        !isPositive(quantityValue) || !isPositive(priceValue);
+    return isOneOfTwoEmpty ||
+        isOneOrTwoZero ||
+        isOneOrTwoNotDouble ||
+        isOneOrTwoNegative;
   }
 
   bool isAboveMaxQty(String quantityValue, int index) {

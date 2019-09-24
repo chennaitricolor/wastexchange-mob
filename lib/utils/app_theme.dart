@@ -55,7 +55,7 @@ class AppTheme {
     // h6 -> title
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: 0.18,
     color: darkerText,
   );
@@ -127,7 +127,7 @@ class AppTheme {
     // body1 -> body2
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.2,
     color: darkText,
   );
@@ -153,7 +153,7 @@ class AppTheme {
     // Caption -> caption
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w600,
-    fontSize: 14,
+    fontSize: 16,
     color: white, // was lightText
   );
 

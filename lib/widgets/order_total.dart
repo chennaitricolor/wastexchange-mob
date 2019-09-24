@@ -52,7 +52,7 @@ class OrderTotal extends StatelessWidget {
                           color: AppColors.green,
                           child: Row(
                             children: <Widget>[
-                              Text(
+                              const Text(
                                 'Confirm',
                                 style: AppTheme.buttonTitle,
                               ),
@@ -62,7 +62,7 @@ class OrderTotal extends StatelessWidget {
                                   child: Icon(
                                     Icons.check,
                                     color: Colors.white,
-                                    size: 20,
+                                    size: 25,
                                   )),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
