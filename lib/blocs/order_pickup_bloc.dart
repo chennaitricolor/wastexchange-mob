@@ -91,8 +91,8 @@ class OrderPickupBloc {
 
   DateTime pickupDateAndTime() => DateTime(
       _pickupDate.year,
-      _pickupTime.month,
-      _pickupTime.day,
+      _pickupDate.month,
+      _pickupDate.day,
       _pickupTime.hour,
       _pickupTime.minute,
       _pickupTime.second);
