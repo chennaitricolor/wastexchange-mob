@@ -58,7 +58,7 @@ class DrawerView extends StatelessWidget {
             Text('Hello, ${_thisUser.name}', style: AppTheme.titleWhite),
         accountEmail: Text(_thisUser.emailId, style: AppTheme.subtitleWhite),
         currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.yellow,
+            backgroundColor: AppColors.avatar_bg,
             child: Text(_thisUser.name.substring(0, 1).toUpperCase(),
                 style: AppTheme.title)),
       ),
