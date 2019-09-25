@@ -41,7 +41,6 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
   _BidDetailScreenState({this.bid});
 
   BidDetailBloc _bloc;
-  MapBloc _mapBloc;
   SellerItemBloc _sellerItemBloc;
   bool isEditMode = false;
   SellerItemDetails sellerItemDetails;
@@ -54,9 +53,7 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
 
   @override
   void initState() {
-    print(bid.bidItems.values.length);
     _bloc = BidDetailBloc();
-    _mapBloc = MapBloc();
 
     _bloc.sellerStream.listen((_snapshot) {
       switch (_snapshot.status) {
@@ -64,33 +61,37 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
           showLoadingDialog(context);
           break;
         case Status.ERROR:
-          print(_snapshot.message);
           dismissDialog(context);
           break;
         case Status.COMPLETED:
-          print(_snapshot.data);
 
-          //TODO try to get from user repo.
-          _mapBloc.getAllUsers().then((result) {
+          sellerItemDetails = _snapshot.data;
+
+          _bloc.getUser(sellerItemDetails.sellerId).then((result) {
+
             dismissDialog(context);
+
             setState(() {
-              sellerItemDetails = _snapshot.data;
-              seller = _mapBloc.getUser(sellerItemDetails.sellerId);
 
+              if(result.status == Status.COMPLETED && result.data != null) {
+                seller = result.data;
 
-              _sellerItemBloc = SellerItemBloc(this, SellerInfo(seller: seller, items: sellerItemDetails.items));
-              _quantityTextEditingControllers =
-                  sellerItemDetails.items.map((_) => TextEditingController()).toList();
-              _priceTextEditingControllers =
-                  sellerItemDetails.items.map((_) => TextEditingController()).toList();
+                _bloc.sortSellerItemsBasedOnBid(sellerItemDetails, bid);
 
-              for(int i=0; i<sellerItemDetails.items.length; i++) {
-                final Item item = sellerItemDetails.items[i];
-                Item bidItem = bid.bidItems[item.name];
+                _sellerItemBloc = SellerItemBloc(this, SellerInfo(seller: seller, items: sellerItemDetails.items));
+                _quantityTextEditingControllers =
+                    sellerItemDetails.items.map((_) => TextEditingController()).toList();
+                _priceTextEditingControllers =
+                    sellerItemDetails.items.map((_) => TextEditingController()).toList();
 
-                if(bidItem != null) {
-                  _quantityTextEditingControllers[i].text = bidItem.qty.toString();
-                  _priceTextEditingControllers[i].text = bidItem.price.toString();
+                for(int i=0; i<sellerItemDetails.items.length; i++) {
+                  final Item item = sellerItemDetails.items[i];
+                  Item bidItem = bid.bidItems[item.name];
+
+                  if(bidItem != null) {
+                    _quantityTextEditingControllers[i].text = bidItem.qty.toString();
+                    _priceTextEditingControllers[i].text = bidItem.price.toString();
+                  }
                 }
               }
             });
@@ -128,10 +129,7 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
 
   @override
   Widget build(BuildContext context) {
-    print(bid);
-    print(sellerItemDetails);
     if(bid != null && sellerItemDetails != null) {
-      print("showing bid details");
       return showBidDetails();
     } else {
       return emptyView();

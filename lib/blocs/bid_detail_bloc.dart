@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/bid_repository.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -65,8 +66,26 @@ class BidDetailBloc {
     sellerSink.add(response);
   }
 
+  Future<Result<User>> getUser(int userId) async {
+    return UserRepository().getUser(id: userId);
+  }
+
   void dispose() {
     _bidController.close();
     _sellerController.close();
+  }
+
+  void sortSellerItemsBasedOnBid(SellerItemDetails sellerItemDetails, Bid bid) {
+    sellerItemDetails.items.sort((a,b)=>compare(bid, a,b));
+  }
+
+  int compare(Bid bid, Item a, Item b) {
+    if(bid.bidItems[a.name] != null && bid.bidItems[b.name] == null) {
+      return -1;
+    } else if(bid.bidItems[a.name] == null && bid.bidItems[b.name] != null) {
+      return 1;
+    }
+
+    return 0;
   }
 }
