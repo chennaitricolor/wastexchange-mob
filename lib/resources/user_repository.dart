@@ -81,4 +81,9 @@ class UserRepository implements SetUpCompliant {
   Future<void> load() async {
     await UserDataStore().getProfile();
   }
+
+  void logoutUser(){
+    _tokenRepository.deleteToken();
+    _userDataStore.deleteUser();
+  }
 }

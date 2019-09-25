@@ -46,4 +46,9 @@ class UserDataStore {
     }
     return _thisUser;
   }
+
+  void deleteUser(){
+    _thisUser = null;
+    _cachedSecureStorage.setValue('thisUser', null);
+  }
 }
