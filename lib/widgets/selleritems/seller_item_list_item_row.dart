@@ -10,27 +10,27 @@ class SellerItemRow extends Row {
         assert(isNotNull(text), 'The text should not be null'),
         assert(textEditingController != null, 'The text editing controller should not be null'),
         super(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              flex: 3,
-              child: Text(text, style: AppTheme.body1),
-            ),
-            Flexible(
-                flex: 1,
-                child: isEditable ?
-                TextFormField(
-                  controller: textEditingController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: hintText,
-                  ),
-                ) : Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(hintText, style: AppTheme.body1))
-            ),
-          ],
-        );
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Flexible(
+            flex: 3,
+            child: Text(text, style: AppTheme.body1),
+          ),
+          Flexible(
+              flex: 1,
+              child: isEditable ?
+              TextFormField(
+                controller: textEditingController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: hintText,
+                ),
+              ) : Align(
+                  alignment: Alignment.center,
+                  child: Text(textEditingController.text ?? EMPTY, style: AppTheme.body1))
+          ),
+        ],
+      );
 
   final TextEditingController textEditingController;
   final String text;

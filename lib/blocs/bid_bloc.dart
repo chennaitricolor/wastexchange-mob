@@ -11,9 +11,14 @@ class BidBloc {
   StreamSink<Result<String>> get bidSink => _buyerController.sink;
   Stream<Result<String>> get bidStream => _buyerController.stream;
 
-  Future<void> placeBid(BuyerBidData data) async {
+  Future<void> placeBid(int previousBidId, BuyerBidData data) async {
     bidSink.add(Result.loading('Loading'));
-    final Result<String> response = await _bidRepository.placeBid(data);
+    Result<String> response;
+    if(previousBidId != null) {
+      response = await _bidRepository.updateBid(previousBidId, data);
+    } else {
+      response = await _bidRepository.placeBid(data);
+    }
     bidSink.add(response);
   }
 

@@ -7,11 +7,13 @@ class BidEditItemList extends StatelessWidget {
   const BidEditItemList(
       {this.bidItems,
         this.quantityEditingControllers,
-        this.priceEditingControllers});
+        this.priceEditingControllers,
+        this.isEditable});
 
   final List<BidItem> bidItems;
   final List<TextEditingController> quantityEditingControllers;
   final List<TextEditingController> priceEditingControllers;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,8 @@ class BidEditItemList extends StatelessWidget {
           return SellerItemListItem(
               item: item,
               quantityTextEditingController: quantityEditingControllers[index],
-              priceTextEditingController: priceEditingControllers[index]);
+              priceTextEditingController: priceEditingControllers[index],
+              isEditable: isEditable);
         }, childCount: bidItems.length)
     );
   }

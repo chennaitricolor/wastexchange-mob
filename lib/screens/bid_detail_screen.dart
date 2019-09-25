@@ -6,6 +6,7 @@ import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
@@ -13,9 +14,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_edit_item_list.dart';
 import 'package:wastexchange_mobile/screens/bid_info.dart';
-import 'package:wastexchange_mobile/screens/bid_item_list.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_list.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -70,16 +69,30 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
           break;
         case Status.COMPLETED:
           print(_snapshot.data);
+
+          //TODO try to get from user repo.
           _mapBloc.getAllUsers().then((result) {
             dismissDialog(context);
             setState(() {
               sellerItemDetails = _snapshot.data;
               seller = _mapBloc.getUser(sellerItemDetails.sellerId);
+
+
               _sellerItemBloc = SellerItemBloc(this, SellerInfo(seller: seller, items: sellerItemDetails.items));
               _quantityTextEditingControllers =
                   sellerItemDetails.items.map((_) => TextEditingController()).toList();
               _priceTextEditingControllers =
                   sellerItemDetails.items.map((_) => TextEditingController()).toList();
+
+              for(int i=0; i<sellerItemDetails.items.length; i++) {
+                final Item item = sellerItemDetails.items[i];
+                Item bidItem = bid.bidItems[item.name];
+
+                if(bidItem != null) {
+                  _quantityTextEditingControllers[i].text = bidItem.qty.toString();
+                  _priceTextEditingControllers[i].text = bidItem.price.toString();
+                }
+              }
             });
           });
           break;
@@ -195,7 +208,7 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
             }),
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: isEditMode? getEditItemView(): getBidItemView()));
+            child: getEditItemView(isEditMode)));
   }
 
   Widget emptyView() {
@@ -211,28 +224,19 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
         ));
   }
 
-  Widget getEditItemView() {
+  Widget getEditItemView(bool isEditMode) {
+
     return CustomScrollView(slivers: <Widget>[
       SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return BidInfo(bid: bid);
       }, childCount: 1)),
       BidEditItemList(
-          bidItems: sellerItemDetails.items.map((item) => BidItem(item: item)).toList(),
-          quantityEditingControllers: _quantityTextEditingControllers,
-          priceEditingControllers: _priceTextEditingControllers)
+        bidItems: sellerItemDetails.items.map((item) => BidItem(item: item)).toList(),
+        quantityEditingControllers: _quantityTextEditingControllers,
+        priceEditingControllers: _priceTextEditingControllers,
+        isEditable: isEditMode,)
     ]);
   }
-
-  Widget getBidItemView() {
-    print("at bid item view");
-    return CustomScrollView(slivers: <Widget>[
-      SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        return BidInfo(bid: bid);
-      }, childCount: 1)),
-      BidItemList(bidItems: bid.bidItems.values.map((item) => BidItem(item: item)).toList())
-    ]);
-  }
-
 
   List<String> _quantityValues() => _quantityTextEditingControllers
       .map((textEditingController) => textEditingController.text)
@@ -244,6 +248,7 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
 
   @override
   void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
+    sellerInfo['previousBid'] = bid;
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: sellerInfo);
   }

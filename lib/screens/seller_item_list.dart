@@ -6,8 +6,8 @@ import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.da
 class SellerItemList extends StatelessWidget {
   const SellerItemList(
       {this.bidItems,
-      this.quantityEditingControllers,
-      this.priceEditingControllers});
+        this.quantityEditingControllers,
+        this.priceEditingControllers});
 
   final List<BidItem> bidItems;
   final List<TextEditingController> quantityEditingControllers;
@@ -19,13 +19,14 @@ class SellerItemList extends StatelessWidget {
       slivers: <Widget>[
         SliverList(
             delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
-          final Item item = bidItems[index].item;
-          return SellerItemListItem(
-              item: item,
-              quantityTextEditingController: quantityEditingControllers[index],
-              priceTextEditingController: priceEditingControllers[index]);
-        }, childCount: bidItems.length))
+            SliverChildBuilderDelegate((BuildContext context, int index) {
+              final Item item = bidItems[index].item;
+              return SellerItemListItem(
+                  item: item,
+                  quantityTextEditingController: quantityEditingControllers[index],
+                  priceTextEditingController: priceEditingControllers[index],
+                  isEditable: true);
+            }, childCount: bidItems.length))
       ],
     );
   }

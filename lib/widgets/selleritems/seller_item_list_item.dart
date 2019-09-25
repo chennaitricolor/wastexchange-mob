@@ -9,11 +9,13 @@ class SellerItemListItem extends StatelessWidget {
   const SellerItemListItem(
       {this.item,
       this.quantityTextEditingController,
-      this.priceTextEditingController});
+      this.priceTextEditingController,
+      this.isEditable});
 
   final Item item;
   final TextEditingController quantityTextEditingController;
   final TextEditingController priceTextEditingController;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +33,12 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
-                isEditable: true,
+                isEditable: isEditable,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
-                isEditable: true,
+                isEditable: isEditable,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
                 hintText: 'Bid Price',
