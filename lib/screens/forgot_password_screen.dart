@@ -18,7 +18,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final String localeEmailId = 
         AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
-    final FieldType _email = FieldType.value(localeEmailId, 50, TextInputType.emailAddress, false);
+    final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
     return Scaffold(
       body: AuthenticationView(
           messageLayout: Container(
@@ -30,7 +30,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               AppColors.green, AppColors.text_grey),
           fieldValidator: (hintAsKey, valueMap) =>
               FieldValidator.validateEmailAddress(
-                  valueMap[localeEmailId]),
+                  valueMap[Constants.ID_EMAIL]),
           headerLayout: HomeAppBar(onBackPressed: () { Navigator.pop(context, false); }),
           fieldTypes: [_email],
           onValidation: (isValidationSuccess, textEditingControllers) {}),

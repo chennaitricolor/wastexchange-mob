@@ -13,6 +13,7 @@ class BidClient {
 
   ApiBaseHelper _helper;
 
+  // TODO(Sayeed): Change the return type
   Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
     try {
       await _helper.post(

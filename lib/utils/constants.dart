@@ -22,6 +22,18 @@ class Constants {
   static const FIELD_MOBILE = 'Mobile number';
   static const FIELD_NAME = 'Name';
 
+  //field ids
+  static const ID_ALTERNATE_NUMBER = 'alternate_number';
+  static const ID_PINCODE = 'pincode';
+  static const ID_CITY = 'city';
+  static const ID_ADDRESS = 'address';
+  static const ID_PASSWORD = 'password';
+  static const ID_CONFIRM_PASSWORD = 'confirm_password';
+  static const ID_MOBILE = 'mobile_number';
+  static const ID_EMAIL = 'email_address';
+  static const ID_NAME = 'name';
+  static const ID_OTP = 'otp';
+
   //OTP screen
   static const FIELD_OTP = 'OTP';
   static const OTP_TITLE = 'OTP Sent';
@@ -78,11 +90,11 @@ class Constants {
   static const CONFIRM_BUTTON = 'Confirm';
   static const BUTTON_HOME_PAGE = 'Home page';
   static const BUTTON_LIST_OF_BIDS = 'View Bids';
+  static const BID_FAILURE_MSG = 'Bid failed';
   static const BID_SUCCESS_MSG = 'Bid successful';
   static const BUTTON_SUBMIT = 'Submit';
   static const MY_BIDS = 'Current Orders';
   static const NO_BIDS = 'No Bids';
-  static const RUPEE = '₹';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
 }

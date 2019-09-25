@@ -36,6 +36,7 @@ class UserClient {
     }
   }
 
+  // TODO(Sayeed): Change this to Future<Result<RegistrationResponse>>
   Future<RegistrationResponse> register(RegistrationData data) async {
     final String response =
         await _helper.post(false, PATH_REGISTER, data.toJson());
@@ -43,6 +44,7 @@ class UserClient {
     return registrationResponse;
   }
 
+  // TODO(Sayeed): Change this to Future<Result<OtpResponse>>
   Future<OtpResponse> sendOTP(OtpData otpData) async {
     final String response =
         await _helper.post(false, PATH_SEND_OTP, otpData.toMap());

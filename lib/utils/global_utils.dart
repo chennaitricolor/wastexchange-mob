@@ -1,3 +1,4 @@
+// TODO(Sayeed): Is this a good design. Discuss with others.
 bool isNull(Object object) => object == null;
 
 bool isNotNull(Object object) => object != null;
@@ -15,3 +16,5 @@ bool isNullOrEmpty(String value) => isNull(value) || value.isEmpty;
 bool isZero(String value) => value == '0';
 
 bool isDouble(String value) => double.tryParse(value) != null;
+
+bool isPositive(String value) => double.tryParse(value) > 0;
