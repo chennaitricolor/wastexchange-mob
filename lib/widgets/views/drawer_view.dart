@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
@@ -66,7 +67,7 @@ class DrawerView extends StatelessWidget {
         iconData: Icons.home,
         text: 'Home',
         onItemPressed: () {
-          closeDrawer(context);
+          Router.removeAllAndPush(context, MapScreen.routeName);
         },
       ),
       DrawerItemView(
