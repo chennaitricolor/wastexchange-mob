@@ -149,6 +149,14 @@ class AppTheme {
     color: lightText, // was lightText
   );
 
+  static const TextStyle body3White = TextStyle(
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+    letterSpacing: 0.2,
+    color: nearlyWhite, // was lightText
+  );
+
   static const TextStyle caption = TextStyle(
     // Caption -> caption
     fontFamily: 'OpenSans',

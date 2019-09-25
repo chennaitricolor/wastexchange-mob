@@ -7,11 +7,11 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
-import 'package:wastexchange_mobile/widgets/commons/card_view.dart';
+import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/custom_time_picker.dart';
 import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 
-import 'commons/header_card_view.dart';
+import 'package:wastexchange_mobile/widgets/views/header_card_view.dart';
 
 class OrderFormHeader extends StatefulWidget {
   const OrderFormHeader({Key key}) : super(key: key);

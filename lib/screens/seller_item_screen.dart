@@ -6,8 +6,11 @@ import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_list.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/views/below_app_bar_message.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
@@ -87,14 +90,22 @@ class _SellerItemScreenState extends State<SellerItemScreen>
             insetT: 10.0,
             insetB: 10.0),
         appBar: HomeAppBar(
-            text: sellerName,
+            text: 'Seller Items',
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
-        body: SellerItemList(
-            bidItems: bidItems,
-            quantityEditingControllers: _quantityTextEditingControllers,
-            priceEditingControllers: _priceTextEditingControllers));
+        body: Column(
+          children: <Widget>[
+            BelowAppBarMessage(message: sellerName),
+            const SizedBox(height: 16),
+            Expanded(
+              child: SellerItemList(
+                  bidItems: bidItems,
+                  quantityEditingControllers: _quantityTextEditingControllers,
+                  priceEditingControllers: _priceTextEditingControllers),
+            ),
+          ],
+        ));
   }
 
   List<String> _quantityValues() => _quantityTextEditingControllers
