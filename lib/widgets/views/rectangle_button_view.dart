@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 
-class LoginToBuyButton extends StatelessWidget {
-  const LoginToBuyButton(
+class RectangleButtonView extends StatelessWidget {
+  const RectangleButtonView(
       {Key key,
       @required this.onPressed,
       @required this.title,

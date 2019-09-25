@@ -91,13 +91,10 @@ class _SellerItemScreenState extends State<SellerItemScreen>
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: SellerItemList(
-              bidItems: bidItems,
-              quantityEditingControllers: _quantityTextEditingControllers,
-              priceEditingControllers: _priceTextEditingControllers),
-        ));
+        body: SellerItemList(
+            bidItems: bidItems,
+            quantityEditingControllers: _quantityTextEditingControllers,
+            priceEditingControllers: _priceTextEditingControllers));
   }
 
   List<String> _quantityValues() => _quantityTextEditingControllers

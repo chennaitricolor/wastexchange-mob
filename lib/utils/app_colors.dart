@@ -25,4 +25,6 @@ class AppColors {
   static const Color underline = Color.fromARGB(255, 226, 226, 226);
   static const Color text_black = Color.fromARGB(255, 38, 36, 48);
   static const Color blue = Color.fromARGB(255, 244, 248, 251);
+  static const Color card_black = Color.fromARGB(255, 53, 58, 71);
+  static const Color card_black_text_secondary = Color.fromARGB(255, 137, 142, 153);
 }

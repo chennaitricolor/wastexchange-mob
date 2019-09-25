@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class TappableCard extends StatelessWidget {
@@ -15,6 +15,7 @@ class TappableCard extends StatelessWidget {
       throw Exception('onPressed cannot be null');
     }
   }
+
   final VoidCallback onPressed;
   final IconData iconData;
   final String displayText;
@@ -22,51 +23,31 @@ class TappableCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-      elevation: 0,
-      onPressed: () {
-        onPressed();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 44.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        iconData,
-                        size: 20.0,
-                        color: AppColors.green,
-                      ),
-                      Text(
-                        ' $displayText',
-                        style: const TextStyle(
-                            color: AppColors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Text(
-              '$actionText',
-              style: const TextStyle(
-                  color: AppColors.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0),
-            ),
-          ],
-        ),
+    return InkWell(
+      onTap: onPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton.icon(
+            padding: const EdgeInsets.all(0),
+              onPressed: null,
+              icon: Icon(
+                iconData,
+                size: 16,
+                color: AppTheme.nearlyWhite,
+              ),
+              label: Text(
+                ' $displayText',
+                style: AppTheme.subtitleWhite,
+              )),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              child: Text(
+                '$actionText',
+                style: AppTheme.subtitleGreen,
+              ))
+        ],
       ),
-      color: Colors.white,
     );
   }
 }

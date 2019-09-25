@@ -6,11 +6,12 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
-import 'package:wastexchange_mobile/widgets/order_summary.dart';
-import 'package:wastexchange_mobile/widgets/order_pickup.dart';
-import 'package:wastexchange_mobile/widgets/order_total.dart';
+import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
+import 'package:wastexchange_mobile/widgets/order_form_header.dart';
+import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
   PlaceBidBloc _bloc;
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
-  final GlobalKey<OrderPickupState> _keyOrderPickup = GlobalKey();
+  final GlobalKey<OrderFormHeaderState> _keyOrderPickup = GlobalKey();
 
   void _showMessage(String message) {
     Flushbar(
@@ -71,7 +72,7 @@ class _BuyerBidConfirmationScreenState
           Navigator.pop(context, false);
         },
       ),
-      bottomNavigationBar: OrderTotal(
+      bottomNavigationBar: OrderFormTotal(
         total: _bloc.bidTotal(),
         itemsCount: widget.bidItems.length,
         onPressed: () {
@@ -86,11 +87,9 @@ class _BuyerBidConfirmationScreenState
       body: SingleChildScrollView(
           child: Column(
         children: <Widget>[
-          OrderPickup(key: _keyOrderPickup),
-          Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, right: 16, top: 20, bottom: 16),
-              child: OrderSummary(items: widget.bidItems)),
+          OrderFormHeader(key: _keyOrderPickup),
+          Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(16), child: Text('Order Summary', style: AppTheme.title)),
+          OrderFormSummaryList(items: widget.bidItems),
         ],
       )),
     );
