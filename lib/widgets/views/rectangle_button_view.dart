@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class RectangleButtonView extends StatelessWidget {
   const RectangleButtonView(
@@ -19,9 +20,7 @@ class RectangleButtonView extends StatelessWidget {
       color: enabled ? AppColors.green : AppColors.grey,
       child: Text(
         title,
-        style: TextStyle(
-          color: AppColors.white,
-        ),
+        style: AppTheme.buttonTitle,
       ),
       onPressed: enabled ? onPressed : null,
     );
