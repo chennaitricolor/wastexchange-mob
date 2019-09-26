@@ -33,7 +33,7 @@ class TokenRepository implements SetUpCompliant {
 
   Future<void> deleteToken() async {
     token = null;
-    await _cachedSecureStorage.setValue(_tokenKey, null);
+    await _cachedSecureStorage.deleteKey(_tokenKey);
   }
 
   Future<String> getToken() async {
