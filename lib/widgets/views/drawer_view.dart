@@ -82,7 +82,8 @@ class DrawerView extends StatelessWidget {
         iconData: Icons.power_settings_new,
         text: 'Logout',
         onItemPressed: () {
-          closeDrawer(context);
+          logoutUser();
+          Router.popToRootAndPushNamed(context, MapScreen.routeName);
         },
       ),
     ];
@@ -90,5 +91,9 @@ class DrawerView extends StatelessWidget {
 
   void closeDrawer(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void logoutUser() {
+    _userRepository.logoutUser();
   }
 }
