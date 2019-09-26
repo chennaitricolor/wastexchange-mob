@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/rectangle_button_view.dart';
+import 'package:wastexchange_mobile/widgets/views/button_view_icon_compact.dart';
 
 class OrderFormTotal extends StatelessWidget {
   const OrderFormTotal({this.total, this.itemsCount, this.onPressed});
@@ -41,20 +40,7 @@ class OrderFormTotal extends StatelessWidget {
                   )
                 ]),
             flex: 1),
-        RaisedButton.icon(
-            color: AppColors.green,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(22.0)),
-            onPressed: onPressed,
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 25,
-            ),
-            label: Text(
-              'Confirm',
-              style: AppTheme.buttonTitle,
-            ))
+        ButtonViewIconCompact(text: 'Confirm', onPressed: onPressed),
       ]),
     );
   }
