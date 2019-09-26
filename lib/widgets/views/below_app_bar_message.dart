@@ -14,7 +14,7 @@ class BelowAppBarMessage extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             width: double.infinity,
-            color: AppColors.green,
-            child: Text(message ?? '', style: AppTheme.subtitleWhite)));
+            color: AppColors.chrome_grey,
+            child: Text(message ?? '', style: AppTheme.subtitle)));
   }
 }
