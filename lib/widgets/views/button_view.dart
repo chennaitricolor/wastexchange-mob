@@ -1,3 +1,4 @@
+import 'package:authentication_view/auth_colors.dart';
 import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -14,5 +15,5 @@ class ButtonView extends CustomButton {
             buttonText: text,
             onButtonPressed: onButtonPressed,
             margin: EdgeInsets.fromLTRB(insetL, insetT, insetR, insetB),
-            buttonStyle: ButtonStyle.DEFAULT);
+            buttonStyle: ButtonStyle.value(240, 55, 55, AuthColors.green, Colors.white));
 }

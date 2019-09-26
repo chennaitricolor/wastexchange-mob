@@ -58,7 +58,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return HeaderCardView(
+    return CardView(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -66,7 +66,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
               children: <Widget>[
             Text(
               _orderPickupBloc.pageTitle(),
-              style: AppTheme.titleWhite,
+              style: AppTheme.title,
             ),
             TextField(
               style: AppTheme.hintText,
@@ -76,9 +76,9 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
                   counter: const SizedBox(),
                   contentPadding: const EdgeInsets.fromLTRB(0, 8, 16, 10),
                   enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.card_black_text_secondary)),
+                      borderSide: BorderSide(color: AppColors.green)),
                   focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.card_black_text_secondary)),
+                      borderSide: BorderSide(color: AppColors.green)),
                   hintStyle: AppTheme.hintText,
                   hintText: _orderPickupBloc.contactHintText()),
             ),

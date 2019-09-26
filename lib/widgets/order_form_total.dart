@@ -41,11 +41,20 @@ class OrderFormTotal extends StatelessWidget {
                   )
                 ]),
             flex: 1),
-        RectangleButtonView(
-          title: 'Confirm',
-          onPressed: onPressed,
-          enabled: true,
-        ),
+        RaisedButton.icon(
+            color: AppColors.green,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(22.0)),
+            onPressed: onPressed,
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+              size: 25,
+            ),
+            label: Text(
+              'Confirm',
+              style: AppTheme.buttonTitle,
+            ))
       ]),
     );
   }

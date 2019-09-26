@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
@@ -34,11 +35,11 @@ class TappableCard extends StatelessWidget {
               icon: Icon(
                 iconData,
                 size: 16,
-                color: AppTheme.nearlyWhite,
+                color: AppTheme.darkText,
               ),
               label: Text(
                 ' $displayText',
-                style: AppTheme.subtitleWhite,
+                style: AppTheme.subtitle,
               )),
           Padding(
               padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),

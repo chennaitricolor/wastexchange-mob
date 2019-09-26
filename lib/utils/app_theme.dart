@@ -180,6 +180,6 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 14,
     letterSpacing: 0.2,
-    color: AppColors.card_black_text_secondary,
+    color: darkerText,
   );
 }
