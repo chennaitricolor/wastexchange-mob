@@ -1,4 +1,5 @@
 import 'package:authentication_view/authentication_view.dart';
+import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flushbar/flushbar.dart';
@@ -111,6 +112,8 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthenticationView(
+          buttonTextStyle: AppTheme.buttonTitle,
+          buttonStyle: ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
           placeHolderBelowButton: MaterialButton(
               onPressed: () {
                 _sendOtp();

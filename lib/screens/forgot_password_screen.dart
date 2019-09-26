@@ -1,4 +1,5 @@
 import 'package:authentication_view/authentication_view.dart';
+import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class ForgotPasswordScreen extends StatelessWidget {
     final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
     return Scaffold(
       body: AuthenticationView(
+          buttonTextStyle: AppTheme.buttonTitle,
+          buttonStyle: ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
           messageLayout: Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(24),

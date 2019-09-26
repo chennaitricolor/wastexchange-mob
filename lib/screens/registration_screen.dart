@@ -1,4 +1,5 @@
 import 'package:authentication_view/authentication_view.dart';
+import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flushbar/flushbar.dart';
@@ -12,6 +13,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/otp_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/locale_constants.dart';
@@ -130,6 +132,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return Scaffold(
         body: AuthenticationView(
+            buttonTextStyle: AppTheme.buttonTitle,
+       buttonStyle: ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
       fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
           AppColors.green, AppColors.text_grey),
       headerLayout: HomeAppBar(onBackPressed: () {
