@@ -8,10 +8,14 @@ import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item_ro
 class SellerItemListItem extends StatelessWidget {
   const SellerItemListItem(
       {this.item,
+      this.showQuantityFieldError,
+      this.showPriceFieldError,
       this.quantityTextEditingController,
       this.priceTextEditingController});
 
   final Item item;
+  final bool showQuantityFieldError;
+  final bool showPriceFieldError;
   final TextEditingController quantityTextEditingController;
   final TextEditingController priceTextEditingController;
 
@@ -31,11 +35,13 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
+                showFieldError: showQuantityFieldError,
                 isEditable: true,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
+                showFieldError: showPriceFieldError,
                 isEditable: true,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',

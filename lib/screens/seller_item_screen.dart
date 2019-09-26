@@ -41,6 +41,8 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   List<TextEditingController> _priceTextEditingControllers;
   String sellerName;
   List<BidItem> bidItems;
+  Set<int> quantityErrorPositions = {};
+  Set<int> priceErrorPositions = {};
 
   @override
   void initState() {
@@ -61,17 +63,55 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         arguments: sellerInfo);
   }
 
+  //TODO: [Chandru] Need to unify the set state methods. It is unnecessary duplicated now.
   @override
-  void onValidationError(String message) {
-    showErrorMessage(message);
+  void onQuantityValidationError(String message, List<int> quantityErrors) {
+    handleQuantityValidationError(message, quantityErrors);
   }
 
   @override
-  void onValidationEmpty(String message) {
+  void onPriceValidationError(String message, List<int> priceErrors) {
+    handlePriceValidationError(message, priceErrors);
+  }
+
+  @override
+  void onValidationEmpty(String message, List<int> errorPositions) {
+    handleValidationEmpty(message, errorPositions);
+  }
+
+  void handlePriceValidationError(String message, List<int> priceErrors) {
     showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = {};
+      priceErrorPositions = priceErrors.toSet();
+    });
+  }
+
+  void handleQuantityValidationError(String message, List<int> quantityErrors) {
+    showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = quantityErrors.toSet();
+      priceErrorPositions = {};
+    });
+  }
+
+  void handleValidationEmpty(String message, List<int> errorPositions) {
+    showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = errorPositions.toSet();
+      priceErrorPositions = errorPositions.toSet();
+    });
+  }
+
+  void resetStates() {
+    setState(() {
+      quantityErrorPositions = {};
+      priceErrorPositions = {};
+    });
   }
 
   void showErrorMessage(String message) {
+    setState(() {});
     Flushbar(
         forwardAnimationCurve: Curves.ease,
         duration: Duration(seconds: 2),
@@ -84,6 +124,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
     return Scaffold(
         bottomNavigationBar: ButtonView(
             onButtonPressed: () {
+              resetStates();
               _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
             },
             text: Constants.BUTTON_SUBMIT,
@@ -100,6 +141,8 @@ class _SellerItemScreenState extends State<SellerItemScreen>
             const SizedBox(height: 16),
             Expanded(
               child: SellerItemList(
+                  quantityErrorPositions: quantityErrorPositions,
+                  priceErrorPositions: priceErrorPositions,
                   bidItems: bidItems,
                   quantityEditingControllers: _quantityTextEditingControllers,
                   priceEditingControllers: _priceTextEditingControllers),
@@ -119,6 +162,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
 mixin SellerItemListener {
   void onValidationSuccess({Map<String, dynamic> sellerInfo});
-  void onValidationError(String message);
-  void onValidationEmpty(String message);
+  void onQuantityValidationError(String message, List<int> quantityErrors);
+  void onPriceValidationError(String message, List<int> priceErrors);
+  void onValidationEmpty(String message, List<int> errorPositions);
 }

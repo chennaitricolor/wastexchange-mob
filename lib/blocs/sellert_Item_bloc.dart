@@ -21,9 +21,10 @@ class SellerItemBloc {
   Map<int, List<int>> _validationMap;
 
   static const EMPTY = 0;
-  static const ERROR = 1;
+  static const QUANTITY_ERROR = 1;
   static const ABOVEMAXQTY = 2;
   static const SUCCESS = 3;
+  static const PRICE_ERROR = 4;
 
   SellerItemListener _listener;
 
@@ -41,8 +42,13 @@ class SellerItemBloc {
         continue;
       }
 
-      if (isErrorScenario(quantityValue, priceValue, index)) {
-        _updateValueMap(ERROR, index);
+      if (isQuantityErrorScenario(quantityValue, index)) {
+        _updateValueMap(QUANTITY_ERROR, index);
+        continue;
+      }
+
+      if (isPriceErrorScenario(priceValue, index)) {
+        _updateValueMap(PRICE_ERROR, index);
         continue;
       }
 
@@ -62,27 +68,34 @@ class SellerItemBloc {
     final List<int> empty = _validationMap[EMPTY];
 
     if (empty?.length == _sellerInfo.items.length) {
-      _listener.onValidationEmpty('Please bid for at least one item');
+      _listener.onValidationEmpty('Please bid for at least one item', empty);
       return;
     }
 
-    final List<int> error = _validationMap[ERROR];
-
-    if (!isListNullOrEmpty(error)) {
+    //TODO: [Chandru] Need to optimize the quantity and price error methods. It loooks like codes are duplicated.
+    final List<int> quantityErrors = _validationMap[QUANTITY_ERROR];
+    if (!isListNullOrEmpty(quantityErrors)) {
       final String invalidItems =
-          error.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onValidationError('Invalid values for $invalidItems');
+      quantityErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
+      _listener.onQuantityValidationError('Invalid quantity values for $invalidItems', quantityErrors);
       return;
     }
 
-    final List<int> aboveMaxQty = _validationMap[ABOVEMAXQTY];
+    final List<int> priceErrors = _validationMap[PRICE_ERROR];
+    if (!isListNullOrEmpty(priceErrors)) {
+      final String invalidItems =
+      priceErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
+      _listener.onPriceValidationError('Invalid price values for $invalidItems', priceErrors);
+      return;
+    }
 
-    if (!isListNullOrEmpty(aboveMaxQty)) {
-      final String aboveMaxQtyItems = aboveMaxQty
+    final List<int> aboveMaxQtys = _validationMap[ABOVEMAXQTY];
+    if (!isListNullOrEmpty(aboveMaxQtys)) {
+      final String aboveMaxQtyItems = aboveMaxQtys
           .map((index) => _sellerInfo.items[index].displayName)
           .join(', ');
       _listener
-          .onValidationError('qty above available qty for $aboveMaxQtyItems');
+          .onQuantityValidationError('qty above available qty for $aboveMaxQtyItems', aboveMaxQtys);
       return;
     }
 
@@ -93,30 +106,29 @@ class SellerItemBloc {
   bool isEmptyScenario(String quantityValue, String priceValue) =>
       quantityValue.isEmpty && priceValue.isEmpty;
 
-  bool isErrorScenario(String quantityValue, String priceValue, int index) {
+  bool isQuantityErrorScenario(String quantityValue, int index) {
     if (_validationMap[EMPTY].contains(index)) {
       throw Exception('Both Quantity and Price are empty');
     }
-
-    final bool isOneOfTwoEmpty =
-        quantityValue.isEmpty && priceValue.isNotEmpty ||
-            quantityValue.isNotEmpty && priceValue.isEmpty;
-    final bool isOneOrTwoZero = quantityValue == '0' || priceValue == '0';
-    final bool isOneOrTwoNotDouble =
-        !isDouble(quantityValue) || !isDouble(priceValue);
-
-    if (isOneOfTwoEmpty || isOneOrTwoZero || isOneOrTwoNotDouble) {
+    if (quantityValue.isEmpty || quantityValue == '0' || !isDouble(quantityValue)) {
       return true;
     }
+    return !isPositive(quantityValue);
+  }
 
-    final bool isOneOrTwoNegative =
-        !isPositive(quantityValue) || !isPositive(priceValue);
-    return isOneOrTwoNegative;
+  bool isPriceErrorScenario(String priceValue, int index) {
+    if (_validationMap[QUANTITY_ERROR].contains(index)) {
+      throw Exception('Both Quantity and Price are empty');
+    }
+    if (priceValue.isEmpty || priceValue == '0' || !isDouble(priceValue)) {
+      return true;
+    }
+    return !isPositive(priceValue);
   }
 
   bool isAboveMaxQty(String quantityValue, int index) {
-    if (_validationMap[EMPTY].contains(index) ||
-        _validationMap[ERROR].contains(index)) {
+    if (_validationMap[QUANTITY_ERROR].contains(index) ||
+        _validationMap[PRICE_ERROR].contains(index)) {
       throw Exception(
           'Empty or Error case should not happen here because of order of code execution');
     }
@@ -125,7 +137,8 @@ class SellerItemBloc {
 
   void _resetValueMap() {
     _validationMap.clear();
-    _validationMap[ERROR] = [];
+    _validationMap[QUANTITY_ERROR] = [];
+    _validationMap[PRICE_ERROR] = [];
     _validationMap[EMPTY] = [];
     _validationMap[ABOVEMAXQTY] = [];
     _validationMap[SUCCESS] = [];
