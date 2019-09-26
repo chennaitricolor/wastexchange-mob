@@ -10,11 +10,10 @@ class BelowAppBarMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-        child: Container(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            width: double.infinity,
-            color: AppColors.chrome_grey,
-            child: Text(message ?? '', style: AppTheme.subtitle)));
+    return Container(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        width: double.infinity,
+        color: AppColors.chrome_grey,
+        child: Text(message ?? '', style: AppTheme.subtitle));
   }
 }

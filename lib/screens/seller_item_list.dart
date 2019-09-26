@@ -15,18 +15,13 @@ class SellerItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverList(
-            delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
+    return ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
           final Item item = bidItems[index].item;
           return SellerItemListItem(
               item: item,
               quantityTextEditingController: quantityEditingControllers[index],
               priceTextEditingController: priceEditingControllers[index]);
-        }, childCount: bidItems.length))
-      ],
-    );
+        }, itemCount : bidItems.length);
   }
 }
