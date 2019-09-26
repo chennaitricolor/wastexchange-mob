@@ -83,7 +83,7 @@ class DrawerView extends StatelessWidget {
         text: 'Logout',
         onItemPressed: () {
           logoutUser();
-          Router.removeAllAndPush(context, MapScreen.routeName);
+          Router.popToRootAndPushNamed(context, MapScreen.routeName);
         },
       ),
     ];
