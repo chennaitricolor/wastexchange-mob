@@ -6,5 +6,5 @@ class CardView extends Card {
             elevation: 1,
             child: child,
             margin:
-                const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4));
+                const EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4));
 }
