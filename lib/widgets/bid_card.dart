@@ -17,48 +17,28 @@ class BidCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardView(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Row(
           children: <Widget>[
-            Flexible(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _getStatus(_bid.status),
-                )),
-              ),
-            ),
-            Flexible(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(_seller.name),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        Constants.INR_UNICODE + _bid.amount,
-                        style: AppTheme.title,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        Constants.PICKUP_AT +
-                            _getFormattedDate(_bid.pickupDate),
-                        style: AppTheme.body3,
-                      ),
-                    )
-                  ],
-                ),
+            _getStatus(_bid.status),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(_seller.name, style: AppTheme.body2),
+                  const SizedBox(height: 4),
+                  Text(
+                    Constants.INR_UNICODE + _bid.amount,
+                    style: AppTheme.title,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    Constants.PICKUP_AT +
+                        _getFormattedDate(_bid.pickupDate),
+                    style: AppTheme.body3,
+                  )
+                ],
               ),
             ),
           ],
