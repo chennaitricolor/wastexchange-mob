@@ -77,7 +77,7 @@ class SellerItemBloc {
     if (!isListNullOrEmpty(quantityErrors)) {
       final String invalidItems =
       quantityErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onQuantityValidationError('Invalid quantity values for $invalidItems', quantityErrors);
+      _listener.onQuantityValidationError('Please enter valid quantity values for $invalidItems', quantityErrors);
       return;
     }
 
@@ -85,7 +85,7 @@ class SellerItemBloc {
     if (!isListNullOrEmpty(priceErrors)) {
       final String invalidItems =
       priceErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onPriceValidationError('Invalid price values for $invalidItems', priceErrors);
+      _listener.onPriceValidationError('Please enter valid price values for $invalidItems', priceErrors);
       return;
     }
 
@@ -95,7 +95,7 @@ class SellerItemBloc {
           .map((index) => _sellerInfo.items[index].displayName)
           .join(', ');
       _listener
-          .onQuantityValidationError('qty above available qty for $aboveMaxQtyItems', aboveMaxQtys);
+          .onQuantityValidationError('Entered quantity is above the available quantity for $aboveMaxQtyItems', aboveMaxQtys);
       return;
     }
 
