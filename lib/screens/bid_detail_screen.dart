@@ -2,7 +2,6 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/bid_detail_bloc.dart';
-import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
@@ -15,11 +14,11 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_edit_item_list.dart';
 import 'package:wastexchange_mobile/screens/bid_info.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
+import 'package:wastexchange_mobile/screens/primary_secondary_action.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
-import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BidDetailScreen extends StatefulWidget {
@@ -129,15 +128,29 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
 
   @override
   Widget build(BuildContext context) {
-    if(bid != null && sellerItemDetails != null) {
-      return showBidDetails();
-    } else {
-      return emptyView();
-    }
-
+    return Scaffold(
+        bottomNavigationBar: _isDataLoaded() && _isPendingBid()? isEditMode ? _getSubmitAndCancelButtons() : _getEditAndCancelBidButtons() : Row(),
+        backgroundColor: AppColors.chrome_grey,
+        appBar: HomeAppBar(
+            text: 'Order Id : ${bid.orderId}',
+            onBackPressed: () {
+              Navigator.pop(context, false);
+            }),
+        body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: _isDataLoaded()? CustomScrollView(slivers: <Widget>[
+              SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                return BidInfo(bid: bid);
+              }, childCount: 1)),
+              BidEditItemList(
+                bidItems: sellerItemDetails.items.map((item) => BidItem(item: item)).toList(),
+                quantityEditingControllers: _quantityTextEditingControllers,
+                priceEditingControllers: _priceTextEditingControllers,
+                isEditable: isEditMode,)
+            ]): Row()));
   }
 
-  bool isPendingBid() {
+  bool _isPendingBid() {
     return bid.status == BidStatus.pending;
   }
 
@@ -147,45 +160,31 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
     super.dispose();
   }
 
-  Widget getSubmitAndCancelButtons() {
-    return Row(children: <Widget>[
-      ButtonView(
-          onButtonPressed: () {
-            setState(() {
-              isEditMode = false;
-            });
-          },
-          buttonStyle: getSmallButtonStyle(),
-          text: Constants.BUTTON_CANCEL),
-      ButtonView(
-          onButtonPressed: () {
-            _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-          },
-          buttonStyle: getSmallButtonStyle(),
-          text: Constants.BUTTON_SUBMIT)
-    ]);
+  Widget _getSubmitAndCancelButtons() {
+    return PrimarySecondaryAction(primaryBtnText: Constants.BUTTON_SUBMIT, secondaryBtnText: Constants.BUTTON_CANCEL, actionCallback: (action) {
+      if(action > 0) {
+        setState(() {
+          isEditMode = false;
+        });
+      } else {
+        _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+      }
+    });
   }
 
-  Widget getEditAndCancelBidButtons() {
-    return Row(children: <Widget>[
-      ButtonView(
-        onButtonPressed: () {
-          askCancelConfirmation();
-        },
-        buttonStyle: getSmallButtonStyle(),
-        text: Constants.BUTTON_CANCEL_BID,),
-      ButtonView(
-          onButtonPressed: () {
-            setState(() {
-              isEditMode = true;
-            });
-          },
-          buttonStyle: getSmallButtonStyle(),
-          text: Constants.BUTTON_EDIT_BID)
-    ]);
+  Widget _getEditAndCancelBidButtons() {
+    return PrimarySecondaryAction(primaryBtnText: Constants.BUTTON_EDIT_BID, secondaryBtnText: Constants.BUTTON_CANCEL_BID, actionCallback: (action) {
+      if(action > 0) {
+        setState(() {
+          isEditMode = true;
+        });
+      } else {
+        _askCancelConfirmation();
+      }
+    });
   }
 
-  void askCancelConfirmation() {
+  void _askCancelConfirmation() {
     showConfirmationDialog(context, "Cancel Bid", "Are you sure, You want to cancel the bid", "Yes", "No", (status) {
       if(status) {
         _isCancelOperation = true;
@@ -194,46 +193,8 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
     });
   }
 
-  Widget showBidDetails() {
-
-    return Scaffold(
-        bottomNavigationBar: isPendingBid()? isEditMode ? getSubmitAndCancelButtons() : getEditAndCancelBidButtons() : Row(),
-        backgroundColor: AppColors.chrome_grey,
-        appBar: HomeAppBar(
-            text: 'Order Id : ${bid.orderId}',
-            onBackPressed: () {
-              Navigator.pop(context, false);
-            }),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: getEditItemView(isEditMode)));
-  }
-
-  Widget emptyView() {
-    return Scaffold(
-        backgroundColor: AppColors.chrome_grey,
-        appBar: HomeAppBar(
-            text: 'Order Id : ${bid.orderId}',
-            onBackPressed: () {
-              Navigator.pop(context, false);
-            }),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-        ));
-  }
-
-  Widget getEditItemView(bool isEditMode) {
-
-    return CustomScrollView(slivers: <Widget>[
-      SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        return BidInfo(bid: bid);
-      }, childCount: 1)),
-      BidEditItemList(
-        bidItems: sellerItemDetails.items.map((item) => BidItem(item: item)).toList(),
-        quantityEditingControllers: _quantityTextEditingControllers,
-        priceEditingControllers: _priceTextEditingControllers,
-        isEditable: isEditMode,)
-    ]);
+  bool _isDataLoaded() {
+    return sellerItemDetails != null;
   }
 
   List<String> _quantityValues() => _quantityTextEditingControllers
