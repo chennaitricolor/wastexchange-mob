@@ -19,12 +19,7 @@ class CachedSecureStorage {
 
   Future<void> setValue(String key, String value) async {
     _cachedKeyValueMap[key] = value;
-
-    if (value != null) {
-      await _flutterSecureStorage.write(key: key, value: value);
-    } else {
-      await deleteKey(key);
-    }
+    await _flutterSecureStorage.write(key: key, value: value);
   }
 
   Future<void> deleteKey(String key) async {
