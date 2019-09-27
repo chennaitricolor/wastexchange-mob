@@ -163,11 +163,11 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
   Widget _getSubmitAndCancelButtons() {
     return PrimarySecondaryAction(primaryBtnText: Constants.BUTTON_SUBMIT, secondaryBtnText: Constants.BUTTON_CANCEL, actionCallback: (action) {
       if(action > 0) {
+        _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+      } else {
         setState(() {
           isEditMode = false;
         });
-      } else {
-        _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
       }
     });
   }
