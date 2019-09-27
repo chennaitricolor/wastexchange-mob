@@ -13,7 +13,7 @@ class BuyerBidData {
 
   List<BidItem> bidItems;
   int sellerId;
-  int totalBid;
+  double totalBid;
   DateTime pDateTime;
   String contactName;
   String status;

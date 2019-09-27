@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item_row.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item_row.dart';
 
 class SellerItemListItem extends StatelessWidget {
   const SellerItemListItem(
       {this.item,
+      this.showQuantityFieldError,
+      this.showPriceFieldError,
       this.quantityTextEditingController,
       this.priceTextEditingController});
 
   final Item item;
+  final bool showQuantityFieldError;
+  final bool showPriceFieldError;
   final TextEditingController quantityTextEditingController;
   final TextEditingController priceTextEditingController;
 
@@ -31,11 +35,13 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
+                showFieldError: showQuantityFieldError,
                 isEditable: true,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
+                showFieldError: showPriceFieldError,
                 isEditable: true,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',

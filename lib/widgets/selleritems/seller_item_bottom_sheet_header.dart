@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/selleritems/login_to_buy_button.dart';
+import 'package:wastexchange_mobile/widgets/views/rectangle_button_view.dart';
 
 class SellerItemBottomSheetHeader extends StatelessWidget {
   const SellerItemBottomSheetHeader(
@@ -36,7 +36,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          LoginToBuyButton(
+          RectangleButtonView(
             title: buttonTitle,
             onPressed: onPressed,
             enabled: buttonEnabled,

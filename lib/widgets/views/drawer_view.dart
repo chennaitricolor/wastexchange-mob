@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
@@ -58,7 +59,7 @@ class DrawerView extends StatelessWidget {
             Text('Hello, ${_thisUser.name}', style: AppTheme.titleWhite),
         accountEmail: Text(_thisUser.emailId, style: AppTheme.subtitleWhite),
         currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.yellow,
+            backgroundColor: AppColors.avatar_bg,
             child: Text(_thisUser.name.substring(0, 1).toUpperCase(),
                 style: AppTheme.title)),
       ),
@@ -66,7 +67,7 @@ class DrawerView extends StatelessWidget {
         iconData: Icons.home,
         text: 'Home',
         onItemPressed: () {
-          closeDrawer(context);
+          Router.removeAllAndPush(context, MapScreen.routeName);
         },
       ),
       DrawerItemView(
@@ -81,7 +82,8 @@ class DrawerView extends StatelessWidget {
         iconData: Icons.power_settings_new,
         text: 'Logout',
         onItemPressed: () {
-          closeDrawer(context);
+          logoutUser();
+          Router.popToRootAndPushNamed(context, MapScreen.routeName);
         },
       ),
     ];
@@ -89,5 +91,9 @@ class DrawerView extends StatelessWidget {
 
   void closeDrawer(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void logoutUser() {
+    _userRepository.logoutUser();
   }
 }
