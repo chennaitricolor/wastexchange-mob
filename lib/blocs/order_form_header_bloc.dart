@@ -5,7 +5,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
-class OrderPickupBloc {
+class OrderFormHeaderBloc {
   OrderPickupBloc() {
     final DateTime nowPlus18Hours =
         DateTime.now().add(Duration(hours: minimumPickupTimeHoursFromNow));
