@@ -5,7 +5,7 @@ import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_list.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
