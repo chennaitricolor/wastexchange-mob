@@ -18,7 +18,7 @@ class TokenRepository implements SetUpCompliant {
 
   CachedSecureStorage _cachedSecureStorage;
 
-  static const _tokenKey = 'token';
+  static const _ktoken = 'token';
 
   String token;
 
@@ -28,16 +28,16 @@ class TokenRepository implements SetUpCompliant {
 
   Future<void> setToken(token) async {
     this.token = token;
-    await _cachedSecureStorage.setValue(_tokenKey, token);
+    await _cachedSecureStorage.setValue(_ktoken, token);
   }
 
   Future<void> deleteToken() async {
     token = null;
-    await _cachedSecureStorage.deleteKey(_tokenKey);
+    await _cachedSecureStorage.deleteKey(_ktoken);
   }
 
   Future<String> getToken() async {
-    token = await _cachedSecureStorage.getValue(_tokenKey);
+    token = await _cachedSecureStorage.getValue(_ktoken);
     return token;
   }
 
