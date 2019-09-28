@@ -23,6 +23,7 @@ class CachedSecureStorage {
   }
 
   Future<void> deleteKey(String key) async {
+    _cachedKeyValueMap.remove(key);
     await _flutterSecureStorage.delete(key: key);
   }
 
