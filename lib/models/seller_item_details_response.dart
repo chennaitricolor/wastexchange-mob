@@ -27,6 +27,7 @@ class SellerItemDetails {
         items: sellerItems);
   }
 
+  // TODO(Sayeed): Where should parsing logic reside
   static List<Item> mapDetailsJsonToList(dynamic detailsJson) {
     if (isNull(detailsJson)) {
       return [];

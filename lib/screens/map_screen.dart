@@ -125,6 +125,7 @@ class _MapState extends State<MapScreen> {
     );
   }
 
+// TODO(Sayeed): Is it bad that we have created a new method for getting widgets instead of having it in build()
   Widget _widgetForMapStatus() {
     if (_mapStatus == _MapStatus.LOADING) {
       return FractionallySizedBox(

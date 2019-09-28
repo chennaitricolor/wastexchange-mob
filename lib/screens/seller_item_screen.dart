@@ -32,6 +32,8 @@ class SellerItemScreen extends StatefulWidget {
   _SellerItemScreenState createState() => _SellerItemScreenState();
 }
 
+// TODO(Sayeed): We have a mixin pattern for callback here where as in other places we have bloc/streams.
+//We should discuss and agree on one style for consistency
 class _SellerItemScreenState extends State<SellerItemScreen>
     with SellerItemListener {
   final logger = AppLogger.get('SellerInformationScreen');
@@ -63,7 +65,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         arguments: sellerInfo);
   }
 
-  //TODO: [Chandru] Need to unify the set state methods. It is unnecessary duplicated now.
+  // TODO(Chandru): Need to unify the set state methods. It is unnecessary duplicated now.
   @override
   void onQuantityValidationError(String message, List<int> quantityErrors) {
     handleQuantityValidationError(message, quantityErrors);
