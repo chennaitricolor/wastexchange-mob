@@ -64,8 +64,7 @@ class OrderFormHeaderBloc {
     if (isNotNull(_pickupDate) &&
         isNotNull(_pickupTime) &&
         !_isPickDateTimeAfterMinimumHoursFromNow()) {
-      arr.add(
-          'Pickup Time should be after $minimumPickupTimeHoursFromNow hours from now');
+      arr.add(minimumPickupDateTimeHoursFromNowMessage());
     }
     if (arr.isNotEmpty) {
       return Result.error(arr.join('\n'));
@@ -104,4 +103,7 @@ class OrderFormHeaderBloc {
   String pageTitle() => 'Pickup Details';
 
   String contactHintText() => 'Contact Name';
+
+  String minimumPickupDateTimeHoursFromNowMessage() =>
+      'Pickup DateTime should be after $minimumPickupTimeHoursFromNow hours from now';
 }

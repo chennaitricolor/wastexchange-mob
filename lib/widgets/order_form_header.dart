@@ -117,6 +117,12 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
                     setState(() {});
                   });
                 }),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                child: Text(
+                  '*${_orderFormHeaderBloc.minimumPickupDateTimeHoursFromNowMessage()}',
+                  style: AppTheme.caption,
+                )),
           ]),
     ));
   }
