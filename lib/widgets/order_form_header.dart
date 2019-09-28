@@ -41,7 +41,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
   void _showMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         message: message)
       ..show(context);
   }
@@ -72,12 +72,12 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   counter: const SizedBox(),
-                  contentPadding: const EdgeInsets.fromLTRB(0, 8, 16, 10),
+                  contentPadding: const EdgeInsets.fromLTRB(0, 12, 16, 10),
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: AppColors.green)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: AppColors.green)),
-                  hintStyle: AppTheme.hintText,
+                  hintStyle: AppTheme.subtitle,
                   hintText: _orderFormHeaderBloc.contactHintText()),
             ),
             TappableCard(

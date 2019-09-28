@@ -88,7 +88,10 @@ class _BuyerBidConfirmationScreenState
           child: Column(
         children: <Widget>[
           OrderFormHeader(key: _keyOrderPickup),
-          Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(16), child: Text('Order Summary', style: AppTheme.title)),
+          Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+              child: const Text('Order Summary', style: AppTheme.title)),
           OrderFormSummaryList(items: widget.bidItems),
         ],
       )),

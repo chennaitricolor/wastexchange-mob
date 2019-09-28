@@ -14,7 +14,7 @@ class OrderFormTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 90,
+      height: 80,
       padding: const EdgeInsets.all(16),
       child: Row(children: <Widget>[
         Expanded(

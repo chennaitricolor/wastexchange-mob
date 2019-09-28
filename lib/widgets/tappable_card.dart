@@ -33,7 +33,7 @@ class TappableCard extends StatelessWidget {
               onPressed: null,
               icon: Icon(
                 iconData,
-                size: 16,
+                size: 20,
                 color: AppTheme.darkText,
               ),
               label: Text(
@@ -41,7 +41,7 @@ class TappableCard extends StatelessWidget {
                 style: AppTheme.subtitle,
               )),
           Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
               child: Text(
                 '$actionText',
                 style: AppTheme.subtitleGreen,
