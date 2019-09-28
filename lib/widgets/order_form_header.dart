@@ -11,8 +11,6 @@ import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/custom_time_picker.dart';
 import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 
-import 'package:wastexchange_mobile/widgets/views/header_card_view.dart';
-
 class OrderFormHeader extends StatefulWidget {
   const OrderFormHeader({Key key}) : super(key: key);
   @override
@@ -60,10 +58,10 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
   Widget build(BuildContext context) {
     return CardView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+      padding: const EdgeInsets.all(16),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
             Text(
               _orderPickupBloc.pageTitle(),
               style: AppTheme.title,
@@ -120,6 +118,6 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
                   });
                 }),
           ]),
-        ));
+    ));
   }
 }

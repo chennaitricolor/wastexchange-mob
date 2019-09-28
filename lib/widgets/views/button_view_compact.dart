@@ -3,9 +3,8 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class ButtonViewCompact extends StatelessWidget {
+  const ButtonViewCompact({@required this.onPressed, this.text});
 
-  ButtonViewCompact({@required this.onPressed, this.text});
-  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,6 +20,7 @@ class ButtonViewCompact extends StatelessWidget {
               borderRadius: BorderRadius.circular(22.0))),
     );
   }
-  VoidCallback onPressed;
-  String text;
+
+  final VoidCallback onPressed;
+  final String text;
 }

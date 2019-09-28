@@ -17,5 +17,6 @@ class ButtonView extends CustomButton {
             buttonText: text,
             onButtonPressed: onButtonPressed,
             margin: EdgeInsets.fromLTRB(insetL, insetT, insetR, insetB),
-            buttonStyle: ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white));
+            buttonStyle:
+                ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white));
 }
