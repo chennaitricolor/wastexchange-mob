@@ -16,13 +16,13 @@ class UserDataStore {
   CachedSecureStorage _cachedSecureStorage;
   User _thisUser;
   List<User> _allUsers;
-  static const THIS_USER_KEY = 'thisUser';
+  static const kThisUser = 'thisUser';
 
   static final UserDataStore _singleton = UserDataStore._internal();
 
   void saveProfile(User user) {
     _thisUser = user;
-    _cachedSecureStorage.setValue(THIS_USER_KEY, json.encode(user.toJson()));
+    _cachedSecureStorage.setValue(kThisUser, json.encode(user.toJson()));
   }
 
   void saveUsers(List<User> users) {
@@ -37,15 +37,15 @@ class UserDataStore {
     if (isNotNull(_thisUser)) {
       return _thisUser;
     }
-    final String jsonStr = await _cachedSecureStorage.getValue(THIS_USER_KEY);
+    final String jsonStr = await _cachedSecureStorage.getValue(kThisUser);
     if (isNotNull(jsonStr)) {
       _thisUser = User.fromJson(json.decode(jsonStr));
     }
     return _thisUser;
   }
 
-  void deleteUser(){
+  void deleteUser() {
     _thisUser = null;
-    _cachedSecureStorage.deleteKey(THIS_USER_KEY);
+    _cachedSecureStorage.deleteKey(kThisUser);
   }
 }
