@@ -9,10 +9,6 @@ class UserDataStore {
     return _singleton;
   }
 
-  factory UserDataStore.testInit([CachedSecureStorage cachedSecureStorage]) {
-    return UserDataStore._internal(cachedSecureStorage);
-  }
-
   UserDataStore._internal([CachedSecureStorage cachedSecureStorage]) {
     _cachedSecureStorage = cachedSecureStorage ?? CachedSecureStorage();
   }
