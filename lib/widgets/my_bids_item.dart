@@ -34,8 +34,7 @@ class MyBidsItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    Constants.PICKUP_AT +
-                        _getFormattedDate(_bid.pickupDate),
+                    Constants.PICKUP_AT + _getFormattedDate(_bid.pickupDate),
                     style: AppTheme.body3,
                   )
                 ],
@@ -49,8 +48,8 @@ class MyBidsItem extends StatelessWidget {
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    final f =
-        DateFormat('${AppDateFormat.shortDate} ${AppDateFormat.defaultTime}');
+    final f = DateFormat(
+        '${AppDateFormat.defaultDate} - ${AppDateFormat.defaultTime}');
     return f.format(date.toLocal());
   }
 

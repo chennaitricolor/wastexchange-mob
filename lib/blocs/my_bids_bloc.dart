@@ -38,6 +38,8 @@ class MyBidsBloc {
             await _userRepository.getUser(id: bid.sellerId);
         _sellerIdToSellerMap[bid.sellerId] = seller.data;
       }
+      _myBidsSink.add(Result.completed(_bids));
+      return;
     }
     _myBidsSink.add(response);
   }
