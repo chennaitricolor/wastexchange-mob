@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
-import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/widgets/order_item.dart';
 
 class OrderFormSummaryList extends StatelessWidget {
@@ -14,8 +13,7 @@ class OrderFormSummaryList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(
+          separatorBuilder: (BuildContext context, int index) => const Divider(
                 color: AppColors.grey,
                 height: 1.0,
               ),
