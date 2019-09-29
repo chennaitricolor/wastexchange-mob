@@ -17,6 +17,7 @@ class SellerItemScreen extends StatefulWidget {
     ArgumentError.checkNotNull(sellerInfo);
     ArgumentError.checkNotNull(sellerInfo.seller);
     ArgumentError.checkNotNull(sellerInfo.items);
+    // TODO(Sayeed): Can we simplify throwing exceptions like below across the app
     if (sellerInfo.items.isEmpty) {
       throw Exception('Seller Items is empty');
     }
