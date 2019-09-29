@@ -13,6 +13,8 @@ abstract class KeyValueStoreInterface {
   int getInt(String key);
   double getDouble(String key);
   String getString(String key);
+
+  void remove(String key);
 }
 
 // TODO(Sayeed): Should we move all code to this abstract interface paradigm and coding to interface
@@ -47,11 +49,6 @@ class KeyValueStore implements KeyValueStoreInterface, LaunchSetupMember {
   }
 
   @override
-  Future<void> load() async {
-    _preferences = await SharedPreferences.getInstance();
-  }
-
-  @override
   Future<void> setBool(bool value, String key) async {
     await _preferences.setBool(key, value);
   }
@@ -69,5 +66,15 @@ class KeyValueStore implements KeyValueStoreInterface, LaunchSetupMember {
   @override
   Future<void> setString(String value, String key) async {
     await _preferences.setString(key, value);
+  }
+
+  @override
+  void remove(String key) {
+    _preferences.remove(key);
+  }
+
+  @override
+  Future<void> load() async {
+    _preferences = await SharedPreferences.getInstance();
   }
 }

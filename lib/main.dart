@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
+import 'package:wastexchange_mobile/resources/key_value_store.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/map_screen.dart';
@@ -16,7 +17,8 @@ Future<void> main() async {
     AppLogger(),
     EnvRepository(),
     TokenRepository(),
-    UserRepository()
+    UserRepository(),
+    KeyValueStore()
   ]).load();
   runApp(WasteExchange());
 }

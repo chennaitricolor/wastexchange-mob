@@ -12,9 +12,12 @@ import 'package:wastexchange_mobile/widgets/custom_time_picker.dart';
 import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 
 class OrderFormHeader extends StatefulWidget {
-  const OrderFormHeader({Key key}) : super(key: key);
+  const OrderFormHeader({Key key, bool restoreSavedData = false})
+      : _restoreSavedData = restoreSavedData,
+        super(key: key);
   @override
   OrderFormHeaderState createState() => OrderFormHeaderState();
+  final bool _restoreSavedData;
 }
 
 class OrderFormHeaderState extends State<OrderFormHeader> {
@@ -27,9 +30,12 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
     super.initState();
     _contactNameController = TextEditingController();
     _contactNameController.addListener(_onContactNameChange);
-    _orderFormHeaderBloc = OrderFormHeaderBloc();
+    _orderFormHeaderBloc = OrderFormHeaderBloc(
+      restoreSavedData: widget._restoreSavedData,
+    );
     _customTimePicker =
         CustomTimePicker(currentTime: _orderFormHeaderBloc.initialDate());
+    _contactNameController.text = _orderFormHeaderBloc.contactName;
   }
 
   @override
@@ -51,8 +57,19 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
   }
 
   Result<PickupInfoData> pickupInfoData() {
-    return _orderFormHeaderBloc.validateAndReturnPickupInfo();
+    return _orderFormHeaderBloc.validatedPickupInfo();
   }
+
+  void saveData() {
+    _orderFormHeaderBloc.saveData();
+  }
+
+  void clearSavedData() {
+    _orderFormHeaderBloc.clearSavedData();
+  }
+
+  String minimumPickupDateTimeHoursFromNowMessage() =>
+      '*${_orderFormHeaderBloc.minimumPickupDateTimeHoursFromNowMessage()}';
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +99,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
             ),
             TappableCard(
                 iconData: Icons.date_range,
-                displayText: _orderFormHeaderBloc.pickupDateDisplayString(),
+                displayText: _orderFormHeaderBloc.pickupDateDisplayString,
                 actionText: _orderFormHeaderBloc.actionText(),
                 onPressed: () {
                   DatePicker.showDatePicker(
@@ -102,7 +119,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
                 }),
             TappableCard(
                 iconData: Icons.access_time,
-                displayText: _orderFormHeaderBloc.pickupTimeDisplayString(),
+                displayText: _orderFormHeaderBloc.pickupTimeDisplayString,
                 actionText: _orderFormHeaderBloc.actionText(),
                 onPressed: () {
                   DatePicker.showPicker(context,
@@ -110,7 +127,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
                       locale: _orderFormHeaderBloc.locale(),
                       pickerModel: _customTimePicker, onConfirm: (time) {
                     if (isNull(time)) {
-                      _showMessage('Invalid time selected');
+                      _showMessage(_orderFormHeaderBloc.invalidDateTimeText());
                       return;
                     }
                     _orderFormHeaderBloc.setPickupTime(time);
@@ -120,7 +137,7 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
             Padding(
                 padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                 child: Text(
-                  '*${_orderFormHeaderBloc.minimumPickupDateTimeHoursFromNowMessage()}',
+                  minimumPickupDateTimeHoursFromNowMessage(),
                   style: AppTheme.caption,
                 )),
           ]),

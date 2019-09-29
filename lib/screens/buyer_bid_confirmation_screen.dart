@@ -15,12 +15,31 @@ import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  const BuyerBidConfirmationScreen({this.seller, this.bidItems});
+  BuyerBidConfirmationScreen({
+    @required User seller,
+    @required List<BidItem> bidItems,
+    @required bool restoreSavedState,
+    @required VoidCallback onBackPressed,
+  }) {
+    ArgumentError.checkNotNull(seller);
+    ArgumentError.checkNotNull(bidItems);
+    ArgumentError.checkNotNull(restoreSavedState);
+    ArgumentError.checkNotNull(onBackPressed);
+    if (bidItems.isEmpty) {
+      throw Exception('BidItems cannot be empty');
+    }
+    _seller = seller;
+    _bidItems = bidItems;
+    _onBackPressed = onBackPressed;
+    _restoreSavedState = restoreSavedState;
+  }
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
-  final User seller;
-  final List<BidItem> bidItems;
+  User _seller;
+  List<BidItem> _bidItems;
+  VoidCallback _onBackPressed;
+  bool _restoreSavedState;
 
   @override
   _BuyerBidConfirmationScreenState createState() =>
@@ -45,7 +64,7 @@ class _BuyerBidConfirmationScreenState
   @override
   void initState() {
     _bloc = BuyerBidConfirmationBloc(
-        items: widget.bidItems, sellerId: widget.seller.id);
+        items: widget._bidItems, sellerId: widget._seller.id);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -71,12 +90,15 @@ class _BuyerBidConfirmationScreenState
       appBar: HomeAppBar(
         text: Constants.TITLE_ORDER_FORM,
         onBackPressed: () {
+          _keyOrderPickup.currentState.clearSavedData();
+          _keyOrderPickup.currentState.saveData();
+          widget._onBackPressed();
           Navigator.pop(context, false);
         },
       ),
       bottomNavigationBar: OrderFormTotal(
         total: _bloc.bidTotal(),
-        itemsCount: widget.bidItems.length,
+        itemsCount: widget._bidItems.length,
         onPressed: () {
           final result = _keyOrderPickup.currentState.pickupInfoData();
           // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
@@ -90,12 +112,14 @@ class _BuyerBidConfirmationScreenState
       body: SingleChildScrollView(
           child: Column(
         children: <Widget>[
-          OrderFormHeader(key: _keyOrderPickup),
+          OrderFormHeader(
+              key: _keyOrderPickup,
+              restoreSavedData: widget._restoreSavedState),
           Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: const Text('Order Summary', style: AppTheme.title)),
-          OrderFormSummaryList(items: widget.bidItems),
+          OrderFormSummaryList(items: widget._bidItems),
         ],
       )),
     );

@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
@@ -44,6 +45,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   List<BidItem> bidItems;
   Set<int> quantityErrorPositions = {};
   Set<int> priceErrorPositions = {};
+  bool _restoreSavedState = false;
 
   @override
   void initState() {
@@ -60,8 +62,17 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   @override
   void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
+    final VoidCallback onBackPressedFromNextScreen = () {
+      _restoreSavedState = true;
+    };
+    final BuyerBidConfirmationScreenLaunchData data =
+        BuyerBidConfirmationScreenLaunchData(
+            seller: sellerInfo['seller'],
+            bidItems: sellerInfo['bidItems'],
+            restoreSavedState: _restoreSavedState,
+            onBackPressed: onBackPressedFromNextScreen);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
-        arguments: sellerInfo);
+        arguments: data);
   }
 
   // TODO(Chandru): Need to unify the set state methods. It is unnecessary duplicated now.
