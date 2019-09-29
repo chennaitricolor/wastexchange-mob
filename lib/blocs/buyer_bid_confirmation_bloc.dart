@@ -25,9 +25,6 @@ class BuyerBidConfirmationBloc {
   StreamSink<Result<String>> get bidSink => _buyerController.sink;
   Stream<Result<String>> get bidStream => _buyerController.stream;
 
-  double bidTotal() =>
-      items.fold(0.0, (acc, item) => acc + item.bidQuantity * item.bidCost);
-
   Future<void> placeBid(PickupInfoData data) async {
     assert(isNotNull(data.pickupDate));
     assert(isNotNull(data.contactName));
@@ -46,5 +43,11 @@ class BuyerBidConfirmationBloc {
 
   void dispose() {
     _buyerController.close();
+  }
+
+  double bidTotal() {
+    final total =
+        items.fold(0.0, (acc, item) => acc + item.bidQuantity * item.bidCost);
+    return roundToPlaces(total, 2);
   }
 }

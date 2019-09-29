@@ -28,8 +28,7 @@ class OrderFormTotal extends StatelessWidget {
                       children: <TextSpan>[
                         const TextSpan(text: 'Total: '),
                         TextSpan(
-                            text:
-                                '${Constants.INR_UNICODE}${total.toStringAsFixed(2)}',
+                            text: '${Constants.INR_UNICODE}$total',
                             style: AppTheme.body1),
                       ],
                     ),
