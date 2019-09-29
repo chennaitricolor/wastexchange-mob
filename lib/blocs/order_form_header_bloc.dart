@@ -86,7 +86,7 @@ class OrderFormHeaderBloc {
 
   DateTime pickupDate() => _pickupDate ?? _initialDate;
 
-  DateTime maxDate() => DateTime(2022, 12, 31);
+  DateTime maxDate() => _initialDate.add(Duration(days: 5));
 
   DateTime pickupDateAndTime() => DateTime(
       _pickupDate.year,
