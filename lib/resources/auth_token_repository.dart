@@ -6,6 +6,7 @@ class TokenRepository implements SetUpCompliant {
     return _singleton;
   }
 
+// TODO(Sayeed): Do we need this test init. Can we test it differently.
   factory TokenRepository.testInit([CachedSecureStorage cachedSecureStorage]) {
     return TokenRepository._internal(cachedSecureStorage);
   }

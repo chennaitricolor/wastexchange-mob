@@ -31,6 +31,7 @@ class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
   BuyerBidConfirmationBloc _bloc;
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
+  //Also due to this OrderFormHeaderState is public
   final GlobalKey<OrderFormHeaderState> _keyOrderPickup = GlobalKey();
 
   void _showMessage(String message) {
