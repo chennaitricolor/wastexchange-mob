@@ -18,14 +18,18 @@ class BidSuccessfulScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-              ButtonViewCompact(text: 'View Bid', onPressed: () {
-                Router.popToRootAndPushNamed(
-                    context, MyBidsScreen.routeName);
-              },),
-              ButtonViewCompact(text: 'Home', onPressed: () {
-                Router.popToRoot(context);
-              },)
-            ])),
+                  ButtonViewCompact(
+                      text: 'View Bid',
+                      onPressed: () {
+                        Router.popToRootAndPushNamed(
+                            context, MyBidsScreen.routeName);
+                      }),
+                  ButtonViewCompact(
+                      text: 'Home',
+                      onPressed: () {
+                        Router.popToRoot(context);
+                      })
+                ])),
         body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
