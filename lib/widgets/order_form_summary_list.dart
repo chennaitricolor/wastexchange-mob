@@ -4,9 +4,16 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/widgets/order_item.dart';
 
 class OrderFormSummaryList extends StatelessWidget {
-  const OrderFormSummaryList({this.items});
+  factory OrderFormSummaryList({List<BidItem> items}) {
+    ArgumentError.checkNotNull(items);
+    if (items.isEmpty) {
+      throw Exception('BidItems cannot be empty');
+    }
+    return OrderFormSummaryList._(items: items);
+  }
 
-  final List<BidItem> items;
+  const OrderFormSummaryList._({List<BidItem> items}) : _items = items;
+  final List<BidItem> _items;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +26,9 @@ class OrderFormSummaryList extends StatelessWidget {
               ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: items.length,
+          itemCount: _items.length,
           itemBuilder: (context, index) {
-            return OrderItem(items[index]);
+            return OrderItem(_items[index]);
           }),
     );
   }
