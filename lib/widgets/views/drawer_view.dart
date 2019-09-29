@@ -41,6 +41,7 @@ class DrawerView extends StatelessWidget {
             : signedOutWidgets(context));
   }
 
+// TODO(Sayeed): Is this the correct convention to have functions returning widgets and using them in build method.
   List<Widget> signedOutWidgets(BuildContext context) {
     return [
       _userAccountsDrawerHeader(user: guestUser()),

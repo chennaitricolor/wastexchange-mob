@@ -16,6 +16,8 @@ class BuyerBidConfirmationBloc {
       throw Exception('SellerId cannot be null');
     }
   }
+
+// TODO(Sayeed): In some classes we are declaring variables at the bottom and in some classes at top. Do as per convention.
   final List<BidItem> items;
   final int sellerId;
 
