@@ -15,7 +15,7 @@ import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  BuyerBidConfirmationScreen({
+  factory BuyerBidConfirmationScreen({
     @required User seller,
     @required List<BidItem> bidItems,
     @required bool restoreSavedState,
@@ -29,18 +29,29 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
     if (bidItems.isEmpty) {
       throw Exception('BidItems cannot be empty');
     }
-    _seller = seller;
-    _bidItems = bidItems;
-    _onBackPressed = onBackPressed;
-    _restoreSavedState = restoreSavedState;
+    return BuyerBidConfirmationScreen._(
+        seller: seller,
+        bidItems: bidItems,
+        restoreSavedState: restoreSavedState,
+        onBackPressed: onBackPressed);
   }
 
-  static const String routeName = '/buyerBidConfirmationScreen';
+  const BuyerBidConfirmationScreen._({
+    User seller,
+    List<BidItem> bidItems,
+    bool restoreSavedState,
+    VoidCallback onBackPressed,
+  })  : _seller = seller,
+        _bidItems = bidItems,
+        _restoreSavedState = restoreSavedState,
+        _onBackPressed = onBackPressed;
 
-  User _seller;
-  List<BidItem> _bidItems;
-  VoidCallback _onBackPressed;
-  bool _restoreSavedState;
+  final User _seller;
+  final List<BidItem> _bidItems;
+  final VoidCallback _onBackPressed;
+  final bool _restoreSavedState;
+
+  static const String routeName = '/buyerBidConfirmationScreen';
 
   @override
   _BuyerBidConfirmationScreenState createState() =>
