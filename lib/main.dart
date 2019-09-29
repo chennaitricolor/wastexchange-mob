@@ -33,7 +33,7 @@ class WasteExchange extends StatelessWidget {
         title: Constants.APP_TITLE,
         onGenerateRoute: Router.generateRoute,
         theme: ThemeData(
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               iconTheme: AppTheme.iconTheme, brightness: Brightness.light),
           textTheme: AppTheme.textTheme,
         ),
