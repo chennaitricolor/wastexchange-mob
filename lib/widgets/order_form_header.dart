@@ -14,10 +14,10 @@ import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 class OrderFormHeader extends StatefulWidget {
   const OrderFormHeader({Key key}) : super(key: key);
   @override
-  _OrderFormHeaderState createState() => _OrderFormHeaderState();
+  OrderFormHeaderState createState() => OrderFormHeaderState();
 }
 
-class _OrderFormHeaderState extends State<OrderFormHeader> {
+class OrderFormHeaderState extends State<OrderFormHeader> {
   TextEditingController _contactNameController;
   CustomTimePicker _customTimePicker;
   OrderFormHeaderBloc _orderFormHeaderBloc;
