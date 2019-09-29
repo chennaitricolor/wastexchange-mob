@@ -8,7 +8,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
 
 class MockUserClient extends Mock implements UserClient {}
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class UserDataStore {
