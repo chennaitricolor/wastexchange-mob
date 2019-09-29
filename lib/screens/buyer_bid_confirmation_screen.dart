@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/place_bid_bloc.dart';
+import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -15,12 +16,13 @@ import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  const BuyerBidConfirmationScreen({this.seller, this.bidItems});
+  const BuyerBidConfirmationScreen({this.previousBid, this.seller, this.bidItems});
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
   final User seller;
   final List<BidItem> bidItems;
+  final Bid previousBid;
 
   @override
   _BuyerBidConfirmationScreenState createState() =>

@@ -18,8 +18,17 @@ class Item {
     return Item(
       name: itemName,
       displayName: itemDisplayNames[itemName],
-      qty: json['quantity'],
-      price: json['cost'],
+      qty: json['quantity'].toDouble(),
+      price: json['cost'].toDouble(),
+    );
+  }
+
+  factory Item.fromBidJson(Map<dynamic, dynamic> json, String itemName) {
+    return Item(
+      name: itemName,
+      displayName: itemDisplayNames[itemName],
+      qty: json['bidQuantity'].toDouble(),
+      price: json['bidCost'].toDouble(),
     );
   }
 
@@ -45,10 +54,10 @@ class Item {
   String name;
   String displayName;
   double qty;
-  int price;
+  double price;
 
   Map<String, dynamic> toJson() => {
-        'qty': qty,
-        'price': price,
-      };
+    'qty': qty,
+    'price': price,
+  };
 }

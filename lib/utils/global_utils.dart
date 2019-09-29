@@ -18,3 +18,5 @@ bool isZero(String value) => value == '0';
 bool isDouble(String value) => double.tryParse(value) != null;
 
 bool isPositive(String value) => double.tryParse(value) > 0;
+
+String EMPTY = '';

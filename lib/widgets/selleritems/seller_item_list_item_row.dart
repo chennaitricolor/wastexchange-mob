@@ -31,7 +31,7 @@ class SellerItemRow extends Row {
                     : NumberTextField(textEditingController: textEditingController, hintText: hintText))
                     : Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(hintText, style: AppTheme.body2))),
+                        child: Text(textEditingController.text ?? EMPTY, style: AppTheme.body2))),
           ],
         );
 

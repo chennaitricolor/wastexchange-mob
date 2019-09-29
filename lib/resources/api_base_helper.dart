@@ -50,6 +50,20 @@ class ApiBaseHelper {
     }
   }
 
+  Future<dynamic> put(bool authenticated, String path, dynamic body) async {
+    try {
+      final response = await _client(authenticated).put(_baseApiUrl + path,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(body));
+      return _returnResponse(response);
+    } on SocketException {
+      final ApiException exception =
+      FetchDataException('No Internet connection');
+      logger.e(exception);
+      throw exception;
+    }
+  }
+
   Future<dynamic> post(bool authenticated, String path, dynamic body) async {
     try {
       final response = await _client(authenticated).post(_baseApiUrl + path,

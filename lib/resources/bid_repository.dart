@@ -18,6 +18,11 @@ class BidRepository {
     return await _client.placeBid(buyerId: thisUser.id, data: data);
   }
 
+  Future<Result<String>> updateBid(int bidId, BuyerBidData data) async {
+    final thisUser = await _userRepository.getProfile();
+    return await _client.updateBid(bidId:bidId, buyerId: thisUser.id, data: data);
+  }
+
   Future<Result<List<Bid>>> getMyBids() async {
     final thisUser = await _userRepository.getProfile();
     return _client.getBids(userId: thisUser.id);

@@ -9,9 +9,22 @@ class BidClient {
   }
 
   static const PATH_MY_BIDS = '/bids';
+  static const PATH_UPDATE_BID = '/bids/:bidId';
   static const PATH_PLACE_BID = '/buyer/:buyerId/bids';
 
   ApiBaseHelper _helper;
+
+  Future<Result<String>> updateBid({int bidId, int buyerId, BuyerBidData data}) async {
+    try {
+      await _helper.put(
+          true,
+          PATH_UPDATE_BID.replaceFirst(':bidId', bidId.toString()),
+          _placeBidPostData(buyerId, data));
+      return Result.completed('');
+    } catch (e) {
+      return Result.error(e.toString());
+    }
+  }
 
   // TODO(Sayeed): Change the return type
   Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
