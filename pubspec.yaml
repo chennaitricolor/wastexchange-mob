@@ -29,18 +29,20 @@ dependencies:
   # The following adds the CupertinoIcons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+
   google_maps_flutter: ^0.5.19+2
   authentication_view: ^0.5.0
   geolocator: "^5.1.1"
 
   # Used to store the data such as access token/other sensitive information securely.
   flutter_secure_storage: ^3.2.1+1
+
   flushbar: ^1.9.0
 
   # Interceptor is used to modify API Request by adding auth header in each request.
   http_interceptor: ^0.0.3
+
   intl: ^0.15.8
-  datetime_picker_formfield: ^0.4.2
   flutter_datetime_picker: 1.2.5
 
 dev_dependencies:
