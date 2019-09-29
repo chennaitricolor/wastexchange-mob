@@ -7,8 +7,8 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/bid_repository.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
-class PlaceBidBloc {
-  PlaceBidBloc({this.items, this.sellerId}) {
+class BuyerBidConfirmationBloc {
+  BuyerBidConfirmationBloc({this.items, this.sellerId}) {
     if (isNull(items) || items.isEmpty) {
       throw Exception('BidItems cannot be null or empty');
     }

@@ -1,6 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/blocs/place_bid_bloc.dart';
+import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -29,7 +29,7 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
 
 class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
-  PlaceBidBloc _bloc;
+  BuyerBidConfirmationBloc _bloc;
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
   final GlobalKey<OrderFormHeaderState> _keyOrderPickup = GlobalKey();
 
@@ -43,7 +43,8 @@ class _BuyerBidConfirmationScreenState
 
   @override
   void initState() {
-    _bloc = PlaceBidBloc(items: widget.bidItems, sellerId: widget.seller.id);
+    _bloc = BuyerBidConfirmationBloc(
+        items: widget.bidItems, sellerId: widget.seller.id);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
