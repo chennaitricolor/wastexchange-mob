@@ -13,7 +13,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 
 Future<void> main() async {
   await LaunchSetup(
-          [EnvRepository(), TokenRepository(), AppLogger(), UserRepository()])
+          [AppLogger(), EnvRepository(), TokenRepository(), UserRepository()])
       .load();
   runApp(WasteExchange());
 }
