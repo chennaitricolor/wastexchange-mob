@@ -25,6 +25,7 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
     ArgumentError.checkNotNull(bidItems);
     ArgumentError.checkNotNull(restoreSavedState);
     ArgumentError.checkNotNull(onBackPressed);
+    // TODO(Sayeed): Simplify the throwing of exceptions.
     if (bidItems.isEmpty) {
       throw Exception('BidItems cannot be empty');
     }
@@ -97,8 +98,8 @@ class _BuyerBidConfirmationScreenState
         },
       ),
       bottomNavigationBar: OrderFormTotal(
-        total: _bloc.bidTotal(),
-        itemsCount: widget._bidItems.length,
+        total: _bloc.bidTotal,
+        itemsCount: _bloc.items.length,
         onPressed: () {
           final result = _keyOrderPickup.currentState.pickupInfoData();
           // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
@@ -119,7 +120,7 @@ class _BuyerBidConfirmationScreenState
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: const Text('Order Summary', style: AppTheme.title)),
-          OrderFormSummaryList(items: widget._bidItems),
+          OrderFormSummaryList(items: _bloc.items),
         ],
       )),
     );

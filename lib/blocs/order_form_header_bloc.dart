@@ -18,7 +18,7 @@ class OrderFormHeaderBloc {
     _restoreSavedData = restoreSavedData;
     _keyValueStore = keyValueStore ?? KeyValueStore();
     if (_restoreSavedData) {
-      _populateSaveDataInUI();
+      _populateSavedDataInUI();
     }
   }
 
@@ -122,7 +122,7 @@ class OrderFormHeaderBloc {
         .forEach((k) => {_keyValueStore.remove(k)});
   }
 
-  void _populateSaveDataInUI() {
+  void _populateSavedDataInUI() {
     final String savedContactName = _keyValueStore.getString(_kContactName);
     if (isContactNameValid(savedContactName)) {
       _contactName = savedContactName;

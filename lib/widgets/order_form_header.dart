@@ -12,9 +12,15 @@ import 'package:wastexchange_mobile/widgets/custom_time_picker.dart';
 import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 
 class OrderFormHeader extends StatefulWidget {
-  const OrderFormHeader({Key key, bool restoreSavedData = false})
-      : _restoreSavedData = restoreSavedData,
+  factory OrderFormHeader({Key key, bool restoreSavedData = false}) {
+    ArgumentError.checkNotNull(key);
+    return OrderFormHeader._(key, restoreSavedData);
+  }
+
+  const OrderFormHeader._(Key key, bool restoreSavedDate)
+      : _restoreSavedData = restoreSavedDate,
         super(key: key);
+
   @override
   OrderFormHeaderState createState() => OrderFormHeaderState();
   final bool _restoreSavedData;
@@ -28,14 +34,14 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
   @override
   void initState() {
     super.initState();
-    _contactNameController = TextEditingController();
-    _contactNameController.addListener(_onContactNameChange);
     _orderFormHeaderBloc = OrderFormHeaderBloc(
       restoreSavedData: widget._restoreSavedData,
     );
+    _contactNameController = TextEditingController();
+    _contactNameController.addListener(_onContactNameChange);
+    _contactNameController.text = _orderFormHeaderBloc.contactName;
     _customTimePicker =
         CustomTimePicker(currentTime: _orderFormHeaderBloc.initialDate());
-    _contactNameController.text = _orderFormHeaderBloc.contactName;
   }
 
   @override

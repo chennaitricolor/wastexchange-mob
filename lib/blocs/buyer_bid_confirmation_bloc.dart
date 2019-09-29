@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
@@ -8,18 +9,20 @@ import 'package:wastexchange_mobile/resources/bid_repository.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class BuyerBidConfirmationBloc {
-  BuyerBidConfirmationBloc({this.items, this.sellerId}) {
-    if (isNull(items) || items.isEmpty) {
-      throw Exception('BidItems cannot be null or empty');
+  BuyerBidConfirmationBloc(
+      {@required List<BidItem> items, @required int sellerId}) {
+    ArgumentError.checkNotNull(items);
+    ArgumentError.checkNotNull(sellerId);
+    if (items.isEmpty) {
+      throw Exception('BidItems cannot be empty');
     }
-    if (isNull(sellerId)) {
-      throw Exception('SellerId cannot be null');
-    }
+    _items = items;
+    _sellerId = sellerId;
   }
 
 // TODO(Sayeed): In some classes we are declaring variables at the bottom and in some classes at top. Do as per convention.
-  final List<BidItem> items;
-  final int sellerId;
+  List<BidItem> _items;
+  int _sellerId;
 
   final BidRepository _bidRepository = BidRepository();
   final StreamController _buyerController = StreamController<Result<String>>();
@@ -32,9 +35,9 @@ class BuyerBidConfirmationBloc {
     assert(isNotNull(data.contactName));
     assert(data.contactName.isNotEmpty);
     final BuyerBidData bidData = BuyerBidData(
-        bidItems: items,
-        sellerId: sellerId,
-        totalBid: bidTotal(),
+        bidItems: _items,
+        sellerId: _sellerId,
+        totalBid: bidTotal,
         pDateTime: data.pickupDate,
         contactName: data.contactName,
         status: 'pending');
@@ -43,13 +46,15 @@ class BuyerBidConfirmationBloc {
     bidSink.add(response);
   }
 
-  void dispose() {
-    _buyerController.close();
+  double get bidTotal {
+    final total =
+        _items.fold(0.0, (acc, item) => acc + item.bidQuantity * item.bidCost);
+    return roundToPlaces(total, 2);
   }
 
-  double bidTotal() {
-    final total =
-        items.fold(0.0, (acc, item) => acc + item.bidQuantity * item.bidCost);
-    return roundToPlaces(total, 2);
+  List<BidItem> get items => _items;
+
+  void dispose() {
+    _buyerController.close();
   }
 }
