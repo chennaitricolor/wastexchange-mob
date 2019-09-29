@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_icon_compact.dart';
 
 class OrderFormTotal extends StatelessWidget {
+  // TODO(Sayeed): Should we change this to resemble OrderFormSummaryList constructor
   const OrderFormTotal({this.total, this.itemsCount, this.onPressed});
 
   final double total;
