@@ -79,6 +79,7 @@ class _BuyerBidConfirmationScreenState
         itemsCount: widget.bidItems.length,
         onPressed: () {
           final result = _keyOrderPickup.currentState.pickupInfoData();
+          // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
           if (result.status == Status.ERROR) {
             _showMessage(result.message);
             return;

@@ -30,6 +30,7 @@ class MyBidsBloc {
   Future<void> myBids() async {
     _myBidsSink.add(Result.loading('Loading'));
     final Result<List<Bid>> response = await _bidRepository.getMyBids();
+    // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
     if (response.status == Status.COMPLETED) {
       _bids = response.data;
       _bids.sort((bid1, bid2) => bid2.pickupDate.compareTo(bid1.pickupDate));
