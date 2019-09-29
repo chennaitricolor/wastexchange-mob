@@ -1,15 +1,17 @@
 // TODO(Sayeed): Is this a good name for this mixin
+import 'package:flutter/material.dart';
+
 mixin LaunchSetupMember {
   Future<void> load();
 }
 
 class LaunchSetup {
-  LaunchSetup([this.setUpParticipants]);
-  final List<LaunchSetupMember> setUpParticipants;
+  LaunchSetup({@required this.members});
+  final List<LaunchSetupMember> members;
 
   Future<void> load() async {
-    for (LaunchSetupMember participant in setUpParticipants) {
-      await participant.load();
+    for (LaunchSetupMember member in members) {
+      await member.load();
     }
   }
 }

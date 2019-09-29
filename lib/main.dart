@@ -12,9 +12,12 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 
 Future<void> main() async {
-  await LaunchSetup(
-          [AppLogger(), EnvRepository(), TokenRepository(), UserRepository()])
-      .load();
+  await LaunchSetup(members: [
+    AppLogger(),
+    EnvRepository(),
+    TokenRepository(),
+    UserRepository()
+  ]).load();
   runApp(WasteExchange());
 }
 
