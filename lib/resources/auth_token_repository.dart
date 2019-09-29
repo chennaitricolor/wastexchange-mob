@@ -16,11 +16,9 @@ class TokenRepository implements SetUpCompliant {
   }
 
   static final TokenRepository _singleton = TokenRepository._internal();
-
-  CachedSecureStorage _cachedSecureStorage;
-
   static const _ktoken = 'token';
 
+  CachedSecureStorage _cachedSecureStorage;
   String token;
 
   bool isAuthorized() {
