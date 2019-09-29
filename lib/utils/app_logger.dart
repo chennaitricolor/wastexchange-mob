@@ -3,7 +3,7 @@ import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/utils/log_printer.dart';
 
-class AppLogger implements SetUpCompliant {
+class AppLogger implements LaunchSetupMember {
   Level _getLoggerLevel(String level) {
     switch (level) {
       case 'debug':

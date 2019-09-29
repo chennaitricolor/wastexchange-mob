@@ -13,7 +13,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/user_data_store.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
-class UserRepository implements SetUpCompliant {
+class UserRepository implements LaunchSetupMember {
   UserRepository(
       {UserClient client,
       TokenRepository tokenRepository,

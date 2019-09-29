@@ -14,6 +14,8 @@ class UserDataStore {
   }
 
   CachedSecureStorage _cachedSecureStorage;
+  // TODO(Sayeed): Do we need a the variable _thisUser? Can we not always fetch from persistence to have a single source
+  // of truth.
   User _thisUser;
   List<User> _allUsers;
   static const kThisUser = 'thisUser';

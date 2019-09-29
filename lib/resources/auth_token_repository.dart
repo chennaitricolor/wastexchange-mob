@@ -1,7 +1,8 @@
 import 'package:wastexchange_mobile/launch_setup.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
 
-class TokenRepository implements SetUpCompliant {
+class TokenRepository implements LaunchSetupMember {
+  // TODO(Sayeed): Examine all singletons and check if we really need singletons
   factory TokenRepository() {
     return _singleton;
   }

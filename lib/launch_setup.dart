@@ -1,14 +1,14 @@
 // TODO(Sayeed): Is this a good name for this mixin
-mixin SetUpCompliant {
+mixin LaunchSetupMember {
   Future<void> load();
 }
 
-class LaunchSetup with SetUpCompliant {
+class LaunchSetup {
   LaunchSetup([this.setUpParticipants]);
-  final List<SetUpCompliant> setUpParticipants;
-  @override
+  final List<LaunchSetupMember> setUpParticipants;
+
   Future<void> load() async {
-    for (SetUpCompliant participant in setUpParticipants) {
+    for (LaunchSetupMember participant in setUpParticipants) {
       await participant.load();
     }
   }
