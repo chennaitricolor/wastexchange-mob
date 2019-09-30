@@ -8,6 +8,7 @@ import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/my_bids_item.dart';
+import 'package:wastexchange_mobile/widgets/views/error_thumbnail.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class MyBidsScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
               Navigator.pop(context, false);
             }),
         body: _bloc.bidCount() == 0
-            ? Center(child: Text(Constants.NO_BIDS))
+            ? ErrorThumbnail(message: Constants.NO_BID_ERROR_MESSAGE, iconPath: Constants.NO_BID_ERROR_ICON)
             : ListView.builder(
                 itemCount: _bloc.bidCount(),
                 itemBuilder: (context, index) {
