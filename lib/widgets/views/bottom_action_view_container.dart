@@ -10,10 +10,11 @@ class BottomActionViewContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(color: AppColors.white),
         height: 90,
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: children));
   }
