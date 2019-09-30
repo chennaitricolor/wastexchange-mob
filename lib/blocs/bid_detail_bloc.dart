@@ -27,12 +27,12 @@ class BidDetailBloc {
 
   Future<void> cancelBid(Bid bid, SellerItemDetails sellerItemDetails) async {
     final int bidId = bid.orderId;
-    final totalBid = bid.bidItems.values.fold(0, (acc, item) => acc + item.qty * item.price);
+    final double totalBid = bid.bidItems.values.fold(0, (acc, item) => acc + item.qty * item.price);
 
     final BuyerBidData data = BuyerBidData(
         bidItems: getBidItems(bid.bidItems, sellerItemDetails.items),
         sellerId: bid.sellerId,
-        totalBid: totalBid.toInt(),
+        totalBid: totalBid,
         pDateTime: bid.pickupDate,
         contactName: bid.contactName,
         status: BidStatus.cancelled.toString().split('.').last);

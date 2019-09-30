@@ -23,6 +23,7 @@ class SellerItemList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final Item item = bidItems[index].item;
           return SellerItemListItem(
+              isEditable: true,
               showQuantityFieldError: quantityErrorPositions.contains(index),
               showPriceFieldError: priceErrorPositions.contains(index),
               item: item,
