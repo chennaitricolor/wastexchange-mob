@@ -77,3 +77,4 @@ Follow this convention while committing
 ``git commit -m "[Sayeed] Simplify drawer logic" --author "Sayeed <sayeedhussain19@gmail.com>"``
 
 Surya : Testing the forks and PR models. will raise a PR no need to merge this.
+Adding second line to squash
