@@ -176,6 +176,33 @@ class AppTheme {
     color: lightText, // was lightText
   );
 
+  static const TextStyle statusGreen = TextStyle(
+    // Caption -> caption
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    letterSpacing: 0.2,
+    color: Colors.green, // was lightText
+  );
+
+  static const TextStyle statusRed = TextStyle(
+    // Caption -> caption
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    letterSpacing: 0.2,
+    color: Colors.red, // was lightText
+  );
+
+  static const TextStyle statusYellow = TextStyle(
+    // Caption -> caption
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    letterSpacing: 0.2,
+    color: Colors.yellow, // was lightText
+  );
+
   static const TextStyle buttonTitle = TextStyle(
     // Caption -> caption
     fontFamily: 'OpenSans',

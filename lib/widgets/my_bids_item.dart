@@ -5,7 +5,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/bid_status_icon.dart';
+import 'package:wastexchange_mobile/widgets/bids_status/bid_status_icon.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 
 class MyBidsItem extends StatelessWidget {
