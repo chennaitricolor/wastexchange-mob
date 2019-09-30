@@ -5,6 +5,7 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/views/bid_status_icon.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 
 class MyBidsItem extends StatelessWidget {
@@ -23,7 +24,7 @@ class MyBidsItem extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: <Widget>[
-              _getStatus(bid.status),
+              BidStatusIcon(bidStatus: bid.status),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -57,29 +58,4 @@ class MyBidsItem extends StatelessWidget {
         DateFormat('${AppDateFormat.shortDate} ${AppDateFormat.defaultTime}');
     return f.format(date.toLocal());
   }
-
-  Widget _getStatus(BidStatus bidStatus) {
-    switch (bidStatus) {
-      case BidStatus.pending:
-        return Icon(
-          Icons.timelapse,
-          size: 36,
-          color: Colors.yellow.shade700,
-        );
-      case BidStatus.cancelled:
-        return Icon(
-          Icons.cancel,
-          size: 36,
-          color: Colors.red.shade300,
-        );
-      case BidStatus.successful:
-        return Icon(
-          Icons.check_circle,
-          size: 36,
-          color: Colors.green.shade300,
-        );
-      default:
-        return null;
-    }
   }
-}

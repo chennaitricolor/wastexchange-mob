@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
+import 'package:wastexchange_mobile/widgets/views/bid_status_icon.dart';
 
 class BidInfo extends StatelessWidget {
   const BidInfo(
@@ -28,7 +29,7 @@ class BidInfo extends StatelessWidget {
   }
 
   Widget getBidStatusView() {
-    return Row(children: <Widget>[_getStatusIcon(bid.status), _getStatusText(bid.status)],);
+    return Row(children: <Widget>[BidStatusIcon(bidStatus: bid.status, iconSize: 16), _getStatusText(bid.status)],);
   }
 
   Widget getBidIdView() {
