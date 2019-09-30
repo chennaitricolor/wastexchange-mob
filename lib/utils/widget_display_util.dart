@@ -1,14 +1,20 @@
 import 'package:authentication_view/auth_colors.dart';
 import 'package:authentication_view/button_style.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/dialogs/error_dialog.dart';
 import 'package:wastexchange_mobile/widgets/dialogs/loading_dialog.dart';
+import 'package:wastexchange_mobile/widgets/views/error_thumbnail.dart';
 
   void showLoadingDialog(BuildContext buildContext) {
     showDialog(
       context: buildContext,
       builder: (BuildContext context) {
-        return LoadingDialog();
+        return Material(type: MaterialType.transparency, child: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(top: 60),
+          child: ErrorThumbnail(message: Constants.LOADING_MESSAGE, iconPath: Constants.LOADING_ICON,),
+        ));
       },
     );
   }
