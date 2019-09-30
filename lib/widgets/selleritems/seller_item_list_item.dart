@@ -37,13 +37,13 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
-                showFieldError: showQuantityFieldError,
+                showFieldError: showQuantityFieldError ?? false,
                 isEditable: isEditable,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
-                showFieldError: showPriceFieldError,
+                showFieldError: showPriceFieldError ?? false,
                 isEditable: isEditable,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',

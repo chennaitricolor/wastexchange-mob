@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 
 class PrimarySecondaryAction extends StatelessWidget {
-
-  PrimarySecondaryAction({this.primaryBtnText, this.secondaryBtnText, this.actionCallback}) {
+  PrimarySecondaryAction(
+      {this.primaryBtnText, this.secondaryBtnText, this.actionCallback}) {
     ArgumentError.checkNotNull(primaryBtnText);
     ArgumentError.checkNotNull(secondaryBtnText);
     ArgumentError.checkNotNull(actionCallback);
@@ -17,18 +18,17 @@ class PrimarySecondaryAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      ButtonViewCompact(
-          onPressed: () {
-            actionCallback(-1);
-          },
-          text: secondaryBtnText),
-      ButtonViewCompact(
-          onPressed: () {
-            actionCallback(1);
-          },
-          text: primaryBtnText)
+    return BottomActionViewContainer(children: <Widget>[
+        ButtonViewCompact(
+            onPressed: () {
+              actionCallback(-1);
+            },
+            text: secondaryBtnText),
+        ButtonViewCompact(
+            onPressed: () {
+              actionCallback(1);
+            },
+            text: primaryBtnText)
     ]);
   }
-
 }

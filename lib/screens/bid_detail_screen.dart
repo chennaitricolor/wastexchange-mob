@@ -19,10 +19,10 @@ import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BidDetailScreen extends StatefulWidget {
-
   BidDetailScreen({this.bid}) {
     ArgumentError.checkNotNull(bid);
   }
@@ -35,8 +35,8 @@ class BidDetailScreen extends StatefulWidget {
   static const routeName = '/bidDetailScreen';
 }
 
-class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListener {
-
+class _BidDetailScreenState extends State<BidDetailScreen>
+    with SellerItemListener {
   _BidDetailScreenState({this.bid});
 
   BidDetailBloc _bloc;
@@ -63,33 +63,35 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
           dismissDialog(context);
           break;
         case Status.COMPLETED:
-
           sellerItemDetails = _snapshot.data;
 
           _bloc.getUser(sellerItemDetails.sellerId).then((result) {
-
             dismissDialog(context);
 
             setState(() {
-
-              if(result.status == Status.COMPLETED && result.data != null) {
+              if (result.status == Status.COMPLETED && result.data != null) {
                 seller = result.data;
 
                 _bloc.sortSellerItemsBasedOnBid(sellerItemDetails, bid);
 
-                _sellerItemBloc = SellerItemBloc(this, SellerInfo(seller: seller, items: sellerItemDetails.items));
-                _quantityTextEditingControllers =
-                    sellerItemDetails.items.map((_) => TextEditingController()).toList();
-                _priceTextEditingControllers =
-                    sellerItemDetails.items.map((_) => TextEditingController()).toList();
+                _sellerItemBloc = SellerItemBloc(this,
+                    SellerInfo(seller: seller, items: sellerItemDetails.items));
+                _quantityTextEditingControllers = sellerItemDetails.items
+                    .map((_) => TextEditingController())
+                    .toList();
+                _priceTextEditingControllers = sellerItemDetails.items
+                    .map((_) => TextEditingController())
+                    .toList();
 
-                for(int i=0; i<sellerItemDetails.items.length; i++) {
+                for (int i = 0; i < sellerItemDetails.items.length; i++) {
                   final Item item = sellerItemDetails.items[i];
                   Item bidItem = bid.bidItems[item.name];
 
-                  if(bidItem != null) {
-                    _quantityTextEditingControllers[i].text = bidItem.qty.toString();
-                    _priceTextEditingControllers[i].text = bidItem.price.toString();
+                  if (bidItem != null) {
+                    _quantityTextEditingControllers[i].text =
+                        bidItem.qty.toString();
+                    _priceTextEditingControllers[i].text =
+                        bidItem.price.toString();
                   }
                 }
               }
@@ -106,14 +108,14 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
         case Status.ERROR:
           print(_snapshot.message);
           dismissDialog(context);
-          if(_isCancelOperation) {
+          if (_isCancelOperation) {
             _isCancelOperation = false;
           }
           break;
         case Status.COMPLETED:
           dismissDialog(context);
           setState(() {
-            if(_isCancelOperation) {
+            if (_isCancelOperation) {
               _isCancelOperation = false;
               bid.status = BidStatus.cancelled;
             }
@@ -129,7 +131,11 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: _isDataLoaded() && _isPendingBid()? isEditMode ? _getSubmitAndCancelButtons() : _getEditAndCancelBidButtons() : Row(),
+        bottomNavigationBar: _isDataLoaded() && _isPendingBid()
+            ? isEditMode
+                ? _getSubmitAndCancelButtons()
+                : _getEditAndCancelBidButtons()
+            : Row(),
         backgroundColor: AppColors.chrome_grey,
         appBar: HomeAppBar(
             text: 'Order Id : ${bid.orderId}',
@@ -138,16 +144,14 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
             }),
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: _isDataLoaded()? CustomScrollView(slivers: <Widget>[
-              SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                return BidInfo(bid: bid);
-              }, childCount: 1)),
-              BidEditItemList(
-                bidItems: sellerItemDetails.items.map((item) => BidItem(item: item)).toList(),
-                quantityEditingControllers: _quantityTextEditingControllers,
-                priceEditingControllers: _priceTextEditingControllers,
-                isEditable: isEditMode,)
-            ]): Row()));
+            child: _isDataLoaded()
+                ? ListView.builder(itemBuilder: (context, index) {
+              return index == 0 ? BidInfo(bid: bid) : SellerItemListItem(
+                  item: sellerItemDetails.items[index - 1],
+                  quantityTextEditingController: _quantityTextEditingControllers[index - 1],
+                  priceTextEditingController: _priceTextEditingControllers[index - 1],
+                  isEditable: isEditMode);
+            }, itemCount: sellerItemDetails.items.length + 1) : Row()));
   }
 
   bool _isPendingBid() {
@@ -161,32 +165,39 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
   }
 
   Widget _getSubmitAndCancelButtons() {
-    return PrimarySecondaryAction(primaryBtnText: Constants.BUTTON_SUBMIT, secondaryBtnText: Constants.BUTTON_CANCEL, actionCallback: (action) {
-      if(action > 0) {
-        _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-      } else {
-        setState(() {
-          isEditMode = false;
+    return PrimarySecondaryAction(
+        primaryBtnText: Constants.BUTTON_SUBMIT,
+        secondaryBtnText: Constants.BUTTON_CANCEL,
+        actionCallback: (action) {
+          if (action > 0) {
+            _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+          } else {
+            setState(() {
+              isEditMode = false;
+            });
+          }
         });
-      }
-    });
   }
 
   Widget _getEditAndCancelBidButtons() {
-    return PrimarySecondaryAction(primaryBtnText: Constants.BUTTON_EDIT_BID, secondaryBtnText: Constants.BUTTON_CANCEL_BID, actionCallback: (action) {
-      if(action > 0) {
-        setState(() {
-          isEditMode = true;
+    return PrimarySecondaryAction(
+        primaryBtnText: Constants.BUTTON_EDIT_BID,
+        secondaryBtnText: Constants.BUTTON_CANCEL_BID,
+        actionCallback: (action) {
+          if (action > 0) {
+            setState(() {
+              isEditMode = true;
+            });
+          } else {
+            _askCancelConfirmation();
+          }
         });
-      } else {
-        _askCancelConfirmation();
-      }
-    });
   }
 
   void _askCancelConfirmation() {
-    showConfirmationDialog(context, "Cancel Bid", "Are you sure, You want to cancel the bid", "Yes", "No", (status) {
-      if(status) {
+    showConfirmationDialog(context, 'Cancel Bid',
+        'Are you sure, You want to cancel the bid', 'Yes', 'No', (status) {
+      if (status) {
         _isCancelOperation = true;
         _bloc.cancelBid(bid, sellerItemDetails);
       }
@@ -221,14 +232,11 @@ class _BidDetailScreenState extends State<BidDetailScreen> with SellerItemListen
   }
 
   @override
-  void onPriceValidationError(String message, List<int> priceErrors) {
-  }
+  void onPriceValidationError(String message, List<int> priceErrors) {}
 
   @override
-  void onQuantityValidationError(String message, List<int> quantityErrors) {
-  }
+  void onQuantityValidationError(String message, List<int> quantityErrors) {}
 
   @override
-  void onValidationEmpty(String message, List<int> errorPositions) {
-  }
+  void onValidationEmpty(String message, List<int> errorPositions) {}
 }

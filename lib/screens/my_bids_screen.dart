@@ -56,7 +56,9 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                 itemCount: _bloc.bidCount(),
                 itemBuilder: (context, index) {
                   final Bid bid = _bloc.bidAtIndex(index);
-                  return MyBidsItem(bid, _bloc.user(id: bid.sellerId));
+                  return MyBidsItem(bid: bid, seller: _bloc.user(id: bid.sellerId), onPressed: () {
+                        goToBidDetailPage(bid);
+                  });
                 },
               ));
   }
