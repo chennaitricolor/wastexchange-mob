@@ -49,6 +49,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
   List<TextEditingController> _quantityTextEditingControllers;
   List<TextEditingController> _priceTextEditingControllers;
+  final _HEADER_COUNT = 1;
 
   @override
   void initState() {
@@ -130,13 +131,13 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    final items = sellerItemDetails.items;
     return Scaffold(
         bottomNavigationBar: _isDataLoaded() && _isPendingBid()
             ? isEditMode
                 ? _getSubmitAndCancelButtons()
                 : _getEditAndCancelBidButtons()
             : Row(),
-        backgroundColor: AppColors.chrome_grey,
         appBar: HomeAppBar(
             text: 'Order Id : ${bid.orderId}',
             onBackPressed: () {
@@ -147,16 +148,16 @@ class _BidDetailScreenState extends State<BidDetailScreen>
             child: _isDataLoaded()
                 ? ListView.builder(itemBuilder: (context, index) {
               return index == 0 ? BidInfo(bid: bid) : SellerItemListItem(
-                  item: sellerItemDetails.items[index - 1],
-                  quantityTextEditingController: _quantityTextEditingControllers[index - 1],
-                  priceTextEditingController: _priceTextEditingControllers[index - 1],
+                  item: items[index - _HEADER_COUNT],
+                  quantityTextEditingController: _quantityTextEditingControllers[index - _HEADER_COUNT],
+                  priceTextEditingController: _priceTextEditingControllers[index - _HEADER_COUNT],
                   isEditable: isEditMode);
-            }, itemCount: sellerItemDetails.items.length + 1) : Row()));
+            }, itemCount: items.length + _HEADER_COUNT) : Row()));
   }
 
-  bool _isPendingBid() {
-    return bid.status == BidStatus.pending;
-  }
+  bool _isPendingBid() => bid.status == BidStatus.pending;
+
+  bool _isDataLoaded() => sellerItemDetails != null;
 
   @override
   void dispose() {
@@ -202,10 +203,6 @@ class _BidDetailScreenState extends State<BidDetailScreen>
         _bloc.cancelBid(bid, sellerItemDetails);
       }
     });
-  }
-
-  bool _isDataLoaded() {
-    return sellerItemDetails != null;
   }
 
   List<String> _quantityValues() => _quantityTextEditingControllers
