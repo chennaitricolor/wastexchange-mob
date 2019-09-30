@@ -51,6 +51,9 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
   List<TextEditingController> _quantityTextEditingControllers;
   List<TextEditingController> _priceTextEditingControllers;
+  Set<int> quantityErrorPositions = {};
+  Set<int> priceErrorPositions = {};
+
   final _HEADER_COUNT = 1;
 
   @override
@@ -173,6 +176,8 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                 ? ListView.builder(itemBuilder: (context, index) {
               return index == 0 ? BidInfo(bid: bid) : SellerItemListItem(
                   item: items[index - _HEADER_COUNT],
+                  showQuantityFieldError: quantityErrorPositions.contains(index),
+                  showPriceFieldError: priceErrorPositions.contains(index),
                   quantityTextEditingController: _quantityTextEditingControllers[index - _HEADER_COUNT],
                   priceTextEditingController: _priceTextEditingControllers[index - _HEADER_COUNT],
                   isEditable: isEditMode);
@@ -252,12 +257,43 @@ class _BidDetailScreenState extends State<BidDetailScreen>
       ..show(context);
   }
 
+  //TODO: [Chandru] Need to unify the set state methods. It is unnecessary duplicated now.
   @override
-  void onPriceValidationError(String message, List<int> priceErrors) {}
+  void onQuantityValidationError(String message, List<int> quantityErrors) {
+    handleQuantityValidationError(message, quantityErrors);
+  }
 
   @override
-  void onQuantityValidationError(String message, List<int> quantityErrors) {}
+  void onPriceValidationError(String message, List<int> priceErrors) {
+    handlePriceValidationError(message, priceErrors);
+  }
 
   @override
-  void onValidationEmpty(String message, List<int> errorPositions) {}
+  void onValidationEmpty(String message, List<int> errorPositions) {
+    handleValidationEmpty(message, errorPositions);
+  }
+
+  void handlePriceValidationError(String message, List<int> priceErrors) {
+    showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = {};
+      priceErrorPositions = priceErrors.toSet();
+    });
+  }
+
+  void handleQuantityValidationError(String message, List<int> quantityErrors) {
+    showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = quantityErrors.toSet();
+      priceErrorPositions = {};
+    });
+  }
+
+  void handleValidationEmpty(String message, List<int> errorPositions) {
+    showErrorMessage(message);
+    setState(() {
+      quantityErrorPositions = errorPositions.toSet();
+      priceErrorPositions = errorPositions.toSet();
+    });
+  }
 }
