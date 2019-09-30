@@ -20,6 +20,8 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
+import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
+import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BidDetailScreen extends StatefulWidget {
@@ -134,10 +136,32 @@ class _BidDetailScreenState extends State<BidDetailScreen>
     final items = sellerItemDetails.items;
     return Scaffold(
         bottomNavigationBar: _isDataLoaded() && _isPendingBid()
-            ? isEditMode
-                ? _getSubmitAndCancelButtons()
-                : _getEditAndCancelBidButtons()
-            : Row(),
+            ? BottomActionViewContainer(children: <Widget>[
+          ButtonViewCompact(
+              onPressed: () {
+                if (isEditMode) {
+                  _sellerItemBloc.onSubmitBids(
+                      _quantityValues(), _priceValues());
+                } else {
+                  setState(() {
+                    isEditMode = true;
+                  });
+                }
+              },
+              text: isEditMode ? Constants.BUTTON_SUBMIT : Constants.BUTTON_EDIT_BID),
+          ButtonViewCompact(
+              onPressed: () {
+                if (isEditMode) {
+                  setState(() {
+                    isEditMode = false;
+                  });
+                } else {
+                  _askCancelConfirmation();
+                }
+              },
+              text: isEditMode ? Constants.BUTTON_CANCEL : Constants
+                  .BUTTON_CANCEL_BID)
+        ]) : Row(),
         appBar: HomeAppBar(
             text: 'Order Id : ${bid.orderId}',
             onBackPressed: () {
@@ -165,35 +189,35 @@ class _BidDetailScreenState extends State<BidDetailScreen>
     super.dispose();
   }
 
-  Widget _getSubmitAndCancelButtons() {
-    return PrimarySecondaryAction(
-        primaryBtnText: Constants.BUTTON_SUBMIT,
-        secondaryBtnText: Constants.BUTTON_CANCEL,
-        actionCallback: (action) {
-          if (action > 0) {
-            _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-          } else {
-            setState(() {
-              isEditMode = false;
-            });
-          }
-        });
-  }
+//  Widget _getSubmitAndCancelButtons() {
+//    return PrimarySecondaryAction(
+//        primaryBtnText: Constants.BUTTON_SUBMIT,
+//        secondaryBtnText: Constants.BUTTON_CANCEL,
+//        actionCallback: (action) {
+//          if (action > 0) {
+//            _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
+//          } else {
+//            setState(() {
+//              isEditMode = false;
+//            });
+//          }
+//        });
+//  }
 
-  Widget _getEditAndCancelBidButtons() {
-    return PrimarySecondaryAction(
-        primaryBtnText: Constants.BUTTON_EDIT_BID,
-        secondaryBtnText: Constants.BUTTON_CANCEL_BID,
-        actionCallback: (action) {
-          if (action > 0) {
-            setState(() {
-              isEditMode = true;
-            });
-          } else {
-            _askCancelConfirmation();
-          }
-        });
-  }
+//  Widget _getEditAndCancelBidButtons() {
+//    return PrimarySecondaryAction(
+//        primaryBtnText: Constants.BUTTON_EDIT_BID,
+//        secondaryBtnText: Constants.BUTTON_CANCEL_BID,
+//        actionCallback: (action) {
+//          if (action > 0) {
+//            setState(() {
+//              isEditMode = true;
+//            });
+//          } else {
+//            _askCancelConfirmation();
+//          }
+//        });
+//  }
 
   void _askCancelConfirmation() {
     showConfirmationDialog(context, 'Cancel Bid',
