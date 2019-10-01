@@ -1,16 +1,19 @@
+import 'dart:async';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/resources/connectivity_flushbar_event.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
-import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
 import 'package:wastexchange_mobile/widgets/order_form_header.dart';
+import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
 import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
@@ -60,7 +63,9 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
 
 class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
+  StreamSubscription _subscription;
   BuyerBidConfirmationBloc _bloc;
+
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
   //Also due to this OrderFormHeaderState is public
   final GlobalKey<OrderFormHeaderState> _keyOrderPickup = GlobalKey();
@@ -94,6 +99,7 @@ class _BuyerBidConfirmationScreenState
     });
 
     super.initState();
+    _subscription = ConnectivityFlushbarEvent().subscribeToConnectivity(context);
   }
 
   @override
@@ -140,6 +146,7 @@ class _BuyerBidConfirmationScreenState
   @override
   void dispose() {
     _bloc.dispose();
+    _subscription.cancel();
     super.dispose();
   }
 }
