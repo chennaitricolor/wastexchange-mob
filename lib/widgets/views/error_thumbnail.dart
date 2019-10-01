@@ -13,12 +13,12 @@ class ErrorThumbnail extends StatelessWidget {
       height: double.infinity,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 48),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.asset(iconPath, height: 340, width: 340),
+            Image.asset(iconPath, height: 240, width: 240),
             Text(message, textAlign: TextAlign.center, style: AppTheme.errorThumbnail)
           ],
         ),
