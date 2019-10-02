@@ -98,8 +98,10 @@ class _BuyerBidConfirmationScreenState
       }
     });
 
+    _subscription =
+        ConnectivityFlushbarEvent().subscribeToConnectivity(context);
+
     super.initState();
-    _subscription = ConnectivityFlushbarEvent().subscribeToConnectivity(context);
   }
 
   @override
