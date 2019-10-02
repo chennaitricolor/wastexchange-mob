@@ -30,7 +30,7 @@ class Bid {
       orderId: json['id'],
       createdDate: DateTime.parse(json['createdAt']),
       sellerId: json['sellerId'],
-      amount: json['totalBid'].toDouble().toStringAsFixed(2),
+      amount: json['totalBid'],
       pickupDate: DateTime.parse(json['pDateTime']),
       status: BidStatus.values
           .firstWhere((s) => s.toString().contains(json['status'])),

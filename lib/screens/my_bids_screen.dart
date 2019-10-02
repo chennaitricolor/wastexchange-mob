@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
@@ -57,7 +58,8 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                 itemCount: _bloc.bidCount(),
                 itemBuilder: (context, index) {
                   final Bid bid = _bloc.bidAtIndex(index);
-                  return MyBidsItem(bid: bid, seller: _bloc.user(id: bid.sellerId), onPressed: () {
+                  final User user = _bloc.user(id: bid.sellerId);
+                  return MyBidsItem(bid: bid, seller: user, onPressed: () {
                         goToBidDetailPage(bid);
                   });
                 },

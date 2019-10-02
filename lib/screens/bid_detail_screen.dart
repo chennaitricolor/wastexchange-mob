@@ -4,20 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/bid_detail_bloc.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
-import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
-import 'package:wastexchange_mobile/screens/bid_edit_item_list.dart';
-import 'package:wastexchange_mobile/screens/bid_info.dart';
+import 'package:wastexchange_mobile/screens/bid_details_header.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
-import 'package:wastexchange_mobile/screens/primary_secondary_action.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
@@ -136,52 +133,68 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    final items = sellerItemDetails.items;
     return Scaffold(
         bottomNavigationBar: _isDataLoaded() && _isPendingBid()
             ? BottomActionViewContainer(children: <Widget>[
-          ButtonViewCompact(
-              onPressed: () {
-                if (isEditMode) {
-                  _sellerItemBloc.onSubmitBids(
-                      _quantityValues(), _priceValues());
-                } else {
-                  setState(() {
-                    isEditMode = true;
-                  });
-                }
-              },
-              text: isEditMode ? Constants.BUTTON_SUBMIT : Constants.BUTTON_EDIT_BID),
-          ButtonViewCompact(
-              onPressed: () {
-                if (isEditMode) {
-                  setState(() {
-                    isEditMode = false;
-                  });
-                } else {
-                  _askCancelConfirmation();
-                }
-              },
-              text: isEditMode ? Constants.BUTTON_CANCEL : Constants
-                  .BUTTON_CANCEL_BID)
-        ]) : Row(),
+                ButtonViewCompact(
+                    onPressed: () {
+                      if (isEditMode) {
+                        _sellerItemBloc.onSubmitBids(
+                            _quantityValues(), _priceValues());
+                      } else {
+                        setState(() {
+                          isEditMode = true;
+                        });
+                      }
+                    },
+                    text: isEditMode
+                        ? Constants.BUTTON_SUBMIT
+                        : Constants.BUTTON_EDIT_BID),
+                ButtonViewCompact(
+                    onPressed: () {
+                      if (isEditMode) {
+                        setState(() {
+                          isEditMode = false;
+                        });
+                      } else {
+                        _askCancelConfirmation();
+                      }
+                    },
+                    text: isEditMode
+                        ? Constants.BUTTON_CANCEL
+                        : Constants.BUTTON_CANCEL_BID)
+              ])
+            : Row(),
         appBar: HomeAppBar(
-            text: 'Order Id : ${bid.orderId}',
+            text: 'Order Id - ${bid.orderId}',
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: _isDataLoaded()
-                ? ListView.builder(itemBuilder: (context, index) {
-              return index == 0 ? BidInfo(bid: bid) : SellerItemListItem(
-                  item: items[index - _HEADER_COUNT],
-                  showQuantityFieldError: quantityErrorPositions.contains(index),
-                  showPriceFieldError: priceErrorPositions.contains(index),
-                  quantityTextEditingController: _quantityTextEditingControllers[index - _HEADER_COUNT],
-                  priceTextEditingController: _priceTextEditingControllers[index - _HEADER_COUNT],
-                  isEditable: isEditMode);
-            }, itemCount: items.length + _HEADER_COUNT) : Row()));
+            child: _isDataLoaded() && !isListNullOrEmpty(sellerItemDetails.items)
+                ? ListView.builder(
+                    itemBuilder: (context, index) {
+                      return index == 0
+                          ? BidDetailsHeader(bid: bid, user: seller)
+                          : SellerItemListItem(
+                              item: sellerItemDetails.items[index - _HEADER_COUNT],
+                              showQuantityFieldError: quantityErrorPositions
+                                  .contains(index - _HEADER_COUNT),
+                              showPriceFieldError: priceErrorPositions
+                                  .contains(index - _HEADER_COUNT),
+                              quantityTextEditingController:
+                                  _quantityTextEditingControllers[
+                                      index - _HEADER_COUNT],
+                              priceTextEditingController:
+                                  _priceTextEditingControllers[
+                                      index - _HEADER_COUNT],
+                              isEditable: isEditMode);
+                    },
+                    itemCount: isListNullOrEmpty(sellerItemDetails.items)
+                        ? 0
+                        : (sellerItemDetails.items.length + _HEADER_COUNT))
+                : Row()));
   }
 
   bool _isPendingBid() => bid.status == BidStatus.pending;
@@ -193,36 +206,6 @@ class _BidDetailScreenState extends State<BidDetailScreen>
     _bloc.dispose();
     super.dispose();
   }
-
-//  Widget _getSubmitAndCancelButtons() {
-//    return PrimarySecondaryAction(
-//        primaryBtnText: Constants.BUTTON_SUBMIT,
-//        secondaryBtnText: Constants.BUTTON_CANCEL,
-//        actionCallback: (action) {
-//          if (action > 0) {
-//            _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
-//          } else {
-//            setState(() {
-//              isEditMode = false;
-//            });
-//          }
-//        });
-//  }
-
-//  Widget _getEditAndCancelBidButtons() {
-//    return PrimarySecondaryAction(
-//        primaryBtnText: Constants.BUTTON_EDIT_BID,
-//        secondaryBtnText: Constants.BUTTON_CANCEL_BID,
-//        actionCallback: (action) {
-//          if (action > 0) {
-//            setState(() {
-//              isEditMode = true;
-//            });
-//          } else {
-//            _askCancelConfirmation();
-//          }
-//        });
-//  }
 
   void _askCancelConfirmation() {
     showConfirmationDialog(context, 'Cancel Bid',
