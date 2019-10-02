@@ -73,6 +73,7 @@ flutter:
     - assets/images/tick.png
     - assets/locale/en.json
     - assets/locale/ta.json
+    - assets/images/
 
   fonts:
     - family: OpenSans

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
+import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
@@ -49,6 +50,10 @@ class Router {
 
       case BidSuccessfulScreen.routeName:
         return MaterialPageRoute(builder: (_) => BidSuccessfulScreen());
+
+      case BidDetailScreen.routeName:
+        return MaterialPageRoute(
+            builder: (_) => BidDetailScreen(bid: settings.arguments));
 
       default:
         return null;

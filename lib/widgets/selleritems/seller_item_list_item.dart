@@ -11,13 +11,15 @@ class SellerItemListItem extends StatelessWidget {
       this.showQuantityFieldError,
       this.showPriceFieldError,
       this.quantityTextEditingController,
-      this.priceTextEditingController});
+      this.priceTextEditingController,
+      this.isEditable});
 
   final Item item;
   final bool showQuantityFieldError;
   final bool showPriceFieldError;
   final TextEditingController quantityTextEditingController;
   final TextEditingController priceTextEditingController;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,14 @@ class SellerItemListItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SellerItemRow(
-                showFieldError: showQuantityFieldError,
-                isEditable: true,
+                showFieldError: showQuantityFieldError ?? false,
+                isEditable: isEditable,
                 text: 'Available Qty: ${item.qty.toString()} Kg',
                 hintText: 'Order Qty',
                 textEditingController: quantityTextEditingController),
             SellerItemRow(
-                showFieldError: showPriceFieldError,
-                isEditable: true,
+                showFieldError: showPriceFieldError ?? false,
+                isEditable: isEditable,
                 text:
                     'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
                 hintText: 'Bid Price',

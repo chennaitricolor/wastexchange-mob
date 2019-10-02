@@ -97,7 +97,13 @@ class Constants {
   static const NO_BIDS = 'No Bids';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
+  static const BUTTON_CANCEL = 'Cancel';
+  static const BUTTON_CANCEL_BID = 'Cancel Bid';
+  static const BUTTON_EDIT_BID = 'Edit Bid';
 
+  //error thumbnails
+  static const NO_BID_ERROR_MESSAGE = 'Sorry! It seems like you do not have any active bids.';
+  static const NO_BID_ERROR_ICON = 'assets/images/img_no_bids_found.png';
   //error
   static const CONNECT_TO_INTERNET = 'connect to internet';
 }

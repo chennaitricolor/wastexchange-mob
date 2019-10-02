@@ -21,6 +21,8 @@ bool isDouble(String value) => double.tryParse(value) != null;
 
 bool isPositive(String value) => double.tryParse(value) > 0;
 
+String EMPTY = '';
+
 double roundToPlaces(double value, int places) {
   final int fac = pow(10, places);
   return (value * fac).round() / fac;

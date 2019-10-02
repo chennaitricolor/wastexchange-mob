@@ -29,9 +29,10 @@ class SellerItemRow extends Row {
                 child: isEditable
                     ? (showFieldError ? NumberErrorTextField(textEditingController: textEditingController, hintText: hintText)
                     : NumberTextField(textEditingController: textEditingController, hintText: hintText))
-                    : Align(
+                    : Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         alignment: Alignment.centerLeft,
-                        child: Text(hintText, style: AppTheme.body2))),
+                        child: Text(textEditingController.text ?? 'Edit to bid', style: AppTheme.body2))),
           ],
         );
 
