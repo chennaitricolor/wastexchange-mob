@@ -104,4 +104,6 @@ class Constants {
   //error thumbnails
   static const NO_BID_ERROR_MESSAGE = 'Sorry! It seems like you do not have any active bids.';
   static const NO_BID_ERROR_ICON = 'assets/images/img_no_bids_found.png';
+  //error
+  static const CONNECT_TO_INTERNET = 'connect to internet';
 }
