@@ -31,7 +31,6 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
           showLoadingDialog(context);
           break;
         case Status.ERROR:
-          print(_snapshot.message);
           dismissDialog(context);
           break;
         case Status.COMPLETED:

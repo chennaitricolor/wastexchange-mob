@@ -1,7 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/blocs/place_bid_bloc.dart';
-import 'package:wastexchange_mobile/models/bid.dart';
+import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -16,13 +15,43 @@ import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  const BuyerBidConfirmationScreen({this.previousBid, this.seller, this.bidItems});
+  factory BuyerBidConfirmationScreen({
+    @required User seller,
+    @required List<BidItem> bidItems,
+    @required bool restoreSavedState,
+    @required VoidCallback onBackPressed,
+  }) {
+    ArgumentError.checkNotNull(seller);
+    ArgumentError.checkNotNull(bidItems);
+    ArgumentError.checkNotNull(restoreSavedState);
+    ArgumentError.checkNotNull(onBackPressed);
+    // TODO(Sayeed): Simplify the throwing of exceptions.
+    if (bidItems.isEmpty) {
+      throw Exception('BidItems cannot be empty');
+    }
+    return BuyerBidConfirmationScreen._(
+        seller: seller,
+        bidItems: bidItems,
+        restoreSavedState: restoreSavedState,
+        onBackPressed: onBackPressed);
+  }
+
+  const BuyerBidConfirmationScreen._({
+    User seller,
+    List<BidItem> bidItems,
+    bool restoreSavedState,
+    VoidCallback onBackPressed,
+  })  : _seller = seller,
+        _bidItems = bidItems,
+        _restoreSavedState = restoreSavedState,
+        _onBackPressed = onBackPressed;
+
+  final User _seller;
+  final List<BidItem> _bidItems;
+  final VoidCallback _onBackPressed;
+  final bool _restoreSavedState;
 
   static const String routeName = '/buyerBidConfirmationScreen';
-
-  final User seller;
-  final List<BidItem> bidItems;
-  final Bid previousBid;
 
   @override
   _BuyerBidConfirmationScreenState createState() =>
@@ -31,21 +60,23 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
 
 class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
-  PlaceBidBloc _bloc;
+  BuyerBidConfirmationBloc _bloc;
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
+  //Also due to this OrderFormHeaderState is public
   final GlobalKey<OrderFormHeaderState> _keyOrderPickup = GlobalKey();
 
   void _showMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         message: message)
       ..show(context);
   }
 
   @override
   void initState() {
-    _bloc = PlaceBidBloc(items: widget.bidItems, sellerId: widget.seller.id);
+    _bloc = BuyerBidConfirmationBloc(
+        items: widget._bidItems, sellerId: widget._seller.id);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -71,14 +102,18 @@ class _BuyerBidConfirmationScreenState
       appBar: HomeAppBar(
         text: Constants.TITLE_ORDER_FORM,
         onBackPressed: () {
+          _keyOrderPickup.currentState.clearSavedData();
+          _keyOrderPickup.currentState.saveData();
+          widget._onBackPressed();
           Navigator.pop(context, false);
         },
       ),
       bottomNavigationBar: OrderFormTotal(
-        total: _bloc.bidTotal(),
-        itemsCount: widget.bidItems.length,
+        total: _bloc.bidTotal,
+        itemsCount: _bloc.items.length,
         onPressed: () {
           final result = _keyOrderPickup.currentState.pickupInfoData();
+          // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
           if (result.status == Status.ERROR) {
             _showMessage(result.message);
             return;
@@ -89,9 +124,14 @@ class _BuyerBidConfirmationScreenState
       body: SingleChildScrollView(
           child: Column(
         children: <Widget>[
-          OrderFormHeader(key: _keyOrderPickup),
-          Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(16), child: Text('Order Summary', style: AppTheme.title)),
-          OrderFormSummaryList(items: widget.bidItems),
+          OrderFormHeader(
+              key: _keyOrderPickup,
+              restoreSavedData: widget._restoreSavedState),
+          Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+              child: const Text('Order Summary', style: AppTheme.title)),
+          OrderFormSummaryList(items: _bloc.items),
         ],
       )),
     );

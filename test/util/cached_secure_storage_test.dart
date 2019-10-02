@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
 
 class MockFlutterStorage extends Mock implements FlutterSecureStorage {}
 

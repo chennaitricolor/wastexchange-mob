@@ -4,9 +4,9 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/widgets/views/menu_app_bar.dart';
@@ -125,6 +125,7 @@ class _MapState extends State<MapScreen> {
     );
   }
 
+// TODO(Sayeed): Is it bad that we have created a new method for getting widgets instead of having it in build()
   Widget _widgetForMapStatus() {
     if (_mapStatus == _MapStatus.LOADING) {
       return FractionallySizedBox(

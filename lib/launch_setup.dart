@@ -1,14 +1,17 @@
-mixin SetUpCompliant {
+// TODO(Sayeed): Is this a good name for this mixin
+import 'package:flutter/material.dart';
+
+mixin LaunchSetupMember {
   Future<void> load();
 }
 
-class LaunchSetup with SetUpCompliant {
-  LaunchSetup([this.setUpParticipants]);
-  final List<SetUpCompliant> setUpParticipants;
-  @override
+class LaunchSetup {
+  LaunchSetup({@required this.members});
+  final List<LaunchSetupMember> members;
+
   Future<void> load() async {
-    for (SetUpCompliant participant in setUpParticipants) {
-      await participant.load();
+    for (LaunchSetupMember member in members) {
+      await member.load();
     }
   }
 }
