@@ -3,24 +3,30 @@ import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class ButtonViewCompact extends StatelessWidget {
+  const ButtonViewCompact(
+      {@required this.onPressed,
+      this.text,
+      this.width = 160,
+      this.enabled = true});
 
-  ButtonViewCompact({@required this.onPressed, this.text});
-  
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
+      width: width,
       child: RaisedButton(
-          color: AppColors.green,
+          color: enabled ? AppColors.green : AppColors.grey,
           child: Text(
             text,
             style: AppTheme.buttonTitle,
           ),
-          onPressed: onPressed,
+          onPressed: enabled ? onPressed : null,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(22.0))),
     );
   }
-  VoidCallback onPressed;
-  String text;
+
+  final VoidCallback onPressed;
+  final String text;
+  final double width;
+  final bool enabled;
 }

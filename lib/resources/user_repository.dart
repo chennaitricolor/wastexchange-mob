@@ -13,7 +13,7 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/user_data_store.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
-class UserRepository implements SetUpCompliant {
+class UserRepository implements LaunchSetupMember {
   UserRepository(
       {UserClient client,
       TokenRepository tokenRepository,
@@ -38,7 +38,7 @@ class UserRepository implements SetUpCompliant {
 
   Future<Result<LoginResponse>> login(LoginData loginData) async {
     final Result<LoginResponse> loginResponse = await _client.login(loginData);
-
+// TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
     if (loginResponse.status == Status.COMPLETED) {
       await _tokenRepository.setToken(loginResponse.data.token);
       final Result<User> userResponse = await _client.myProfile();
@@ -55,6 +55,7 @@ class UserRepository implements SetUpCompliant {
 
   Future<Result<List<User>>> getAllUsers() async {
     final Result<List<User>> allUsersResponse = await _client.getAllUsers();
+// TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
     if (allUsersResponse.status == Status.COMPLETED) {
       _userDataStore.saveUsers(allUsersResponse.data);
     }
@@ -82,7 +83,7 @@ class UserRepository implements SetUpCompliant {
     await UserDataStore().getProfile();
   }
 
-  void logoutUser(){
+  void logoutUser() {
     _tokenRepository.deleteToken();
     _userDataStore.deleteUser();
   }

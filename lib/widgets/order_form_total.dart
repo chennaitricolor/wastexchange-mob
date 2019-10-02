@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_icon_compact.dart';
 
 class OrderFormTotal extends StatelessWidget {
+  // TODO(Sayeed): Should we change this to resemble OrderFormSummaryList constructor
   const OrderFormTotal({this.total, this.itemsCount, this.onPressed});
 
   final double total;
@@ -14,7 +15,7 @@ class OrderFormTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 90,
+      height: 80,
       padding: const EdgeInsets.all(16),
       child: Row(children: <Widget>[
         Expanded(
@@ -28,8 +29,7 @@ class OrderFormTotal extends StatelessWidget {
                       children: <TextSpan>[
                         const TextSpan(text: 'Total: '),
                         TextSpan(
-                            text:
-                                '${Constants.INR_UNICODE}${total.toStringAsFixed(2)}',
+                            text: '${Constants.INR_UNICODE}$total',
                             style: AppTheme.body1),
                       ],
                     ),

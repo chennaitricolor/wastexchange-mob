@@ -2,13 +2,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_list.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
-import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/widgets/views/below_app_bar_message.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
@@ -19,6 +18,7 @@ class SellerItemScreen extends StatefulWidget {
     ArgumentError.checkNotNull(sellerInfo);
     ArgumentError.checkNotNull(sellerInfo.seller);
     ArgumentError.checkNotNull(sellerInfo.items);
+    // TODO(Sayeed): Can we simplify throwing exceptions like below across the app
     if (sellerInfo.items.isEmpty) {
       throw Exception('Seller Items is empty');
     }
@@ -32,6 +32,8 @@ class SellerItemScreen extends StatefulWidget {
   _SellerItemScreenState createState() => _SellerItemScreenState();
 }
 
+// TODO(Sayeed): We have a mixin pattern for callback here where as in other places we have bloc/streams.
+//We should discuss and agree on one style for consistency
 class _SellerItemScreenState extends State<SellerItemScreen>
     with SellerItemListener {
   final logger = AppLogger.get('SellerInformationScreen');
@@ -43,6 +45,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
   List<BidItem> bidItems;
   Set<int> quantityErrorPositions = {};
   Set<int> priceErrorPositions = {};
+  bool _restoreSavedState = false;
 
   @override
   void initState() {
@@ -59,11 +62,20 @@ class _SellerItemScreenState extends State<SellerItemScreen>
 
   @override
   void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
+    final VoidCallback onBackPressedFromNextScreen = () {
+      _restoreSavedState = true;
+    };
+    final BuyerBidConfirmationScreenLaunchData data =
+        BuyerBidConfirmationScreenLaunchData(
+            seller: sellerInfo['seller'],
+            bidItems: sellerInfo['bidItems'],
+            restoreSavedState: _restoreSavedState,
+            onBackPressed: onBackPressedFromNextScreen);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
-        arguments: sellerInfo);
+        arguments: data);
   }
 
-  //TODO: [Chandru] Need to unify the set state methods. It is unnecessary duplicated now.
+  // TODO(Chandru): Need to unify the set state methods. It is unnecessary duplicated now.
   @override
   void onQuantityValidationError(String message, List<int> quantityErrors) {
     handleQuantityValidationError(message, quantityErrors);

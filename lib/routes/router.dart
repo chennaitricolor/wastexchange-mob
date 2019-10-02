@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
@@ -35,13 +36,14 @@ class Router {
             builder: (_) => SellerItemScreen(sellerInfo: settings.arguments));
 
       case BuyerBidConfirmationScreen.routeName:
-        final Map<String, dynamic> argsMap = settings.arguments;
-        final seller = argsMap['seller'];
-        final bidItems = argsMap['bidItems'];
-        final previousBid = argsMap['previousBid'];
+        final BuyerBidConfirmationScreenLaunchData data = settings.arguments;
         return MaterialPageRoute(
-            builder: (_) =>
-                BuyerBidConfirmationScreen(previousBid: previousBid, seller: seller, bidItems: bidItems));
+            builder: (_) => BuyerBidConfirmationScreen(
+                  seller: data.seller,
+                  bidItems: data.bidItems,
+                  restoreSavedState: data.restoreSavedState,
+                  onBackPressed: data.onBackPressed,
+                ));
 
       case MyBidsScreen.routeName:
         return MaterialPageRoute(builder: (_) => MyBidsScreen());
@@ -82,6 +84,11 @@ class Router {
       {dynamic arguments}) {
     Navigator.pushNamedAndRemoveUntil(
         context, routeName, (Route<dynamic> route) => false);
+  }
+
+  static void removeAllAndPopToHome(BuildContext context, {dynamic arguments}) {
+    Navigator.pushNamedAndRemoveUntil(
+        context, Navigator.defaultRouteName, (Route<dynamic> route) => false);
   }
 
   static void popToRoot(BuildContext context, {dynamic arguments}) {

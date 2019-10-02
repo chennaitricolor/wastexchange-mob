@@ -87,7 +87,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void _showMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         message: message)
       ..show(context);
   }
@@ -132,8 +132,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return Scaffold(
         body: AuthenticationView(
-            buttonTextStyle: AppTheme.buttonTitle,
-       buttonStyle: ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
+      buttonTextStyle: AppTheme.buttonTitle,
+      buttonStyle:
+          ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
       fieldStyle: FieldStyle.value(0, 8, 24, 24, AppColors.underline,
           AppColors.green, AppColors.text_grey),
       headerLayout: HomeAppBar(onBackPressed: () {

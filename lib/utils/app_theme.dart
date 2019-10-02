@@ -178,7 +178,7 @@ class AppTheme {
     // body1 -> body2
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.2,
     color: darkerText,
   );

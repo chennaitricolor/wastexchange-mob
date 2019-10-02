@@ -34,8 +34,7 @@ class MyBidsItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    Constants.PICKUP_AT +
-                        _getFormattedDate(_bid.pickupDate),
+                    Constants.PICKUP_AT + _getFormattedDate(_bid.pickupDate),
                     style: AppTheme.body3,
                   )
                 ],
@@ -49,8 +48,8 @@ class MyBidsItem extends StatelessWidget {
 
 //helpers
   String _getFormattedDate(DateTime date) {
-    final f =
-        DateFormat('${AppDateFormat.shortDate} ${AppDateFormat.defaultTime}');
+    final f = DateFormat(
+        '${AppDateFormat.defaultDate} - ${AppDateFormat.defaultTime}');
     return f.format(date.toLocal());
   }
 
@@ -60,19 +59,19 @@ class MyBidsItem extends StatelessWidget {
         return Icon(
           Icons.timelapse,
           size: 36,
-          color: Colors.yellow.shade700,
+          color: Colors.yellow.shade800,
         );
       case BidStatus.cancelled:
         return Icon(
           Icons.cancel,
           size: 36,
-          color: Colors.red.shade300,
+          color: Colors.red.shade400,
         );
       case BidStatus.successful:
         return Icon(
           Icons.check_circle,
           size: 36,
-          color: Colors.green.shade300,
+          color: Colors.green.shade500,
         );
       default:
         return null;

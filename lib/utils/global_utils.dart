@@ -1,4 +1,6 @@
 // TODO(Sayeed): Is this a good design. Discuss with others.
+import 'dart:math';
+
 bool isNull(Object object) => object == null;
 
 bool isNotNull(Object object) => object != null;
@@ -20,3 +22,8 @@ bool isDouble(String value) => double.tryParse(value) != null;
 bool isPositive(String value) => double.tryParse(value) > 0;
 
 String EMPTY = '';
+
+double roundToPlaces(double value, int places) {
+  final int fac = pow(10, places);
+  return (value * fac).round() / fac;
+}

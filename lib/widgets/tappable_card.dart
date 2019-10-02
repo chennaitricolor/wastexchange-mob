@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
@@ -30,11 +29,11 @@ class TappableCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           FlatButton.icon(
-            padding: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               onPressed: null,
               icon: Icon(
                 iconData,
-                size: 16,
+                size: 20,
                 color: AppTheme.darkText,
               ),
               label: Text(
@@ -42,7 +41,7 @@ class TappableCard extends StatelessWidget {
                 style: AppTheme.subtitle,
               )),
           Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
               child: Text(
                 '$actionText',
                 style: AppTheme.subtitleGreen,

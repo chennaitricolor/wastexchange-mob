@@ -16,16 +16,16 @@ class OrderItem extends StatelessWidget {
           child: Container(
               child:
                   Text('${bidItem.item.displayName}', style: AppTheme.body2)),
-          flex: 2,
+          flex: 24,
         ),
         Expanded(
           child: Container(
               child: Text(
             'Qty: ${bidItem.bidQuantity} Kg',
             style: AppTheme.body2,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
           )),
-          flex: 1,
+          flex: 13,
         ),
         Expanded(
           child: Container(
@@ -34,7 +34,7 @@ class OrderItem extends StatelessWidget {
             style: AppTheme.body2,
             textAlign: TextAlign.right,
           )),
-          flex: 1,
+          flex: 13,
         ),
       ]),
       height: 44,

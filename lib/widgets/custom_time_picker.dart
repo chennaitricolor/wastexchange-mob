@@ -15,7 +15,7 @@ class CustomTimePicker extends CommonPickerModel {
 
   @override
   String leftStringAtIndex(int index) {
-    if (index >= 0 && index < 13) {
+    if (index >= 1 && index < 13) {
       return digits(index, 2);
     } else {
       return null;

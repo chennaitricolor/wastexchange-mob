@@ -1,7 +1,12 @@
 import 'dart:convert';
 
-//Removing json.decoded(str) since the string is already decoded by the parent.
-Item itemFromJson(String itemName, dynamic str) => Item.fromJson(str, itemName);
+import 'package:wastexchange_mobile/utils/global_utils.dart';
+
+bool isValidItem(dynamic json) =>
+    isNotNull(json['quantity']) && isNotNull(json['cost']);
+
+Item itemFromJson(String itemName, dynamic json) =>
+    Item.fromJson(itemName, json);
 
 String itemToJson(Item data) => json.encode(data.toJson());
 
@@ -12,9 +17,12 @@ class Item {
     this.displayName,
     this.qty,
     this.price,
-  });
+  }) {
+    ArgumentError.checkNotNull(qty);
+    ArgumentError.checkNotNull(price);
+  }
 
-  factory Item.fromJson(Map<dynamic, dynamic> json, String itemName) {
+  factory Item.fromJson(String itemName, Map<dynamic, dynamic> json) {
     return Item(
       name: itemName,
       displayName: itemDisplayNames[itemName],

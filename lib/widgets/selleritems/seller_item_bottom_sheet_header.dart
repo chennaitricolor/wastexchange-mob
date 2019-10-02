@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/widgets/views/rectangle_button_view.dart';
+import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 
 class SellerItemBottomSheetHeader extends StatelessWidget {
   const SellerItemBottomSheetHeader(
@@ -19,8 +19,7 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonTitle =
         isAuthorized ? Constants.BID_TO_BUY : Constants.LOGIN_TO_BUY;
-    // TODO(Sayeed): Fix this
-    final buttonEnabled = isAuthorized ? hasItems : true;
+    final buttonEnabled = !isAuthorized || hasItems;
     return Padding(
       padding: const EdgeInsets.all(
         16,
@@ -36,11 +35,11 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          RectangleButtonView(
-            title: buttonTitle,
-            onPressed: onPressed,
-            enabled: buttonEnabled,
-          )
+          ButtonViewCompact(
+              text: buttonTitle,
+              width: 140,
+              enabled: buttonEnabled,
+              onPressed: onPressed),
         ],
       ),
     );

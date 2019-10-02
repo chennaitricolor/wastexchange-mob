@@ -72,20 +72,25 @@ class SellerItemBloc {
       return;
     }
 
-    //TODO: [Chandru] Need to optimize the quantity and price error methods. It loooks like codes are duplicated.
+    // TODO(Chandru): Need to optimize the quantity and price error methods. It loooks like codes are duplicated.
     final List<int> quantityErrors = _validationMap[QUANTITY_ERROR];
     if (!isListNullOrEmpty(quantityErrors)) {
-      final String invalidItems =
-      quantityErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onQuantityValidationError('Please enter valid quantity values for $invalidItems', quantityErrors);
+      final String invalidItems = quantityErrors
+          .map((index) => _sellerInfo.items[index].displayName)
+          .join(', ');
+      _listener.onQuantityValidationError(
+          'Please enter valid quantity values for $invalidItems',
+          quantityErrors);
       return;
     }
 
     final List<int> priceErrors = _validationMap[PRICE_ERROR];
     if (!isListNullOrEmpty(priceErrors)) {
-      final String invalidItems =
-      priceErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onPriceValidationError('Please enter valid price values for $invalidItems', priceErrors);
+      final String invalidItems = priceErrors
+          .map((index) => _sellerInfo.items[index].displayName)
+          .join(', ');
+      _listener.onPriceValidationError(
+          'Please enter valid price values for $invalidItems', priceErrors);
       return;
     }
 
@@ -94,8 +99,9 @@ class SellerItemBloc {
       final String aboveMaxQtyItems = aboveMaxQtys
           .map((index) => _sellerInfo.items[index].displayName)
           .join(', ');
-      _listener
-          .onQuantityValidationError('Entered quantity is above the available quantity for $aboveMaxQtyItems', aboveMaxQtys);
+      _listener.onQuantityValidationError(
+          'Entered quantity is above the available quantity for $aboveMaxQtyItems',
+          aboveMaxQtys);
       return;
     }
 
@@ -110,7 +116,9 @@ class SellerItemBloc {
     if (_validationMap[EMPTY].contains(index)) {
       throw Exception('Both Quantity and Price are empty');
     }
-    if (quantityValue.isEmpty || quantityValue == '0' || !isDouble(quantityValue)) {
+    if (quantityValue.isEmpty ||
+        quantityValue == '0' ||
+        !isDouble(quantityValue)) {
       return true;
     }
     return !isPositive(quantityValue);
