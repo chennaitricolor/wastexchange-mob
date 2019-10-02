@@ -97,4 +97,7 @@ class Constants {
   static const NO_BIDS = 'No Bids';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
+
+  //error
+  static const CONNECT_TO_INTERNET = 'connect to internet';
 }
