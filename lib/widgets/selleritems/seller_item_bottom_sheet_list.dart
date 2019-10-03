@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list_item.dart';
 
 class SellerItemBottomSheetList extends StatelessWidget {
@@ -16,10 +17,11 @@ class SellerItemBottomSheetList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const itemsEmptyWidget = Padding(
+    final itemsEmptyWidget = Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text(
-          Constants.ITEMS_UNAVAILABLE,
+        child: 
+          Text(
+          AppLocalizations.translate(context, LocaleConstants.ITEMS_UNAVAILABLE),
           style: AppTheme.body1,
           textAlign: TextAlign.center,
         ));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 
 class SellerItemBottomSheetHeader extends StatelessWidget {
@@ -18,7 +19,8 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonTitle =
-        isAuthorized ? Constants.BID_TO_BUY : Constants.LOGIN_TO_BUY;
+        isAuthorized ? AppLocalizations.translate(context, LocaleConstants.BID_TO_BUY) 
+        : AppLocalizations.translate(context, LocaleConstants.LOGIN_TO_BUY);
     final buttonEnabled = !isAuthorized || hasItems;
     return Padding(
       padding: const EdgeInsets.all(

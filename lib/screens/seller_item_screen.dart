@@ -1,5 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
@@ -8,7 +9,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/below_app_bar_message.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
@@ -139,7 +140,7 @@ class _SellerItemScreenState extends State<SellerItemScreen>
               resetStates();
               _sellerItemBloc.onSubmitBids(_quantityValues(), _priceValues());
             },
-            text: Constants.BUTTON_SUBMIT,
+            text: AppLocalizations.translate(context, LocaleConstants.BUTTON_SUBMIT),
             insetT: 10.0,
             insetB: 10.0),
         appBar: HomeAppBar(

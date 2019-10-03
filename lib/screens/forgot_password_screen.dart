@@ -17,8 +17,7 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String localeEmailId = 
-        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
+    final String localeEmailId = AppLocalizations.translate(context, LocaleConstants.EMAIL_FIELD);
     final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId, 50, TextInputType.emailAddress, false);
     return Scaffold(
       body: AuthenticationView(
@@ -27,7 +26,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           messageLayout: Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(24),
-              child: Text(Constants.FORGOT_MESSAGE,
+              child: Text(AppLocalizations.translate(context, LocaleConstants.FORGOT_MESSAGE),
                   style: AppTheme.subtitle)),
           fieldStyle: FieldStyle.value(24, 8, 24, 36, AppColors.underline,
               AppColors.green, AppColors.text_grey),

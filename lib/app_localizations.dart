@@ -35,12 +35,15 @@ class AppLocalizations {
     return true;
   }
 
-  String translate(String key) {
+  String getLocaleValue(String key) {
     if(_localizedStrings.containsKey(key)){
       return _localizedStrings[key];
     }
     throw Exception('No Translations found for '+key);
   }
+
+  static String translate(BuildContext context, String key)=> AppLocalizations.of(context).getLocaleValue(key);
+
   static Locale getCurrentLocale(locale){
     if(locale != null){
       for (var supportedLocale in supportedLocales) {

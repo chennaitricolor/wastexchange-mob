@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
@@ -10,7 +11,7 @@ import 'package:wastexchange_mobile/resources/connectivity_flushbar_event.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/order_form_header.dart';
 import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
@@ -89,7 +90,7 @@ class _BuyerBidConfirmationScreenState
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.BID_FAILURE_MSG);
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.BID_FAILURE_MSG));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -108,7 +109,7 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        text: Constants.TITLE_ORDER_FORM,
+        text: AppLocalizations.translate(context, LocaleConstants.TITLE_ORDER_FORM),
         onBackPressed: () {
           _keyOrderPickup.currentState.clearSavedData();
           _keyOrderPickup.currentState.saveData();

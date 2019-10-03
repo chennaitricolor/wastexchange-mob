@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
@@ -134,10 +136,10 @@ class _MapState extends State<MapScreen> {
           alignment: Alignment.topCenter,
           child: const LoadingProgressIndicator());
     } else if (_mapStatus == _MapStatus.LOADING) {
-      return const Padding(
+      return Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            Constants.MAP_LOADING_FAILED,
+            AppLocalizations.translate(context, LocaleConstants.MAP_LOADING_FAILED),
             style: AppTheme.body1,
             textAlign: TextAlign.center,
           ));
