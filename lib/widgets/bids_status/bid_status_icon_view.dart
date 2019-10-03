@@ -32,7 +32,7 @@ class BidStatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double size = 24;
+    const double size = 24;
     return CircleAvatar(
       radius: size,
       backgroundColor: backgroundColor,

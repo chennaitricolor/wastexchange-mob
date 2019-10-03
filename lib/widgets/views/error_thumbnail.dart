@@ -3,6 +3,9 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class ErrorThumbnail extends StatelessWidget {
+  
+  ErrorThumbnail({this.message, this.iconPath}) : assert(isNotNull(message), 'Error message should not be null'),
+                                                  assert(isNotNull(iconPath), 'Icon path should not be null');
   final String message;
   final String iconPath;
 
@@ -25,7 +28,4 @@ class ErrorThumbnail extends StatelessWidget {
       ),
     );
   }
-
-  ErrorThumbnail({this.message, this.iconPath}) : assert(isNotNull(message), 'Error message should not be null'),
-                                                  assert(isNotNull(iconPath), 'Icon path should not be null');
 }

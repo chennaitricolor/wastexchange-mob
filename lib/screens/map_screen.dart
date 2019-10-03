@@ -127,26 +127,27 @@ class _MapState extends State<MapScreen> {
 
 // TODO(Sayeed): Is it bad that we have created a new method for getting widgets instead of having it in build()
   Widget _widgetForMapStatus() {
-    if (_mapStatus == _MapStatus.LOADING) {
-      return FractionallySizedBox(
-          heightFactor:
-              (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
-          alignment: Alignment.topCenter,
-          child: const LoadingProgressIndicator());
-    } else if (_mapStatus == _MapStatus.LOADING) {
-      return const Padding(
+    switch(_mapStatus){
+      case _MapStatus.LOADING: 
+        return FractionallySizedBox(
+            heightFactor:
+                (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
+            alignment: Alignment.topCenter,
+            child: const LoadingProgressIndicator());
+      case _MapStatus.COMPLETED:
+        return GoogleMap(
+          initialCameraPosition: _initialCameraPosition,
+          onMapCreated: onMapCreated,
+          mapType: MapType.normal,
+          markers: Set<Marker>.of(markers.values));
+      default: 
+        return const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             Constants.MAP_LOADING_FAILED,
             style: AppTheme.body1,
             textAlign: TextAlign.center,
           ));
-    } else {
-      return GoogleMap(
-          initialCameraPosition: _initialCameraPosition,
-          onMapCreated: onMapCreated,
-          mapType: MapType.normal,
-          markers: Set<Marker>.of(markers.values));
     }
   }
 }

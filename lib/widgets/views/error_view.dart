@@ -3,6 +3,9 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class ErrorView extends StatelessWidget {
+
+  ErrorView({this.message}) : assert(isNotNull(message), 'Error message should not be null');
+
   final String message;
 
   @override
@@ -14,6 +17,4 @@ class ErrorView extends StatelessWidget {
       ),
     );
   }
-
-  ErrorView({this.message}) : assert(isNotNull(message), 'Error message should not be null');
 }

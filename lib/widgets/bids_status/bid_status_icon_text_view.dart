@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
-import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/widgets/views/badge_view.dart';
 
 class BidStatusIconTextView extends StatelessWidget {

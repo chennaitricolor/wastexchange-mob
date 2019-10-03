@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
-import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
@@ -9,9 +8,9 @@ import 'package:wastexchange_mobile/widgets/bids_status/bid_status_icon_view.dar
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 
 class MyBidsItem extends StatelessWidget {
-  final GestureTapCallback onPressed;
   const MyBidsItem({@required this.onPressed, this.bid, this.seller});
 
+  final GestureTapCallback onPressed;
   final Bid bid;
   final User seller;
 
