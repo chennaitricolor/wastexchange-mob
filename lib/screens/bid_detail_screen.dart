@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/bid_detail_bloc.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
+import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
@@ -52,6 +53,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   Set<int> priceErrorPositions = {};
 
   final _HEADER_COUNT = 1;
+  bool _restoreSavedState = false;
 
   @override
   void initState() {
@@ -228,8 +230,17 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   @override
   void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
     sellerInfo['previousBid'] = bid;
+    final VoidCallback onBackPressedFromNextScreen = () {
+      _restoreSavedState = true;
+    };
+    final BuyerBidConfirmationScreenLaunchData data =
+    BuyerBidConfirmationScreenLaunchData(
+        seller: sellerInfo['seller'],
+        bidItems: sellerInfo['bidItems'],
+        restoreSavedState: _restoreSavedState,
+        onBackPressed: onBackPressedFromNextScreen);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
-        arguments: sellerInfo);
+        arguments: data);
   }
 
   void showErrorMessage(String message) {
