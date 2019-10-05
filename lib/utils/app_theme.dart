@@ -45,8 +45,8 @@ class AppTheme {
   static const TextStyle errorThumbnail = TextStyle(
     // h4 -> display1
     fontFamily: 'OpenSans',
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    fontSize: 18,
     letterSpacing: 0.4,
     height: 1.4,
     color: darkText,
@@ -57,7 +57,7 @@ class AppTheme {
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w600,
     fontSize: 20,
-        letterSpacing: 0.27,
+    letterSpacing: 0.27,
     color: darkerText,
   );
 
