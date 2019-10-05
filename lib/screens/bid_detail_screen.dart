@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/bid_detail_bloc.dart';
 import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
@@ -14,7 +15,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_details_header.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
@@ -150,8 +151,8 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                       }
                     },
                     text: isEditMode
-                        ? Constants.BUTTON_SUBMIT
-                        : Constants.BUTTON_EDIT_BID),
+                        ? AppLocalizations.translate(context, LocaleConstants.BUTTON_SUBMIT)
+                        : AppLocalizations.translate(context, LocaleConstants.BUTTON_EDIT_BID)),
                 ButtonViewCompact(
                     onPressed: () {
                       if (isEditMode) {
@@ -163,8 +164,8 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                       }
                     },
                     text: isEditMode
-                        ? Constants.BUTTON_CANCEL
-                        : Constants.BUTTON_CANCEL_BID)
+                        ? AppLocalizations.translate(context, LocaleConstants.BUTTON_CANCEL)
+                        : AppLocalizations.translate(context, LocaleConstants.BUTTON_CANCEL_BID))
               ])
             : Row(),
         appBar: HomeAppBar(

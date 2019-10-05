@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/my_bids_item.dart';
 import 'package:wastexchange_mobile/widgets/views/error_view.dart';
@@ -47,12 +48,12 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: HomeAppBar(
-            text: Constants.MY_BIDS,
+            text: AppLocalizations.translate(context, LocaleConstants.MY_BIDS),
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
         body: _bloc.bidCount() == 0
-            ? ErrorView(message: Constants.NO_BID_ERROR_MESSAGE)
+            ? ErrorView(message: AppLocalizations.translate(context, LocaleConstants.NO_BID_ERROR_MESSAGE))
             : ListView.builder(
                 itemCount: _bloc.bidCount(),
                 itemBuilder: (context, index) {

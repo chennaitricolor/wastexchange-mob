@@ -73,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.REGISTRATION_FAILED);
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.REGISTRATION_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -121,10 +121,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String localeEmailId =
-        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
-    final String localePasswordText =
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
+    final String localeEmailId = AppLocalizations.translate(context, LocaleConstants.EMAIL_FIELD);
+    final String localePasswordText = AppLocalizations.translate(context, LocaleConstants.PASSWORD_FIELD);
     final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId,
         50, TextInputType.emailAddress, false);
     final FieldType _password = FieldType.value(Constants.ID_PASSWORD,

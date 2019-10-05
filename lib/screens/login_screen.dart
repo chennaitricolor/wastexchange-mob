@@ -74,18 +74,16 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(AppLocalizations.of(context)
-              .translate(LocaleConstants.LOGIN_FAILED));
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.LOGIN_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
           if (!_snapshot.data.approved) {
-            _showMessage(Constants.LOGIN_UNAPPROVED);
+            _showMessage(AppLocalizations.translate(context, LocaleConstants.LOGIN_UNAPPROVED));
             return;
           }
           if (!_snapshot.data.success) {
-            _showMessage(AppLocalizations.of(context)
-                .translate(LocaleConstants.LOGIN_FAILED));
+            _showMessage(AppLocalizations.translate(context, LocaleConstants.LOGIN_FAILED));
             return;
           }
           _routeToNextScreen();
@@ -98,10 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String localeEmailId =
-        AppLocalizations.of(context).translate(LocaleConstants.EMAIL_FIELD);
-    final String localePasswordText =
-        AppLocalizations.of(context).translate(LocaleConstants.PASSWORD_FIELD);
+    final String localeEmailId = AppLocalizations.translate(context, LocaleConstants.EMAIL_FIELD);
+    final String localePasswordText = AppLocalizations.translate(context, LocaleConstants.PASSWORD_FIELD);
     final FieldType _email = FieldType.value(Constants.ID_EMAIL, localeEmailId,
         50, TextInputType.emailAddress, false);
     final FieldType _password = FieldType.value(Constants.ID_PASSWORD,
@@ -117,13 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: RichText(
                     text: TextSpan(
-                        text: AppLocalizations.of(context)
-                            .translate(LocaleConstants.LOGIN_NOT_MEMBER),
+                        text: AppLocalizations.translate(context, LocaleConstants.LOGIN_NOT_MEMBER),
                         style: AppTheme.subtitle,
                         children: <TextSpan>[
                       TextSpan(
-                          text: AppLocalizations.of(context)
-                              .translate(LocaleConstants.SIGNUP_BUTTON),
+                          text: AppLocalizations.translate(context, LocaleConstants.SIGNUP_BUTTON),
                           style: AppTheme.subtitleGreen)
                     ]))),
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
@@ -142,8 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pop(context, false);
             }),
             fieldTypes: [_email, _password],
-            buttonText: AppLocalizations.of(context)
-                .translate(LocaleConstants.CONTINUE),
+            buttonText: AppLocalizations.translate(context, LocaleConstants.CONTINUE),
             // TODO(Sayeed): Move this to bloc
             onValidation: (isValidationSuccess, valueMap) {
               if (!isValidationSuccess) {

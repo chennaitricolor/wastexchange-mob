@@ -4,6 +4,7 @@ import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/otp_bloc.dart';
 import 'package:wastexchange_mobile/blocs/registration_bloc.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -16,6 +17,7 @@ import 'package:wastexchange_mobile/utils/app_logger.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 
@@ -54,11 +56,11 @@ class _OTPScreenState extends State<OTPScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.SEND_OTP_FAIL);
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.SEND_OTP_FAIL));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
-          _showMessage(Constants.SEND_OTP_SUCCESS);
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.SEND_OTP_SUCCESS));
           break;
       }
     });
@@ -73,7 +75,7 @@ class _OTPScreenState extends State<OTPScreen> {
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.REGISTRATION_FAILED);
+          _showMessage(AppLocalizations.translate(context, LocaleConstants.REGISTRATION_FAILED));
           break;
         case Status.COMPLETED:
           dismissDialog(context);
@@ -121,15 +123,18 @@ class _OTPScreenState extends State<OTPScreen> {
               },
               child: RichText(
                   text: TextSpan(
-                text: Constants.RESEND_OTP,
+                text: AppLocalizations.translate(context, LocaleConstants.RESEND_OTP),
                 style: AppTheme.subtitleGreen,
               ))),
           titleLayout: Center(
-              child: const Text(Constants.OTP_TITLE, style: AppTheme.headline)),
-          messageLayout: Container(
+              child: 
+                Text(AppLocalizations.translate(context, LocaleConstants.OTP_TITLE),
+                  style: AppTheme.headline)),
+              messageLayout: Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(24),
-              child: Text(Constants.OTP_MESSAGE, style: AppTheme.subtitle)),
+              child: Text(AppLocalizations.translate(context, LocaleConstants.OTP_MESSAGE),
+                       style: AppTheme.subtitle)),
           fieldStyle: FieldStyle.value(24, 8, 24, 36, AppColors.underline,
               AppColors.green, AppColors.text_grey),
           fieldValidator: (idAsKey, values) {
@@ -145,7 +150,7 @@ class _OTPScreenState extends State<OTPScreen> {
             Navigator.pop(context, false);
           }),
           fieldTypes: [
-            FieldType.value(Constants.ID_OTP, Constants.FIELD_OTP, 10,
+            FieldType.value(Constants.ID_OTP, AppLocalizations.translate(context, LocaleConstants.FIELD_OTP), 10,
                 TextInputType.number, false)
           ],
           onValidation: (isValidationSuccess, valueMap) {

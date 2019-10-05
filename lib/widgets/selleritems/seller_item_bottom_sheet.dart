@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
@@ -8,8 +9,8 @@ import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list.dart';
@@ -122,7 +123,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
           padding: const EdgeInsets.all(16.0),
           child: Align(
             alignment: Alignment.topCenter,
-            child: Text(Constants.GENERIC_ERROR_MESSAGE),
+            child: Text(AppLocalizations.translate(context, LocaleConstants.GENERIC_ERROR_MESSAGE)),
           ));
     } else {
       final items = _sellerItemDetails.items ?? [];
