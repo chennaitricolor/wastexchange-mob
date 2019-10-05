@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
-import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
