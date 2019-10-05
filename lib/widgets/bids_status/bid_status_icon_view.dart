@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
+import 'package:wastexchange_mobile/widgets/bids_status/bid_status_colors.dart';
 
 class BidStatusIconView extends StatelessWidget {
   const BidStatusIconView({this.bidStatus, this.iconSize});
@@ -12,13 +13,13 @@ class BidStatusIconView extends StatelessWidget {
     switch (bidStatus) {
       case BidStatus.pending:
         return BidStatusIcon(
-            backgroundColor: Colors.yellow.shade700, icon: Icons.timer);
+            backgroundColor: statusPendingColor, icon: Icons.timer);
       case BidStatus.cancelled:
         return BidStatusIcon(
-            backgroundColor: Colors.red.shade300, icon: Icons.clear);
+            backgroundColor: statusCancelledColor, icon: Icons.clear);
       case BidStatus.successful:
         return BidStatusIcon(
-            backgroundColor: Colors.green.shade300, icon: Icons.check);
+            backgroundColor: statusCompletedColor, icon: Icons.check);
       default:
         return null;
     }
