@@ -6,8 +6,10 @@ import 'package:wastexchange_mobile/screens/map_screen.dart';
 import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
+import 'package:wastexchange_mobile/widgets/views/thought_works_logo_powered.dart';
 
 // TODO(Sayeed): Should this be a stateless widget?
 class DrawerView extends StatelessWidget {
@@ -61,7 +63,6 @@ class DrawerView extends StatelessWidget {
           Router.popAndPushNamed(context, MyBidsScreen.routeName);
         },
       ),
-      const Divider(),
       DrawerItemView(
         iconData: Icons.power_settings_new,
         text: 'Logout',
@@ -69,6 +70,11 @@ class DrawerView extends StatelessWidget {
           logoutUser();
           Router.removeAllAndPopToHome(context);
         },
+      ),
+      const Divider(),
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ThoughtWorksLogoPowered(),
       ),
     ];
   }
