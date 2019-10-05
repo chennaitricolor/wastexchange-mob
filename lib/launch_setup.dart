@@ -1,16 +1,25 @@
-// TODO(Sayeed): Is this a good name for this mixin
-import 'package:flutter/material.dart';
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
+import 'package:wastexchange_mobile/resources/env_repository.dart';
+import 'package:wastexchange_mobile/resources/key_value_store.dart';
+import 'package:wastexchange_mobile/resources/user_repository.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
 
+// TODO(Sayeed): Is this a good name for this mixin
 mixin LaunchSetupMember {
   Future<void> load();
 }
 
 class LaunchSetup {
-  LaunchSetup({@required this.members});
-  final List<LaunchSetupMember> members;
+  final List<LaunchSetupMember> _members = [
+    EnvRepository(),
+    AppLogger(),
+    TokenRepository(),
+    UserRepository(),
+    KeyValueStore()
+  ];
 
   Future<void> load() async {
-    for (LaunchSetupMember member in members) {
+    for (LaunchSetupMember member in _members) {
       await member.load();
     }
   }
