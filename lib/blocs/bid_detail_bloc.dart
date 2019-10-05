@@ -16,21 +16,24 @@ class BidDetailBloc {
   final UserRepository _userRepository = UserRepository();
 
   final StreamController _bidController = StreamController<Result<String>>();
-  final StreamController _sellerController = StreamController<Result<SellerItemDetails>>();
+  final StreamController _sellerController =
+      StreamController<Result<SellerItemDetails>>();
 
   StreamSink<Result<String>> get bidSink => _bidController.sink;
   Stream<Result<String>> get bidStream => _bidController.stream;
 
-  StreamSink<Result<SellerItemDetails>> get sellerSink => _sellerController.sink;
-  Stream<Result<SellerItemDetails>> get sellerStream => _sellerController.stream;
-
+  StreamSink<Result<SellerItemDetails>> get sellerSink =>
+      _sellerController.sink;
+  Stream<Result<SellerItemDetails>> get sellerStream =>
+      _sellerController.stream;
 
   Future<void> cancelBid(Bid bid, SellerItemDetails sellerItemDetails) async {
     final int bidId = bid.orderId;
-    final double totalBid = bid.bidItems.values.fold(0, (acc, item) => acc + item.qty * item.price);
+    final double totalBid = bid.nameToItemMap.values
+        .fold(0, (acc, item) => acc + item.qty * item.price);
 
     final BuyerBidData data = BuyerBidData(
-        bidItems: getBidItems(bid.bidItems, sellerItemDetails.items),
+        bidItems: getBidItems(bid.nameToItemMap, sellerItemDetails.items),
         sellerId: bid.sellerId,
         totalBid: totalBid,
         pDateTime: bid.pickupDate,
@@ -40,12 +43,16 @@ class BidDetailBloc {
     return updateBid(bidId, data);
   }
 
-  List<BidItem> getBidItems(Map<String,Item> buyerItems, List<Item> sellerItems) {
+  List<BidItem> getBidItems(
+      Map<String, Item> buyerItems, List<Item> sellerItems) {
     final List<BidItem> bidItems = [];
-    for(final sellerItem in sellerItems) {
+    for (final sellerItem in sellerItems) {
       final Item buyerItem = buyerItems[sellerItem.name];
-      if(buyerItem != null) {
-        final BidItem bidItem = BidItem(item: sellerItem, bidQuantity: buyerItem.qty, bidCost: buyerItem.price);
+      if (buyerItem != null) {
+        final BidItem bidItem = BidItem(
+            item: sellerItem,
+            bidQuantity: buyerItem.qty,
+            bidCost: buyerItem.price);
         bidItems.add(bidItem);
       }
     }
@@ -62,7 +69,7 @@ class BidDetailBloc {
   Future<void> getSellerDetails(int sellerId) async {
     sellerSink.add(Result.loading(Constants.LOADING));
     final Result<SellerItemDetails> response =
-    await _userRepository.getSellerDetails(sellerId);
+        await _userRepository.getSellerDetails(sellerId);
     sellerSink.add(response);
   }
 
@@ -76,13 +83,15 @@ class BidDetailBloc {
   }
 
   void sortSellerItemsBasedOnBid(SellerItemDetails sellerItemDetails, Bid bid) {
-    sellerItemDetails.items.sort((a,b)=>compare(bid, a,b));
+    sellerItemDetails.items.sort((a, b) => _compare(bid, a, b));
   }
 
-  int compare(Bid bid, Item a, Item b) {
-    if(bid.bidItems[a.name] != null && bid.bidItems[b.name] == null) {
+  int _compare(Bid bid, Item a, Item b) {
+    if (bid.nameToItemMap[a.name] != null &&
+        bid.nameToItemMap[b.name] == null) {
       return -1;
-    } else if(bid.bidItems[a.name] == null && bid.bidItems[b.name] != null) {
+    } else if (bid.nameToItemMap[a.name] == null &&
+        bid.nameToItemMap[b.name] != null) {
       return 1;
     }
 
