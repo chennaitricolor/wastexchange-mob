@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem(this.bidItem);
@@ -30,7 +31,7 @@ class OrderItem extends StatelessWidget {
         Expanded(
           child: Container(
               child: Text(
-            '${Constants.INR_UNICODE} ${bidItem.bidCost}/Kg',
+            '${formattedPrice(bidItem.bidCost)}/Kg',
             style: AppTheme.body2,
             textAlign: TextAlign.right,
           )),

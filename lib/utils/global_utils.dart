@@ -1,6 +1,8 @@
 // TODO(Sayeed): Is this a good design. Discuss with others.
 import 'dart:math';
 
+import 'package:wastexchange_mobile/utils/constants.dart';
+
 bool isNull(Object object) => object == null;
 
 bool isNotNull(Object object) => object != null;
@@ -26,4 +28,8 @@ const String EMPTY = '';
 double roundToPlaces(double value, int places) {
   final int fac = pow(10, places);
   return (value * fac).round() / fac;
+}
+
+String formattedPrice(double price) {
+  return '${Constants.INR_UNICODE} ${price.toStringAsFixed(2)}';
 }

@@ -9,7 +9,6 @@ import 'package:wastexchange_mobile/widgets/calendar_card_widget.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 
 class BidDetailsHeader extends StatelessWidget {
-
   const BidDetailsHeader({this.bid, this.user});
 
   final Bid bid;
@@ -28,8 +27,10 @@ class BidDetailsHeader extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Visibility(visible: !isNullOrEmpty(address), child: Text(address, style: AppTheme.body2)),
-                    Text('${Constants.INR_UNICODE} ${bid.amount}', style: AppTheme.title),
+                    Visibility(
+                        visible: !isNullOrEmpty(address),
+                        child: Text(address, style: AppTheme.body2)),
+                    Text(formattedPrice(bid.amount), style: AppTheme.title),
                     Text(bid.contactName, style: AppTheme.subtitle),
                   ]),
             ),
