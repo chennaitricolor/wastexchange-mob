@@ -2,6 +2,7 @@ import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
+import 'package:wastexchange_mobile/resources/json_parsing.dart';
 
 class BidClient {
   BidClient([ApiBaseHelper helper]) {
@@ -14,7 +15,8 @@ class BidClient {
 
   ApiBaseHelper _helper;
 
-  Future<Result<String>> updateBid({int bidId, int buyerId, BuyerBidData data}) async {
+  Future<Result<String>> updateBid(
+      {int bidId, int buyerId, BuyerBidData data}) async {
     try {
       await _helper.put(
           true,
@@ -57,9 +59,12 @@ class BidClient {
 
   Future<Result<List<Bid>>> getBids({int userId}) async {
     try {
-      final result = await _helper
+      final response = await _helper
           .get(PATH_PLACE_BID.replaceFirst(':buyerId', userId.toString()));
-      return Result.completed(bidsFromJson(result));
+      final bids = List<Bid>.from(codecForIntToDoubleConversion(key: 'totalBid')
+          .decode(response)
+          .map((x) => Bid.fromJson(x)));
+      return Result.completed(bids);
     } catch (e) {
       return Result.error(e.toString());
     }
