@@ -3,14 +3,13 @@ import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 
 class CalendarCardWidget extends StatelessWidget {
-
-  CalendarCardWidget({this.date, this.hint});
-  DateTime date;
-  String hint;
+  const CalendarCardWidget({this.date, this.hint});
+  final DateTime date;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
         elevation: 2,
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -26,5 +25,4 @@ class CalendarCardWidget extends StatelessWidget {
               ]),
         ));
   }
-
 }

@@ -52,7 +52,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   Set<int> quantityErrorPositions = {};
   Set<int> priceErrorPositions = {};
 
-  final _HEADER_COUNT = 1;
+  static const headerCount = 1;
   bool _restoreSavedState = false;
 
   @override
@@ -90,7 +90,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
                 for (int i = 0; i < sellerItemDetails.items.length; i++) {
                   final Item item = sellerItemDetails.items[i];
-                  Item bidItem = bid.bidItems[item.name];
+                  final Item bidItem = bid.bidItems[item.name];
 
                   if (bidItem != null) {
                     _quantityTextEditingControllers[i].text =
@@ -174,28 +174,30 @@ class _BidDetailScreenState extends State<BidDetailScreen>
             }),
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: _isDataLoaded() && !isListNullOrEmpty(sellerItemDetails.items)
+            child: _isDataLoaded() &&
+                    !isListNullOrEmpty(sellerItemDetails.items)
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return index == 0
                           ? BidDetailsHeader(bid: bid, user: seller)
                           : SellerItemListItem(
-                              item: sellerItemDetails.items[index - _HEADER_COUNT],
+                              item:
+                                  sellerItemDetails.items[index - headerCount],
                               showQuantityFieldError: quantityErrorPositions
-                                  .contains(index - _HEADER_COUNT),
+                                  .contains(index - headerCount),
                               showPriceFieldError: priceErrorPositions
-                                  .contains(index - _HEADER_COUNT),
+                                  .contains(index - headerCount),
                               quantityTextEditingController:
                                   _quantityTextEditingControllers[
-                                      index - _HEADER_COUNT],
+                                      index - headerCount],
                               priceTextEditingController:
                                   _priceTextEditingControllers[
-                                      index - _HEADER_COUNT],
+                                      index - headerCount],
                               isEditable: isEditMode);
                     },
                     itemCount: isListNullOrEmpty(sellerItemDetails.items)
                         ? 0
-                        : (sellerItemDetails.items.length + _HEADER_COUNT))
+                        : (sellerItemDetails.items.length + headerCount))
                 : Row()));
   }
 
@@ -234,11 +236,11 @@ class _BidDetailScreenState extends State<BidDetailScreen>
       _restoreSavedState = true;
     };
     final BuyerBidConfirmationScreenLaunchData data =
-    BuyerBidConfirmationScreenLaunchData(
-        seller: sellerInfo['seller'],
-        bidItems: sellerInfo['bidItems'],
-        restoreSavedState: _restoreSavedState,
-        onBackPressed: onBackPressedFromNextScreen);
+        BuyerBidConfirmationScreenLaunchData(
+            seller: sellerInfo['seller'],
+            bidItems: sellerInfo['bidItems'],
+            restoreSavedState: _restoreSavedState,
+            onBackPressed: onBackPressedFromNextScreen);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: data);
   }
@@ -251,7 +253,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
       ..show(context);
   }
 
-  //TODO: [Chandru] Need to unify the set state methods. It is unnecessary duplicated now.
+  // TODO(Chandru): Need to unify the set state methods. It is unnecessary duplicated now.
   @override
   void onQuantityValidationError(String message, List<int> quantityErrors) {
     handleQuantityValidationError(message, quantityErrors);

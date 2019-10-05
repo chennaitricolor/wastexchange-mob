@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 
 class BidStatusIconView extends StatelessWidget {
-  BidStatusIconView({this.bidStatus, this.iconSize});
+  const BidStatusIconView({this.bidStatus, this.iconSize});
 
   final BidStatus bidStatus;
   final double iconSize;

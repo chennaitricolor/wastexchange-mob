@@ -9,13 +9,13 @@ List<Bid> bidsFromJson(String str) =>
 class Bid {
   Bid(
       {this.orderId,
-        this.createdDate,
-        this.sellerId,
-        this.amount,
-        this.pickupDate,
-        this.status,
-        this.contactName,
-        this.bidItems}) {
+      this.createdDate,
+      this.sellerId,
+      this.amount,
+      this.pickupDate,
+      this.status,
+      this.contactName,
+      this.bidItems}) {
     ArgumentError.checkNotNull(orderId);
     ArgumentError.checkNotNull(createdDate);
     ArgumentError.checkNotNull(sellerId);

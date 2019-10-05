@@ -11,6 +11,7 @@ import 'package:wastexchange_mobile/widgets/views/drawer_item_view.dart';
 
 // TODO(Sayeed): Should this be a stateless widget?
 class DrawerView extends StatelessWidget {
+  // TODO(Sayeed): Add bloc for drawer view
   DrawerView({UserRepository userRepository}) {
     _userRepository = userRepository ?? UserRepository();
     _getThisUserProfile();

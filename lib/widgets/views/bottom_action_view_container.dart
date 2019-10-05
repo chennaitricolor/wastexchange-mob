@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 
 class BottomActionViewContainer extends StatelessWidget {
-
-  BottomActionViewContainer({@required this.children});
+  const BottomActionViewContainer({@required this.children});
 
   final List<Widget> children;
 
