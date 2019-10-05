@@ -58,7 +58,7 @@ class ApiBaseHelper {
       return _returnResponse(response);
     } on SocketException {
       final ApiException exception =
-      FetchDataException('No Internet connection');
+          FetchDataException('No Internet connection');
       logger.e(exception);
       throw exception;
     }

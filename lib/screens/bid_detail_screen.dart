@@ -90,7 +90,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
                 for (int i = 0; i < sellerItemDetails.items.length; i++) {
                   final Item item = sellerItemDetails.items[i];
-                  final Item bidItem = bid.bidItems[item.name];
+                  final Item bidItem = bid.nameToItemMap[item.name];
 
                   if (bidItem != null) {
                     _quantityTextEditingControllers[i].text =

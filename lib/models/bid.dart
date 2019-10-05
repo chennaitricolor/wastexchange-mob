@@ -15,7 +15,7 @@ class Bid {
       this.pickupDate,
       this.status,
       this.contactName,
-      this.bidItems}) {
+      this.nameToItemMap}) {
     ArgumentError.checkNotNull(orderId);
     ArgumentError.checkNotNull(createdDate);
     ArgumentError.checkNotNull(sellerId);
@@ -23,7 +23,7 @@ class Bid {
     ArgumentError.checkNotNull(pickupDate);
     ArgumentError.checkNotNull(status);
     ArgumentError.checkNotNull(contactName);
-    ArgumentError.checkNotNull(bidItems);
+    ArgumentError.checkNotNull(nameToItemMap);
   }
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
@@ -35,7 +35,7 @@ class Bid {
       status: BidStatus.values
           .firstWhere((s) => s.toString().contains(json['status'])),
       contactName: json['contactName'],
-      bidItems: getBidItems(json['details']));
+      nameToItemMap: getNameToItemMap(json['details']));
 
   final int orderId;
   final DateTime createdDate;
@@ -44,9 +44,9 @@ class Bid {
   final DateTime pickupDate;
   BidStatus status;
   final String contactName;
-  final Map<String, Item> bidItems;
+  final Map<String, Item> nameToItemMap;
 
-  static Map<String, Item> getBidItems(Map<String, dynamic> map) {
+  static Map<String, Item> getNameToItemMap(Map<String, dynamic> map) {
     final Map<String, Item> bitItemLites = HashMap();
     map.forEach((name, value) {
       bitItemLites[name] = Item.fromBidJson(value, name);
