@@ -1,5 +1,3 @@
-import 'package:authentication_view/auth_colors.dart';
-import 'package:authentication_view/button_style.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/widgets/dialogs/error_dialog.dart';
 import 'package:wastexchange_mobile/widgets/dialogs/loading_dialog.dart';
