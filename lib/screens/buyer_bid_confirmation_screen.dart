@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
@@ -63,8 +61,8 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
 
 class _BuyerBidConfirmationScreenState
     extends State<BuyerBidConfirmationScreen> {
-  StreamSubscription _subscription;
   BuyerBidConfirmationBloc _bloc;
+  final ConnectivityFlushbar _connectivityFlushbar = ConnectivityFlushbar();
 
   // TODO(Sayeed): Check if this is a design problem that we are having to call a child widget method from parent.
   //Also due to this OrderFormHeaderState is public
@@ -98,8 +96,8 @@ class _BuyerBidConfirmationScreenState
       }
     });
 
-    _subscription =
-        ConnectivityFlushbarEvent().subscribeToConnectivity(context);
+    _connectivityFlushbar
+        .init(context);
 
     super.initState();
   }
@@ -148,7 +146,7 @@ class _BuyerBidConfirmationScreenState
   @override
   void dispose() {
     _bloc.dispose();
-    _subscription.cancel();
+    _connectivityFlushbar.dispose();
     super.dispose();
   }
 }

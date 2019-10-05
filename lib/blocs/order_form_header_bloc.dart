@@ -29,8 +29,8 @@ class OrderFormHeaderBloc {
   static const String _kContactName = 'contact';
   static const String _kPickupDate = 'pickupDate';
   static const String _kPickupTime = 'pickupTime';
-  static final DateFormat persistenceDateFormat =
-      DateFormat('${AppDateFormat.defaultDate} ${AppDateFormat.defaultTime}');
+  static final DateFormat _persistenceDateFormat = DateFormat(
+      '${AppDateFormat.defaultDateFormat} ${AppDateFormat.defaultTimeFormat}');
 
   DateTime _initialDate;
   DateTime _pickupDate;
@@ -55,7 +55,7 @@ class OrderFormHeaderBloc {
     if (isNull(_pickupDate)) {
       return 'Pickup Date';
     }
-    final f = DateFormat(AppDateFormat.defaultDate);
+    final f = DateFormat(AppDateFormat.defaultDateFormat);
     return f.format(_pickupDate.toLocal());
   }
 
@@ -63,7 +63,7 @@ class OrderFormHeaderBloc {
     if (isNull(_pickupTime)) {
       return 'Pickup Time';
     }
-    final f = DateFormat(AppDateFormat.defaultTime);
+    final f = DateFormat(AppDateFormat.defaultTimeFormat);
     return f.format(_pickupTime.toLocal());
   }
 
@@ -108,11 +108,11 @@ class OrderFormHeaderBloc {
       _keyValueStore.setString(_contactName, _kContactName);
     }
     if (isNotNull(_pickupDate)) {
-      final String date = persistenceDateFormat.format(_pickupDate.toLocal());
+      final String date = _persistenceDateFormat.format(_pickupDate.toLocal());
       _keyValueStore.setString(date, _kPickupDate);
     }
     if (isNotNull(_pickupTime)) {
-      final String time = persistenceDateFormat.format(_pickupTime.toLocal());
+      final String time = _persistenceDateFormat.format(_pickupTime.toLocal());
       _keyValueStore.setString(time, _kPickupTime);
     }
   }
@@ -129,11 +129,11 @@ class OrderFormHeaderBloc {
     }
     final String date = _keyValueStore.getString(_kPickupDate);
     if (isNotNull(date)) {
-      _pickupDate = persistenceDateFormat.parse(date);
+      _pickupDate = _persistenceDateFormat.parse(date);
     }
     final String time = _keyValueStore.getString(_kPickupTime);
     if (isNotNull(time)) {
-      _pickupTime = persistenceDateFormat.parse(time);
+      _pickupTime = _persistenceDateFormat.parse(time);
     }
   }
 

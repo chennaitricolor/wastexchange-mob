@@ -1,10 +1,5 @@
 import 'dart:collection';
-import 'dart:convert';
-
 import 'package:wastexchange_mobile/models/item.dart';
-
-List<Bid> bidsFromJson(String str) =>
-    List<Bid>.from(json.decode(str).map((x) => Bid.fromJson(x)));
 
 class Bid {
   Bid(
@@ -40,7 +35,7 @@ class Bid {
   final int orderId;
   final DateTime createdDate;
   final int sellerId;
-  final String amount;
+  final double amount;
   final DateTime pickupDate;
   BidStatus status;
   final String contactName;

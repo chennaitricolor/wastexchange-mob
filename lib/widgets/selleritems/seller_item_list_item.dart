@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/card_view.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item_row.dart';
 
@@ -45,8 +46,7 @@ class SellerItemListItem extends StatelessWidget {
             SellerItemRow(
                 showFieldError: showPriceFieldError ?? false,
                 isEditable: isEditable,
-                text:
-                    'Estimated Price: ${Constants.INR_UNICODE} ${item.price.toString()}/Kg',
+                text: 'Estimated Price: ${formattedPrice(item.price)}/Kg',
                 hintText: 'Bid Price',
                 textEditingController: priceTextEditingController),
           ],
