@@ -48,7 +48,7 @@ class BidDetailsHeader extends StatelessWidget {
             const SizedBox(width: 8),
             Container(
                 alignment: Alignment.centerRight,
-                child: Text('${Constants.INR_UNICODE} ${bid.amount}',
+                child: Text('${formattedPrice(bid.amount)}',
                     style: AppTheme.title),
                 width: 85)
           ]),
