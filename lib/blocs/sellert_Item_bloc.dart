@@ -150,7 +150,7 @@ class SellerItemBloc {
     if (_validationMap[PRICE_ERROR].contains(index)) {
       throw Exception('Both Quantity and Price are empty');
     }
-    if(item.price == 0 && priceValue == '0'){
+    if(item.price == 0 && (priceValue == '0' || priceValue == '0.0')){
       return false;
     }
     return !isPositive(priceValue);
