@@ -46,7 +46,7 @@ class SellerItemListItem extends StatelessWidget {
             SellerItemRow(
                 showFieldError: showPriceFieldError ?? false,
                 isEditable: isEditable,
-                text: 'Estimated Price: ${formattedPrice(item.price)}/Kg',
+                text: item.price == 0 ? 'Estimated Price: Free' : 'Estimated Price: ${formattedPrice(item.price)}/Kg' ,
                 hintText: 'Bid Price',
                 textEditingController: priceTextEditingController),
           ],
