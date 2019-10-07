@@ -3,14 +3,14 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/resources/key_value_store.dart';
+import 'package:wastexchange_mobile/resources/key_value_datastore.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 // TODO(Sayeed): Split this class by responsibility. We can separate state management, dateTime, UI
 class OrderFormHeaderBloc {
   OrderFormHeaderBloc(
-      {@required restoreSavedData, KeyValueStoreInterface keyValueStore}) {
+      {@required restoreSavedData, KeyValueDataStoreInterface keyValueStore}) {
     final DateTime nowPlusMinimumHours = DateTime.now()
         .add(const Duration(hours: _minimumPickupTimeHoursFromNow));
     _initialDate = DateTime(nowPlusMinimumHours.year, nowPlusMinimumHours.month,
@@ -23,7 +23,7 @@ class OrderFormHeaderBloc {
   }
 
   bool _restoreSavedData;
-  KeyValueStoreInterface _keyValueStore;
+  KeyValueDataStoreInterface _keyValueStore;
 
   static const int _minimumPickupTimeHoursFromNow = 18;
   static const String _kContactName = 'contact';

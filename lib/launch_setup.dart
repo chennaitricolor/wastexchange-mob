@@ -1,6 +1,6 @@
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
-import 'package:wastexchange_mobile/resources/key_value_store.dart';
+import 'package:wastexchange_mobile/resources/key_value_datastore.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 

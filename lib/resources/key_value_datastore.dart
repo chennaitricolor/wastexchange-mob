@@ -3,7 +3,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 
-abstract class KeyValueStoreInterface {
+abstract class KeyValueDataStoreInterface {
   Future<void> setBool(bool value, String key);
   Future<void> setInt(int value, String key);
   Future<void> setDouble(double value, String key);
@@ -18,7 +18,7 @@ abstract class KeyValueStoreInterface {
 }
 
 // TODO(Sayeed): Should we move all code to this abstract interface paradigm and coding to interface
-class KeyValueStore implements KeyValueStoreInterface, LaunchSetupMember {
+class KeyValueStore implements KeyValueDataStoreInterface, LaunchSetupMember {
   factory KeyValueStore() {
     return _singleton;
   }
