@@ -16,11 +16,11 @@ import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
-import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.dart';
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BidDetailScreen extends StatefulWidget {
   BidDetailScreen({this.bid}) {

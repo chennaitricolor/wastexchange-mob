@@ -7,10 +7,10 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/widget_display_util.dart';
 import 'package:wastexchange_mobile/widgets/my_bids_item.dart';
 import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class MyBidsScreen extends StatefulWidget {
   @override

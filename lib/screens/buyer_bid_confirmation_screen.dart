@@ -4,16 +4,16 @@ import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/resources/connectivity_flushbar_event.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/connectivity_flushbar_event.dart';
 import 'package:wastexchange_mobile/widgets/order_form_header.dart';
 import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
 import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
   factory BuyerBidConfirmationScreen({
