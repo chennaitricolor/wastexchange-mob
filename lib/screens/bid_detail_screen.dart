@@ -248,7 +248,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   void showErrorMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         message: message)
       ..show(context);
   }
