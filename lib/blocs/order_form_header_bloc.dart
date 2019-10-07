@@ -91,7 +91,9 @@ class OrderFormHeaderBloc {
       return Result.error(arr.join('\n'));
     }
     return Result.completed(PickupInfoData(
-        contactName: _contactName, pickupDate: pickupDateAndTime()));
+        contactName: _contactName,
+        pickupDate: _pickupDate,
+        pickupTime: _pickupTime));
   }
 
   bool _isPickDateTimeAfterMinimumHoursFromNow() {

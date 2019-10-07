@@ -31,14 +31,11 @@ class BuyerBidConfirmationBloc {
   Stream<Result<String>> get bidStream => _buyerController.stream;
 
   Future<void> placeBid(PickupInfoData data) async {
-    assert(isNotNull(data.pickupDate));
-    assert(isNotNull(data.contactName));
-    assert(data.contactName.isNotEmpty);
     final BuyerBidData bidData = BuyerBidData(
         bidItems: _items,
         sellerId: _sellerId,
         totalBid: bidTotal,
-        pDateTime: data.pickupDate,
+        pDateTime: data.pickDateTime,
         contactName: data.contactName,
         status: 'pending');
     bidSink.add(Result.loading('Loading'));
