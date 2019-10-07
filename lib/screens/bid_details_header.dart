@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/bids_status/bid_status_icon_text_view.dart';
 import 'package:wastexchange_mobile/widgets/calendar_card_widget.dart';

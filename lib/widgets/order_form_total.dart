@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_icon_compact.dart';
