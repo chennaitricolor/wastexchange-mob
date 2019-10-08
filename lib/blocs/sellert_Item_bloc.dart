@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
-import 'package:wastexchange_mobile/models/item.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
@@ -26,7 +26,6 @@ class SellerItemBloc {
   static const ABOVEMAXQTY = 2;
   static const SUCCESS = 3;
   static const PRICE_ERROR = 4;
-  static const FREE_PRICE = 5;
 
   SellerItemListener _listener;
 
@@ -59,10 +58,6 @@ class SellerItemBloc {
         continue;
       }
 
-      if (isPriceFreeScenario(priceValue, item, index)) {
-        _updateValueMap(FREE_PRICE, index);
-        continue;
-      }
       _updateValueMap(SUCCESS, index);
 
       _bidItems.add(BidItem(
@@ -109,13 +104,6 @@ class SellerItemBloc {
       return;
     }
 
-    final List<int> priceFreeErrors = _validationMap[FREE_PRICE];
-    if (!isListNullOrEmpty(priceFreeErrors)) {
-      final String invalidItems =
-      priceFreeErrors.map((index) => _sellerInfo.items[index].displayName).join(', ');
-      _listener.onPriceValidationError('$invalidItems are not available for free, please enter valid price.', priceFreeErrors);
-      return;
-    }
     _listener.onValidationSuccess(
         sellerInfo: {'seller': _sellerInfo.seller, 'bidItems': _bidItems});
   }
@@ -142,16 +130,6 @@ class SellerItemBloc {
     if (priceValue.isEmpty || !isDouble(priceValue)) {
       return true;
     }
-    return false;
-  }
-
-  bool isPriceFreeScenario(String priceValue, Item item, int index) {
-    if (_validationMap[PRICE_ERROR].contains(index)) {
-      throw Exception('Both Quantity and Price are empty');
-    }
-    if(item.price == 0 && isDouble(priceValue) && double.parse(priceValue) == 0){
-      return false;
-    }
     return !isPositive(priceValue);
   }
 
@@ -170,7 +148,6 @@ class SellerItemBloc {
     _validationMap[EMPTY] = [];
     _validationMap[ABOVEMAXQTY] = [];
     _validationMap[SUCCESS] = [];
-    _validationMap[FREE_PRICE] = [];
   }
 
   void _updateValueMap(int key, int index) {
