@@ -37,7 +37,7 @@ class BidDetailsHeader extends StatelessWidget {
                 Icon(
                   Icons.person,
                   size: 18,
-                  color: AppTheme.lightText,
+                  color: AppTheme.darkText,
                 ),
                 const SizedBox(width: 5),
                 Flexible(
@@ -57,7 +57,7 @@ class BidDetailsHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CalendarCardWidget(hint: 'Created date', date: bid.createdDate),
-              Icon(Icons.date_range, color: AppTheme.lightText),
+              Icon(Icons.date_range, color: AppTheme.darkText),
               CalendarCardWidget(hint: 'Pickup date', date: bid.pickupDate),
             ],
           )

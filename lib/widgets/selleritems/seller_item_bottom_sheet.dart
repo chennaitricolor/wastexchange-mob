@@ -122,7 +122,7 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
           padding: const EdgeInsets.all(16.0),
           child: Align(
             alignment: Alignment.topCenter,
-            child: Text(Constants.GENERIC_ERROR_MESSAGE),
+            child: const Text(Constants.GENERIC_ERROR_MESSAGE),
           ));
     } else {
       final items = _sellerItemDetails.items ?? [];

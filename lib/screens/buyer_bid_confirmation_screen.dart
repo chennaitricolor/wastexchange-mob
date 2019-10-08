@@ -2,12 +2,14 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/connectivity_flushbar_event.dart';
 import 'package:wastexchange_mobile/widgets/order_form_header.dart';
 import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
@@ -19,13 +21,11 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
   factory BuyerBidConfirmationScreen({
     @required User seller,
     @required List<BidItem> bidItems,
-    @required bool restoreSavedState,
+    @required PickupInfoData pickupInfoData,
     @required VoidCallback onBackPressed,
   }) {
     ArgumentError.checkNotNull(seller);
     ArgumentError.checkNotNull(bidItems);
-    ArgumentError.checkNotNull(restoreSavedState);
-    ArgumentError.checkNotNull(onBackPressed);
     // TODO(Sayeed): Simplify the throwing of exceptions.
     if (bidItems.isEmpty) {
       throw Exception('BidItems cannot be empty');
@@ -33,24 +33,24 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
     return BuyerBidConfirmationScreen._(
         seller: seller,
         bidItems: bidItems,
-        restoreSavedState: restoreSavedState,
+        pickupInfoData: pickupInfoData,
         onBackPressed: onBackPressed);
   }
 
   const BuyerBidConfirmationScreen._({
     User seller,
     List<BidItem> bidItems,
-    bool restoreSavedState,
+    PickupInfoData pickupInfoData,
     VoidCallback onBackPressed,
   })  : _seller = seller,
         _bidItems = bidItems,
-        _restoreSavedState = restoreSavedState,
+        _pickupInfoData = pickupInfoData,
         _onBackPressed = onBackPressed;
 
   final User _seller;
   final List<BidItem> _bidItems;
   final VoidCallback _onBackPressed;
-  final bool _restoreSavedState;
+  final PickupInfoData _pickupInfoData;
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
@@ -96,8 +96,7 @@ class _BuyerBidConfirmationScreenState
       }
     });
 
-    _connectivityFlushbar
-        .init(context);
+    _connectivityFlushbar.init(context);
 
     super.initState();
   }
@@ -110,7 +109,9 @@ class _BuyerBidConfirmationScreenState
         onBackPressed: () {
           _keyOrderPickup.currentState.clearSavedData();
           _keyOrderPickup.currentState.saveData();
-          widget._onBackPressed();
+          if (isNotNull(widget._onBackPressed)) {
+            widget._onBackPressed();
+          }
           Navigator.pop(context, false);
         },
       ),
@@ -131,8 +132,9 @@ class _BuyerBidConfirmationScreenState
           child: Column(
         children: <Widget>[
           OrderFormHeader(
-              key: _keyOrderPickup,
-              restoreSavedData: widget._restoreSavedState),
+            key: _keyOrderPickup,
+            pickupInfoData: widget._pickupInfoData,
+          ),
           Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),

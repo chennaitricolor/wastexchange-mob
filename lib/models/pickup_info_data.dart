@@ -9,7 +9,7 @@ class PickupInfoData {
   final DateTime pickupDate;
   final String contactName;
 
-  DateTime get pickDateTime {
+  DateTime get pickupDateTime {
     return DateTime(pickupDate.year, pickupDate.month, pickupDate.day,
         pickupTime.hour, pickupTime.minute, pickupTime.second);
   }

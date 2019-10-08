@@ -3,35 +3,28 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
-import 'package:wastexchange_mobile/resources/key_value_datastore.dart';
+import 'package:wastexchange_mobile/resources/pickup_info_data_store.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 // TODO(Sayeed): Split this class by responsibility. We can separate state management, dateTime, UI
 class OrderFormHeaderBloc {
   OrderFormHeaderBloc(
-      {@required restoreSavedData, KeyValueDataStoreInterface keyValueStore}) {
+      {@required PickupInfoData pickupInfoData,
+      PickupInfoDatastore pickupInfoDataStore}) {
     final DateTime nowPlusMinimumHours = DateTime.now()
         .add(const Duration(hours: _minimumPickupTimeHoursFromNow));
     _initialDate = DateTime(nowPlusMinimumHours.year, nowPlusMinimumHours.month,
         nowPlusMinimumHours.day);
-    _restoreSavedData = restoreSavedData;
-    _keyValueStore = keyValueStore ?? KeyValueStore();
-    if (_restoreSavedData) {
-      _populateSavedDataInUI();
+    _pickupInfoDatastore = pickupInfoDataStore ?? PickupInfoDatastore();
+    if (isNotNull(pickupInfoData)) {
+      _populateSavedData(pickupInfoData);
     }
   }
 
-  bool _restoreSavedData;
-  KeyValueDataStoreInterface _keyValueStore;
-
   static const int _minimumPickupTimeHoursFromNow = 18;
-  static const String _kContactName = 'contact';
-  static const String _kPickupDate = 'pickupDate';
-  static const String _kPickupTime = 'pickupTime';
-  static final DateFormat _persistenceDateFormat = DateFormat(
-      '${AppDateFormat.defaultDateFormat} ${AppDateFormat.defaultTimeFormat}');
 
+  PickupInfoDatastore _pickupInfoDatastore;
   DateTime _initialDate;
   DateTime _pickupDate;
   DateTime _pickupTime;
@@ -106,36 +99,25 @@ class OrderFormHeaderBloc {
   }
 
   void saveData() {
-    if (isContactNameValid(_contactName)) {
-      _keyValueStore.setString(_contactName, _kContactName);
-    }
-    if (isNotNull(_pickupDate)) {
-      final String date = _persistenceDateFormat.format(_pickupDate.toLocal());
-      _keyValueStore.setString(date, _kPickupDate);
-    }
-    if (isNotNull(_pickupTime)) {
-      final String time = _persistenceDateFormat.format(_pickupTime.toLocal());
-      _keyValueStore.setString(time, _kPickupTime);
-    }
+    _pickupInfoDatastore.saveData(PickupInfoData(
+        contactName: _contactName,
+        pickupDate: _pickupDate,
+        pickupTime: _pickupTime));
   }
 
   void clearSavedData() {
-    [_kContactName, _kPickupDate, _kPickupTime]
-        .forEach((k) => {_keyValueStore.remove(k)});
+    _pickupInfoDatastore.clearData();
   }
 
-  void _populateSavedDataInUI() {
-    final String savedContactName = _keyValueStore.getString(_kContactName);
-    if (isContactNameValid(savedContactName)) {
-      _contactName = savedContactName;
+  void _populateSavedData(PickupInfoData pickupInfoData) {
+    if (isContactNameValid(pickupInfoData.contactName)) {
+      _contactName = pickupInfoData.contactName;
     }
-    final String date = _keyValueStore.getString(_kPickupDate);
-    if (isNotNull(date)) {
-      _pickupDate = _persistenceDateFormat.parse(date);
+    if (isNotNull(pickupInfoData.pickupDate)) {
+      _pickupDate = pickupInfoData.pickupDate;
     }
-    final String time = _keyValueStore.getString(_kPickupTime);
-    if (isNotNull(time)) {
-      _pickupTime = _persistenceDateFormat.parse(time);
+    if (isNotNull(pickupInfoData.pickupTime)) {
+      _pickupTime = pickupInfoData.pickupTime;
     }
   }
 
@@ -144,7 +126,11 @@ class OrderFormHeaderBloc {
 
   DateTime initialDate() => _initialDate;
 
-  DateTime pickupDate() => _pickupDate ?? _initialDate;
+  DateTime pickupDate() {
+    print(_pickupDate);
+    print(_initialDate);
+    return _pickupDate ?? _initialDate;
+  }
 
   DateTime maxDate() => _initialDate.add(const Duration(days: 5));
 

@@ -6,10 +6,12 @@ import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/item.dart';
+import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/resources/pickup_info_data_store.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_details_header.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
@@ -53,12 +55,12 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   Set<int> priceErrorPositions = {};
 
   static const headerCount = 1;
-  bool _restoreSavedState = false;
 
   @override
   void initState() {
     _bloc = BidDetailBloc();
 
+// TODO(Sayeed): Why are we listening to this stream
     _bloc.sellerStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -232,15 +234,15 @@ class _BidDetailScreenState extends State<BidDetailScreen>
   @override
   void onValidationSuccess({Map<String, dynamic> sellerInfo}) {
     sellerInfo['previousBid'] = bid;
-    final VoidCallback onBackPressedFromNextScreen = () {
-      _restoreSavedState = true;
-    };
+    final pickupInfoData = PickupInfoData(
+        contactName: bid.contactName,
+        pickupDate: bid.pickupDate,
+        pickupTime: bid.pickupDate);
     final BuyerBidConfirmationScreenLaunchData data =
         BuyerBidConfirmationScreenLaunchData(
             seller: sellerInfo['seller'],
             bidItems: sellerInfo['bidItems'],
-            restoreSavedState: _restoreSavedState,
-            onBackPressed: onBackPressedFromNextScreen);
+            pickupInfoData: pickupInfoData);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: data);
   }

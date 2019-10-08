@@ -35,7 +35,7 @@ class BuyerBidConfirmationBloc {
         bidItems: _items,
         sellerId: _sellerId,
         totalBid: bidTotal,
-        pDateTime: data.pickDateTime,
+        pDateTime: data.pickupDateTime,
         contactName: data.contactName,
         status: 'pending');
     bidSink.add(Result.loading('Loading'));

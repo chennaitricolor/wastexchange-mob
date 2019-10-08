@@ -18,14 +18,14 @@ abstract class KeyValueDataStoreInterface {
 }
 
 // TODO(Sayeed): Should we move all code to this abstract interface paradigm and coding to interface
-class KeyValueStore implements KeyValueDataStoreInterface, LaunchSetupMember {
-  factory KeyValueStore() {
+class KeyValueDataStore implements KeyValueDataStoreInterface, LaunchSetupMember {
+  factory KeyValueDataStore() {
     return _singleton;
   }
 
-  KeyValueStore._internal();
+  KeyValueDataStore._internal();
 
-  static final KeyValueStore _singleton = KeyValueStore._internal();
+  static final KeyValueDataStore _singleton = KeyValueDataStore._internal();
   SharedPreferences _preferences;
 
   @override

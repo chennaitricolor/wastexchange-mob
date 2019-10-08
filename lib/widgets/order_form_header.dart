@@ -12,18 +12,18 @@ import 'package:wastexchange_mobile/widgets/custom_time_picker.dart';
 import 'package:wastexchange_mobile/widgets/tappable_card.dart';
 
 class OrderFormHeader extends StatefulWidget {
-  factory OrderFormHeader({Key key, bool restoreSavedData = false}) {
+  factory OrderFormHeader({Key key, PickupInfoData pickupInfoData}) {
     ArgumentError.checkNotNull(key);
-    return OrderFormHeader._(key, restoreSavedData);
+    return OrderFormHeader._(key, pickupInfoData);
   }
 
-  const OrderFormHeader._(Key key, bool restoreSavedDate)
-      : _restoreSavedData = restoreSavedDate,
+  const OrderFormHeader._(Key key, PickupInfoData pickupInfoData)
+      : _pickupInfoData = pickupInfoData,
         super(key: key);
 
   @override
   OrderFormHeaderState createState() => OrderFormHeaderState();
-  final bool _restoreSavedData;
+  final PickupInfoData _pickupInfoData;
 }
 
 class OrderFormHeaderState extends State<OrderFormHeader> {
@@ -34,9 +34,8 @@ class OrderFormHeaderState extends State<OrderFormHeader> {
   @override
   void initState() {
     super.initState();
-    _orderFormHeaderBloc = OrderFormHeaderBloc(
-      restoreSavedData: widget._restoreSavedData,
-    );
+    _orderFormHeaderBloc =
+        OrderFormHeaderBloc(pickupInfoData: widget._pickupInfoData);
     _contactNameController = TextEditingController();
     _contactNameController.addListener(_onContactNameChange);
     _contactNameController.text = _orderFormHeaderBloc.contactName;

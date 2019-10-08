@@ -4,6 +4,7 @@ import 'package:wastexchange_mobile/blocs/sellert_Item_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
+import 'package:wastexchange_mobile/resources/pickup_info_data_store.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list.dart';
@@ -65,11 +66,13 @@ class _SellerItemScreenState extends State<SellerItemScreen>
     final VoidCallback onBackPressedFromNextScreen = () {
       _restoreSavedState = true;
     };
+    final pickupInfoData =
+        _restoreSavedState ? PickupInfoDatastore().getData() : null;
     final BuyerBidConfirmationScreenLaunchData data =
         BuyerBidConfirmationScreenLaunchData(
             seller: sellerInfo['seller'],
             bidItems: sellerInfo['bidItems'],
-            restoreSavedState: _restoreSavedState,
+            pickupInfoData: pickupInfoData,
             onBackPressed: onBackPressedFromNextScreen);
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: data);

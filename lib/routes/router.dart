@@ -41,7 +41,7 @@ class Router {
             builder: (_) => BuyerBidConfirmationScreen(
                   seller: data.seller,
                   bidItems: data.bidItems,
-                  restoreSavedState: data.restoreSavedState,
+                  pickupInfoData: data.pickupInfoData,
                   onBackPressed: data.onBackPressed,
                 ));
 
