@@ -1,14 +1,26 @@
-mixin SetUpCompliant {
+import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
+import 'package:wastexchange_mobile/resources/env_repository.dart';
+import 'package:wastexchange_mobile/resources/key_value_data_store.dart';
+import 'package:wastexchange_mobile/resources/user_repository.dart';
+import 'package:wastexchange_mobile/utils/app_logger.dart';
+
+// TODO(Sayeed): Is this a good name for this mixin
+mixin LaunchSetupMember {
   Future<void> load();
 }
 
-class LaunchSetup with SetUpCompliant {
-  LaunchSetup([this.setUpParticipants]);
-  final List<SetUpCompliant> setUpParticipants;
-  @override
+class LaunchSetup {
+  final List<LaunchSetupMember> _members = [
+    EnvRepository(),
+    AppLogger(),
+    TokenRepository(),
+    UserRepository(),
+    KeyValueDataStore()
+  ];
+
   Future<void> load() async {
-    for (SetUpCompliant participant in setUpParticipants) {
-      await participant.load();
+    for (LaunchSetupMember member in _members) {
+      await member.load();
     }
   }
 }

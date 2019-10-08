@@ -42,6 +42,16 @@ class AppTheme {
     color: darkerText,
   );
 
+  static const TextStyle errorThumbnail = TextStyle(
+    // h4 -> display1
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 18,
+    letterSpacing: 0.4,
+    height: 1.4,
+    color: darkText,
+  );
+
   static const TextStyle headline = TextStyle(
     // h5 -> headline
     fontFamily: 'OpenSans',
@@ -149,6 +159,14 @@ class AppTheme {
     color: lightText, // was lightText
   );
 
+  static const TextStyle body3White = TextStyle(
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+    letterSpacing: 0.2,
+    color: nearlyWhite, // was lightText
+  );
+
   static const TextStyle caption = TextStyle(
     // Caption -> caption
     fontFamily: 'OpenSans',
@@ -157,6 +175,14 @@ class AppTheme {
     letterSpacing: 0.2,
     color: lightText, // was lightText
   );
+
+//  static const TextStyle badge = TextStyle(
+//    // Caption -> caption
+//    fontFamily: 'OpenSans',
+//    fontWeight: FontWeight.w600,
+//    fontSize: 14,
+//    color: white, // was lightText
+//  );
 
   static const TextStyle buttonTitle = TextStyle(
     // Caption -> caption
@@ -170,8 +196,8 @@ class AppTheme {
     // body1 -> body2
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.2,
-    color: lightText,
+    color: darkerText,
   );
 }

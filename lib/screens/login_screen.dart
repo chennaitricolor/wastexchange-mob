@@ -1,4 +1,5 @@
 import 'package:authentication_view/authentication_view.dart';
+import 'package:authentication_view/button_style.dart';
 import 'package:authentication_view/field_style.dart';
 import 'package:authentication_view/field_type.dart';
 import 'package:flushbar/flushbar.dart';
@@ -17,7 +18,7 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
-import 'package:wastexchange_mobile/utils/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 import '../app_localizations.dart';
 
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showMessage(String message) {
     Flushbar(
         forwardAnimationCurve: Curves.ease,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         message: message)
       ..show(context);
   }
@@ -107,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
         localePasswordText, 15, TextInputType.text, true);
     return Scaffold(
         body: AuthenticationView(
+            buttonTextStyle: AppTheme.buttonTitle,
+            buttonStyle:
+                ButtonStyle.value(240, 55, 55, AppColors.green, Colors.white),
             placeHolderBelowButton: MaterialButton(
                 onPressed: () {
                   _routeToRegistrationScreen();

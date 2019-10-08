@@ -1,11 +1,13 @@
 import 'package:wastexchange_mobile/launch_setup.dart';
-import 'package:wastexchange_mobile/utils/cached_secure_storage.dart';
+import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
 
-class TokenRepository implements SetUpCompliant {
+class TokenRepository implements LaunchSetupMember {
+  // TODO(Sayeed): Examine all singletons and check if we really need singletons
   factory TokenRepository() {
     return _singleton;
   }
 
+// TODO(Sayeed): Do we need this test init. Can we test it differently.
   factory TokenRepository.testInit([CachedSecureStorage cachedSecureStorage]) {
     return TokenRepository._internal(cachedSecureStorage);
   }
@@ -15,11 +17,9 @@ class TokenRepository implements SetUpCompliant {
   }
 
   static final TokenRepository _singleton = TokenRepository._internal();
+  static const _ktoken = 'token';
 
   CachedSecureStorage _cachedSecureStorage;
-
-  static const _tokenKey = 'token';
-
   String token;
 
   bool isAuthorized() {
@@ -28,16 +28,16 @@ class TokenRepository implements SetUpCompliant {
 
   Future<void> setToken(token) async {
     this.token = token;
-    await _cachedSecureStorage.setValue(_tokenKey, token);
+    await _cachedSecureStorage.setValue(_ktoken, token);
   }
 
   Future<void> deleteToken() async {
     token = null;
-    await _cachedSecureStorage.setValue(_tokenKey, null);
+    await _cachedSecureStorage.deleteKey(_ktoken);
   }
 
   Future<String> getToken() async {
-    token = await _cachedSecureStorage.getValue(_tokenKey);
+    token = await _cachedSecureStorage.getValue(_ktoken);
     return token;
   }
 

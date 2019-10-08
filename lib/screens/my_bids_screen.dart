@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/my_bids_bloc.dart';
 import 'package:wastexchange_mobile/models/bid.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/routes/router.dart';
+import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/widget_display_util.dart';
-import 'package:wastexchange_mobile/widgets/bid_card.dart';
+import 'package:wastexchange_mobile/widgets/my_bids_item.dart';
+import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
+import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class MyBidsScreen extends StatefulWidget {
   @override
@@ -27,7 +31,6 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
           showLoadingDialog(context);
           break;
         case Status.ERROR:
-          print(_snapshot.message);
           dismissDialog(context);
           break;
         case Status.COMPLETED:
@@ -48,25 +51,30 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 4, bottom: 4),
-          child: Scrollbar(
-            child: _bloc.bidCount() == 0
-                ? Center(child: Text(Constants.NO_BIDS))
-                : ListView.builder(
-                    itemCount: _bloc.bidCount(),
-                    itemBuilder: (context, index) {
-                      final Bid bid = _bloc.bidAtIndex(index);
-                      return BidCard(bid, _bloc.user(id: bid.sellerId));
-                    },
-                  ),
-          ),
-        ));
+        body: _bloc.bidCount() == 0
+            ? ErrorView(message: Constants.NO_BID_ERROR_MESSAGE)
+            : ListView.builder(
+                itemCount: _bloc.bidCount(),
+                itemBuilder: (context, index) {
+                  final Bid bid = _bloc.bidAtIndex(index);
+                  final User user = _bloc.user(id: bid.sellerId);
+                  return MyBidsItem(
+                      bid: bid,
+                      seller: user,
+                      onPressed: () {
+                        showBidDetail(bid);
+                      });
+                },
+              ));
   }
 
   @override
   void dispose() {
     _bloc.dispose();
     super.dispose();
+  }
+
+  void showBidDetail(Bid bid) {
+    Router.pushNamed(context, BidDetailScreen.routeName, arguments: bid);
   }
 }

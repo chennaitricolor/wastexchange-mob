@@ -4,10 +4,11 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wastexchange_mobile/blocs/map_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/screens/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet.dart';
 import 'package:wastexchange_mobile/widgets/views/drawer_view.dart';
+import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/widgets/views/menu_app_bar.dart';
 
@@ -125,27 +126,23 @@ class _MapState extends State<MapScreen> {
     );
   }
 
+// TODO(Sayeed): Is it bad that we have created a new method for getting widgets instead of having it in build()
   Widget _widgetForMapStatus() {
-    if (_mapStatus == _MapStatus.LOADING) {
-      return FractionallySizedBox(
-          heightFactor:
-              (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
-          alignment: Alignment.topCenter,
-          child: const LoadingProgressIndicator());
-    } else if (_mapStatus == _MapStatus.LOADING) {
-      return const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text(
-            Constants.MAP_LOADING_FAILED,
-            style: AppTheme.body1,
-            textAlign: TextAlign.center,
-          ));
-    } else {
-      return GoogleMap(
-          initialCameraPosition: _initialCameraPosition,
-          onMapCreated: onMapCreated,
-          mapType: MapType.normal,
-          markers: Set<Marker>.of(markers.values));
+    switch (_mapStatus) {
+      case _MapStatus.LOADING:
+        return FractionallySizedBox(
+            heightFactor:
+                (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
+            alignment: Alignment.topCenter,
+            child: const LoadingProgressIndicator());
+      case _MapStatus.COMPLETED:
+        return GoogleMap(
+            initialCameraPosition: _initialCameraPosition,
+            onMapCreated: onMapCreated,
+            mapType: MapType.normal,
+            markers: Set<Marker>.of(markers.values));
+      default:
+        return ErrorView(message: Constants.MAP_LOADING_FAILED);
     }
   }
 }

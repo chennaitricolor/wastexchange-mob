@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-List<Bid> bidsFromJson(String str) =>
-    List<Bid>.from(json.decode(str).map((x) => Bid.fromJson(x)));
+import 'dart:collection';
+import 'package:wastexchange_mobile/models/item.dart';
 
 class Bid {
   Bid(
@@ -12,7 +10,7 @@ class Bid {
       this.pickupDate,
       this.status,
       this.contactName,
-      this.bidItems}) {
+      this.nameToItemMap}) {
     ArgumentError.checkNotNull(orderId);
     ArgumentError.checkNotNull(createdDate);
     ArgumentError.checkNotNull(sellerId);
@@ -20,28 +18,37 @@ class Bid {
     ArgumentError.checkNotNull(pickupDate);
     ArgumentError.checkNotNull(status);
     ArgumentError.checkNotNull(contactName);
-    ArgumentError.checkNotNull(bidItems);
+    ArgumentError.checkNotNull(nameToItemMap);
   }
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
       orderId: json['id'],
       createdDate: DateTime.parse(json['createdAt']),
       sellerId: json['sellerId'],
-      amount: json['totalBid'].toDouble().toStringAsFixed(2),
+      amount: json['totalBid'],
       pickupDate: DateTime.parse(json['pDateTime']),
       status: BidStatus.values
           .firstWhere((s) => s.toString().contains(json['status'])),
       contactName: json['contactName'],
-      bidItems: json['details']);
+      nameToItemMap: getNameToItemMap(json['details']));
 
   final int orderId;
   final DateTime createdDate;
   final int sellerId;
-  final String amount;
+  final double amount;
   final DateTime pickupDate;
-  final BidStatus status;
+  BidStatus status;
   final String contactName;
-  final Map<String, dynamic> bidItems;
+  final Map<String, Item> nameToItemMap;
+
+  static Map<String, Item> getNameToItemMap(Map<String, dynamic> map) {
+    final Map<String, Item> bitItemLites = HashMap();
+    map.forEach((name, value) {
+      bitItemLites[name] = Item.fromBidJson(value, name);
+    });
+
+    return bitItemLites;
+  }
 }
 
 enum BidStatus { cancelled, pending, successful }

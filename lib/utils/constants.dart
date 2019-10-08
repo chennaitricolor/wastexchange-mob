@@ -79,8 +79,6 @@ class Constants {
 
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';
-  static const DATE_FORMAT = 'yyyy-MM-dd';
-  static const TIME_FORMAT = 'h:mm a';
   static const FIELD_CONTACT_NAME = 'Contact name';
   static const FIELD_PICKUP_DATE = 'Pick up date';
   static const FIELD_PICKUP_TIME = 'Pick up time';
@@ -97,4 +95,15 @@ class Constants {
   static const NO_BIDS = 'No Bids';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
+  static const BUTTON_CANCEL = 'Cancel';
+  static const BUTTON_CANCEL_BID = 'Cancel Bid';
+  static const BUTTON_EDIT_BID = 'Edit Bid';
+
+  //error thumbnails
+  static const NO_BID_ERROR_MESSAGE =
+      'Sorry! It seems like you do not have any active bids.';
+  static const NO_BID_ERROR_ICON = 'assets/images/img_no_bids_found.png';
+
+  //error
+  static const NO_INTERNET_CONNECTION = 'No Internet connection';
 }

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 
-class EnvRepository implements SetUpCompliant {
+class EnvRepository implements LaunchSetupMember {
   factory EnvRepository() {
     return _singleton;
   }
