@@ -14,23 +14,23 @@ class ConnectivityFlushbar {
       child: Icon(
         Icons.network_check,
         size: 30,
-        color: Colors.grey[700],
+        color: AppTheme.darkerText,
       ),
     ),
     duration: const Duration(days: 10),
-    backgroundColor: Colors.orange[400],
+    backgroundColor: Colors.orange[300],
     forwardAnimationCurve: Curves.ease,
-    messageText: Padding(
-      padding: const EdgeInsets.all(8.0),
+    messageText: const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Text(
-        Constants.CONNECT_TO_INTERNET,
+        Constants.NO_INTERNET_CONNECTION,
         style: AppTheme.buttonTitle,
       ),
     ),
   );
 
   void init(context) {
-    _connectivity.subscribeToConnectivity((onData) {
+    _connectivity.subscribe((onData) {
       if (onData == InternetState.UNAVAILABLE) {
         _flushbar.show(context);
       } else {
@@ -40,6 +40,6 @@ class ConnectivityFlushbar {
   }
 
   void dispose() {
-    _connectivity.unsubscribeToConnectivity();
+    _connectivity.unsubscribe();
   }
 }

@@ -7,10 +7,9 @@ class ConnectivityEventImpl implements ConnectivityEvent {
   StreamSubscription _streamSubscription;
   final Connectivity _connectivity = Connectivity();
 
-
   @override
-  void subscribeToConnectivity(void onInternetStateData(InternetState event)) {
-    _streamSubscription = _connectivity.onConnectivityChanged.listen((onData){
+  void subscribe(void onInternetStateData(InternetState event)) {
+    _streamSubscription = _connectivity.onConnectivityChanged.listen((onData) {
       if (onData == ConnectivityResult.none) {
         onInternetStateData(InternetState.UNAVAILABLE);
       } else {
@@ -20,9 +19,9 @@ class ConnectivityEventImpl implements ConnectivityEvent {
   }
 
   @override
-  void unsubscribeToConnectivity() {
+  void unsubscribe() {
     _streamSubscription.cancel();
   }
 }
 
-enum InternetState{AVAILABLE, UNAVAILABLE}
+enum InternetState { AVAILABLE, UNAVAILABLE }
