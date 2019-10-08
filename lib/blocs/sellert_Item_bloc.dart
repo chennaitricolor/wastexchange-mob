@@ -130,7 +130,7 @@ class SellerItemBloc {
     if (priceValue.isEmpty || !isDouble(priceValue)) {
       return true;
     }
-    return !isPositive(priceValue);
+    return false;
   }
 
   bool isAboveMaxQty(String quantityValue, int index) {
