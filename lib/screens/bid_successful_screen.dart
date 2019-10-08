@@ -12,13 +12,18 @@ class BidSuccessfulScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
-          ButtonViewCompact(text: 'View Bid', onPressed: () {
-          Router.popToRootAndPushNamed(
-              context, MyBidsScreen.routeName);
-        },),
-         ButtonViewCompact(text: 'Home', onPressed: () {
-          Router.popToRoot(context);
-        })]),
+          ButtonViewCompact(
+            text: 'View All Bids',
+            onPressed: () {
+              Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
+            },
+          ),
+          ButtonViewCompact(
+              text: 'Home',
+              onPressed: () {
+                Router.popToRoot(context);
+              })
+        ]),
         body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

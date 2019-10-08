@@ -16,7 +16,7 @@ class BuyerBidConfirmationScreenLaunchData {
         assert(isNotNull(bidItems)),
         assert(bidItems.isNotEmpty),
         assert(isNotNull(isEditBid)),
-        assert(isEditBid && isNotNull(orderId));
+        assert(!isEditBid || isEditBid && isNotNull(orderId));
 
   final User seller;
   final List<BidItem> bidItems;

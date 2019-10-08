@@ -103,6 +103,20 @@ class _BuyerBidConfirmationScreenState
     super.initState();
   }
 
+  void _validateAndPlaceBid() {
+    final result = _keyOrderPickup.currentState.pickupInfoData();
+    if (result.status == Status.ERROR) {
+      _showMessage(result.message);
+      return;
+    }
+    showConfirmationDialog(context, 'Place Bid',
+        'You are about to place a bid.\nContinue?', 'Yes', 'No', (status) {
+      if (status) {
+        _bloc.submitBid(result.data);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,13 +135,7 @@ class _BuyerBidConfirmationScreenState
         total: _bloc.bidTotal,
         itemsCount: _bloc.items.length,
         onPressed: () {
-          final result = _keyOrderPickup.currentState.pickupInfoData();
-          // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
-          if (result.status == Status.ERROR) {
-            _showMessage(result.message);
-            return;
-          }
-          _bloc.submitBid(result.data);
+          _validateAndPlaceBid();
         },
       ),
       body: SingleChildScrollView(
