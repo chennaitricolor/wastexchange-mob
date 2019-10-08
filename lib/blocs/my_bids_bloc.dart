@@ -33,7 +33,7 @@ class MyBidsBloc {
     // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
     if (response.status == Status.COMPLETED) {
       _bids = response.data;
-      _bids.sort((bid1, bid2) => bid2.pickupDate.compareTo(bid1.pickupDate));
+      _bids.sort((bid1, bid2) => bid2.pickupDate.compareTo(bid1.createdDate));
       for (Bid bid in _bids) {
         final Result<User> seller =
             await _userRepository.getUser(id: bid.sellerId);
