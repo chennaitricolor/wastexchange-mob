@@ -51,21 +51,23 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
             onBackPressed: () {
               Navigator.pop(context, false);
             }),
-        body: _bloc.bidCount() == 0
-            ? ErrorView(message: Constants.NO_BID_ERROR_MESSAGE)
-            : ListView.builder(
-                itemCount: _bloc.bidCount(),
-                itemBuilder: (context, index) {
-                  final Bid bid = _bloc.bidAtIndex(index);
-                  final User user = _bloc.user(id: bid.sellerId);
-                  return MyBidsItem(
-                      bid: bid,
-                      seller: user,
-                      onPressed: () {
-                        showBidDetail(bid);
-                      });
-                },
-              ));
+        body: Scrollbar(
+          child: _bloc.bidCount() == 0
+              ? ErrorView(message: Constants.NO_BID_ERROR_MESSAGE)
+              : ListView.builder(
+                  itemCount: _bloc.bidCount(),
+                  itemBuilder: (context, index) {
+                    final Bid bid = _bloc.bidAtIndex(index);
+                    final User user = _bloc.user(id: bid.sellerId);
+                    return MyBidsItem(
+                        bid: bid,
+                        seller: user,
+                        onPressed: () {
+                          showBidDetail(bid);
+                        });
+                  },
+                ),
+        ));
   }
 
   @override
