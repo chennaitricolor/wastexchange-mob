@@ -10,29 +10,32 @@ class BidSuccessfulScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
-          ButtonViewCompact(
-            text: 'View All Bids',
-            onPressed: () {
-              Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
-            },
-          ),
-          ButtonViewCompact(
-              text: 'Home',
-              onPressed: () {
-                Router.popToRoot(context);
-              })
-        ]),
-        body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/tick.png', width: 100, height: 100),
-                const SizedBox(height: 16),
-                const Text('You have placed the bid successfully!',
-                    style: AppTheme.bodyThin),
-              ]),
-        ));
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
+              ButtonViewCompact(
+                text: 'View All Bids',
+                onPressed: () {
+                  Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
+                },
+              ),
+              ButtonViewCompact(
+                  text: 'Home',
+                  onPressed: () {
+                    Router.popToRoot(context);
+                  })
+            ]),
+            body: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/images/tick.png',
+                        width: 100, height: 100),
+                    const SizedBox(height: 16),
+                    const Text('You have placed the bid successfully!',
+                        style: AppTheme.bodyThin),
+                  ]),
+            )));
   }
 }

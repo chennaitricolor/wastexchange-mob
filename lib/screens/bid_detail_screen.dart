@@ -214,7 +214,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 
   void _askCancelConfirmation() {
     showConfirmationDialog(context, 'Cancel Bid',
-        'Are you sure, You want to cancel the bid', 'Yes', 'No', (status) {
+        'Are you sure, you want to cancel the bid', 'Yes', 'No', (status) {
       if (status) {
         _isCancelOperation = true;
         _bloc.cancelBid(bid, sellerItemDetails);

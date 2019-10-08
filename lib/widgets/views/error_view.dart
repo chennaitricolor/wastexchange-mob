@@ -13,8 +13,8 @@ class ErrorView extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Text(message,
-            textAlign: TextAlign.center, style: AppTheme.errorThumbnail),
+        child:
+            Text(message, textAlign: TextAlign.center, style: AppTheme.body1),
       ),
     );
   }

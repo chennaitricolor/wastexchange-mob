@@ -24,7 +24,7 @@ class ConnectivityFlushbar {
       padding: EdgeInsets.all(8.0),
       child: Text(
         Constants.NO_INTERNET_CONNECTION,
-        style: AppTheme.buttonTitle,
+        style: AppTheme.body1,
       ),
     ),
   );

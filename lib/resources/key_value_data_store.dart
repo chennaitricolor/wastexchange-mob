@@ -3,6 +3,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 
+// TODO(Sayeed): We have different naming conventions for interface/implementation design pattern. This class is different from ConnectivityEvent. Need consistency.
 abstract class KeyValueDataStoreInterface {
   Future<void> setBool(bool value, String key);
   Future<void> setInt(int value, String key);
@@ -18,7 +19,8 @@ abstract class KeyValueDataStoreInterface {
 }
 
 // TODO(Sayeed): Should we move all code to this abstract interface paradigm and coding to interface
-class KeyValueDataStore implements KeyValueDataStoreInterface, LaunchSetupMember {
+class KeyValueDataStore
+    implements KeyValueDataStoreInterface, LaunchSetupMember {
   factory KeyValueDataStore() {
     return _singleton;
   }

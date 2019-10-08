@@ -58,9 +58,12 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                 itemBuilder: (context, index) {
                   final Bid bid = _bloc.bidAtIndex(index);
                   final User user = _bloc.user(id: bid.sellerId);
-                  return MyBidsItem(bid: bid, seller: user, onPressed: () {
-                        goToBidDetailPage(bid);
-                  });
+                  return MyBidsItem(
+                      bid: bid,
+                      seller: user,
+                      onPressed: () {
+                        showBidDetail(bid);
+                      });
                 },
               ));
   }
@@ -71,8 +74,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     super.dispose();
   }
 
-  void goToBidDetailPage(Bid bid) {
-    Router.pushNamed(context, BidDetailScreen.routeName,
-        arguments: bid);
+  void showBidDetail(Bid bid) {
+    Router.pushNamed(context, BidDetailScreen.routeName, arguments: bid);
   }
 }
