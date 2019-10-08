@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/user.dart';
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class BuyerBidConfirmationScreenLaunchData {
-  BuyerBidConfirmationScreenLaunchData(
-      {this.seller, this.bidItems, this.pickupInfoData, this.onBackPressed}) {
-    ArgumentError.checkNotNull(seller);
-    ArgumentError.checkNotNull(bidItems);
-    if (bidItems.isEmpty) {
-      throw Exception('BidItems cannot be empty');
-    }
-  }
+  BuyerBidConfirmationScreenLaunchData({
+    @required this.seller,
+    @required this.bidItems,
+    @required this.isEditBid,
+    this.orderId,
+    this.pickupInfoData,
+    this.onBackPressed,
+  })  : assert(isNotNull(seller)),
+        assert(isNotNull(bidItems)),
+        assert(bidItems.isNotEmpty),
+        assert(isNotNull(isEditBid)),
+        assert(isEditBid && isNotNull(orderId));
+
   final User seller;
   final List<BidItem> bidItems;
   final VoidCallback onBackPressed;
   final PickupInfoData pickupInfoData;
+  final bool isEditBid;
+  final int orderId;
 }

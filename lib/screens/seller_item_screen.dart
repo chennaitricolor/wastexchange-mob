@@ -70,10 +70,12 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         _restoreSavedState ? PickupInfoDatastore().getData() : null;
     final BuyerBidConfirmationScreenLaunchData data =
         BuyerBidConfirmationScreenLaunchData(
-            seller: sellerInfo['seller'],
-            bidItems: sellerInfo['bidItems'],
-            pickupInfoData: pickupInfoData,
-            onBackPressed: onBackPressedFromNextScreen);
+      seller: sellerInfo['seller'],
+      bidItems: sellerInfo['bidItems'],
+      isEditBid: false,
+      pickupInfoData: pickupInfoData,
+      onBackPressed: onBackPressedFromNextScreen,
+    );
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: data);
   }

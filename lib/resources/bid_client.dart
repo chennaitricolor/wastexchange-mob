@@ -16,11 +16,11 @@ class BidClient {
   ApiBaseHelper _helper;
 
   Future<Result<String>> updateBid(
-      {int bidId, int buyerId, BuyerBidData data}) async {
+      {int orderId, int buyerId, BuyerBidData data}) async {
     try {
       await _helper.put(
           true,
-          PATH_UPDATE_BID.replaceFirst(':bidId', bidId.toString()),
+          PATH_UPDATE_BID.replaceFirst(':bidId', orderId.toString()),
           _placeBidPostData(buyerId, data));
       return Result.completed('');
     } catch (e) {

@@ -10,19 +10,21 @@ import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 class BuyerBidConfirmationBloc {
   BuyerBidConfirmationBloc(
-      {@required List<BidItem> items, @required int sellerId}) {
-    ArgumentError.checkNotNull(items);
-    ArgumentError.checkNotNull(sellerId);
-    if (items.isEmpty) {
-      throw Exception('BidItems cannot be empty');
-    }
+      {@required List<BidItem> items,
+      @required int sellerId,
+      @required bool isEditBid,
+      int orderId}) {
     _items = items;
     _sellerId = sellerId;
+    _isEditBid = isEditBid;
+    _orderId = orderId;
   }
 
 // TODO(Sayeed): In some classes we are declaring variables at the bottom and in some classes at top. Do as per convention.
   List<BidItem> _items;
   int _sellerId;
+  int _orderId;
+  bool _isEditBid;
 
   final BidRepository _bidRepository = BidRepository();
   final StreamController _buyerController = StreamController<Result<String>>();
@@ -30,7 +32,7 @@ class BuyerBidConfirmationBloc {
   StreamSink<Result<String>> get bidSink => _buyerController.sink;
   Stream<Result<String>> get bidStream => _buyerController.stream;
 
-  Future<void> placeBid(PickupInfoData data) async {
+  Future<void> submitBid(PickupInfoData data) async {
     final BuyerBidData bidData = BuyerBidData(
         bidItems: _items,
         sellerId: _sellerId,
@@ -39,8 +41,14 @@ class BuyerBidConfirmationBloc {
         contactName: data.contactName,
         status: 'pending');
     bidSink.add(Result.loading('Loading'));
-    final Result<String> response = await _bidRepository.placeBid(bidData);
-    bidSink.add(response);
+    if (_isEditBid) {
+      final Result<String> response =
+          await _bidRepository.updateBid(_orderId, bidData);
+      bidSink.add(response);
+    } else {
+      final Result<String> response = await _bidRepository.placeBid(bidData);
+      bidSink.add(response);
+    }
   }
 
   double get bidTotal {

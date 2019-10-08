@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/buyer_bid_confirmation_bloc.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
+import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/user.dart';
@@ -18,32 +19,28 @@ import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
 import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
-  factory BuyerBidConfirmationScreen({
-    @required User seller,
-    @required List<BidItem> bidItems,
-    @required PickupInfoData pickupInfoData,
-    @required VoidCallback onBackPressed,
-  }) {
-    ArgumentError.checkNotNull(seller);
-    ArgumentError.checkNotNull(bidItems);
-    // TODO(Sayeed): Simplify the throwing of exceptions.
-    if (bidItems.isEmpty) {
-      throw Exception('BidItems cannot be empty');
-    }
+  factory BuyerBidConfirmationScreen(
+      {@required BuyerBidConfirmationScreenLaunchData data}) {
     return BuyerBidConfirmationScreen._(
-        seller: seller,
-        bidItems: bidItems,
-        pickupInfoData: pickupInfoData,
-        onBackPressed: onBackPressed);
+        seller: data.seller,
+        bidItems: data.bidItems,
+        isEditBid: data.isEditBid,
+        orderId: data.orderId,
+        pickupInfoData: data.pickupInfoData,
+        onBackPressed: data.onBackPressed);
   }
 
   const BuyerBidConfirmationScreen._({
-    User seller,
-    List<BidItem> bidItems,
+    @required User seller,
+    @required List<BidItem> bidItems,
+    @required bool isEditBid,
+    int orderId,
     PickupInfoData pickupInfoData,
     VoidCallback onBackPressed,
   })  : _seller = seller,
         _bidItems = bidItems,
+        _isEditBid = isEditBid,
+        _orderId = orderId,
         _pickupInfoData = pickupInfoData,
         _onBackPressed = onBackPressed;
 
@@ -51,6 +48,8 @@ class BuyerBidConfirmationScreen extends StatefulWidget {
   final List<BidItem> _bidItems;
   final VoidCallback _onBackPressed;
   final PickupInfoData _pickupInfoData;
+  final bool _isEditBid;
+  final int _orderId;
 
   static const String routeName = '/buyerBidConfirmationScreen';
 
@@ -79,7 +78,10 @@ class _BuyerBidConfirmationScreenState
   @override
   void initState() {
     _bloc = BuyerBidConfirmationBloc(
-        items: widget._bidItems, sellerId: widget._seller.id);
+        items: widget._bidItems,
+        sellerId: widget._seller.id,
+        isEditBid: widget._isEditBid,
+        orderId: widget._orderId);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
@@ -125,7 +127,7 @@ class _BuyerBidConfirmationScreenState
             _showMessage(result.message);
             return;
           }
-          _bloc.placeBid(result.data);
+          _bloc.submitBid(result.data);
         },
       ),
       body: SingleChildScrollView(

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/models/buyer_bid_confirmation_screen_launch_data.dart';
 import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
@@ -36,14 +35,9 @@ class Router {
             builder: (_) => SellerItemScreen(sellerInfo: settings.arguments));
 
       case BuyerBidConfirmationScreen.routeName:
-        final BuyerBidConfirmationScreenLaunchData data = settings.arguments;
         return MaterialPageRoute(
-            builder: (_) => BuyerBidConfirmationScreen(
-                  seller: data.seller,
-                  bidItems: data.bidItems,
-                  pickupInfoData: data.pickupInfoData,
-                  onBackPressed: data.onBackPressed,
-                ));
+            builder: (_) =>
+                BuyerBidConfirmationScreen(data: settings.arguments));
 
       case MyBidsScreen.routeName:
         return MaterialPageRoute(builder: (_) => MyBidsScreen());

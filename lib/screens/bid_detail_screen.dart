@@ -11,7 +11,6 @@ import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/resources/pickup_info_data_store.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_details_header.dart';
 import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
@@ -240,9 +239,12 @@ class _BidDetailScreenState extends State<BidDetailScreen>
         pickupTime: bid.pickupDate);
     final BuyerBidConfirmationScreenLaunchData data =
         BuyerBidConfirmationScreenLaunchData(
-            seller: sellerInfo['seller'],
-            bidItems: sellerInfo['bidItems'],
-            pickupInfoData: pickupInfoData);
+      seller: sellerInfo['seller'],
+      isEditBid: true,
+      orderId: bid.orderId,
+      bidItems: sellerInfo['bidItems'],
+      pickupInfoData: pickupInfoData,
+    );
     Router.pushNamed(context, BuyerBidConfirmationScreen.routeName,
         arguments: data);
   }
