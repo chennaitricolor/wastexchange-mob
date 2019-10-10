@@ -127,7 +127,7 @@ class SellerItemBloc {
     if (_validationMap[ABOVEMAXQTY].contains(index)) {
       throw Exception('Both Quantity and Price are empty');
     }
-    if (priceValue.isEmpty || !isDouble(priceValue)) {
+    if (priceValue.isEmpty || !isDouble(priceValue) || double.parse(priceValue) < 0) {
       return true;
     }
     return false;
