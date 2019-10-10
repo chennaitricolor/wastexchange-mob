@@ -140,6 +140,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
         bottomNavigationBar: _isDataLoaded() && _isPendingBid()
             ? BottomActionViewContainer(children: <Widget>[
                 ButtonViewCompact(
+                  width: 160,
                     onPressed: () {
                       if (isEditMode) {
                         _sellerItemBloc.onSubmitBids(
@@ -154,6 +155,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                         ? Constants.BUTTON_SUBMIT
                         : Constants.BUTTON_EDIT_BID),
                 ButtonViewCompact(
+                    width: 160,
                     onPressed: () {
                       if (isEditMode) {
                         setState(() {

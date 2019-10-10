@@ -15,6 +15,7 @@ class BidSuccessfulScreen extends StatelessWidget {
         child: Scaffold(
             bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
               ButtonViewCompact(
+                width: 160,
                 text: 'View All Bids',
                 onPressed: () {
                   Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
@@ -22,6 +23,7 @@ class BidSuccessfulScreen extends StatelessWidget {
               ),
               const SizedBox(width: 24),
               ButtonViewCompact(
+                  width: 160,
                   text: 'Home',
                   onPressed: () {
                     Router.popToRoot(context);

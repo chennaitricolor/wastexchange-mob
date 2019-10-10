@@ -37,7 +37,6 @@ class SellerItemBottomSheetHeader extends StatelessWidget {
           ),
           ButtonViewCompact(
               text: buttonTitle,
-              width: 140,
               enabled: buttonEnabled,
               onPressed: onPressed),
         ],

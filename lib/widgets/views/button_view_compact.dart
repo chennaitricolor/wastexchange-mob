@@ -6,7 +6,7 @@ class ButtonViewCompact extends StatelessWidget {
   const ButtonViewCompact(
       {@required this.onPressed,
       this.text,
-      this.width = 160,
+      this.width,
       this.enabled = true});
 
   @override
