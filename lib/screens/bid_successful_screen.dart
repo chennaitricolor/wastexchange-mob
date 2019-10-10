@@ -20,20 +20,23 @@ class BidSuccessfulScreen extends StatelessWidget {
                   Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
                 },
               ),
+              const SizedBox(width: 24),
               ButtonViewCompact(
                   text: 'Home',
                   onPressed: () {
                     Router.popToRoot(context);
                   })
             ]),
-            body: Center(
+            body: Padding(
+              padding: const EdgeInsets.all(16),
               child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset('assets/images/tick.png',
                         width: 100, height: 100),
                     const SizedBox(height: 16),
-                    const Text('You have placed the bid successfully!',
+                    const Text('You have placed the bid successfully!', textAlign: TextAlign.center,
                         style: AppTheme.bodyThin),
                   ]),
             )));
