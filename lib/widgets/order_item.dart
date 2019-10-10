@@ -10,34 +10,27 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: <Widget>[
-        Expanded(
-          child: Container(
-              child:
-                  Text('${bidItem.item.displayName}', style: AppTheme.body2)),
-          flex: 24,
+    return Row(children: <Widget>[
+      Expanded(
+        child: Text('${bidItem.item.displayName}', style: AppTheme.body2),
+        flex: 6,
+      ),
+      Expanded(
+        child: Text(
+          'Qty: ${bidItem.bidQuantity} Kg',
+          style: AppTheme.body2,
+          textAlign: TextAlign.left,
         ),
-        Expanded(
-          child: Container(
-              child: Text(
-            'Qty: ${bidItem.bidQuantity} Kg',
-            style: AppTheme.body2,
-            textAlign: TextAlign.left,
-          )),
-          flex: 13,
+        flex: 2,
+      ),
+      Expanded(
+        child: Text(
+          '${formattedPrice(bidItem.bidCost)}/Kg',
+          style: AppTheme.body2,
+          textAlign: TextAlign.right,
         ),
-        Expanded(
-          child: Container(
-              child: Text(
-            '${formattedPrice(bidItem.bidCost)}/Kg',
-            style: AppTheme.body2,
-            textAlign: TextAlign.right,
-          )),
-          flex: 13,
-        ),
-      ]),
-      height: 44,
-    );
+        flex: 2,
+      ),
+    ]);
   }
 }
