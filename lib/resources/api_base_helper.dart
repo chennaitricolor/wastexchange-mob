@@ -83,7 +83,7 @@ class ApiBaseHelper {
     if (_isSuccessfulResponse(response)) {
       return responseStr;
     }
-    handleUnsuccessfulStatusCode(response, responseStr);
+    _handleUnsuccessfulStatusCode(response, responseStr);
   }
 
   bool _isSuccessfulResponse(Response response) {
@@ -91,7 +91,7 @@ class ApiBaseHelper {
         response.statusCode < APIResponseCodes.MULTIPLE_CHOICE;
   }
 
-  void handleUnsuccessfulStatusCode(Response response, String responseStr) {
+  void _handleUnsuccessfulStatusCode(Response response, String responseStr) {
     switch (response.statusCode) {
       case APIResponseCodes.BAD_REQUEST:
         final ApiException exception = BadRequestException(responseStr);
