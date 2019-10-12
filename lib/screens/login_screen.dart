@@ -6,8 +6,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/blocs/login_bloc.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
-import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
+import 'package:wastexchange_mobile/models/ui_state.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/registration_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
@@ -69,15 +69,15 @@ class _LoginScreenState extends State<LoginScreen> {
     _bloc = LoginBloc();
     _bloc.loginStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case UIStatus.LOADING:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case UIStatus.ERROR:
           dismissDialog(context);
           _showMessage(AppLocalizations.of(context)
               .translate(LocaleConstants.LOGIN_FAILED));
           break;
-        case Status.COMPLETED:
+        case UIStatus.COMPLETED:
           dismissDialog(context);
           if (!_snapshot.data.approved) {
             _showMessage(Constants.LOGIN_UNAPPROVED);

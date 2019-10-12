@@ -7,14 +7,15 @@ class EnvRepository implements LaunchSetupMember {
     return _singleton;
   }
 
+  // TODO(Sayeed): Try if DotEnv can be injected into this.
   EnvRepository._internal([DotEnv env]) {
     _env = env ?? DotEnv();
   }
 
   static final EnvRepository _singleton = EnvRepository._internal();
 
-  static const loggerLevel = 'LOGGER_LEVEL';
-  static const baseApiUrl = 'BASE_API_URL';
+  static const _loggerLevel = 'LOGGER_LEVEL';
+  static const _baseApiUrl = 'BASE_API_URL';
   DotEnv _env;
 
   @override
@@ -22,7 +23,15 @@ class EnvRepository implements LaunchSetupMember {
     await _env.load('.env');
   }
 
-  dynamic getValue({@required String key}) {
+  String baseApiURL() {
+    return _getValue(key: _baseApiUrl);
+  }
+
+  String loggerLevel() {
+    return _getValue(key: _loggerLevel);
+  }
+
+  dynamic _getValue({@required String key}) {
     return _env.env[key];
   }
 }

@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-LoginResponse loginResponseFromJson(String str) =>
-    LoginResponse.fromJson(json.decode(str));
-
 class LoginResponse {
   LoginResponse({this.auth, this.token, this.approved}) {
     ArgumentError.checkNotNull(auth, 'auth key is missing in LoginResponse');

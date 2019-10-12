@@ -5,6 +5,7 @@ import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
+import 'package:wastexchange_mobile/models/result_v2.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
@@ -12,6 +13,7 @@ import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/user_data_store.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/models/app_error.dart';
 
 class UserRepository implements LaunchSetupMember {
   UserRepository(
@@ -36,21 +38,23 @@ class UserRepository implements LaunchSetupMember {
     return await _client.register(registrationData);
   }
 
-  Future<Result<LoginResponse>> login(LoginData loginData) async {
-    final Result<LoginResponse> loginResponse = await _client.login(loginData);
-// TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
-    if (loginResponse.status == Status.COMPLETED) {
-      await _tokenRepository.setToken(loginResponse.data.token);
+  Future<ResultV2<LoginResponse, AppError>> login(LoginData loginData) async {
+    final ResultV2<LoginResponse, AppError> loginResult =
+        await _client.login(loginData);
+    if (loginResult.hasData) {
+      await _tokenRepository.setToken(loginResult.data.token);
       final Result<User> userResponse = await _client.myProfile();
+      // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
       if (userResponse.status == Status.COMPLETED) {
         _userDataStore.saveProfile(userResponse.data);
       } else {
         _tokenRepository.deleteToken();
+        loginResult.data = null;
+        loginResult.error = AppError('Failed to fetch user profile');
       }
-      loginResponse.status = userResponse.status;
     }
 
-    return loginResponse;
+    return loginResult;
   }
 
   Future<Result<List<User>>> getAllUsers() async {

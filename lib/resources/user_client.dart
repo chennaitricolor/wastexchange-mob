@@ -1,19 +1,30 @@
 import 'dart:convert';
+import 'package:wastexchange_mobile/models/app_error.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/otp_response.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/registration_response.dart';
+import 'package:wastexchange_mobile/models/result_v2.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/resources/http_request_manager.dart';
 import 'package:wastexchange_mobile/resources/json_parsing.dart';
+import 'package:wastexchange_mobile/resources/user_client_http_requests.dart';
 
 class UserClient {
-  UserClient([ApiBaseHelper helper]) {
+  UserClient(
+      [ApiBaseHelper helper,
+      HttpRequestManager manager,
+      JsonCodec json,
+      UserClientHttpRequests clientHttpRequests]) {
     _helper = helper ?? ApiBaseHelper();
+    _manager = manager ?? HttpRequestManagerImpl();
+    _json = json ?? const JsonCodec();
+    _clientHttpRequests = clientHttpRequests ?? UserClientHttpRequests();
   }
 
   static const PATH_SEND_OTP = '/users/sendOtp';
@@ -25,15 +36,21 @@ class UserClient {
   static const PATH_USER_DETAILS = '/users/:id';
 
   ApiBaseHelper _helper;
+  HttpRequestManager _manager;
+  JsonCodec _json;
+  UserClientHttpRequests _clientHttpRequests;
 
-  Future<Result<LoginResponse>> login(LoginData loginData) async {
+  Future<ResultV2<LoginResponse, AppError>> login(LoginData data) async {
+    final request = _clientHttpRequests.loginRequest(data);
+    final response = await _manager.performRequest(request);
+    if (response.hasError) {
+      return ResultV2.error(response.error);
+    }
     try {
-      final String response =
-          await _helper.post(false, PATH_LOGIN, loginData.toMap());
-      final LoginResponse loginResponse = loginResponseFromJson(response);
-      return Result.completed(loginResponse);
+      final loginResponse = LoginResponse.fromJson(_json.decode(response.data));
+      return ResultV2.data(loginResponse);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResultV2.error(JsonParseError(e.toString()));
     }
   }
 

@@ -1,10 +1,12 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'package:wastexchange_mobile/models/app_error.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
 import 'package:wastexchange_mobile/models/registration_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
+import 'package:wastexchange_mobile/models/result_v2.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
@@ -110,7 +112,7 @@ void main() {
     final loginData = LoginData(loginId: email, password: password);
 
     when(mockUserClient.login(loginData))
-        .thenAnswer((_) async => Result.error('error'));
+        .thenAnswer((_) async => ResultV2.error(AppError('error')));
 
     userRepository.login(loginData).then((loginResponse) {
       verifyNever(mockTokenRepository.setToken(any));

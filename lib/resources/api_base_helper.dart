@@ -31,8 +31,7 @@ class ApiBaseHelper {
   @visibleForTesting
   HttpClientWithInterceptor httpClient;
 
-  final String _baseApiUrl =
-      EnvRepository().getValue(key: EnvRepository.baseApiUrl);
+  final String _baseApiUrl = EnvRepository().baseApiURL();
   final logger = AppLogger.get('ApiBaseHelper');
 
   HttpClientWithInterceptor _client(bool authenticated) =>

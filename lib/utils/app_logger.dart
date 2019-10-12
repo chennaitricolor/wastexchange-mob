@@ -3,6 +3,8 @@ import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/utils/log_printer.dart';
 
+// TODO(Sayeed): Make AppLogger class abstract
+
 class AppLogger implements LaunchSetupMember {
   Level _getLoggerLevel(String level) {
     switch (level) {
@@ -25,7 +27,6 @@ class AppLogger implements LaunchSetupMember {
 
   @override
   Future<void> load() async {
-    Logger.level = _getLoggerLevel(
-        EnvRepository().getValue(key: EnvRepository.loggerLevel));
+    Logger.level = _getLoggerLevel(EnvRepository().loggerLevel());
   }
 }
