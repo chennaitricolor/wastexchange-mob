@@ -13,34 +13,30 @@ class BidSuccessfulScreen extends StatelessWidget {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
-              ButtonViewCompact(
+          bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
+            ButtonViewCompact(
+              width: 160,
+              text: 'View All Bids',
+              onPressed: () {
+                Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
+              },
+            ),
+            const SizedBox(width: 24),
+            ButtonViewCompact(
                 width: 160,
-                text: 'View All Bids',
+                text: 'Home',
                 onPressed: () {
-                  Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
-                },
-              ),
-              const SizedBox(width: 24),
-              ButtonViewCompact(
-                  width: 160,
-                  text: 'Home',
-                  onPressed: () {
-                    Router.popToRoot(context);
-                  })
-            ]),
-            body: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/images/tick.png',
-                        width: 100, height: 100),
-                    const SizedBox(height: 16),
-                    const Text('You have placed the bid successfully!', textAlign: TextAlign.center,
-                        style: AppTheme.bodyThin),
-                  ]),
-            )));
+                  Router.popToRoot(context);
+                })
+          ]),
+          body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('assets/images/tick.png', width: 100, height: 100),
+                const Text('You have placed the bid successfully!',
+                    textAlign: TextAlign.center, style: AppTheme.bodyThin),
+              ]),
+        ));
   }
 }
