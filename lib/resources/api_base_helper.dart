@@ -14,6 +14,7 @@ import 'package:wastexchange_mobile/utils/app_logger.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper(
+      // TODO(Sayeed): Need to close the clients after completion of requests.
       {HttpClientWithInterceptor client,
       HttpClientWithInterceptor clientWithAuth}) {
     httpClientWithAuth = clientWithAuth ??
@@ -21,8 +22,10 @@ class ApiBaseHelper {
           LogInterceptor(),
           AuthInterceptor(TokenRepository())
         ]);
+    httpClientWithAuth.requestTimeout = _requestTimeOut;
     httpClient = client ??
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
+    httpClient.requestTimeout = _requestTimeOut;
   }
 
   @visibleForTesting
@@ -30,6 +33,8 @@ class ApiBaseHelper {
 
   @visibleForTesting
   HttpClientWithInterceptor httpClient;
+
+  final _requestTimeOut = const Duration(seconds: 10);
 
   final String _baseApiUrl =
       EnvRepository().getValue(key: EnvRepository.baseApiUrl);
