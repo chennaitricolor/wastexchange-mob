@@ -53,6 +53,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
             }),
         body: Scrollbar(
           child: _bloc.bidCount() == 0
+              // TODO(Sayeed): Error/Success messaging is not consitent across screens. Compare below with bid_succesful_screen.
               ? ErrorView(message: Constants.NO_BID_ERROR_MESSAGE)
               : ListView.builder(
                   itemCount: _bloc.bidCount(),
