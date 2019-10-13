@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:wastexchange_mobile/models/api_exception.dart';
 import 'package:wastexchange_mobile/models/login_data.dart';
 import 'package:wastexchange_mobile/models/login_response.dart';
 import 'package:wastexchange_mobile/models/otp_data.dart';
@@ -10,6 +11,8 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/json_parsing.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/utils/locale_constants.dart';
 
 class UserClient {
   UserClient([ApiBaseHelper helper]) {
@@ -32,8 +35,11 @@ class UserClient {
           await _helper.post(false, PATH_LOGIN, loginData.toMap());
       final LoginResponse loginResponse = loginResponseFromJson(response);
       return Result.completed(loginResponse);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(LocaleConstants.LOGIN_FAILED);
     }
   }
 
