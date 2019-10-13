@@ -1,4 +1,5 @@
 //source: https://medium.com/flutter-community/handling-network-calls-like-a-pro-in-flutter-31bd30c86be1
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:meta/meta.dart';
@@ -45,13 +46,15 @@ class ApiBaseHelper {
 
   Future<dynamic> get(String path, {bool authenticated = true}) async {
     try {
-      final response = await _client(authenticated).get(_baseApiUrl + path);
+      final response = await _client(authenticated).get(
+        _baseApiUrl + path,
+        headers: {'Content-Type': 'application/json'},
+      );
       return _returnResponse(response);
     } on SocketException {
-      final ApiException exception =
-          FetchDataException('No Internet connection');
-      logger.e(exception);
-      throw exception;
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException {
+      throw ConnectionTimeoutException('Connection timed out');
     }
   }
 
@@ -62,10 +65,9 @@ class ApiBaseHelper {
           body: json.encode(body));
       return _returnResponse(response);
     } on SocketException {
-      final ApiException exception =
-          FetchDataException('No Internet connection');
-      logger.e(exception);
-      throw exception;
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException {
+      throw ConnectionTimeoutException('Connection timed out');
     }
   }
 
@@ -76,10 +78,9 @@ class ApiBaseHelper {
           body: json.encode(body));
       return _returnResponse(response);
     } on SocketException {
-      final ApiException exception =
-          FetchDataException('No Internet connection');
-      logger.e(exception);
-      throw exception;
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException {
+      throw ConnectionTimeoutException('Connection timed out');
     }
   }
 

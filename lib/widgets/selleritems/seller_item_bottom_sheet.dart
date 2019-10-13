@@ -3,19 +3,20 @@ import 'package:wastexchange_mobile/blocs/seller_item_details_bloc.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/models/seller_info.dart';
 import 'package:wastexchange_mobile/models/seller_item_details_response.dart';
+import 'package:wastexchange_mobile/models/ui_state.dart';
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/login_screen.dart';
 import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list.dart';
+import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
-
-enum _UIStatus { LOADING, ERROR, COMPLETED }
 
 class SellerItemBottomSheet extends StatefulWidget {
   SellerItemBottomSheet({@required this.seller});
@@ -34,7 +35,8 @@ class SellerItemBottomSheet extends StatefulWidget {
 class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   SellerItemDetailsBloc _bloc;
   SellerItemDetails _sellerItemDetails;
-  _UIStatus _status = _UIStatus.LOADING;
+  UIState _uiState = UIState.LOADING;
+  String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
 
   bool hasSeller() => isNotNull(widget.seller);
   bool isAuthorized() => TokenRepository().isAuthorized();
@@ -46,18 +48,19 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
       switch (_snapshot.status) {
         case Status.LOADING:
           setState(() {
-            _status = _UIStatus.LOADING;
+            _uiState = UIState.LOADING;
           });
           break;
         case Status.ERROR:
           setState(() {
-            _status = _UIStatus.ERROR;
+            _uiState = UIState.ERROR;
+            _errorMessage = _snapshot.message;
           });
           break;
         case Status.COMPLETED:
           setState(() {
             _sellerItemDetails = _snapshot.data;
-            _status = _UIStatus.COMPLETED;
+            _uiState = UIState.COMPLETED;
           });
 
           break;
@@ -110,50 +113,50 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
         arguments: _getSellerInfo());
   }
 
-  Widget _widgetForUIStatus() {
-    if (_status == _UIStatus.LOADING) {
-      return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: LoadingProgressIndicator(
-            alignment: Alignment.topCenter,
-          ));
-    } else if (_status == _UIStatus.ERROR) {
-      return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: const Text(Constants.GENERIC_ERROR_MESSAGE),
-          ));
-    } else {
-      final items = _sellerItemDetails.items ?? [];
-      return Column(
-        children: <Widget>[
-          Icon(
-            Icons.drag_handle,
-            size: 25.0,
-          ),
-          SellerItemBottomSheetHeader(
-            onPressed: _routeToNextScreen,
-            name: widget.seller.name,
-            isAuthorized: isAuthorized(),
-            hasItems: items.isNotEmpty,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-              ),
-              child: SellerItemBottomSheetList(
-                items: items,
+  Widget _widgetForUIState() {
+    switch (_uiState) {
+      case UIState.LOADING:
+        return Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: LoadingProgressIndicator(
+              alignment: Alignment.topCenter,
+            ));
+      case UIState.COMPLETED:
+        final items = _sellerItemDetails.items ?? [];
+        return Column(
+          children: <Widget>[
+            Icon(
+              Icons.drag_handle,
+              size: 25.0,
+            ),
+            SellerItemBottomSheetHeader(
+              onPressed: _routeToNextScreen,
+              name: widget.seller.name,
+              isAuthorized: isAuthorized(),
+              hasItems: items.isNotEmpty,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                child: SellerItemBottomSheetList(
+                  items: items,
+                ),
               ),
             ),
-          ),
-        ],
-      );
+          ],
+        );
+      default:
+        return Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Text(_errorMessage,
+                textAlign: TextAlign.center, style: AppTheme.body1));
     }
   }
 
   @override
+  // TODO(Sayeed): This is not the recommended pattern for building widgets. Fix this. But how do we handle this?
   Widget build(BuildContext context) {
     if (!hasSeller()) {
       return SellerItemBottomSheetHeaderEmpty(
@@ -161,6 +164,6 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
         isAuthorized: isAuthorized(),
       );
     }
-    return _widgetForUIStatus();
+    return _widgetForUIState();
   }
 }

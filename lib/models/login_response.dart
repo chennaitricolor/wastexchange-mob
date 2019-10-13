@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-LoginResponse loginResponseFromJson(String str) =>
-    LoginResponse.fromJson(json.decode(str));
-
 class LoginResponse {
+  // TODO(Sayeed): Consider using asserts for validation
   LoginResponse({this.auth, this.token, this.approved}) {
     ArgumentError.checkNotNull(auth, 'auth key is missing in LoginResponse');
     ArgumentError.checkNotNull(token, 'token key is missing in LoginResponse');

@@ -27,11 +27,11 @@ class UserRepository implements LaunchSetupMember {
   TokenRepository _tokenRepository;
   UserDataStore _userDataStore;
 
-  Future<OtpResponse> sendOTP(OtpData otpData) async {
+  Future<Result<OtpResponse>> sendOTP(OtpData otpData) async {
     return await _client.sendOTP(otpData);
   }
 
-  Future<RegistrationResponse> register(
+  Future<Result<RegistrationResponse>> register(
       RegistrationData registrationData) async {
     return await _client.register(registrationData);
   }

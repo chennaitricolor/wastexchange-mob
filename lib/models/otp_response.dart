@@ -1,10 +1,4 @@
-import 'dart:convert';
-
-OtpResponse otpResponseFromJson(String str) =>
-    OtpResponse.fromJson(json.decode(str));
-
-String otpResponseToJson(OtpResponse data) => json.encode(data.toJson());
-
+// TODO(Sayeed): Add asserts to constructor
 class OtpResponse {
   OtpResponse({
     this.message,
@@ -15,8 +9,4 @@ class OtpResponse {
       );
 
   String message;
-
-  Map<String, dynamic> toJson() => {
-        'message': message,
-      };
 }

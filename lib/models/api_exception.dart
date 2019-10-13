@@ -19,6 +19,11 @@ class FetchDataException extends ApiException {
       : super(message, 'Error During Communication: ');
 }
 
+class ConnectionTimeoutException extends ApiException {
+  ConnectionTimeoutException([String message])
+      : super(message, 'Connection Timeout: ');
+}
+
 class BadRequestException extends ApiException {
   BadRequestException([message]) : super(message, 'Invalid Request: ');
 }

@@ -21,7 +21,7 @@ import 'package:wastexchange_mobile/widgets/selleritems/seller_item_list_item.da
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_compact.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/dialog_util.dart';
 
 class BidDetailScreen extends StatefulWidget {
   BidDetailScreen({this.bid}) {
@@ -140,7 +140,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
         bottomNavigationBar: _isDataLoaded() && _isPendingBid()
             ? BottomActionViewContainer(children: <Widget>[
                 ButtonViewCompact(
-                  width: 160,
+                    width: 160,
                     onPressed: () {
                       if (isEditMode) {
                         _sellerItemBloc.onSubmitBids(

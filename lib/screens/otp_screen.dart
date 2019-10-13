@@ -17,7 +17,7 @@ import 'package:wastexchange_mobile/utils/app_theme.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/dialog_util.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen(this._registrationData);

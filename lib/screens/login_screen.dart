@@ -18,7 +18,7 @@ import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/utils/locale_constants.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/dialog_util.dart';
 
 import '../app_localizations.dart';
 

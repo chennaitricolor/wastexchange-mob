@@ -20,13 +20,9 @@ class RegistrationBloc {
 
   Future<void> register(RegistrationData data) async {
     registrationSink.add(Result.loading(Constants.LOADING_REGISTRATION));
-    try {
-      final RegistrationResponse response =
-          await _userRepository.register(data);
-      registrationSink.add(Result.completed(response));
-    } catch (e) {
-      registrationSink.add(Result.error(e.toString()));
-    }
+    final Result<RegistrationResponse> response =
+        await _userRepository.register(data);
+    registrationSink.add(response);
   }
 
   void dispose() {

@@ -16,7 +16,7 @@ import 'package:wastexchange_mobile/widgets/order_form_header.dart';
 import 'package:wastexchange_mobile/widgets/order_form_summary_list.dart';
 import 'package:wastexchange_mobile/widgets/order_form_total.dart';
 import 'package:wastexchange_mobile/widgets/views/home_app_bar.dart';
-import 'package:wastexchange_mobile/widgets/widget_display_util.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/dialog_util.dart';
 
 class BuyerBidConfirmationScreen extends StatefulWidget {
   factory BuyerBidConfirmationScreen(

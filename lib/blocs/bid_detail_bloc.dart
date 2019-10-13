@@ -74,7 +74,7 @@ class BidDetailBloc {
   }
 
   Future<Result<User>> getUser(int userId) async {
-    return UserRepository().getUser(id: userId);
+    return _userRepository.getUser(id: userId);
   }
 
   void dispose() {

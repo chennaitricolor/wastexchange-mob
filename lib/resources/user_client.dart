@@ -33,7 +33,8 @@ class UserClient {
     try {
       final String response =
           await _helper.post(false, PATH_LOGIN, loginData.toMap());
-      final LoginResponse loginResponse = loginResponseFromJson(response);
+      final LoginResponse loginResponse =
+          LoginResponse.fromJson(json.decode(response));
       return Result.completed(loginResponse);
     } on ApiException catch (e) {
       return Result.error(e.message);
@@ -43,22 +44,33 @@ class UserClient {
     }
   }
 
-  // TODO(Sayeed): Change this to Future<Result<RegistrationResponse>>
-  // TODO(Sayeed): Wrap the json parsing inside try catch
-  Future<RegistrationResponse> register(RegistrationData data) async {
-    final String response =
-        await _helper.post(false, PATH_REGISTER, data.toJson());
-    final registrationResponse = registrationResponseFromJson(response);
-    return registrationResponse;
+  Future<Result<RegistrationResponse>> register(RegistrationData data) async {
+    try {
+      final String response =
+          await _helper.post(false, PATH_REGISTER, data.toJson());
+      final registrationResponse =
+          RegistrationResponse.fromJson(json.decode(response));
+      return Result.completed(registrationResponse);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
+    } catch (e) {
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.REGISTRATION_FAILED);
+    }
   }
 
-  // TODO(Sayeed): Change this to Future<Result<OtpResponse>>
-  // TODO(Sayeed): Wrap the json parsing inside try catch
-  Future<OtpResponse> sendOTP(OtpData otpData) async {
-    final String response =
-        await _helper.post(false, PATH_SEND_OTP, otpData.toMap());
-    final otpResponse = otpResponseFromJson(response);
-    return otpResponse;
+  Future<Result<OtpResponse>> sendOTP(OtpData otpData) async {
+    try {
+      final String response =
+          await _helper.post(false, PATH_SEND_OTP, otpData.toMap());
+      final otpResponse = OtpResponse.fromJson(json.decode(response));
+      return Result.completed(otpResponse);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
+    } catch (e) {
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.SEND_OTP_FAIL);
+    }
   }
 
   Future<Result<List<User>>> getAllUsers() async {
@@ -66,8 +78,11 @@ class UserClient {
       final response = await _helper.get(PATH_USERS, authenticated: false);
       final List<User> users = userFromJson(json.decode(response));
       return Result.completed(users);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.MAP_LOADING_FAILED);
     }
   }
 
@@ -79,18 +94,11 @@ class UserClient {
       final SellerItemDetails details = SellerItemDetails.fromJson(
           codecForIntToDoubleConversion(key: 'quantity').decode(response));
       return Result.completed(details);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
-    }
-  }
-
-  Future<Result<User>> myProfile() async {
-    try {
-      final String response = await _helper.get(PATH_ME);
-      final User user = User.fromJson(json.decode(response));
-      return Result.completed(user);
-    } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.SELLER_DETAILS_FETCH_FAILED);
     }
   }
 
@@ -100,8 +108,24 @@ class UserClient {
           await _helper.get(PATH_USERS.replaceFirst(':id', id.toString()));
       final User user = User.fromJson(json.decode(response));
       return Result.completed(user);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.USER_FETCH_FAILED);
+    }
+  }
+
+  Future<Result<User>> myProfile() async {
+    try {
+      final String response = await _helper.get(PATH_ME);
+      final User user = User.fromJson(json.decode(response));
+      return Result.completed(user);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
+    } catch (e) {
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.PROFILE_FETCH_FAILED);
     }
   }
 }

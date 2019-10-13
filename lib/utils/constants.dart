@@ -1,7 +1,5 @@
 class Constants {
   static const APP_TITLE = 'India Waste Exchange';
-  static const LOGO_SMART_CITY = 'assets/images/smart-cities-mission-logo.png';
-  static const INDIAN_EMBLEM = 'assets/images/indian-emblem.png';
   static const GENERIC_ERROR_MESSAGE =
       'Something went wrong. Please try again.';
 
@@ -76,6 +74,11 @@ class Constants {
   static const String TAP_SELLER_FOR_DETAILS =
       'Tap on a blue pin\nto view seller inventory';
   static const String ITEMS_UNAVAILABLE = 'No items available';
+  static const String SELLER_DETAILS_FETCH_FAILED =
+      'Failed to get seller information';
+  static const String PROFILE_FETCH_FAILED =
+      'Failed to get profile information';
+  static const String USER_FETCH_FAILED = 'Failed to get user information';
 
   //Buyer's bid form
   static const TITLE_ORDER_FORM = 'Order Form';
@@ -92,17 +95,14 @@ class Constants {
   static const BID_SUCCESS_MSG = 'Bid successful';
   static const BUTTON_SUBMIT = 'Submit';
   static const MY_BIDS = 'Current Orders';
-  static const NO_BIDS = 'No Bids';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
   static const BUTTON_CANCEL = 'Cancel';
   static const BUTTON_CANCEL_BID = 'Cancel Bid';
   static const BUTTON_EDIT_BID = 'Edit Bid';
 
-  //error thumbnails
-  static const NO_BID_ERROR_MESSAGE =
-      'Sorry! It seems like you do not have any active bids.';
-  static const NO_BID_ERROR_ICON = 'assets/images/img_no_bids_found.png';
+  static const BIDS_FETCH_FAILED = 'Failed to get bids';
+  static const NO_BIDS_MESSAGE = 'You do not have any bids';
 
   //error
   static const NO_INTERNET_CONNECTION = 'No Internet connection';

@@ -1,11 +1,4 @@
-import 'dart:convert';
-
-RegistrationResponse registrationResponseFromJson(String str) =>
-    RegistrationResponse.fromJson(json.decode(str));
-
-String registrationResponseToJson(RegistrationResponse data) =>
-    json.encode(data.toJson());
-
+// TODO(Sayeed): Add asserts to constructor
 class RegistrationResponse {
   RegistrationResponse({
     this.success,
@@ -26,11 +19,4 @@ class RegistrationResponse {
   String message;
   bool auth;
   String token;
-
-  Map<String, dynamic> toJson() => {
-        'success': success,
-        'message': message,
-        'auth': auth,
-        'token': token,
-      };
 }

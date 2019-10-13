@@ -18,13 +18,8 @@ class OtpBloc {
 
   Future<void> sendOtp(OtpData data) async {
     otpSink.add(Result.loading(Constants.LOADING_OTP));
-    try {
-      final OtpResponse response = await _userRepository.sendOTP(data);
-      otpSink.add(Result.completed(response));
-    } catch (e) {
-      otpSink.add(Result.error(e.toString()));
-      logger.e(e.toString());
-    }
+    final Result<OtpResponse> response = await _userRepository.sendOTP(data);
+    otpSink.add(response);
   }
 
   void dispose() {

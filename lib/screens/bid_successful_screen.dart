@@ -34,7 +34,7 @@ class BidSuccessfulScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset('assets/images/tick.png', width: 100, height: 100),
-                const Text('You have placed the bid successfully!',
+                const Text('You have successfully placed the bid!',
                     textAlign: TextAlign.center, style: AppTheme.bodyThin),
               ]),
         ));
