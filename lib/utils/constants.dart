@@ -103,6 +103,7 @@ class Constants {
   static const NO_BIDS_MESSAGE = 'You do not have any bids';
   static const BID_CREATE_FAILED = 'Failed to create bid';
   static const BID_EDIT_FAILED = 'Failed to edit bids';
+  static const LOADING_BIDS = 'Loading Bids';
 
   static const BUTTON_SUBMIT = 'Submit';
 

@@ -9,6 +9,7 @@ import 'package:wastexchange_mobile/routes/router.dart';
 import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
 import 'package:wastexchange_mobile/utils/app_colors.dart';
 import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/widgets/dialogs/dialog_util.dart';
 import 'package:wastexchange_mobile/widgets/my_bids_item.dart';
 import 'package:wastexchange_mobile/widgets/views/empty_page_view.dart';
 import 'package:wastexchange_mobile/widgets/views/error_view.dart';
@@ -34,17 +35,20 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     _bloc.myBidsStream.listen((_snapshot) {
       switch (_snapshot.status) {
         case Status.LOADING:
+          showLoadingDialog(context);
           setState(() {
             _uiState = UIState.LOADING;
           });
           break;
         case Status.ERROR:
+          dismissDialog(context);
           setState(() {
             _uiState = UIState.ERROR;
             _errorMessage = _snapshot.message;
           });
           break;
         case Status.COMPLETED:
+          dismissDialog(context);
           setState(() {
             _uiState = UIState.COMPLETED;
           });
@@ -81,7 +85,8 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
   Widget _widgetForUIState() {
     switch (_uiState) {
       case UIState.LOADING:
-        return const LoadingView(message: 'Loading Bids');
+        // return const LoadingView(message: 'Loading Bids');
+        return EmptyPageView(message: Constants.LOADING_BIDS);
       case UIState.COMPLETED:
         return _bloc.bidCount() == 0
             ? EmptyPageView(message: Constants.NO_BIDS_MESSAGE)
