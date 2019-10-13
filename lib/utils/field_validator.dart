@@ -1,7 +1,7 @@
 // TODO(Sayeed): Consider renaming this class for readability
-class FieldValidator {
-  static bool isNullOrEmpty(String o) => o == null || '' == o;
+import 'package:wastexchange_mobile/utils/global_utils.dart';
 
+class FieldValidator {
   static String validateName(String value) {
     if (isNullOrEmpty(value)) {
       return 'Name cannot be empty';
@@ -58,10 +58,10 @@ class FieldValidator {
     if (isNullOrEmpty(value)) {
       return 'Email cannot be empty';
     }
-    final bool emailValid =
+    final bool isEmailValid =
         RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(value);
 
-    return !emailValid ? 'Please enter a valid Email' : null;
+    return !isEmailValid ? 'Please enter a valid Email' : null;
   }
 
   static String validateMobileNumber(String value) {
@@ -71,7 +71,21 @@ class FieldValidator {
     if (value.length < 10) {
       return 'Mobile number must be minimum 10 digits';
     }
-    return null;
+    final bool isPhoneNumberValid = RegExp(r'^[0-9]{10}$').hasMatch(value);
+    return !isPhoneNumberValid ? 'Mobile number must contain digits' : null;
+  }
+
+  static String validateAlternateMobileNumber(
+      String value, String primayMobileNumber) {
+    final alternateMobileValid = validateMobileNumber(value);
+
+    if (isNotNull(alternateMobileValid)) {
+      return alternateMobileValid;
+    }
+
+    return value == primayMobileNumber
+        ? 'Mobile and Alternate Mobile are same'
+        : null;
   }
 
   static String validateOTP(String value) {

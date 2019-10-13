@@ -104,8 +104,7 @@ void main() {
       expect(result, 'Please enter a valid Email');
     });
 
-    test('GIVEN value WHEN email is withougt domain THEN should show error',
-        () {
+    test('GIVEN value WHEN email is without domain THEN should show error', () {
       final result = FieldValidator.validateEmailAddress('abc@xyz');
       expect(result, 'Please enter a valid Email');
     });
@@ -141,9 +140,70 @@ void main() {
     });
 
     test(
+        'GIVEN value WHEN mobile number has characters other than digits [0-9] THEN should show error',
+        () {
+      final result = FieldValidator.validateMobileNumber('+998877666');
+      expect(result, 'Mobile number must contain digits');
+    });
+
+    test(
         'GIVEN value WHEN mobile number is valid THEN should validate mobile number successfully',
         () {
       final result = FieldValidator.validateMobileNumber('9988776655');
+      expect(result, null);
+    });
+  });
+
+  group('Alternate Mobile Field Tests', () {
+    test(
+        'GIVEN value WHEN alternate mobile number is null THEN should show error',
+        () {
+      final result = FieldValidator.validateAlternateMobileNumber(null, '123');
+      expect(
+        result,
+        'Mobile number cannot be empty',
+      );
+    });
+
+    test(
+        'GIVEN value WHEN alternate mobile number is empty THEN should show error',
+        () {
+      final result = FieldValidator.validateAlternateMobileNumber('', '123');
+      expect(
+        result,
+        'Mobile number cannot be empty',
+      );
+    });
+
+    test(
+        'GIVEN value WHEN alternate mobile number is < 10 THEN should show error',
+        () {
+      final result =
+          FieldValidator.validateAlternateMobileNumber('998877665', '123');
+      expect(result, 'Mobile number must be minimum 10 digits');
+    });
+
+    test(
+        'GIVEN value WHEN alternate mobile number has characters other than digits [0-9] THEN should show error',
+        () {
+      final result =
+          FieldValidator.validateAlternateMobileNumber('+998877666', '123');
+      expect(result, 'Mobile number must contain digits');
+    });
+
+    test(
+        'GIVEN value WHEN alternate mobile number is same as mobile number THEN should show error',
+        () {
+      final result = FieldValidator.validateAlternateMobileNumber(
+          '9988776651', '9988776651');
+      expect(result, 'Mobile and Alternate Mobile are same');
+    });
+
+    test(
+        'GIVEN value WHEN alternate mobile number is valid THEN should validate mobile number successfully',
+        () {
+      final result =
+          FieldValidator.validateAlternateMobileNumber('9988776655', '123');
       expect(result, null);
     });
   });

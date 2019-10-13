@@ -148,7 +148,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           case Constants.ID_MOBILE:
             return FieldValidator.validateMobileNumber(value);
           case Constants.ID_ALTERNATE_NUMBER:
-            return FieldValidator.validateMobileNumber(value);
+            final String mobile = values[Constants.ID_MOBILE];
+            return FieldValidator.validateAlternateMobileNumber(value, mobile);
           case Constants.ID_PINCODE:
             return FieldValidator.validatePincode(value);
           case Constants.ID_CITY:
