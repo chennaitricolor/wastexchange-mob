@@ -226,6 +226,15 @@ void main() {
       );
     });
 
+    test('GIVEN value WHEN name has special characters THEN should show error',
+        () {
+      final result = FieldValidator.validateName('Sayeed#');
+      expect(
+        result,
+        'Name cannot have special characters',
+      );
+    });
+
     test(
         'GIVEN value WHEN name is valid THEN should validate name successfully',
         () {

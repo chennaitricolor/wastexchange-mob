@@ -141,7 +141,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Navigator.pop(context, false);
       }),
       fieldValidator: (idAsKey, values) {
-        final String value = values[idAsKey];
+        final String value = values[idAsKey].trim();
         switch (idAsKey) {
           case Constants.ID_NAME:
             return FieldValidator.validateName(value);

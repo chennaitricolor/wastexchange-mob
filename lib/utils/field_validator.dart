@@ -1,12 +1,15 @@
-// TODO(Sayeed): Consider renaming this class for readability
 import 'package:wastexchange_mobile/utils/global_utils.dart';
+
+// TODO(Sayeed): Separate this class to decouple app logic from generic logic
+// TODO(Sayeed): Consider renaming this class for readability
 
 class FieldValidator {
   static String validateName(String value) {
     if (isNullOrEmpty(value)) {
       return 'Name cannot be empty';
     }
-    return null;
+    final bool isNameValid = RegExp(r'^[0-9a-zA-Z ]+$').hasMatch(value);
+    return !isNameValid ? 'Name cannot have special characters' : null;
   }
 
   static String validateAddress(String value) {
@@ -71,7 +74,7 @@ class FieldValidator {
     if (value.length < 10) {
       return 'Mobile number must be minimum 10 digits';
     }
-    final bool isPhoneNumberValid = RegExp(r'^[0-9]{10}$').hasMatch(value);
+    final bool isPhoneNumberValid = RegExp(r'^[0-9]+$').hasMatch(value);
     return !isPhoneNumberValid ? 'Mobile number must contain digits' : null;
   }
 
