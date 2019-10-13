@@ -21,6 +21,7 @@ class Bid {
     ArgumentError.checkNotNull(nameToItemMap);
   }
 
+// TODO(Sayeed): Handle parsing where invalid objects can be skipped instead of failing the entire parsing
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
       orderId: json['id'],
       createdDate: DateTime.parse(json['createdAt']),
