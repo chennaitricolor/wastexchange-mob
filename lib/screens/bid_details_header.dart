@@ -56,9 +56,9 @@ class BidDetailsHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CalendarCardWidget(hint: 'Created date', date: bid.createdDate),
-              Icon(Icons.date_range, color: AppTheme.darkText),
-              CalendarCardWidget(hint: 'Pickup date', date: bid.pickupDate),
+              Expanded(flex: 4, child: CalendarCardWidget(hint: 'Created date', date: bid.createdDate)),
+              Expanded(flex: 2, child: Icon(Icons.date_range, color: AppTheme.darkText)),
+              Expanded(flex: 4, child: CalendarCardWidget(hint: 'Pickup date', date: bid.pickupDate)),
             ],
           )
         ],

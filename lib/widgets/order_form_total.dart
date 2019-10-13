@@ -21,15 +21,11 @@ class OrderFormTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      style: AppTheme.title,
-                      children: <TextSpan>[
-                        const TextSpan(text: 'Total: '),
-                        TextSpan(
-                            text: formattedPrice(total), style: AppTheme.body1),
-                      ],
-                    ),
+                  Row(
+                    children: <Widget>[
+                      Text('Total: ', style: AppTheme.title),
+                      Flexible(child: Text(formattedPrice(total), style: AppTheme.body1, overflow: TextOverflow.ellipsis)),
+                    ],
                   ),
                   Text(
                     '$itemsCount item' + (itemsCount == 1 ? '' : 's'),
