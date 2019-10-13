@@ -29,14 +29,17 @@ class BidSuccessfulScreen extends StatelessWidget {
                   Router.popToRoot(context);
                 })
           ]),
-          body: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/tick.png', width: 100, height: 100),
-                const Text('You have placed the bid successfully!',
-                    textAlign: TextAlign.center, style: AppTheme.bodyThin),
-              ]),
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/images/tick.png', width: 100, height: 100),
+                  const Text('You have placed the bid successfully!',
+                      textAlign: TextAlign.center, style: AppTheme.bodyThin),
+                ]),
+          ),
         ));
   }
 }
