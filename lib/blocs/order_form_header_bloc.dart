@@ -5,6 +5,7 @@ import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/pickup_info_data_store.dart';
 import 'package:wastexchange_mobile/utils/app_date_format.dart';
+import 'package:wastexchange_mobile/utils/field_validator.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 
 // TODO(Sayeed): Split this class by responsibility. We can separate state management, dateTime, UI
@@ -41,7 +42,7 @@ class OrderFormHeaderBloc {
   }
 
   void setContactName(String name) {
-    _contactName = name;
+    _contactName = name.trim();
   }
 
   String get pickupDateDisplayString {
@@ -66,8 +67,9 @@ class OrderFormHeaderBloc {
 
   Result<PickupInfoData> validatedPickupInfo() {
     final List<String> arr = [];
-    if (!isContactNameValid(_contactName)) {
-      arr.add('Please add Contact Name');
+    final isContactNameValid = _isContactNameValid(_contactName);
+    if (isNotNull(isContactNameValid)) {
+      arr.add(isContactNameValid);
     }
     if (isNull(_pickupDate)) {
       arr.add('Please select Pickup Date');
@@ -110,7 +112,7 @@ class OrderFormHeaderBloc {
   }
 
   void _populateSavedData(PickupInfoData pickupInfoData) {
-    if (isContactNameValid(pickupInfoData.contactName)) {
+    if (!isNullOrEmpty(pickupInfoData.contactName)) {
       _contactName = pickupInfoData.contactName;
     }
     if (isNotNull(pickupInfoData.pickupDate)) {
@@ -121,8 +123,12 @@ class OrderFormHeaderBloc {
     }
   }
 
-  bool isContactNameValid(String contactName) =>
-      !isNull(contactName) && contactName.isNotEmpty;
+  String _isContactNameValid(String contactName) {
+    if (isNullOrEmpty(contactName)) {
+      return 'Please add Contact Name';
+    }
+    return FieldValidator.validateName(contactName);
+  }
 
   DateTime initialDate() => _initialDate;
 
