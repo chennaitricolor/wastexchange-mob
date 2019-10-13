@@ -16,7 +16,7 @@ class BidStatusIconTextView extends StatelessWidget {
       case BidStatus.cancelled:
         return BadgeView(
             color: statusCancelledColor, text: 'Cancelled', icon: Icons.clear);
-      case BidStatus.successful:
+      case BidStatus.approved:
         return BadgeView(
             color: statusCompletedColor, text: 'Completed', icon: Icons.check);
       default:

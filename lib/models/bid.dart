@@ -27,10 +27,9 @@ class Bid {
       sellerId: json['sellerId'],
       amount: json['totalBid'],
       pickupDate: DateTime.parse(json['pDateTime']),
-      status: BidStatus.values
-          .firstWhere((s) => s.toString().contains(json['status'])),
       contactName: json['contactName'],
-      nameToItemMap: getNameToItemMap(json['details']));
+      status: _bidStatus(json['status']),
+      nameToItemMap: _getNameToItemMap(json['details']));
 
   final int orderId;
   final DateTime createdDate;
@@ -41,7 +40,7 @@ class Bid {
   final String contactName;
   final Map<String, Item> nameToItemMap;
 
-  static Map<String, Item> getNameToItemMap(Map<String, dynamic> map) {
+  static Map<String, Item> _getNameToItemMap(Map<String, dynamic> map) {
     final Map<String, Item> bitItemLites = HashMap();
     map.forEach((name, value) {
       bitItemLites[name] = Item.fromBidJson(value, name);
@@ -49,6 +48,19 @@ class Bid {
 
     return bitItemLites;
   }
+
+  static BidStatus _bidStatus(String status) {
+    switch (status) {
+      case 'pending':
+        return BidStatus.pending;
+      case 'cancelled':
+        return BidStatus.cancelled;
+      case 'approved':
+        return BidStatus.approved;
+      default:
+        return BidStatus.pending;
+    }
+  }
 }
 
-enum BidStatus { cancelled, pending, successful }
+enum BidStatus { cancelled, pending, approved }

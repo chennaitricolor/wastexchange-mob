@@ -17,7 +17,7 @@ class BidStatusIconView extends StatelessWidget {
       case BidStatus.cancelled:
         return BidStatusIcon(
             backgroundColor: statusCancelledColor, icon: Icons.clear);
-      case BidStatus.successful:
+      case BidStatus.approved:
         return BidStatusIcon(
             backgroundColor: statusCompletedColor, icon: Icons.check);
       default:

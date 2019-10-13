@@ -65,7 +65,7 @@ class Item {
   double price;
 
   Map<String, dynamic> toJson() => {
-    'qty': qty,
-    'price': price,
-  };
+        'qty': qty,
+        'price': price,
+      };
 }
