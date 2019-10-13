@@ -147,9 +147,11 @@ class _BuyerBidConfirmationScreenState
           ),
           Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
               child: const Text('Order Summary', style: AppTheme.title)),
-          OrderFormSummaryList(items: _bloc.items),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              child: OrderFormSummaryList(items: _bloc.items)),
         ],
       )),
     );

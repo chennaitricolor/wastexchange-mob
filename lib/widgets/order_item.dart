@@ -13,7 +13,7 @@ class OrderItem extends StatelessWidget {
     return Row(children: <Widget>[
       Expanded(
         child: Text('${bidItem.item.displayName}', style: AppTheme.body2),
-        flex: 6,
+        flex: 48,
       ),
       Expanded(
         child: Text(
@@ -21,7 +21,7 @@ class OrderItem extends StatelessWidget {
           style: AppTheme.body2,
           textAlign: TextAlign.left,
         ),
-        flex: 2,
+        flex: 26,
       ),
       Expanded(
         child: Text(
@@ -29,7 +29,7 @@ class OrderItem extends StatelessWidget {
           style: AppTheme.body2,
           textAlign: TextAlign.right,
         ),
-        flex: 2,
+        flex: 26,
       ),
     ]);
   }

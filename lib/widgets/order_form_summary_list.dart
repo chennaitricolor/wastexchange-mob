@@ -20,10 +20,12 @@ class OrderFormSummaryList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => const Divider(
+          separatorBuilder: (BuildContext context, int index) => Container(
+              height: 15,
+              child: Divider(
                 color: AppColors.grey,
                 height: 1.0,
-              ),
+              )),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: _items.length,
