@@ -155,7 +155,6 @@ class _SellerItemScreenState extends State<SellerItemScreen>
         body: Column(
           children: <Widget>[
             BelowAppBarMessage(message: sellerName),
-            const SizedBox(height: 16),
             Expanded(
               child: SellerItemList(
                   quantityErrorPositions: quantityErrorPositions,

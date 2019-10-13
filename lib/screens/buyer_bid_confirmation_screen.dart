@@ -89,7 +89,7 @@ class _BuyerBidConfirmationScreenState
           break;
         case Status.ERROR:
           dismissDialog(context);
-          _showMessage(Constants.BID_FAILURE_MSG);
+          _showMessage(_snapshot.message);
           break;
         case Status.COMPLETED:
           dismissDialog(context);

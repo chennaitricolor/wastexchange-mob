@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/utils/app_theme.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
 import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/views/bottom_action_view_container.dart';
 import 'package:wastexchange_mobile/widgets/views/button_view_icon_compact.dart';
@@ -24,7 +25,10 @@ class OrderFormTotal extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text('Total: ', style: AppTheme.title),
-                      Flexible(child: Text(formattedPrice(total), style: AppTheme.body1, overflow: TextOverflow.ellipsis)),
+                      Flexible(
+                          child: Text(formattedPrice(total),
+                              style: AppTheme.body1,
+                              overflow: TextOverflow.ellipsis)),
                     ],
                   ),
                   Text(
@@ -33,7 +37,8 @@ class OrderFormTotal extends StatelessWidget {
                   )
                 ]),
             flex: 1),
-        ButtonViewIconCompact(text: 'Confirm', onPressed: onPressed)
+        ButtonViewIconCompact(
+            text: Constants.CONFIRM_BUTTON, onPressed: onPressed)
       ],
     );
   }

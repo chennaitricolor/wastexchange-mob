@@ -3,6 +3,8 @@ import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/resources/json_parsing.dart';
+import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/models/api_exception.dart';
 
 class BidClient {
   BidClient([ApiBaseHelper helper]) {
@@ -15,6 +17,21 @@ class BidClient {
 
   ApiBaseHelper _helper;
 
+  Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
+    try {
+      await _helper.post(
+          true,
+          PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
+          _placeBidPostData(buyerId, data));
+      return Result.completed('');
+    } on ApiException catch (e) {
+      return Result.error(e.message);
+    } catch (e) {
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.BID_CREATE_FAILED);
+    }
+  }
+
   Future<Result<String>> updateBid(
       {int orderId, int buyerId, BuyerBidData data}) async {
     try {
@@ -23,21 +40,11 @@ class BidClient {
           PATH_UPDATE_BID.replaceFirst(':bidId', orderId.toString()),
           _placeBidPostData(buyerId, data));
       return Result.completed('');
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
-    }
-  }
-
-  // TODO(Sayeed): Change the return type
-  Future<Result<String>> placeBid({int buyerId, BuyerBidData data}) async {
-    try {
-      await _helper.post(
-          true,
-          PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
-          _placeBidPostData(buyerId, data));
-      return Result.completed('');
-    } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.BID_EDIT_FAILED);
     }
   }
 
@@ -65,8 +72,11 @@ class BidClient {
           .decode(response)
           .map((x) => Bid.fromJson(x)));
       return Result.completed(bids);
+    } on ApiException catch (e) {
+      return Result.error(e.message);
     } catch (e) {
-      return Result.error(e.toString());
+      // TODO(Sayeed): Need to move this to a higher layer close to the UI possibly bloc
+      return Result.error(Constants.BIDS_FETCH_FAILED);
     }
   }
 }

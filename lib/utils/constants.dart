@@ -89,11 +89,6 @@ class Constants {
   static const FIELD_PICKUP_DATE_ERROR_MSG = 'Please enter pick up date';
   static const FIELD_PICKUP_TIME_ERROR_MSG = 'Please enter pick up time';
   static const CONFIRM_BUTTON = 'Confirm';
-  static const BUTTON_HOME_PAGE = 'Home page';
-  static const BUTTON_LIST_OF_BIDS = 'View Bids';
-  static const BID_FAILURE_MSG = 'Bid failed';
-  static const BID_SUCCESS_MSG = 'Bid successful';
-  static const BUTTON_SUBMIT = 'Submit';
   static const MY_BIDS = 'Current Orders';
   static const PICKUP_AT = 'Pickup: ';
   static const LANGUAGE_SETTINGS = 'Choose Preferred Language';
@@ -101,8 +96,15 @@ class Constants {
   static const BUTTON_CANCEL_BID = 'Cancel Bid';
   static const BUTTON_EDIT_BID = 'Edit Bid';
 
+  static const BUTTON_HOME = 'Home';
+  static const BUTTON_VIEW_ALL_BIDS = 'View All Bids';
+
   static const BIDS_FETCH_FAILED = 'Failed to get bids';
   static const NO_BIDS_MESSAGE = 'You do not have any bids';
+  static const BID_CREATE_FAILED = 'Failed to create bid';
+  static const BID_EDIT_FAILED = 'Failed to edit bids';
+
+  static const BUTTON_SUBMIT = 'Submit';
 
   //error
   static const NO_INTERNET_CONNECTION = 'No Internet connection';

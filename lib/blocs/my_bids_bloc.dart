@@ -33,8 +33,9 @@ class MyBidsBloc {
     // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
     if (response.status == Status.COMPLETED) {
       _bids = response.data;
-      _bids.sort((bid1, bid2) => bid2.pickupDate.compareTo(bid1.createdDate));
+      _bids.sort((bid1, bid2) => bid2.createdDate.compareTo(bid1.createdDate));
       for (Bid bid in _bids) {
+        // TODO(Sayeed): move sellerId to user mapping inside _bidRepository
         final Result<User> seller =
             await _userRepository.getUser(id: bid.sellerId);
         _sellerIdToSellerMap[bid.sellerId] = seller.data;

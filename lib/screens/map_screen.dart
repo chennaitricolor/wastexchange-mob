@@ -20,6 +20,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapState extends State<MapScreen> {
+  GoogleMapController _mapController;
   static const double _mapPinHue = 200.0;
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
@@ -74,7 +75,8 @@ class _MapState extends State<MapScreen> {
   }
 
   void onMapCreated(GoogleMapController controller) {
-    controller.animateCamera(_animateCameraTo);
+    _mapController = controller;
+    _mapController.animateCamera(_animateCameraTo);
   }
 
   void _onMarkerTapped(int userId) {

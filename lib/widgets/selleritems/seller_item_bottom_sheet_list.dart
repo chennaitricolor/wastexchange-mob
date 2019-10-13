@@ -9,7 +9,7 @@ class SellerItemBottomSheetList extends StatelessWidget {
   SellerItemBottomSheetList({
     Key key,
     @required this.items,
-  })  : assert(!isListNullOrEmpty(items)),
+  })  : assert(isNotNull(items)),
         super(key: key);
 
   final List<Item> items;
