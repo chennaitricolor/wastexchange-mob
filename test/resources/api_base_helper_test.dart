@@ -48,7 +48,10 @@ void main() {
 
   test('Test GET call throw Exception on 503 response', () async {
     const String path = 'login';
-    when(_mockHttpClient.get(_baseUrl + path)).thenAnswer(
+    when(_mockHttpClient.get(
+      _baseUrl + path,
+      headers: {'Content-Type': 'application/json'},
+    )).thenAnswer(
         (_) async => http.Response('{"auth":true,"token":"token"}', 503));
 
     expect(_apiBaseHelper.get(path, authenticated: false),
@@ -57,7 +60,10 @@ void main() {
 
   test('Test GET call throw FetchData exception on Socket Exception', () async {
     const String path = 'login';
-    when(_mockHttpClient.get(_baseUrl + path)).thenAnswer((_) => Future(() {
+    when(_mockHttpClient.get(
+      _baseUrl + path,
+      headers: {'Content-Type': 'application/json'},
+    )).thenAnswer((_) => Future(() {
           throw const SocketException('');
         }));
 
