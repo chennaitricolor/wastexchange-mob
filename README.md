@@ -56,9 +56,9 @@ Keep running analyzer periodically and before pushing code.
 
 ## Releasing the app?
 
-- Create a file ``key.properties` inside project android root folder.
+- Create a file `key.properties` inside project android root folder.
 
-- Paste the following contents and save it
+- Paste the following contents and save it.
 
 ```
 storePassword="ENTER_THE_STORE_PASSWORD"
