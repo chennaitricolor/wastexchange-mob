@@ -85,3 +85,7 @@ dbdata
 
 # Test Coverage
 coverage
+
+# Release credentials
+android/wasteexchange.jks
+android/key.properties
