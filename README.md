@@ -65,6 +65,8 @@ For disabling a lint rule inline use (not recommended)
 
 ## Releasing the app?
 
+### Release Credentials
+
 - Create a file `key.properties` inside project android root folder.
 
 - Paste the following contents and save it.
@@ -77,6 +79,11 @@ storeFile="PATH_WHERE_SECURE_KEY_EXISTS"
 (Eg: /Users/USER_NAME/Desktop/Flutter/opensource/wastexchange_mobile/android/wasteexchange.jks)
 ```
 
+### Creating the release build?
+
+```flutter build appbundle```
+
+## Create 
 ### References: https://flutter.dev/docs/deployment/android
 
 > Please reach out to admin to get store password, key password, store file and keystore file.
