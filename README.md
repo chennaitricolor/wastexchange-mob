@@ -52,6 +52,20 @@ Always run the tests before pushing in.
 
 ``flutter analyze``
 
+## Releasing the app?
+
+- Create a file ``key.properties` inside project android root folder.
+
+- Paste the following contents and save it
+
+```
+storePassword="ENTER_THE_STORE_PASSWORD"
+keyPassword="ENTER_THE_KEY_PASSWORD"
+keyAlias=key
+storeFile="PATH_WHERE_SECURE_KEY_EXISTS"
+(Eg: /Users/USER_NAME/Desktop/Flutter/opensource/wastexchange_mobile/android/wasteexchange.jks)
+```
+
 Keep running analyzer periodically and before pushing code. 
 
 ### References:
