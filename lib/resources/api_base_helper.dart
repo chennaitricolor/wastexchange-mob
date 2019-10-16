@@ -19,7 +19,7 @@ class ApiBaseHelper {
       // TODO(Sayeed): Need to close the clients after completion of requests.
       {HttpClientWithInterceptor client,
       HttpClientWithInterceptor clientWithAuth,
-      PlatformInfoRespository respository}) {
+      PlatformInfoRespository platformInfoRespository}) {
     httpClientWithAuth = clientWithAuth ??
         HttpClientWithInterceptor.build(interceptors: [
           LogInterceptor(),
@@ -30,7 +30,8 @@ class ApiBaseHelper {
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
     httpClient.requestTimeout = _requestTimeOut;
 
-    _platformInfoRespository = respository ?? PlatformInfoRespositoryImpl();
+    _platformInfoRespository =
+        platformInfoRespository ?? PlatformInfoRespositoryImpl();
   }
 
   @visibleForTesting
