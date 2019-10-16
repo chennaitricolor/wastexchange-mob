@@ -58,7 +58,7 @@ class BidClient {
       'sellerId': data.sellerId,
       'buyerId': userId,
       'totalBid': data.totalBid,
-      'pDateTime': data.pDateTime.toUtc().toString(),
+      'pDateTime': data.pDateTime.toString(),
       'contactName': data.contactName,
       'status': data.status,
     };

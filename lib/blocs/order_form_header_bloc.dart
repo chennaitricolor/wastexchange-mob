@@ -33,12 +33,14 @@ class OrderFormHeaderBloc {
 
   void setPickupDate(DateTime date) {
     ArgumentError.checkNotNull(date);
-    _pickupDate = date;
+    _pickupDate = date.toUtc();
   }
 
   void setPickupTime(DateTime time) {
+    // TODO(Sayeed): Move to assert pattern
     ArgumentError.checkNotNull(time);
-    _pickupTime = time;
+    // TODO(Sayeed): This timezone conversion should move to domain layer i.e. repository
+    _pickupTime = time.toUtc();
   }
 
   void setContactName(String name) {
@@ -103,8 +105,9 @@ class OrderFormHeaderBloc {
   void saveData() {
     _pickupInfoDatastore.saveData(PickupInfoData(
         contactName: _contactName,
-        pickupDate: _pickupDate,
-        pickupTime: _pickupTime));
+        // TODO(Sayeed): Fix this code later. Doing it in release pressure. Will revisit.
+        pickupDate: isNotNull(_pickupDate) ? _pickupDate.toUtc() : null,
+        pickupTime: isNotNull(_pickupTime) ? _pickupTime.toUtc() : null));
   }
 
   void clearSavedData() {
@@ -116,10 +119,10 @@ class OrderFormHeaderBloc {
       _contactName = pickupInfoData.contactName;
     }
     if (isNotNull(pickupInfoData.pickupDate)) {
-      _pickupDate = pickupInfoData.pickupDate;
+      _pickupDate = pickupInfoData.pickupDate.toUtc();
     }
     if (isNotNull(pickupInfoData.pickupTime)) {
-      _pickupTime = pickupInfoData.pickupTime;
+      _pickupTime = pickupInfoData.pickupTime.toUtc();
     }
   }
 

@@ -35,7 +35,7 @@ class ApiBaseHelper {
   @visibleForTesting
   HttpClientWithInterceptor httpClient;
 
-  final _requestTimeOut = const Duration(seconds: 15);
+  final _requestTimeOut = const Duration(seconds: 20);
 
   final String _baseApiUrl =
       EnvRepository().getValue(key: EnvRepository.baseApiUrl);
