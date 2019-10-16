@@ -52,35 +52,37 @@ class DrawerView extends StatelessWidget {
                   style: AppTheme.title)),
         ),
         Expanded(
-          child: SingleChildScrollView(child: Column(
-            children: <Widget>[
-              DrawerItemView(
-                iconData: Icons.home,
-                text: 'Home',
-                onItemPressed: () {
-                  Router.removeAllAndPush(context, MapScreen.routeName);
-                },
-              ),
-              DrawerItemView(
-                visibility: isLoggedIn(),
-                iconData: Icons.casino,
-                text: 'My Bids',
-                onItemPressed: () {
-                  Router.popAndPushNamed(context, MyBidsScreen.routeName);
-                },
-              ),
-              const Divider(),
-              DrawerItemView(
-                visibility: isLoggedIn(),
-                iconData: Icons.power_settings_new,
-                text: 'Logout',
-                onItemPressed: () {
-                  logoutUser();
-                  Router.removeAllAndPopToHome(context);
-                },
-              ),
-            ],
-          ),),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                DrawerItemView(
+                  iconData: Icons.home,
+                  text: 'Home',
+                  onItemPressed: () {
+                    Router.removeAllAndPopToHome(context);
+                  },
+                ),
+                DrawerItemView(
+                  visibility: isLoggedIn(),
+                  iconData: Icons.casino,
+                  text: 'My Bids',
+                  onItemPressed: () {
+                    Router.popAndPushNamed(context, MyBidsScreen.routeName);
+                  },
+                ),
+                const Divider(),
+                DrawerItemView(
+                  visibility: isLoggedIn(),
+                  iconData: Icons.power_settings_new,
+                  text: 'Logout',
+                  onItemPressed: () {
+                    logoutUser();
+                    Router.removeAllAndPopToHome(context);
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
