@@ -1,5 +1,5 @@
 class Constants {
-  static const APP_TITLE = 'iWasteX';
+  static const APP_TITLE = 'India Waste Exchange';
   static const GENERIC_ERROR_MESSAGE =
       'Something went wrong. Please try again.';
 
