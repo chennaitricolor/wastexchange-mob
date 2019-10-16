@@ -15,20 +15,23 @@ class BidSuccessfulScreen extends StatelessWidget {
         onWillPop: () async => false,
         child: Scaffold(
           bottomNavigationBar: BottomActionViewContainer(children: <Widget>[
-            ButtonViewCompact(
-              width: 160,
-              text: Constants.BUTTON_VIEW_ALL_BIDS,
-              onPressed: () {
-                Router.popToRootAndPushNamed(context, MyBidsScreen.routeName);
-              },
-            ),
-            const SizedBox(width: 24),
-            ButtonViewCompact(
-                width: 160,
-                text: Constants.BUTTON_HOME,
-                onPressed: () {
-                  Router.popToRoot(context);
-                })
+            Expanded(
+                flex: 4,
+                child: ButtonViewCompact(
+                  text: Constants.BUTTON_VIEW_ALL_BIDS,
+                  onPressed: () {
+                    Router.popToRootAndPushNamed(
+                        context, MyBidsScreen.routeName);
+                  },
+                )),
+            Spacer(),
+            Expanded(
+                flex: 4,
+                child: ButtonViewCompact(
+                    text: Constants.BUTTON_HOME,
+                    onPressed: () {
+                      Router.popToRoot(context);
+                    }))
           ]),
           body: Padding(
               padding: const EdgeInsets.all(16),
