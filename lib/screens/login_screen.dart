@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _routeToSellerInfo() {
-    Router.pushReplacementNamed(context, SellerItemScreen.routeName,
+    Router.popToRootAndPushNamed(context, SellerItemScreen.routeName,
         arguments: widget._sellerInfo);
   }
 

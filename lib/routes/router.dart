@@ -64,9 +64,10 @@ class Router {
     Navigator.pushNamed(context, routeName, arguments: arguments);
   }
 
-  static void popToRootAndPushNamed(BuildContext context, String routeName) {
+  static void popToRootAndPushNamed(BuildContext context, String routeName,
+      {dynamic arguments}) {
     popToRoot(context);
-    pushNamed(context, routeName);
+    pushNamed(context, routeName, arguments: arguments);
   }
 
   static void popAndPushNamed(BuildContext context, String routeName,
