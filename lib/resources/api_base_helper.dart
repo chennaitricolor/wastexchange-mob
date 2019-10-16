@@ -11,13 +11,15 @@ import 'package:wastexchange_mobile/resources/auth_interceptor.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/log_interceptor.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
+import 'package:wastexchange_mobile/resources/platform_info_repository.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 
 class ApiBaseHelper {
   ApiBaseHelper(
       // TODO(Sayeed): Need to close the clients after completion of requests.
       {HttpClientWithInterceptor client,
-      HttpClientWithInterceptor clientWithAuth}) {
+      HttpClientWithInterceptor clientWithAuth,
+      PlatformInfoRespository respository}) {
     httpClientWithAuth = clientWithAuth ??
         HttpClientWithInterceptor.build(interceptors: [
           LogInterceptor(),
@@ -27,6 +29,8 @@ class ApiBaseHelper {
     httpClient = client ??
         HttpClientWithInterceptor.build(interceptors: [LogInterceptor()]);
     httpClient.requestTimeout = _requestTimeOut;
+
+    _platformInfoRespository = respository ?? PlatformInfoRespositoryImpl();
   }
 
   @visibleForTesting
@@ -35,20 +39,33 @@ class ApiBaseHelper {
   @visibleForTesting
   HttpClientWithInterceptor httpClient;
 
+  PlatformInfoRespository _platformInfoRespository;
+
   final _requestTimeOut = const Duration(seconds: 20);
 
   final String _baseApiUrl =
       EnvRepository().getValue(key: EnvRepository.baseApiUrl);
+
   final logger = AppLogger.get('ApiBaseHelper');
 
   HttpClientWithInterceptor _client(bool authenticated) =>
       authenticated ? httpClientWithAuth : httpClient;
 
+  Future<String> getPlatformHeader() async {
+    final platformInfo = _platformInfoRespository.getPlatformInfo();
+    return '${platformInfo.appName}/${platformInfo.appVersion}(${platformInfo.appBuildNumber})/${platformInfo.platformOS}/${platformInfo.platformOSVersion}';
+  }
+
   Future<dynamic> get(String path, {bool authenticated = true}) async {
+    final String platformHeader = await getPlatformHeader();
+
     try {
       final response = await _client(authenticated).get(
         _baseApiUrl + path,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wstexchng-platform': platformHeader
+        },
       );
       return _returnResponse(response);
     } on SocketException {
@@ -59,9 +76,14 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> put(bool authenticated, String path, dynamic body) async {
+    final String platformHeader = await getPlatformHeader();
+
     try {
       final response = await _client(authenticated).put(_baseApiUrl + path,
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'x-wstexchng-platform': platformHeader
+          },
           body: json.encode(body));
       return _returnResponse(response);
     } on SocketException {
@@ -72,9 +94,14 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> post(bool authenticated, String path, dynamic body) async {
+    final String platformHeader = await getPlatformHeader();
+
     try {
       final response = await _client(authenticated).post(_baseApiUrl + path,
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'x-wstexchng-platform': platformHeader
+          },
           body: json.encode(body));
       return _returnResponse(response);
     } on SocketException {

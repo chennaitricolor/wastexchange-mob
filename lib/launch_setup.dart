@@ -1,6 +1,7 @@
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/key_value_data_store.dart';
+import 'package:wastexchange_mobile/resources/platform_info_repository.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
 import 'package:wastexchange_mobile/utils/app_logger.dart';
 
@@ -15,7 +16,8 @@ class LaunchSetup {
     AppLogger(),
     TokenRepository(),
     UserRepository(),
-    KeyValueDataStore()
+    KeyValueDataStore(),
+    PlatformInfoRespositoryImpl()
   ];
 
   Future<void> load() async {
