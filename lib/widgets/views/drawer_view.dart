@@ -84,6 +84,7 @@ class DrawerView extends StatelessWidget {
             ),
           ),
         ),
+        ThoughtWorksLogoPowered()
       ],
     );
   }
