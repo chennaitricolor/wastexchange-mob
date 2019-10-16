@@ -75,6 +75,7 @@ flutter:
   assets:
     - .env
     - assets/images/tick.png
+    - assets/images/logo_thoughtworks.png
     - assets/locale/en.json
     - assets/locale/ta.json
 

@@ -27,4 +27,8 @@ class AppColors {
   static const Color blue = Color.fromARGB(255, 244, 248, 251);
   static const Color card_black = Color.fromARGB(255, 53, 58, 71);
   static const Color card_black_text_secondary = Color.fromARGB(255, 137, 142, 153);
+
+  //thoughtworks colors
+  static const Color purple = Color.fromARGB(255, 93, 39, 96);
+
 }

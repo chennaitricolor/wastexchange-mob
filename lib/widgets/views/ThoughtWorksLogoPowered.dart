@@ -12,8 +12,8 @@ class ThoughtWorksLogoPowered extends StatelessWidget {
               text: 'Powered by ',
               style: AppTheme.subtitle,
               children: <TextSpan>[
-                TextSpan(text: 'Thought', style: AppTheme.title),
-                TextSpan(text: 'Works', style: AppTheme.titleLight),
+                TextSpan(text: 'Thought', style: AppTheme.thoughtWorksDark),
+                TextSpan(text: 'Works', style: AppTheme.thoughtWorksLight),
               ])),
     );
   }

@@ -70,12 +70,21 @@ class AppTheme {
     color: darkerText,
   );
 
-  static const TextStyle titleLight = TextStyle(
+  static const TextStyle thoughtWorksDark = TextStyle(
+    // h6 -> title
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    letterSpacing: 0.18,
+    color: AppColors.purple,
+  );
+
+  static const TextStyle thoughtWorksLight = TextStyle(
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: 0.18,
-    color: darkerText,
+    color: AppColors.purple,
   );
 
   static const TextStyle body = TextStyle(
