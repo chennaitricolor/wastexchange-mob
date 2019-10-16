@@ -65,7 +65,7 @@ class DrawerView extends StatelessWidget {
                 DrawerItemView(
                   visibility: isLoggedIn(),
                   iconData: Icons.casino,
-                  text: 'My Bids',
+                  text: 'Current Orders',
                   onItemPressed: () {
                     Router.popAndPushNamed(context, MyBidsScreen.routeName);
                   },
