@@ -1,4 +1,4 @@
-package com.example.wastexchange_mobile;
+package com.smartcities.indiawasteexchange;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
