@@ -81,7 +81,8 @@ class Constants {
   static const String USER_FETCH_FAILED = 'Failed to get user information';
 
   //Buyer's bid form
-  static const TITLE_ORDER_FORM = 'Order Form';
+  static const TITLE_CREATE_ORDER = 'Create Order';
+  static const TITLE_EDIT_ORDER = 'Edit Order';
   static const FIELD_CONTACT_NAME = 'Contact name';
   static const FIELD_PICKUP_DATE = 'Pick up date';
   static const FIELD_PICKUP_TIME = 'Pick up time';

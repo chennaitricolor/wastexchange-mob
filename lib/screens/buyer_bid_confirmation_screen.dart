@@ -121,7 +121,9 @@ class _BuyerBidConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        text: Constants.TITLE_ORDER_FORM,
+        text: widget._isEditBid
+            ? Constants.TITLE_EDIT_ORDER
+            : Constants.TITLE_CREATE_ORDER,
         onBackPressed: () {
           _keyOrderPickup.currentState.clearSavedData();
           _keyOrderPickup.currentState.saveData();
