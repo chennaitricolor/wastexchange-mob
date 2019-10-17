@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
             fieldStyle: FieldStyle.value(16, 8, 24, 36, AppColors.underline,
                 AppColors.green, AppColors.text_grey),
             fieldValidator: (idAsKey, values) {
-              final String value = values[idAsKey];
+              final String value = values[idAsKey].trim();
               switch (idAsKey) {
                 case Constants.ID_EMAIL:
                   return FieldValidator.validateEmailAddress(value);
