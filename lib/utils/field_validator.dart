@@ -40,9 +40,6 @@ class FieldValidator {
     if (isNullOrEmpty(value)) {
       return 'Password cannot be empty';
     }
-    if (value.length < 5) {
-      return 'Password must be more than 4 characters';
-    }
     return null;
   }
 
