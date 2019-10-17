@@ -8,13 +8,13 @@ class ThoughtWorksLogoPowered extends StatelessWidget {
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.all(24),
       child: RichText(
-          text: TextSpan(
+          text: const TextSpan(
               text: 'Powered by ',
               style: AppTheme.subtitle,
               children: <TextSpan>[
-                TextSpan(text: 'Thought', style: AppTheme.thoughtWorksDark),
-                TextSpan(text: 'Works', style: AppTheme.thoughtWorksLight),
-              ])),
+            TextSpan(text: 'Thought', style: AppTheme.thoughtWorksDark),
+            TextSpan(text: 'Works', style: AppTheme.thoughtWorksLight),
+          ])),
     );
   }
 }

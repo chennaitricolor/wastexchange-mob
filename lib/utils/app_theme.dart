@@ -76,7 +76,7 @@ class AppTheme {
     fontWeight: FontWeight.bold,
     fontSize: 16,
     letterSpacing: 0.18,
-    color: AppColors.purple,
+    color: AppColors.text_black,
   );
 
   static const TextStyle thoughtWorksLight = TextStyle(
@@ -84,7 +84,7 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: 0.18,
-    color: AppColors.purple,
+    color: AppColors.text_black,
   );
 
   static const TextStyle body = TextStyle(
