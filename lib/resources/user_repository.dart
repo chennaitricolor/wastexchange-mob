@@ -11,7 +11,7 @@ import 'package:wastexchange_mobile/resources/user_client.dart';
 import 'package:wastexchange_mobile/resources/auth_token_repository.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/user_data_store.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 class UserRepository implements LaunchSetupMember {
   UserRepository(

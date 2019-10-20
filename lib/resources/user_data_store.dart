@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/cached_secure_storage.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 class UserDataStore {
   factory UserDataStore() {

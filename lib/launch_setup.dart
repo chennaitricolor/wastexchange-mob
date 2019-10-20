@@ -3,7 +3,7 @@ import 'package:wastexchange_mobile/resources/env_repository.dart';
 import 'package:wastexchange_mobile/resources/key_value_data_store.dart';
 import 'package:wastexchange_mobile/resources/platform_info_repository.dart';
 import 'package:wastexchange_mobile/resources/user_repository.dart';
-import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/core/utils/app_logger.dart';
 
 // TODO(Sayeed): Is this a good name for this mixin
 mixin LaunchSetupMember {

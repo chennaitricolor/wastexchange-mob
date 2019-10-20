@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 bool isValidItem(dynamic json) =>
     isNotNull(json['quantity']) && isNotNull(json['cost']);

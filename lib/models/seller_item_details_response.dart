@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 import 'package:wastexchange_mobile/models/item.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 SellerItemDetails sellerItemDetailsFromJson(String str) =>
     SellerItemDetails.fromJson(json.decode(str));

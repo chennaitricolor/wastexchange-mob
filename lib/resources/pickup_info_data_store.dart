@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/resources/key_value_data_store.dart';
-import 'package:wastexchange_mobile/utils/app_date_format.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/app_date_format.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 class PickupInfoDatastore {
   PickupInfoDatastore({KeyValueDataStoreInterface keyValueDataStore}) {

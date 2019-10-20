@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wastexchange_mobile/utils/field_validator.dart';
+import 'package:wastexchange_mobile/core/utils/field_validator.dart';
 
 void main() {
   group('Password Field Tests', () {

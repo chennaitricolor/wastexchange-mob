@@ -3,7 +3,7 @@ import 'package:wastexchange_mobile/models/buyer_bid_confirmation_data.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/resources/json_parsing.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/core/utils/constants.dart';
 import 'package:wastexchange_mobile/models/api_exception.dart';
 
 class BidClient {

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:wastexchange_mobile/app_localizations.dart';
 import 'package:wastexchange_mobile/launch_setup.dart';
 import 'package:wastexchange_mobile/routes/router.dart';
-import 'package:wastexchange_mobile/screens/map_screen.dart';
-import 'package:wastexchange_mobile/utils/app_theme.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
+import 'package:wastexchange_mobile/features/home/presentation/screens/map_screen.dart';
+import 'package:wastexchange_mobile/core/utils/app_theme.dart';
+import 'package:wastexchange_mobile/core/utils/constants.dart';
 
 Future<void> main() async {
   await LaunchSetup().load();

@@ -11,8 +11,8 @@ import 'package:wastexchange_mobile/models/user.dart';
 import 'package:wastexchange_mobile/resources/api_base_helper.dart';
 import 'package:wastexchange_mobile/models/result.dart';
 import 'package:wastexchange_mobile/resources/json_parsing.dart';
-import 'package:wastexchange_mobile/utils/constants.dart';
-import 'package:wastexchange_mobile/utils/locale_constants.dart';
+import 'package:wastexchange_mobile/core/utils/constants.dart';
+import 'package:wastexchange_mobile/core/utils/locale_constants.dart';
 
 class UserClient {
   UserClient([ApiBaseHelper helper]) {

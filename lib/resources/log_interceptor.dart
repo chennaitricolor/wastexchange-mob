@@ -1,5 +1,5 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:wastexchange_mobile/utils/app_logger.dart';
+import 'package:wastexchange_mobile/core/utils/app_logger.dart';
 
 ///
 /// Interceptor for debug purpose.

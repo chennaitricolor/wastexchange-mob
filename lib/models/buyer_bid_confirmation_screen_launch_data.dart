@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wastexchange_mobile/models/bid_item.dart';
 import 'package:wastexchange_mobile/models/pickup_info_data.dart';
 import 'package:wastexchange_mobile/models/user.dart';
-import 'package:wastexchange_mobile/utils/global_utils.dart';
+import 'package:wastexchange_mobile/core/utils/global_utils.dart';
 
 class BuyerBidConfirmationScreenLaunchData {
   BuyerBidConfirmationScreenLaunchData({

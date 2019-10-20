@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wastexchange_mobile/screens/bid_successful_screen.dart';
-import 'package:wastexchange_mobile/screens/bid_detail_screen.dart';
-import 'package:wastexchange_mobile/screens/buyer_bid_confirmation_screen.dart';
-import 'package:wastexchange_mobile/screens/forgot_password_screen.dart';
-import 'package:wastexchange_mobile/screens/login_screen.dart';
-import 'package:wastexchange_mobile/screens/map_screen.dart';
-import 'package:wastexchange_mobile/screens/my_bids_screen.dart';
-import 'package:wastexchange_mobile/screens/otp_screen.dart';
-import 'package:wastexchange_mobile/screens/registration_screen.dart';
-import 'package:wastexchange_mobile/screens/seller_item_screen.dart';
+import 'package:wastexchange_mobile/features/buyerbids/presentation/screens/bid_successful_screen.dart';
+import 'package:wastexchange_mobile/features/viewbids/presentation/screens/bid_detail_screen.dart';
+import 'package:wastexchange_mobile/features/buyerbids/presentation/screens/buyer_bid_confirmation_screen.dart';
+import 'package:wastexchange_mobile/features/forgotpassword/presentation/screens/forgot_password_screen.dart';
+import 'package:wastexchange_mobile/features/login/presentation/screens/login_screen.dart';
+import 'package:wastexchange_mobile/features/home/presentation/screens/map_screen.dart';
+import 'package:wastexchange_mobile/features/viewbids/presentation/screens/view_bids_screen.dart';
+import 'package:wastexchange_mobile/features/otp/presentation/screens/otp_screen.dart';
+import 'package:wastexchange_mobile/features/registration/presentation/screens/registration_screen.dart';
+import 'package:wastexchange_mobile/features/selleritems/presentation/screens/seller_item_screen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -39,8 +39,8 @@ class Router {
             builder: (_) =>
                 BuyerBidConfirmationScreen(data: settings.arguments));
 
-      case MyBidsScreen.routeName:
-        return MaterialPageRoute(builder: (_) => MyBidsScreen());
+      case ViewBidsScreen.routeName:
+        return MaterialPageRoute(builder: (_) => ViewBidsScreen());
 
       case BidSuccessfulScreen.routeName:
         return MaterialPageRoute(builder: (_) => BidSuccessfulScreen());
