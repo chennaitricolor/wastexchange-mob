@@ -232,7 +232,6 @@ class ClusteringHelper {
       ),
         infoWindow: InfoWindow(
           title: '${user.name}',
-          snippet: '${user.address}',
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(
           _mapPinHue,

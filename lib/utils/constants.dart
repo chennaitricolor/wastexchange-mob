@@ -60,7 +60,7 @@ class Constants {
   // Map configuration
   static const double CHENNAI_LAT = 12.9838;
   static const double CHENNAI_LONG = 80.2459;
-  static const double DEFAULT_MAP_ZOOM = 12;
+  static const double DEFAULT_MAP_ZOOM = 10;
   static const int CLUSTER_MARKER_SIZE = 60;
   static const String MAP_LOADING_FAILED = 'Failed to load map';
 

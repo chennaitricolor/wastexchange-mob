@@ -120,6 +120,11 @@ class _MapState extends State<MapScreen> {
     );
   }
 
+  void _onCameraMove(CameraPosition newPosition) {
+   clusteringHelper.onCameraMove(newPosition, forceUpdate: true);
+  //  clusteringHelper.updateMap();
+  }
+
   Widget _widgetForMapStatus() {
     if (_mapStatus == _MapStatus.LOADING) {
       return FractionallySizedBox(
@@ -127,7 +132,7 @@ class _MapState extends State<MapScreen> {
               (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
           alignment: Alignment.topCenter,
           child: const LoadingProgressIndicator());
-    } else if (_mapStatus == _MapStatus.LOADING) {
+    } else if (_mapStatus == _MapStatus.ERROR) {
       return const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
@@ -141,9 +146,8 @@ class _MapState extends State<MapScreen> {
           initialCameraPosition: _initialCameraPosition,
           onMapCreated: onMapCreated,
           markers: clusterMarkers,
-          onCameraMove: (newPosition) =>
-              clusteringHelper.onCameraMove(newPosition, forceUpdate: true),
-          onCameraIdle: clusteringHelper?.onMapIdle,
+          onCameraMove: _onCameraMove,
+          //onCameraIdle: clusteringHelper?.onMapIdle,
         );
     }
   }  
