@@ -2,36 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wastexchange_mobile/utils/field_validator.dart';
 
 void main() {
-  group('Password Field Tests', () {
-    test('GIVEN value WHEN password is null THEN should show error', () {
-      final result = FieldValidator.validatePassword(null);
-      expect(
-        result,
-        'Password cannot be empty',
-      );
-    });
-
-    test('GIVEN value WHEN password is empty THEN should show error', () {
-      final result = FieldValidator.validatePassword('');
-      expect(
-        result,
-        'Password cannot be empty',
-      );
-    });
-
-    test('GIVEN value WHEN password is < 5 THEN should show error', () {
-      final result = FieldValidator.validatePassword('abc');
-      expect(result, 'Password must be more than 4 characters');
-    });
-
-    test(
-        'GIVEN value WHEN password is valid THEN should validate password successfully',
-        () {
-      final result = FieldValidator.validatePassword('abcdefg');
-      expect(result, null);
-    });
-  });
-
   group('Confirm Password Field Tests', () {
     test(
         'GIVEN value WHEN password and confirm password are null THEN should show error',
