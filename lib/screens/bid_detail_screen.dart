@@ -70,6 +70,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
           break;
         case Status.COMPLETED:
           sellerItemDetails = _snapshot.data;
+          final sellerItems = sellerItemDetails.items;
 
           _bloc.getUser(sellerItemDetails.sellerId).then((result) {
             dismissDialog(context);
@@ -81,16 +82,16 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                 _bloc.sortSellerItemsBasedOnBid(sellerItemDetails, bid);
 
                 _sellerItemBloc = SellerItemBloc(this,
-                    SellerInfo(seller: seller, items: sellerItemDetails.items));
-                _quantityTextEditingControllers = sellerItemDetails.items
+                    SellerInfo(seller: seller, items: sellerItems));
+                _quantityTextEditingControllers = sellerItems
                     .map((_) => TextEditingController())
                     .toList();
-                _priceTextEditingControllers = sellerItemDetails.items
+                _priceTextEditingControllers = sellerItems
                     .map((_) => TextEditingController())
                     .toList();
 
-                for (int i = 0; i < sellerItemDetails.items.length; i++) {
-                  final Item item = sellerItemDetails.items[i];
+                for (int i = 0; i < sellerItems.length; i++) {
+                  final Item item = sellerItems[i];
                   final Item bidItem = bid.nameToItemMap[item.name];
 
                   if (bidItem != null) {
@@ -123,7 +124,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
           setState(() {
             if (_isCancelOperation) {
               _isCancelOperation = false;
-              bid.status = BidStatus.cancelled;
+              bid.status = BidStatus.CANCELLED;
             }
           });
           break;
@@ -204,7 +205,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                 : Row()));
   }
 
-  bool _isPendingBid() => bid.status == BidStatus.pending;
+  bool _isPendingBid() => bid.status == BidStatus.PENDING;
 
   bool _isDataLoaded() => sellerItemDetails != null;
 

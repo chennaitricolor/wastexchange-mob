@@ -35,7 +35,7 @@ class SellerItemDetails {
     final List<Item> itemsList = [];
     detailsJson.forEach((itemName, json) {
       if (isValidItem(json)) {
-        itemsList.add(itemFromJson(itemName, json));
+        itemsList.add(Item.fromJson(itemName, json));
       }
     });
     itemsList.sort((i1, i2) => i1.displayName.compareTo(i2.displayName));

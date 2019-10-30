@@ -68,7 +68,7 @@ class ApiBaseHelper {
           'x-wstexchng-platform': platformHeader
         },
       );
-      return _returnResponse(response);
+      return _getResponseBody(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     } on TimeoutException {
@@ -86,7 +86,7 @@ class ApiBaseHelper {
             'x-wstexchng-platform': platformHeader
           },
           body: json.encode(body));
-      return _returnResponse(response);
+      return _getResponseBody(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     } on TimeoutException {
@@ -104,7 +104,7 @@ class ApiBaseHelper {
             'x-wstexchng-platform': platformHeader
           },
           body: json.encode(body));
-      return _returnResponse(response);
+      return _getResponseBody(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     } on TimeoutException {
@@ -112,7 +112,7 @@ class ApiBaseHelper {
     }
   }
 
-  dynamic _returnResponse(Response response) {
+  dynamic _getResponseBody(Response response) {
     final String responseStr = response.body.toString();
     if (_isSuccessfulResponse(response)) {
       return responseStr;
@@ -121,8 +121,8 @@ class ApiBaseHelper {
   }
 
   bool _isSuccessfulResponse(Response response) {
-    return APIResponseCodes.SUCCESS <= response.statusCode &&
-        response.statusCode < APIResponseCodes.MULTIPLE_CHOICE;
+    return APIResponseCodes.OK <= response.statusCode &&
+        response.statusCode < APIResponseCodes.MULTIPLE_CHOICES;
   }
 
   void handleUnsuccessfulStatusCode(Response response, String responseStr) {
