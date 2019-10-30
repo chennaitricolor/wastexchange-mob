@@ -5,9 +5,6 @@ import 'package:wastexchange_mobile/utils/global_utils.dart';
 bool isValidItem(dynamic json) =>
     isNotNull(json['quantity']) && isNotNull(json['cost']);
 
-Item itemFromJson(String itemName, dynamic json) =>
-    Item.fromJson(itemName, json);
-
 String itemToJson(Item data) => json.encode(data.toJson());
 
 class Item {

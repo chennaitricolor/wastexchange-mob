@@ -10,13 +10,13 @@ class BidStatusIconTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (bidStatus) {
-      case BidStatus.pending:
+      case BidStatus.PENDING:
         return BadgeView(
             color: statusPendingColor, text: 'Pending', icon: Icons.timer);
-      case BidStatus.cancelled:
+      case BidStatus.CANCELLED:
         return BadgeView(
             color: statusCancelledColor, text: 'Cancelled', icon: Icons.clear);
-      case BidStatus.approved:
+      case BidStatus.APPROVED:
         return BadgeView(
             color: statusCompletedColor, text: 'Completed', icon: Icons.check);
       default:
