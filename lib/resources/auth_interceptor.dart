@@ -21,8 +21,8 @@ class AuthInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
-    if (data != null && data.statusCode == APIResponseCodes.UNAUTHORIZED ||
-        data.statusCode == APIResponseCodes.FORBIDDEN) {
+    if (data != null && data.statusCode == APIResponseCodes.unauthorized ||
+        data.statusCode == APIResponseCodes.forbidden) {
       await _tokenRepository.deleteToken();
     }
     return data;

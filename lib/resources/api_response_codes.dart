@@ -1,9 +1,9 @@
 class APIResponseCodes {
-  static const OK = 200;
-  static const MULTIPLE_CHOICES = 300;
-  static const BAD_REQUEST = 400;
-  static const UNAUTHORIZED = 401;
-  static const FORBIDDEN = 403;
-  static const NOT_FOUND = 404;
-  static const INTERNAL_SERVER_ERROR = 500;
+  static const ok = 200;
+  static const multipleChoices = 300;
+  static const badRequest = 400;
+  static const unauthorized = 401;
+  static const forbidden = 403;
+  static const notFound = 404;
+  static const internalServerError = 500;
 }

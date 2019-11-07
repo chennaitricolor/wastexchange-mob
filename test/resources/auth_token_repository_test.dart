@@ -17,50 +17,50 @@ void main() {
   });
 
   test('Setting jwt token THEN expect it to retrieve the same', () async {
-    const SAMPLE_JWT_TOKEN_TO_WRITE =
+    const sampleJwtToken =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
-    token = SAMPLE_JWT_TOKEN_TO_WRITE;
+    token = sampleJwtToken;
 
-    await tokenRepository.setToken(SAMPLE_JWT_TOKEN_TO_WRITE);
+    await tokenRepository.setToken(sampleJwtToken);
 
-    expect(await tokenRepository.getToken(), SAMPLE_JWT_TOKEN_TO_WRITE);
+    expect(await tokenRepository.getToken(), sampleJwtToken);
   });
 
   test(
       'Setting jwt token in multiple futures THEN expect it to retrieve the same in order',
       () async {
-    const SAMPLE_JWT_TOKEN_TO_WRITE1 =
+    const sampleJwtToken1 =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.gCtyCNK1GbhBXIG_gIlb8HpB5xl4_wlivgly0yN3na8';
-    const SAMPLE_JWT_TOKEN_TO_WRITE2 =
+    const sampleJwtToken2 =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkyIiwibmFtZSI6IlBSYXNhbm5hIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.wS0stFzGkhygpmnzZoWMPTUjkDzA_dFi7aSVFZhqIjg';
-    const SAMPLE_JWT_TOKEN_TO_WRITE3 =
+    const sampleJwtToken3 =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkzIiwibmFtZSI6IlNhbXRobyBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.lCvAuq_71AHlb-dtgATQpxG3_TJAlVaoHXKpJd-tQ14';
 
-    token = SAMPLE_JWT_TOKEN_TO_WRITE1;
+    token = sampleJwtToken1;
 
     tokenRepository.setToken(token);
     final String retrieved1 = await tokenRepository.getToken();
 
-    token = SAMPLE_JWT_TOKEN_TO_WRITE2;
+    token = sampleJwtToken2;
     tokenRepository.setToken(token);
     final String retrieved2 = await tokenRepository.getToken();
 
-    token = SAMPLE_JWT_TOKEN_TO_WRITE3;
+    token = sampleJwtToken3;
     tokenRepository.setToken(token);
     final String retrieved3 = await tokenRepository.getToken();
 
-    expect(retrieved1, SAMPLE_JWT_TOKEN_TO_WRITE1);
-    expect(retrieved2, SAMPLE_JWT_TOKEN_TO_WRITE2);
-    expect(retrieved3, SAMPLE_JWT_TOKEN_TO_WRITE3);
+    expect(retrieved1, sampleJwtToken1);
+    expect(retrieved2, sampleJwtToken2);
+    expect(retrieved3, sampleJwtToken3);
   });
 
   test('CHECK isAuthorized() method returns positive WHEN token is present',
       () async {
-    const SAMPLE_JWT_TOKEN =
+    const sampleJwtToken =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.gCtyCNK1GbhBXIG_gIlb8HpB5xl4_wlivgly0yN3na8';
 
-    token = SAMPLE_JWT_TOKEN;
+    token = sampleJwtToken;
     await tokenRepository.setToken(token);
 
     expect(tokenRepository.isAuthorized(), true);
