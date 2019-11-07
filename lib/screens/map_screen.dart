@@ -21,7 +21,10 @@ class MapScreen extends StatefulWidget {
 
 class _MapState extends State<MapScreen> {
   GoogleMapController _mapController;
-  static const double _mapPinHue = 200.0;
+  static const double _mapMCCHue = BitmapDescriptor.hueViolet;
+  static const double _mapRRCHue = BitmapDescriptor.hueOrange;
+  static const double _mapOtherHue = BitmapDescriptor.hueRose;
+
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
 
@@ -86,6 +89,7 @@ class _MapState extends State<MapScreen> {
   // TODO(Sayeed): Should we move markers logic to its own class
   void _setMarkers(List<User> users) {
     final markers = users.map((user) {
+      final hue = _markerHue(user);
       void callback() => _onMarkerTapped(user.id);
       return Marker(
         markerId: MarkerId(
@@ -96,7 +100,7 @@ class _MapState extends State<MapScreen> {
           user.long,
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(
-          _mapPinHue,
+          hue,
         ),
         infoWindow: InfoWindow(
           title: '${user.name}',
@@ -106,6 +110,17 @@ class _MapState extends State<MapScreen> {
     });
     _markers = Map.fromIterable(markers,
         key: (marker) => marker.markerId, value: (marker) => marker);
+  }
+
+  double _markerHue(User user) {
+    final lowerCaseName = user.name.toLowerCase();
+    if (lowerCaseName.contains(' mcc')) {
+      return _mapMCCHue;
+    } else if (lowerCaseName.contains(' rrc')) {
+      return _mapRRCHue;
+    } else {
+      return _mapOtherHue;
+    }
   }
 
   @override
