@@ -84,14 +84,14 @@ class _BuyerBidConfirmationScreenState
         orderId: widget._orderId);
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           _showMessage(_snapshot.message);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           Router.pushNamed(context, BidSuccessfulScreen.routeName);
           break;
@@ -105,7 +105,7 @@ class _BuyerBidConfirmationScreenState
 
   void _validateAndPlaceBid() {
     final result = _keyOrderPickup.currentState.pickupInfoData();
-    if (result.status == Status.ERROR) {
+    if (result.status == Status.error) {
       _showMessage(result.message);
       return;
     }

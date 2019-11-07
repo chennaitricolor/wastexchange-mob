@@ -49,14 +49,14 @@ class _OTPScreenState extends State<OTPScreen> {
     _otpBloc = OtpBloc();
     _otpBloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           _showMessage(Constants.SEND_OTP_FAIL);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           _showMessage(Constants.SEND_OTP_SUCCESS);
           break;
@@ -68,14 +68,14 @@ class _OTPScreenState extends State<OTPScreen> {
     _registrationBloc = RegistrationBloc();
     _registrationBloc.registrationStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           _showMessage(Constants.REGISTRATION_FAILED);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           _showMap();
           break;

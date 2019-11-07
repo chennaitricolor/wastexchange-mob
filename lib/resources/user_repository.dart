@@ -39,10 +39,10 @@ class UserRepository implements LaunchSetupMember {
   Future<Result<LoginResponse>> login(LoginData loginData) async {
     final Result<LoginResponse> loginResponse = await _client.login(loginData);
 // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
-    if (loginResponse.status == Status.COMPLETED) {
+    if (loginResponse.status == Status.completed) {
       await _tokenRepository.setToken(loginResponse.data.token);
       final Result<User> userResponse = await _client.myProfile();
-      if (userResponse.status == Status.COMPLETED) {
+      if (userResponse.status == Status.completed) {
         _userDataStore.saveProfile(userResponse.data);
       } else {
         _tokenRepository.deleteToken();
@@ -56,7 +56,7 @@ class UserRepository implements LaunchSetupMember {
   Future<Result<List<User>>> getAllUsers() async {
     final Result<List<User>> allUsersResponse = await _client.getAllUsers();
 // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
-    if (allUsersResponse.status == Status.COMPLETED) {
+    if (allUsersResponse.status == Status.completed) {
       _userDataStore.saveUsers(allUsersResponse.data);
     }
     return allUsersResponse;

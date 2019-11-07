@@ -11,9 +11,9 @@ class ConnectivityEventImpl implements ConnectivityEvent {
   void subscribe(void onInternetStateData(InternetState event)) {
     _streamSubscription = _connectivity.onConnectivityChanged.listen((onData) {
       if (onData == ConnectivityResult.none) {
-        onInternetStateData(InternetState.UNAVAILABLE);
+        onInternetStateData(InternetState.unavailable);
       } else {
-        onInternetStateData(InternetState.AVAILABLE);
+        onInternetStateData(InternetState.available);
       }
     });
   }
@@ -24,4 +24,4 @@ class ConnectivityEventImpl implements ConnectivityEvent {
   }
 }
 
-enum InternetState { AVAILABLE, UNAVAILABLE }
+enum InternetState { available, unavailable }

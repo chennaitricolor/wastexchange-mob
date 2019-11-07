@@ -21,7 +21,7 @@ void main() {
       final result =
           await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      expect(result.status, Status.ERROR);
+      expect(result.status, Status.error);
     });
 
     test('returns result if the http call completes successfully', () async {

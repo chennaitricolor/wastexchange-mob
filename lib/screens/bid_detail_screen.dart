@@ -62,13 +62,13 @@ class _BidDetailScreenState extends State<BidDetailScreen>
 // TODO(Sayeed): Why are we listening to this stream
     _bloc.sellerStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           sellerItemDetails = _snapshot.data;
           final sellerItems = sellerItemDetails.items;
 
@@ -76,7 +76,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
             dismissDialog(context);
 
             setState(() {
-              if (result.status == Status.COMPLETED && result.data != null) {
+              if (result.status == Status.completed && result.data != null) {
                 seller = result.data;
 
                 _bloc.sortSellerItemsBasedOnBid(sellerItemDetails, bid);
@@ -109,22 +109,22 @@ class _BidDetailScreenState extends State<BidDetailScreen>
     });
     _bloc.bidStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           print(_snapshot.message);
           dismissDialog(context);
           if (_isCancelOperation) {
             _isCancelOperation = false;
           }
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           setState(() {
             if (_isCancelOperation) {
               _isCancelOperation = false;
-              bid.status = BidStatus.CANCELLED;
+              bid.status = BidStatus.cancelled;
             }
           });
           break;
@@ -205,7 +205,7 @@ class _BidDetailScreenState extends State<BidDetailScreen>
                 : Row()));
   }
 
-  bool _isPendingBid() => bid.status == BidStatus.PENDING;
+  bool _isPendingBid() => bid.status == BidStatus.pending;
 
   bool _isDataLoaded() => sellerItemDetails != null;
 

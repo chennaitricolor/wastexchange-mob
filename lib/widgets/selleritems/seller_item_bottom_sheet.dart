@@ -35,7 +35,7 @@ class SellerItemBottomSheet extends StatefulWidget {
 class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
   SellerItemDetailsBloc _bloc;
   SellerItemDetails _sellerItemDetails;
-  UIState _uiState = UIState.LOADING;
+  UIState _uiState = UIState.loading;
   String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
 
   bool hasSeller() => isNotNull(widget.seller);
@@ -46,21 +46,21 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
     _bloc = SellerItemDetailsBloc();
     _bloc.sellerItemDetailsStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           setState(() {
-            _uiState = UIState.LOADING;
+            _uiState = UIState.loading;
           });
           break;
-        case Status.ERROR:
+        case Status.error:
           setState(() {
-            _uiState = UIState.ERROR;
+            _uiState = UIState.error;
             _errorMessage = _snapshot.message;
           });
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           setState(() {
             _sellerItemDetails = _snapshot.data;
-            _uiState = UIState.COMPLETED;
+            _uiState = UIState.completed;
           });
 
           break;
@@ -115,13 +115,13 @@ class _SellerItemBottomSheetState extends State<SellerItemBottomSheet> {
 
   Widget _widgetForUIState() {
     switch (_uiState) {
-      case UIState.LOADING:
+      case UIState.loading:
         return Padding(
             padding: const EdgeInsets.all(24.0),
             child: LoadingProgressIndicator(
               alignment: Alignment.topCenter,
             ));
-      case UIState.COMPLETED:
+      case UIState.completed:
         final items = _sellerItemDetails.items ?? [];
         return Column(
           children: <Widget>[

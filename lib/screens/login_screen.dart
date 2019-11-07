@@ -69,14 +69,14 @@ class _LoginScreenState extends State<LoginScreen> {
     _bloc = LoginBloc();
     _bloc.loginStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           _showMessage(_snapshot.message);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           if (!_snapshot.data.success) {
             _showMessage(AppLocalizations.of(context)
                 .translate(LocaleConstants.LOGIN_FAILED));

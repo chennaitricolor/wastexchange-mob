@@ -40,7 +40,7 @@ class _MapState extends State<MapScreen> {
       const LatLng(Constants.CHENNAI_LAT, Constants.CHENNAI_LONG),
       Constants.DEFAULT_MAP_ZOOM);
 
-  UIState _uiState = UIState.LOADING;
+  UIState _uiState = UIState.loading;
   MapBloc _bloc;
 
   @override
@@ -48,20 +48,20 @@ class _MapState extends State<MapScreen> {
     _bloc = MapBloc();
     _bloc.allUsersStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           setState(() {
-            _uiState = UIState.LOADING;
+            _uiState = UIState.loading;
           });
           break;
-        case Status.ERROR:
+        case Status.error:
           setState(() {
-            _uiState = UIState.ERROR;
+            _uiState = UIState.error;
             _errorMessage = _snapshot.message;
           });
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           setState(() {
-            _uiState = UIState.COMPLETED;
+            _uiState = UIState.completed;
             _setMarkers(_snapshot.data);
           });
           break;
@@ -145,13 +145,13 @@ class _MapState extends State<MapScreen> {
 // TODO(Sayeed): Is it bad that we have created a new method for getting widgets instead of having it in build()
   Widget _widgetForUIState() {
     switch (_uiState) {
-      case UIState.LOADING:
+      case UIState.loading:
         return FractionallySizedBox(
             heightFactor:
                 (_screenHeight() - _bottomSheetMinHeight) / _screenHeight(),
             alignment: Alignment.topCenter,
             child: const LoadingProgressIndicator());
-      case UIState.COMPLETED:
+      case UIState.completed:
         return GoogleMap(
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: onMapCreated,
