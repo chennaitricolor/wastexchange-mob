@@ -15,7 +15,6 @@ import 'package:wastexchange_mobile/utils/global_utils.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_header_empty.dart';
 import 'package:wastexchange_mobile/widgets/selleritems/seller_item_bottom_sheet_list.dart';
-import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 
 class SellerItemBottomSheet extends StatefulWidget {

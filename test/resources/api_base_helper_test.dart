@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/mockito.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:http/http.dart' as http;
 import 'package:wastexchange_mobile/models/platform_info.dart';

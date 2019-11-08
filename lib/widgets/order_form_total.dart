@@ -24,7 +24,7 @@ class OrderFormTotal extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text('Total: ', style: AppTheme.title),
+                      const Text('Total: ', style: AppTheme.title),
                       Flexible(
                           child: Text(formattedPrice(total),
                               style: AppTheme.body1,
