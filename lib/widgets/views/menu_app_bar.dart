@@ -7,6 +7,13 @@ class MenuAppBar extends AppBar {
       : super(
             backgroundColor: Colors.transparent,
             elevation: 0,
+            actions: <Widget>[
+              Padding(
+                child: Image.asset('assets/images/logo_corporation.png',
+                    width: 36, height: 44),
+                padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+              )
+            ],
             centerTitle: true,
             title: Text(
               text ?? Constants.APP_TITLE,
