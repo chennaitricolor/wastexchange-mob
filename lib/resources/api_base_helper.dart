@@ -121,26 +121,26 @@ class ApiBaseHelper {
   }
 
   bool _isSuccessfulResponse(Response response) {
-    return APIResponseCodes.OK <= response.statusCode &&
-        response.statusCode < APIResponseCodes.MULTIPLE_CHOICES;
+    return APIResponseCodes.ok <= response.statusCode &&
+        response.statusCode < APIResponseCodes.multipleChoices;
   }
 
   void handleUnsuccessfulStatusCode(Response response, String responseStr) {
     switch (response.statusCode) {
-      case APIResponseCodes.BAD_REQUEST:
+      case APIResponseCodes.badRequest:
         final ApiException exception = BadRequestException(responseStr);
         logger.e(exception);
         throw exception;
-      case APIResponseCodes.UNAUTHORIZED:
-      case APIResponseCodes.FORBIDDEN:
+      case APIResponseCodes.unauthorized:
+      case APIResponseCodes.forbidden:
         final ApiException exception = UnauthorisedException(responseStr);
         logger.e(exception);
         throw exception;
-      case APIResponseCodes.NOT_FOUND:
+      case APIResponseCodes.notFound:
         final ApiException exception = ResourceNotFoundException(responseStr);
         logger.e(exception);
         throw exception;
-      case APIResponseCodes.INTERNAL_SERVER_ERROR:
+      case APIResponseCodes.internalServerError:
       default:
         final ApiException exception = FetchDataException(
             'Error occured while communicating with server. StatusCode : ${response.statusCode}, Error: $responseStr');

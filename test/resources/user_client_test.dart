@@ -13,7 +13,7 @@ void main() {
   group('login', () {
     test('returns error if the http call completes with an error', () async {
       final MockApiBaseHelper mockApiHelper = MockApiBaseHelper();
-      when(mockApiHelper.post(false, UserClient.PATH_LOGIN,
+      when(mockApiHelper.post(false, UserClient.pathLogin,
               LoginData(loginId: 'a', password: 'b').toMap()))
           .thenThrow(ApiException());
 
@@ -21,13 +21,13 @@ void main() {
       final result =
           await provider.login(LoginData(loginId: 'a', password: 'b'));
 
-      expect(result.status, Status.ERROR);
+      expect(result.status, Status.error);
     });
 
     test('returns result if the http call completes successfully', () async {
       final MockApiBaseHelper mockApiHelper = MockApiBaseHelper();
 
-      when(mockApiHelper.post(false, UserClient.PATH_LOGIN,
+      when(mockApiHelper.post(false, UserClient.pathLogin,
               LoginData(loginId: 'a', password: 'b').toMap()))
           .thenAnswer(
               (_) async => '{"auth":true,"token":"token","approved":true}');

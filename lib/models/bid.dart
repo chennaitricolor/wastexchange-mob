@@ -53,15 +53,15 @@ class Bid {
   static BidStatus _bidStatus(String status) {
     switch (status) {
       case 'pending':
-        return BidStatus.PENDING;
+        return BidStatus.pending;
       case 'cancelled':
-        return BidStatus.CANCELLED;
+        return BidStatus.cancelled;
       case 'approved':
-        return BidStatus.APPROVED;
+        return BidStatus.approved;
       default:
-        return BidStatus.PENDING;
+        return BidStatus.pending;
     }
   }
 }
 
-enum BidStatus { CANCELLED, PENDING, APPROVED }
+enum BidStatus { cancelled, pending, approved }

@@ -59,7 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       TextInputType.phone,
       false);
 
-  UserType userType = UserType.BUYER;
+  UserType userType = UserType.buyer;
 
   @override
   void initState() {
@@ -68,14 +68,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _bloc = OtpBloc();
     _bloc.otpStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           _showMessage(Constants.REGISTRATION_FAILED);
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           _showOTPScreen();
           break;

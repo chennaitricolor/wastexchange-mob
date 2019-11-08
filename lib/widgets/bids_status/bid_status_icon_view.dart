@@ -11,13 +11,13 @@ class BidStatusIconView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (bidStatus) {
-      case BidStatus.PENDING:
+      case BidStatus.pending:
         return BidStatusIcon(
             backgroundColor: statusPendingColor, icon: Icons.timer);
-      case BidStatus.CANCELLED:
+      case BidStatus.cancelled:
         return BidStatusIcon(
             backgroundColor: statusCancelledColor, icon: Icons.clear);
-      case BidStatus.APPROVED:
+      case BidStatus.approved:
         return BidStatusIcon(
             backgroundColor: statusCompletedColor, icon: Icons.check);
       default:

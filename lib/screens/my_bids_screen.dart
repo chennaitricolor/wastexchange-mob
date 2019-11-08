@@ -22,7 +22,7 @@ class MyBidsScreen extends StatefulWidget {
 }
 
 class _MyBidsScreenState extends State<MyBidsScreen> {
-  UIState _uiState = UIState.LOADING;
+  UIState _uiState = UIState.loading;
   String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
 
   MyBidsBloc _bloc;
@@ -32,23 +32,23 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     _bloc = MyBidsBloc();
     _bloc.myBidsStream.listen((_snapshot) {
       switch (_snapshot.status) {
-        case Status.LOADING:
+        case Status.loading:
           showLoadingDialog(context);
           setState(() {
-            _uiState = UIState.LOADING;
+            _uiState = UIState.loading;
           });
           break;
-        case Status.ERROR:
+        case Status.error:
           dismissDialog(context);
           setState(() {
-            _uiState = UIState.ERROR;
+            _uiState = UIState.error;
             _errorMessage = _snapshot.message;
           });
           break;
-        case Status.COMPLETED:
+        case Status.completed:
           dismissDialog(context);
           setState(() {
-            _uiState = UIState.COMPLETED;
+            _uiState = UIState.completed;
           });
           break;
       }
@@ -82,10 +82,10 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
 // TODO(Sayeed): Fix this anti pattern of returning widgets from method
   Widget _widgetForUIState() {
     switch (_uiState) {
-      case UIState.LOADING:
+      case UIState.loading:
         // return const LoadingView(message: 'Loading Bids');
         return EmptyPageView(message: Constants.LOADING_BIDS);
-      case UIState.COMPLETED:
+      case UIState.completed:
         return _bloc.bidCount() == 0
             ? EmptyPageView(message: Constants.NO_BIDS_MESSAGE)
             : ListView.builder(

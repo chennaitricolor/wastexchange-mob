@@ -38,7 +38,7 @@ class BidDetailBloc {
         totalBid: totalBid,
         pDateTime: bid.pickupDate,
         contactName: bid.contactName,
-        status: BidStatus.CANCELLED.toString().split('.').last);
+        status: BidStatus.cancelled.toString().split('.').last);
 
     return updateBid(bidId, data);
   }

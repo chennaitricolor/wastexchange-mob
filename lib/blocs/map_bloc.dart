@@ -18,7 +18,7 @@ class MapBloc {
     allUsersSink.add(Result.loading(Constants.LOADING_LOGIN));
     final Result<List<User>> response = await _userRepository.getAllUsers();
     // TODO(Sayeed): Can we improve this. Examining the state and doing computations here feels off.
-    if (response.status == Status.COMPLETED) {
+    if (response.status == Status.completed) {
       _users = _removeBuyersFromUsers(response.data);
       allUsersSink.add(Result.completed(_users));
       return;

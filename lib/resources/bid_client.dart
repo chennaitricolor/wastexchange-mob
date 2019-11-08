@@ -11,9 +11,9 @@ class BidClient {
     _helper = helper ?? ApiBaseHelper();
   }
 
-  static const PATH_MY_BIDS = '/bids';
-  static const PATH_UPDATE_BID = '/bids/:bidId';
-  static const PATH_PLACE_BID = '/buyer/:buyerId/bids';
+  static const pathMyBids = '/bids';
+  static const pathUpdateBid = '/bids/:bidId';
+  static const pathPlaceBid = '/buyer/:buyerId/bids';
 
   ApiBaseHelper _helper;
 
@@ -21,7 +21,7 @@ class BidClient {
     try {
       await _helper.post(
           true,
-          PATH_PLACE_BID.replaceFirst(':buyerId', buyerId.toString()),
+          pathPlaceBid.replaceFirst(':buyerId', buyerId.toString()),
           _placeBidPostData(buyerId, data));
       return Result.completed('');
     } on ApiException catch (e) {
@@ -37,7 +37,7 @@ class BidClient {
     try {
       await _helper.put(
           true,
-          PATH_UPDATE_BID.replaceFirst(':bidId', orderId.toString()),
+          pathUpdateBid.replaceFirst(':bidId', orderId.toString()),
           _placeBidPostData(buyerId, data));
       return Result.completed('');
     } on ApiException catch (e) {
@@ -67,7 +67,7 @@ class BidClient {
   Future<Result<List<Bid>>> getBids({int userId}) async {
     try {
       final response = await _helper
-          .get(PATH_PLACE_BID.replaceFirst(':buyerId', userId.toString()));
+          .get(pathPlaceBid.replaceFirst(':buyerId', userId.toString()));
       final bids = List<Bid>.from(codecForIntToDoubleConversion(key: 'totalBid')
           .decode(response)
           .map((x) => Bid.fromJson(x)));

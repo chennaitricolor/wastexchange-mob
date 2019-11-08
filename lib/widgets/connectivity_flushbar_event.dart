@@ -31,7 +31,7 @@ class ConnectivityFlushbar {
 
   void init(context) {
     _connectivity.subscribe((onData) {
-      if (onData == InternetState.UNAVAILABLE) {
+      if (onData == InternetState.unavailable) {
         _flushbar.show(context);
       } else {
         _flushbar.dismiss();

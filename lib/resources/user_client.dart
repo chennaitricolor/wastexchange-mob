@@ -19,20 +19,20 @@ class UserClient {
     _helper = helper ?? ApiBaseHelper();
   }
 
-  static const PATH_SEND_OTP = '/users/sendOtp';
-  static const PATH_LOGIN = '/users/login';
-  static const PATH_REGISTER = '/users/register';
-  static const PATH_USERS = '/users';
-  static const PATH_ME = '/users/me';
-  static const PATH_SELLER_ITEMS = '/seller/:sellerId/items';
-  static const PATH_USER_DETAILS = '/users/:id';
+  static const pathSendOtp = '/users/sendOtp';
+  static const pathLogin = '/users/login';
+  static const pathRegister = '/users/register';
+  static const pathUsers = '/users';
+  static const pathMe = '/users/me';
+  static const pathSellerItems = '/seller/:sellerId/items';
+  static const pathUserDetails = '/users/:id';
 
   ApiBaseHelper _helper;
 
   Future<Result<LoginResponse>> login(LoginData loginData) async {
     try {
       final String response =
-          await _helper.post(false, PATH_LOGIN, loginData.toMap());
+          await _helper.post(false, pathLogin, loginData.toMap());
       final LoginResponse loginResponse =
           LoginResponse.fromJson(json.decode(response));
       return Result.completed(loginResponse);
@@ -47,7 +47,7 @@ class UserClient {
   Future<Result<RegistrationResponse>> register(RegistrationData data) async {
     try {
       final String response =
-          await _helper.post(false, PATH_REGISTER, data.toJson());
+          await _helper.post(false, pathRegister, data.toJson());
       final registrationResponse =
           RegistrationResponse.fromJson(json.decode(response));
       return Result.completed(registrationResponse);
@@ -62,7 +62,7 @@ class UserClient {
   Future<Result<OtpResponse>> sendOTP(OtpData otpData) async {
     try {
       final String response =
-          await _helper.post(false, PATH_SEND_OTP, otpData.toMap());
+          await _helper.post(false, pathSendOtp, otpData.toMap());
       final otpResponse = OtpResponse.fromJson(json.decode(response));
       return Result.completed(otpResponse);
     } on ApiException catch (e) {
@@ -75,7 +75,7 @@ class UserClient {
 
   Future<Result<List<User>>> getAllUsers() async {
     try {
-      final response = await _helper.get(PATH_USERS, authenticated: false);
+      final response = await _helper.get(pathUsers, authenticated: false);
       final List<User> users = userFromJson(json.decode(response));
       return Result.completed(users);
     } on ApiException catch (e) {
@@ -87,10 +87,10 @@ class UserClient {
   }
 
   Future<Result<SellerItemDetails>> getSellerDetails(int sellerId) async {
-    final pathSellerItems =
-        PATH_SELLER_ITEMS.replaceFirst(':sellerId', sellerId.toString());
+    final sellerItemsUrlPath =
+        pathSellerItems.replaceFirst(':sellerId', sellerId.toString());
     try {
-      final response = await _helper.get(pathSellerItems, authenticated: false);
+      final response = await _helper.get(sellerItemsUrlPath, authenticated: false);
       final SellerItemDetails details = SellerItemDetails.fromJson(
           codecForIntToDoubleConversion(key: 'quantity').decode(response));
       return Result.completed(details);
@@ -105,7 +105,7 @@ class UserClient {
   Future<Result<User>> getUser({int id}) async {
     try {
       final response =
-          await _helper.get(PATH_USERS.replaceFirst(':id', id.toString()));
+          await _helper.get(pathUsers.replaceFirst(':id', id.toString()));
       final User user = User.fromJson(json.decode(response));
       return Result.completed(user);
     } on ApiException catch (e) {
@@ -118,7 +118,7 @@ class UserClient {
 
   Future<Result<User>> myProfile() async {
     try {
-      final String response = await _helper.get(PATH_ME);
+      final String response = await _helper.get(pathMe);
       final User user = User.fromJson(json.decode(response));
       return Result.completed(user);
     } on ApiException catch (e) {

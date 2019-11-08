@@ -1,1 +1,1 @@
-enum UIState { LOADING, ERROR, COMPLETED }
+enum UIState { loading, error, completed }
