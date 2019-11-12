@@ -17,7 +17,7 @@ class MenuAppBar extends AppBar {
             centerTitle: true,
             title: Text(
               text ?? Constants.APP_TITLE,
-              style: AppTheme.headline,
+              style: AppTheme.menuHeader,
             ));
   final List<Widget> actionItems;
   final String text;

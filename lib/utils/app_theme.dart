@@ -61,6 +61,15 @@ class AppTheme {
     color: darkerText,
   );
 
+  static const TextStyle menuHeader = TextStyle(
+    // h5 -> menuHeader
+    fontFamily: 'OpenSans',
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+    letterSpacing: 0.27,
+    color: darkerText,
+  );
+
   static const TextStyle title = TextStyle(
     // h6 -> title
     fontFamily: 'OpenSans',
