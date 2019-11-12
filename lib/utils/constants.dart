@@ -72,7 +72,7 @@ class Constants {
   static const String USER_ENCOURAGE_LOGIN_MESSAGE =
       '''Join us and be a part of our effort to make Chennai an efficient net Zero Waste City.''';
   static const String TAP_SELLER_FOR_DETAILS =
-      'Tap on a blue pin\nto view seller inventory';
+      'Tap on a pin\nto view seller inventory';
   static const String ITEMS_UNAVAILABLE = 'No items available';
   static const String SELLER_DETAILS_FETCH_FAILED =
       'Failed to get seller information';
