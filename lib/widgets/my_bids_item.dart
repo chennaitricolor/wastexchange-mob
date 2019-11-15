@@ -39,7 +39,8 @@ class MyBidsItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       Constants.PICKUP_AT +
-                          AppDateFormat.getFormattedDate(bid.pickupDate),
+                          AppDateFormat.getFormattedDefaultDateTime(
+                              bid.pickupDate),
                       style: AppTheme.body3,
                     )
                   ],

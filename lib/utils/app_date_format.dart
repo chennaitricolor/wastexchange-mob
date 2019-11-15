@@ -5,9 +5,9 @@ class AppDateFormat {
   static const String defaultTimeFormat = 'h:mm a';
   static const String shortDateFormat = 'dd MMM';
 
-  static String getFormattedDate(DateTime date) {
+  static String getFormattedDefaultDateTime(DateTime date) {
     final format = DateFormat(
-        '${AppDateFormat.shortDateFormat} ${AppDateFormat.defaultTimeFormat}');
+        '${AppDateFormat.defaultDateFormat} ${AppDateFormat.defaultTimeFormat}');
     return format.format(date.toLocal());
   }
 }

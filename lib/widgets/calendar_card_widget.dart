@@ -19,7 +19,7 @@ class CalendarCardWidget extends StatelessWidget {
                 Text(hint, style: AppTheme.caption),
                 const SizedBox(height: 4),
                 Text(
-                  AppDateFormat.getFormattedDate(date),
+                  AppDateFormat.getFormattedDefaultDateTime(date),
                   style: AppTheme.subtitle,
                 )
               ]),
