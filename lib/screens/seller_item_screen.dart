@@ -34,7 +34,7 @@ class SellerItemScreen extends StatefulWidget {
 }
 
 // TODO(Sayeed): We have a mixin pattern for callback here where as in other places we have bloc/streams.
-//We should discuss and agree on one style for consistency
+// We should discuss and agree on one style for consistency
 class _SellerItemScreenState extends State<SellerItemScreen>
     with SellerItemListener {
   final logger = AppLogger.get('SellerInformationScreen');

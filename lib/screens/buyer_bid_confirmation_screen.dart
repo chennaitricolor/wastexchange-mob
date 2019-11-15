@@ -117,46 +117,55 @@ class _BuyerBidConfirmationScreenState
     });
   }
 
+  void _onBackPressed() {
+    _keyOrderPickup.currentState.clearSavedData();
+    _keyOrderPickup.currentState.saveData();
+    if (isNotNull(widget._onBackPressed)) {
+      widget._onBackPressed();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: HomeAppBar(
-        text: widget._isEditBid
-            ? Constants.TITLE_EDIT_ORDER
-            : Constants.TITLE_CREATE_ORDER,
-        onBackPressed: () {
-          _keyOrderPickup.currentState.clearSavedData();
-          _keyOrderPickup.currentState.saveData();
-          if (isNotNull(widget._onBackPressed)) {
-            widget._onBackPressed();
-          }
-          Navigator.pop(context, false);
-        },
-      ),
-      bottomNavigationBar: OrderFormTotal(
-        total: _bloc.bidTotal,
-        itemsCount: _bloc.items.length,
-        onPressed: () {
-          _validateAndPlaceBid();
-        },
-      ),
-      body: SingleChildScrollView(
-          child: Column(
-        children: <Widget>[
-          OrderFormHeader(
-            key: _keyOrderPickup,
-            pickupInfoData: widget._pickupInfoData,
+    return WillPopScope(
+        child: Scaffold(
+          appBar: HomeAppBar(
+            text: widget._isEditBid
+                ? Constants.TITLE_EDIT_ORDER
+                : Constants.TITLE_CREATE_ORDER,
+            onBackPressed: () {
+              _onBackPressed();
+              Navigator.pop(context, false);
+            },
           ),
-          Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
-              child: const Text('Order Summary', style: AppTheme.title)),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-              child: OrderFormSummaryList(items: _bloc.items)),
-        ],
-      )),
-    );
+          bottomNavigationBar: OrderFormTotal(
+            total: _bloc.bidTotal,
+            itemsCount: _bloc.items.length,
+            onPressed: () {
+              _validateAndPlaceBid();
+            },
+          ),
+          body: SingleChildScrollView(
+              child: Column(
+            children: <Widget>[
+              OrderFormHeader(
+                key: _keyOrderPickup,
+                pickupInfoData: widget._pickupInfoData,
+              ),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
+                  child: const Text('Order Summary', style: AppTheme.title)),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+                  child: OrderFormSummaryList(items: _bloc.items)),
+            ],
+          )),
+        ),
+        onWillPop: () {
+          _onBackPressed();
+          return Future(() => true);
+        });
   }
 
   @override
