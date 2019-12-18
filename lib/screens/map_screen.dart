@@ -11,6 +11,8 @@ import 'package:wastexchange_mobile/widgets/views/drawer_view.dart';
 import 'package:wastexchange_mobile/widgets/views/error_view.dart';
 import 'package:wastexchange_mobile/widgets/views/loading_progress_indicator.dart';
 import 'package:wastexchange_mobile/widgets/views/menu_app_bar.dart';
+import 'package:clustering_google_maps/clustering_google_maps.dart' show AggregationSetup;
+import 'package:wastexchange_mobile/resources/clustering_helper.dart';
 
 // TODO(Sayeed): Extract all map related logic to its own class
 class MapScreen extends StatefulWidget {
@@ -20,12 +22,12 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapState extends State<MapScreen> {
-  GoogleMapController _mapController;
-  static const double _mapMCCHue = BitmapDescriptor.hueViolet;
-  static const double _mapRRCHue = BitmapDescriptor.hueOrange;
-  static const double _mapOtherHue = BitmapDescriptor.hueRose;
+  
+  ClusteringHelper clusteringHelper;
+  Set<Marker> clusterMarkers;
 
-  Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
+  GoogleMapController _mapController;
+
   String _errorMessage = Constants.GENERIC_ERROR_MESSAGE;
 
   final SellerItemBottomSheet _bottomSheet =
@@ -62,7 +64,7 @@ class _MapState extends State<MapScreen> {
         case Status.completed:
           setState(() {
             _uiState = UIState.completed;
-            _setMarkers(_snapshot.data);
+            initMapsClustering(_snapshot.data);
           });
           break;
       }
@@ -79,48 +81,29 @@ class _MapState extends State<MapScreen> {
 
   void onMapCreated(GoogleMapController controller) {
     _mapController = controller;
+    clusteringHelper.mapController = _mapController;
+    clusteringHelper.updateMap();
     _mapController.animateCamera(_animateCameraTo);
   }
 
-  void _onMarkerTapped(int userId) {
+  void onMarkerTapped(int userId) {
     _bottomSheet.setUser(_bloc.getUser(userId));
   }
 
-  // TODO(Sayeed): Should we move markers logic to its own class
-  void _setMarkers(List<User> users) {
-    final markers = users.map((user) {
-      final hue = _markerHue(user);
-      void callback() => _onMarkerTapped(user.id);
-      return Marker(
-        markerId: MarkerId(
-          user.id.toString(),
-        ),
-        position: LatLng(
-          user.lat,
-          user.long,
-        ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-          hue,
-        ),
-        infoWindow: InfoWindow(
-          title: '${user.name}',
-        ),
-        onTap: callback,
-      );
+  void updateMarkers(Set<Marker> markers) {
+    setState(() {
+      clusterMarkers = markers;
     });
-    _markers = Map.fromIterable(markers,
-        key: (marker) => marker.markerId, value: (marker) => marker);
   }
 
-  double _markerHue(User user) {
-    final lowerCaseName = user.name.toLowerCase();
-    if (lowerCaseName.contains(' mcc')) {
-      return _mapMCCHue;
-    } else if (lowerCaseName.contains(' rrc')) {
-      return _mapRRCHue;
-    } else {
-      return _mapOtherHue;
-    }
+  void initMapsClustering(List<User> userList) {
+    clusteringHelper = ClusteringHelper.forMemory(
+      list: _bloc.getUsersLocationList(),
+      users: userList,
+      updateMarkers: updateMarkers,
+      onMarkerTapped: onMarkerTapped,
+      aggregationSetup: AggregationSetup(markerSize: Constants.CLUSTER_MARKER_SIZE),
+    );
   }
 
   @override
@@ -155,8 +138,11 @@ class _MapState extends State<MapScreen> {
         return GoogleMap(
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: onMapCreated,
-            mapType: MapType.normal,
-            markers: Set<Marker>.of(_markers.values));
+            markers: clusterMarkers,
+            onCameraMove: (newPosition) =>
+              clusteringHelper.onCameraMove(newPosition, forceUpdate: true),
+            onCameraIdle: clusteringHelper?.onMapIdle
+        );
       default:
         return ErrorView(message: _errorMessage);
     }
